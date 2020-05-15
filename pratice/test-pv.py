@@ -139,6 +139,13 @@ def main():
     codegen = ASTCodeGenerator()
     rep_num=0
 
+    try:
+        dirName = os.getcwd()+"/pv_candidates"
+        os.mkdir(dirName)
+        print("Directory " , dirName ,  " Created ") 
+    except FileExistsError:
+        print("Directory " , dirName ,  " already exists")
+
     for f in fixcollector.my_fixes:
         for c in candidatecollector.my_candidates:
             old_id = f.name
@@ -150,6 +157,10 @@ def main():
 
             rslt = codegen.visit(ast)
             print(rslt)
+
+            outf = open("./pv_candidates/candidate_"+str(rep_num)+".v","w+")
+            outf.write(str(rslt))
+            outf.close()
 
             print('$$$$$$$$$')
 
