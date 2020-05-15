@@ -2,7 +2,8 @@
 
 # how to run this bash script: ./run.sh first_counter.v
 module load vcs/2017.12-SP2-1
-module load verilog
+#module load verilog
+# TODO: Why are we loading verilog here? What exactly is verilog? Is it iverilog?
 
 rm -r ./candidates
 rm -r ./repair
@@ -11,12 +12,14 @@ rm -r ./infinite
 mkdir ./candidates
 mkdir ./repair
 mkdir ./infinite
+
 #generate tokens
 # $1: original verilog file. e.g. fsm_cd.v
-python lex.py $1 > tokens_temp.txt
 
+python lex.py $1 > tokens_temp.txt
 python gen.py > tokens.v
 DONE=0
+
 # make one replace edit to the source tokens and generate a candiate:
 # replace the j_th token with the i_th token
 # the resulting file is: candidate_i_j.v
