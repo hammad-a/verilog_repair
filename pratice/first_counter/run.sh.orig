@@ -3,11 +3,6 @@
 # how to run this bash script: ./run.sh first_counter.v
 module load vcs/2017.12-SP2-1
 module load verilog
-
-rm -r ./candidates
-rm -r ./repair
-rm -r ./infinite
-
 mkdir ./candidates
 mkdir ./repair
 mkdir ./infinite
@@ -28,7 +23,7 @@ for (( i=0; i<$NUM; i++))
 do
    
     if [ "$DONE" -eq "0" ]; then
-        for(( j=0; j<1; j++))
+        for(( j=0; j<$NUM; j++))
         #DEBUG:for(( j=57; j<58; j++))
         do
             rm output.txt
@@ -48,7 +43,7 @@ do
             echo "start:">>checksum_log.txt
             date>>checksum_log.txt
 
-            timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh first_counter_tb_t1.v ./candidates/candidate_$i\_$j.v  -o simv -R 
+            timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh first_counter_tb_t2.v ./candidates/candidate_$i\_$j.v  -o simv -R 
 
             if [ `echo $?` -eq 124 ]; then
                 echo "candidate_$i\_$j.v: time out"
@@ -67,7 +62,6 @@ do
                         echo "valid repair">>checksum_log.txt
                         cp ./candidates/candidate_$i\_$j.v ./repair/
                     else
-			echo "DEBUG: We were here."
                         # can compile but not correct
                         echo "invalid repair">>checksum_log.txt
                     fi
