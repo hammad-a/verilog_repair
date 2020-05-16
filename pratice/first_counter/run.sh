@@ -76,7 +76,9 @@ do
                 if [ -e ./output.txt ]; then
                     python ../strip_vcs_output.py output.txt
 
-                    if [ -z `diff ./output_stripped.txt ./output_oracle_stripped.txt` ]; then
+		    cat output_stripped.txt
+
+                    if [ `cmp output_oracle_stripped.txt output_stripped.txt` -eq 0 ]; then
                         echo "!!!!!!!!!!!!!!!"
                         echo "Repair FOUND: candidate_$i\_$j.v"
                         echo "valid repair">>checksum_log.txt
