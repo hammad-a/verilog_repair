@@ -38,7 +38,7 @@ for (( i=0; i<$NUM; i++))
 do
    
     if [ "$DONE" -eq "0" ]; then
-        for(( j=0; j<1; j++))
+        for(( j=0; j<$NUM; j++))
         #DEBUG:for(( j=57; j<58; j++))
         do
             # delete existing output files

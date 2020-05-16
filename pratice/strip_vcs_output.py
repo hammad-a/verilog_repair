@@ -16,19 +16,21 @@ def main():
     inFile = open(fName, "r")
     outFile = open(fName.split(".txt")[0]+"_stripped.txt", "w+")
 
+    
+
     line = inFile.readline()
 
     # get the header for the simulation table
-    while not line.strip().startswith("time"):
+    while not line.strip().startswith("time,"):
         line = inFile.readline()
-    print(line)
+    #print(line)
     outFile.write(line)
 
     # get the rows in the simulation table
     for line in inFile:
         if "V C S   S i m u l a t i o n   R e p o r t" in line:
             break
-        print(line, end="")
+        #print(line, end="")
         outFile.write(line)
     
     inFile.close()
