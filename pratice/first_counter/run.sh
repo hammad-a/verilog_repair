@@ -25,6 +25,13 @@ DONE=0
 # the resulting file is: candidate_i_j.v
 NUM=`wc -l tokens.v | awk '{print $1}'`
 
+if [ -e ./output_oracle.txt ]; then
+    python ../strip_vcs_output.py output_oracle.txt
+else
+    echo "Error: output_oracle.txt does not exist."
+    exit 1
+fi
+
 date>date0.txt
 for (( i=0; i<$NUM; i++))
 #DEBUG: for (( i=5; i<6; i++))
@@ -34,7 +41,10 @@ do
         for(( j=0; j<1; j++))
         #DEBUG:for(( j=57; j<58; j++))
         do
+            # delete existing output files
             rm output.txt
+            rm output_stripped.txt 
+
             echo "Repairing: replace $j with $i..."
             python repair.py tokens.v $i $j
             # the resulting file is: candidate_i_j.v
@@ -51,7 +61,7 @@ do
             echo "start:">>checksum_log.txt
             date>>checksum_log.txt
 
-            timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh first_counter_tb_t1.v ./candidates/candidate_$i\_$j.v  -o simv -R 
+            timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh first_counter_tb_t1.v ./candidates/candidate_$i\_$j.v  -o simv -R | tee output.txt
 
             if [ `echo $?` -eq 124 ]; then
                 echo "candidate_$i\_$j.v: time out"
@@ -64,17 +74,20 @@ do
                 echo "end:">>checksum_log.txt
                 date>>checksum_log.txt
                 if [ -e ./output.txt ]; then
-                    if [ -z `diff ./output.txt ./output_oracle.txt` ]; then
+                    python ../strip_vcs_output.py output.txt
+
+                    if [ -z `diff ./output_stripped.txt ./output_oracle_stripped.txt` ]; then
                         echo "!!!!!!!!!!!!!!!"
                         echo "Repair FOUND: candidate_$i\_$j.v"
                         echo "valid repair">>checksum_log.txt
                         cp ./candidates/candidate_$i\_$j.v ./repair/
                     else
-			echo "DEBUG: We were here."
+			            echo "DEBUG: Invalid repair."
                         # can compile but not correct
                         echo "invalid repair">>checksum_log.txt
                     fi
                 else
+                    echo "Debug: Cannot compile; output.txt not found."
                     echo "Cannot compile: output.txt not found">>checksum_log.txt
                 fi
             fi
