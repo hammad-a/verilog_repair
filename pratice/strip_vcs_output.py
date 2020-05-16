@@ -16,22 +16,28 @@ def main():
     inFile = open(fName, "r")
     outFile = open(fName.split(".txt")[0]+"_stripped.txt", "w+")
 
+    lines = inFile.readlines()
+
+    start = -1
+    end = -1
+
+    for i in range(len(lines)):
+        if lines[i].strip().startswith("time,"): # get header for the simulation table
+            start = i
+        elif "V C S   S i m u l a t i o n   R e p o r t" in lines[i]: # get end for the rows in the simulation table
+            end = i
     
-
-    line = inFile.readline()
-
-    # get the header for the simulation table
-    while not line.strip().startswith("time,"):
-        line = inFile.readline()
-    #print(line)
-    outFile.write(line)
-
-    # get the rows in the simulation table
-    for line in inFile:
-        if "V C S   S i m u l a t i o n   R e p o r t" in line:
-            break
-        #print(line, end="")
-        outFile.write(line)
+    if start == -1 or end == -1:
+        print("Simulation error: Could not finish simulation. See output file for details.")
+        outFile.write("Simulation error: Could not finish simulation. See output file for details.\n")
+        inFile.close()
+        outFile.close()
+        sys.exit(1)
+    
+    for i in range(start, end):
+         outFile.write(lines[i])
+        
+    print("VCS output stripped: %s" % fName.split(".txt")[0]+"_stripped.txt")
     
     inFile.close()
     outFile.close()
