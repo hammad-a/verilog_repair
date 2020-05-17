@@ -16,6 +16,8 @@ mkdir ./infinite
 #generate tokens
 # $1: original verilog file. e.g. fsm_cd.v
 
+TESTBENCH=$2
+
 python lex.py $1 > tokens_temp.txt
 python gen.py > tokens.v
 DONE=0
@@ -26,20 +28,23 @@ DONE=0
 NUM=`wc -l tokens.v | awk '{print $1}'`
 
 if [ -e ./output_oracle.txt ]; then
-    python ../strip_vcs_output.py output_oracle.txt
-else
-    echo "Error: output_oracle.txt does not exist."
-    exit 1
+    rm ./output_oracle.txt
 fi
+
+echo "Attempting to generate the output oracle..."
+vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh $TESTBENCH ./first_counter.v  -o simv -R | tee output_oracle.txt
+python ../strip_vcs_output.py output_oracle.txt
+
+
 
 date>date0.txt
 for (( i=0; i<$NUM; i++))
-#DEBUG: for (( i=5; i<6; i++))
+#for (( i=5; i<6; i++))
 do
    
     if [ "$DONE" -eq "0" ]; then
         for(( j=0; j<$NUM; j++))
-        #DEBUG:for(( j=57; j<58; j++))
+        #for(( j=57; j<58; j++))
         do
             # delete existing output files
             rm output.txt
@@ -61,7 +66,7 @@ do
             echo "start:">>checksum_log.txt
             date>>checksum_log.txt
 
-            timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh first_counter_tb_t1.v ./candidates/candidate_$i\_$j.v  -o simv -R | tee output.txt
+            timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh $TESTBENCH ./candidates/candidate_$i\_$j.v  -o simv -R | tee output.txt
 
             if [ `echo $?` -eq 124 ]; then
                 echo "candidate_$i\_$j.v: time out"
@@ -77,8 +82,9 @@ do
                     python ../strip_vcs_output.py output.txt
 
 		    cat output_stripped.txt
+		    cmp output_oracle_stripped.txt output_stripped.txt
 
-                    if [ `cmp output_oracle_stripped.txt output_stripped.txt` -eq 0 ]; then
+                    if [ $? -eq 0 ]; then
                         echo "!!!!!!!!!!!!!!!"
                         echo "Repair FOUND: candidate_$i\_$j.v"
                         echo "valid repair">>checksum_log.txt

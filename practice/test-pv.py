@@ -142,8 +142,8 @@ def main():
     try:
         dirName = os.getcwd()+"/pv_candidates"
         os.mkdir(dirName)
-        print("Directory " , dirName ,  " Created ") 
-    except FileExistsError:
+        print("Directory " , dirName ,  " created ") 
+    except:
         print("Directory " , dirName ,  " already exists")
 
     for f in fixcollector.my_fixes:
