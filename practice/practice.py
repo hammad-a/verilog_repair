@@ -166,13 +166,13 @@ def main():
 
     codegen = ASTCodeGenerator()
 
-    candidatecollector = CandidateCollector()
-    candidatecollector.visit(ast)
-    #print(candidatecollector.my_candidates)
+    # candidatecollector = CandidateCollector()
+    # candidatecollector.visit(ast)
+    # print(candidatecollector.my_candidates)
 
-    fixcollector = FixCollector()
-    fixcollector.visit(ast)
-    #print(fixcollector.my_fixes)
+    # fixcollector = FixCollector()
+    # fixcollector.visit(ast)
+    # print(fixcollector.my_fixes)
 
     # Used to convert expressions of the form symbol <= x to symbol <= x+1
     # incrementintconst = IncrementIntConst()
@@ -185,12 +185,12 @@ def main():
     # print(pluscounter.count)
 
     # Used to convert plus operators to minus operators in ast
-    plustominus = PlusToMinus()
-    plustominus.visit(ast)
-    print(codegen.visit(ast))
+    # plustominus = PlusToMinus()
+    # plustominus.visit(ast)
+    # print(codegen.visit(ast))
 
-    # editable = EditableNodes()
-    # editable.visit(ast)
+    editable = EditableNodes()
+    editable.visit(ast)
     
     # rep_num=0
     # try:
