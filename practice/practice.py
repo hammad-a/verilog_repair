@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-from __future__ import print_function
 import sys
 import os
 from optparse import OptionParser
@@ -7,7 +5,6 @@ from optparse import OptionParser
 # the next line can be removed after installation
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import pyverilog.utils.version
 from pyverilog.vparser.parser import parse
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 
@@ -82,12 +79,10 @@ class CrapVisitor(ASTCodeGenerator):
 
 def main():
     INFO = "Verilog code parser"
-    VERSION = pyverilog.utils.version.VERSION
     USAGE = "Usage: python example_parser.py file ..."
 
     def showVersion():
         print(INFO)
-        print(VERSION)
         print(USAGE)
         sys.exit()
 
