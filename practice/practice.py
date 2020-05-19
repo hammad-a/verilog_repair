@@ -33,12 +33,23 @@ class FixCollector(ASTCodeGenerator):
         for c in ast.children():
             self.visit(c)
 
+class PlusCounter(ASTCodeGenerator):
+    def __init__(self):
+        self.count = 0
+
+    def visit(self, ast):
+        if ast.__class__.__name__ == "Plus":
+            self.count += 1
+
+        for c in ast.children():
+            self.visit(c)
+
 
 # custom visitor class that updates expressions of the form:
 #   symbolName <= x
 # to become
 #   symbolName <= x+1
-class CrapVisitor(ASTCodeGenerator):
+class IncrementIntConst(ASTCodeGenerator):
 
     def addToBVal(self, bVal, num):
         tmp = int(bVal.split('b')[1], 2)
@@ -80,8 +91,33 @@ class CrapVisitor(ASTCodeGenerator):
         #    print("Found int const {}".format(ast.value))
         for c in ast.children():
             self.visit(c)
-     
 
+class PlusToMinus(ASTCodeGenerator):
+
+    def visit(self, ast):
+
+        if ast.__class__.__name__ == 'NonblockingSubstitution' and ast.right.var and ast.right.var.__class__.__name__ == "Plus":
+            new_child = vast.Minus(ast.right.var.left, ast.right.var.right)
+            print("Changing %s on line %s to %s" % (ast.right.var, ast.right.var.lineno, new_child))
+            ast.right.var = new_child
+
+        for c in ast.children():
+            self.visit(c)
+
+class EditableNodes(ASTCodeGenerator):
+
+    def __init__(self):
+        self.editable = []
+
+    def visit(self, ast):
+
+        if ast.__class__.__name__ == 'NonblockingSubstitution':
+            print(ast.left.var, ast.right.var)
+            print(ast.right.var.__class__)
+            
+
+        for c in ast.children():
+            self.visit(c)
 
 
 def main():
@@ -118,15 +154,17 @@ def main():
                             preprocess_include=options.include,
                             preprocess_define=options.define)
     
-    #ast.show()
-    #for lineno, directive in directives:
-    #    print('Line %d : %s' % (lineno, directive))
-    print( "!!")
-    print(ast.children()[0].children())  
-    print ("!!")
+    # ast.show()
+    # for lineno, directive in directives:
+    #     print('Line %d : %s' % (lineno, directive))
+    # print( "!!")
+    # print(ast.children()[0].children())  
+    # print ("!!")
 
     ast.show()
-    # print("\n\n\n")
+    print("\n\n")
+
+    codegen = ASTCodeGenerator()
 
     candidatecollector = CandidateCollector()
     candidatecollector.visit(ast)
@@ -136,16 +174,25 @@ def main():
     fixcollector.visit(ast)
     #print(fixcollector.my_fixes)
 
-    crapvisitor = CrapVisitor()
-    print(crapvisitor.visit(ast))
+    # Used to convert expressions of the form symbol <= x to symbol <= x+1
+    # incrementintconst = IncrementIntConst()
+    # incrementintconst.visit(ast)
+    # print(codegen.visit(ast))
 
-    ast.show()
+    # Used to count number of + operators in .v code
+    # pluscounter = PlusCounter()
+    # pluscounter.visit(ast)
+    # print(pluscounter.count)
 
-    codegen = ASTCodeGenerator()
-    rep_num=0
-
+    # Used to convert plus operators to minus operators in ast
+    plustominus = PlusToMinus()
+    plustominus.visit(ast)
     print(codegen.visit(ast))
 
+    # editable = EditableNodes()
+    # editable.visit(ast)
+    
+    # rep_num=0
     # try:
     #     dirName = os.getcwd()+"/pv_candidates"
     #     os.mkdir(dirName)
