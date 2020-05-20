@@ -1,25 +1,15 @@
-module tb;
+module jk_ff ( input j,
+               input k,
+               input clk,
+               output q);
  
-  // 1. Declare input/output variables to drive to the design
-  reg   tb_clk;
-  reg   tb_d;
-  reg   tb_rstn;
-  wire   tb_q;
+   reg q;
  
-  // 2. Create an instance of the design
-  // This is called design instantiation
-  dff   dff0 (   .clk   (tb_clk),     // Connect clock input with TB signal
-          .d     (tb_d),     // Connect data input with TB signal
-          .rstn   (tb_rstn),     // Connect reset input with TB signal
-          .q     (tb_q));     // Connect output q with TB signal
- 
-  // 3. The following is an example of a stimulus
-  // Here we drive the signals tb_* with certain values
-  // Since these tb_* signals are connected to the design inputs,
-  // the design will be driven with the values in tb_*
-  initial begin
-    tb_rsnt   <=   1'b0;
-    tb_clk     <=   1'b0;
-    tb_d     <=  1'b0;
-  end
+   always @ (posedge clk)
+      case ({j,k})
+         2'b00 :  q <= q;
+         2'b01 :  q <= 0;
+         2'b10 :  q <= 1;
+         2'b11 :  q <= ~q;
+      endcase
 endmodule
