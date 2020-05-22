@@ -11,24 +11,22 @@ from pyverilog.vparser.parser import parse
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 import pyverilog.vparser.ast as vast
 
+
+"""
+Valid mutation operators supported by the algorithm.
+"""
+VALID_MUTATIONS = ["swap_plus_minus", "increment_identifier"]
+
+"""
+Returns a set of line numbers as potential targets for mutations.
+"""
 class CandidateCollector(ASTCodeGenerator):
     def __init__(self):
         self.my_candidates = set()
 
     def visit(self, ast):
-        if ast.__class__.__name__ in [ 'Port', 'Input', 'Wire' ]:
-            self.my_candidates.add(ast.name)
-
-        for c in ast.children():
-            self.visit(c)
-
-class FixCollector(ASTCodeGenerator):
-    def __init__(self):
-        self.my_fixes = []
-
-    def visit(self, ast):
-        if ast.__class__.__name__ in [ 'Identifier' ]:
-            self.my_fixes.append(ast)
+        if ast.__class__.__name__ in [ 'BlockingSubstitution', 'NonblockingSubstitution' ]:
+            self.my_candidates.add(ast.lineno)
 
         for c in ast.children():
             self.visit(c)
@@ -36,7 +34,6 @@ class FixCollector(ASTCodeGenerator):
 class Mutate(ASTCodeGenerator):
 
     def __init__(self):
-        self._validMutations = ["swap_plus_minus", "increment_identifier"]
         self.mutation = "null"
         self.mutateAt = -1
 
@@ -79,7 +76,7 @@ class Mutate(ASTCodeGenerator):
                         my_rvalue.value,
                     incrementedVal))
                     my_rvalue.value = incrementedVal
-        elif self.mutation not in self._validMutations or self.mutateAt == -1:
+        elif self.mutation not in VALID_MUTATIONS or self.mutateAt == -1:
             print("Not a valid mutation: %s at line %d" % (self.mutation, self.mutateAt))
 
 
@@ -128,17 +125,23 @@ def main():
 
     candidatecollector = CandidateCollector()
     candidatecollector.visit(ast)
-    print("Candidates: %s" % candidatecollector.my_candidates)
-
-    fixcollector = FixCollector()
-    fixcollector.visit(ast)
-    print("Fixes: %s" % fixcollector.my_fixes)
 
     mutation_op = Mutate()
-    mutation_op.set_mutation("swap_plus_minus", 42)
-    tmp = copy.deepcopy(ast)
-    mutation_op.visit(tmp)
-    print(codegen.visit(tmp))
+
+    attempts = 0
+    valids = 0
+    for choice in VALID_MUTATIONS:
+        for line in candidatecollector.my_candidates:
+            mutation_op.set_mutation(choice, line)
+            tmp = copy.deepcopy(ast)
+            mutation_op.visit(tmp)
+            if tmp != ast: # if the mutation was successful
+                print(codegen.visit(tmp))
+                print("#################\n")
+                valids += 1
+            attempts += 1
+    
+    print(valids,attempts)
 
 
 if __name__ == '__main__':
