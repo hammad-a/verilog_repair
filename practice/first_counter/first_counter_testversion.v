@@ -38,6 +38,8 @@ begin: COUNTER //block name
     //If enable is active, we increment the counter
     else if(enable == 1'b1) begin
         counter_out <= #1 counter_out + 1;
+        counter_out <= #1 counter_out - 1;
+        counter_out <= #1 counter_out + 1;
     end
 end // End of block COUNTER
 
