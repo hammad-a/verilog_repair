@@ -23,6 +23,8 @@ Valid mutation operators supported by the algorithm.
 """
 MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfStatement", "SensList"]
 
+WRITE_TO_FILE = True
+
 """
 Returns a set of line numbers as potential targets for mutations.
 """
@@ -149,6 +151,13 @@ def main():
 
     mutation_op = Mutate()
 
+    try:
+        dirName = os.getcwd()+"/repair_candidates"
+        os.mkdir(dirName)
+        print("Directory " , dirName ,  " created ") 
+    except:
+        print("Directory " , dirName ,  " already exists")
+
     # depth_edits = 1
     # try_all_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, depth_edits)
 
@@ -186,9 +195,16 @@ def try_random_mutations(mutation_op, candidates, codegen, ast, maxIters):
         if tmp != ast: # if the mutation was successful and/or resulted in a different ast
             uniq.add(tmp)
     
+    cand_num = 0
     for tmp in uniq:
-        print(codegen.visit(tmp))
+        rslt = codegen.visit(tmp)
+        print(rslt)
         print("#################\n")
+        if WRITE_TO_FILE:
+            outf = open("./repair_candidates/candidate_"+str(cand_num)+".v","w+")
+            outf.write(str(rslt))
+            outf.close()
+        cand_num += 1
 
     print("A total of %d mutations were successful out of %d attempted mutations." % (len(uniq), maxIters))
 
