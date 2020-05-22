@@ -19,6 +19,11 @@ Valid mutation operators supported by the algorithm.
 VALID_MUTATIONS = ["swap_plus_minus", "increment_identifier", "decrement_identifier", "flip_if_cond", "flip_all_sens_edge", "flip_random_sens_edge"]
 
 """
+Valid mutation operators supported by the algorithm.
+"""
+MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfStatement", "SensList"]
+
+"""
 Returns a set of line numbers as potential targets for mutations.
 """
 class CandidateCollector(ASTCodeGenerator):
@@ -26,7 +31,7 @@ class CandidateCollector(ASTCodeGenerator):
         self.my_candidates = set()
 
     def visit(self, ast):
-        if ast.__class__.__name__ in [ 'BlockingSubstitution', 'NonblockingSubstitution', 'IfStatement', 'SensList' ]:
+        if ast.__class__.__name__ in MUTATIONS_TARGETS:
             self.my_candidates.add(ast.lineno)
 
         for c in ast.children():
@@ -144,11 +149,10 @@ def main():
 
     mutation_op = Mutate()
 
-    depth_edits = 1
+    # depth_edits = 1
+    # try_all_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, depth_edits)
 
-    try_all_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, depth_edits)
-
-    # try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 500)
+    try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 500)
 
 def try_all_mutations(mutation_op, candidates, codegen, ast, depth, uniq=set()):
     for choice in VALID_MUTATIONS:
@@ -164,9 +168,9 @@ def try_all_mutations(mutation_op, candidates, codegen, ast, depth, uniq=set()):
 
     if depth == 1:
         for tmp in uniq:
-            # print(codegen.visit(tmp))
+            print(codegen.visit(tmp))
             print("#################\n")
-        print("A total of %d mutations were successful." % (len(uniq)))
+        print("A total of %d mutations were performed." % (len(uniq)))
 
 
 def try_random_mutations(mutation_op, candidates, codegen, ast, maxIters):
@@ -187,8 +191,6 @@ def try_random_mutations(mutation_op, candidates, codegen, ast, maxIters):
         print("#################\n")
 
     print("A total of %d mutations were successful out of %d attempted mutations." % (len(uniq), maxIters))
-
-
 
 if __name__ == '__main__':
     main()
