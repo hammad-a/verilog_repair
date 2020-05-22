@@ -16,7 +16,7 @@ import pyverilog.vparser.ast as vast
 """
 Valid mutation operators supported by the algorithm.
 """
-VALID_MUTATIONS = ["swap_plus_minus", "increment_identifier", "decrement_identifier", "flip_if_cond"]
+VALID_MUTATIONS = ["swap_plus_minus", "increment_identifier", "decrement_identifier", "flip_if_cond", "flip_all_sens_edge", "flip_random_sens_edge"]
 
 """
 Returns a set of line numbers as potential targets for mutations.
@@ -26,7 +26,7 @@ class CandidateCollector(ASTCodeGenerator):
         self.my_candidates = set()
 
     def visit(self, ast):
-        if ast.__class__.__name__ in [ 'BlockingSubstitution', 'NonblockingSubstitution', 'IfStatement' ]:
+        if ast.__class__.__name__ in [ 'BlockingSubstitution', 'NonblockingSubstitution', 'IfStatement', 'SensList' ]:
             self.my_candidates.add(ast.lineno)
 
         for c in ast.children():
@@ -80,7 +80,18 @@ class Mutate(ASTCodeGenerator):
                     new_cond = vast.NotEq(ast.cond.left, ast.cond.right, ast.lineno)
                     print("Changing %s on line %s to %s" % (ast.cond, ast.lineno, new_cond))
                     ast.cond = new_cond
-
+        elif self.mutation == "flip_all_sens_edge":
+            if ast.__class__.__name__ == 'SensList' and ast.lineno == self.mutateAt:
+                for sens in ast.list:
+                    newType = random.choice(("posedge", "negedge", "level", "all"))
+                    print("Changing sens %s type on line %s from %s to %s" % (sens.sig, ast.lineno, sens.type, newType))
+                    sens.type = newType
+        elif self.mutation == "flip_random_sens_edge":
+            if ast.__class__.__name__ == 'SensList' and ast.lineno == self.mutateAt:
+                sens = random.choice(ast.list)
+                newType = random.choice(("posedge", "negedge", "level", "all"))
+                print("Changing sens %s type on line %s from %s to %s" % (sens.sig, ast.lineno, sens.type, newType))
+                sens.type = newType
         elif self.mutation not in VALID_MUTATIONS or self.mutateAt == -1:
             print("Not a valid mutation: %s at line %d" % (self.mutation, self.mutateAt))
 
@@ -133,12 +144,13 @@ def main():
 
     mutation_op = Mutate()
 
-    # twoDistanceEdits = True
-    # try_all_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, twoDistanceEdits)
+    depth_edits = 1
 
-    try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 500)
+    try_all_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, depth_edits)
 
-def try_all_mutations(mutation_op, candidates, codegen, ast, furtherEdits, attempts=0, valids=0):
+    # try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 500)
+
+def try_all_mutations(mutation_op, candidates, codegen, ast, depth, uniq=set()):
     for choice in VALID_MUTATIONS:
         for line in candidates:
             mutation_op.set_mutation(choice, line)
@@ -146,14 +158,16 @@ def try_all_mutations(mutation_op, candidates, codegen, ast, furtherEdits, attem
             mutation_op.visit(tmp)
             mutation_op.reset_mutation()
             if tmp != ast: # if the mutation was successful
-                print(codegen.visit(tmp))
-                print("#################\n")
-                if furtherEdits:
-                    try_all_mutations(mutation_op, candidates, codegen, tmp, False, attempts, valids)
-                valids += 1
-            attempts += 1
-    if not furtherEdits:
-        print("A total of %d mutations were successful out of %d attempted mutations." % (valids, attempts))
+                uniq.add(tmp)
+                if depth > 1:
+                    try_all_mutations(mutation_op, candidates, codegen, tmp, depth - 1)
+
+    if depth == 1:
+        for tmp in uniq:
+            # print(codegen.visit(tmp))
+            print("#################\n")
+        print("A total of %d mutations were successful." % (len(uniq)))
+
 
 def try_random_mutations(mutation_op, candidates, codegen, ast, maxIters):
     uniq = set()
