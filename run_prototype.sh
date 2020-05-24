@@ -24,7 +24,7 @@ if [ ! -f output_oracle.txt ]; then
     timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh $TESTBENCH "$correct_prog"  -o simv -R
     mv "$dir"/output.txt output_oracle.txt
     if [ ! -f output_oracle.txt ]; then
-        echo "Generation of oracle failed. Termianting."
+        echo "Generation of oracle failed. Terminating."
         exit 1
     fi
 fi
