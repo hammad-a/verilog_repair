@@ -23,7 +23,7 @@ Valid mutation operators supported by the algorithm.
 """
 MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfStatement", "SensList"]
 
-WRITE_TO_FILE = True
+WRITE_TO_FILE = False
 
 """
 Returns a set of line numbers as potential targets for mutations.
@@ -73,6 +73,10 @@ class Mutate(ASTCodeGenerator):
                     incrementedVal = my_rvalue.value + " + 1"
                     print("Updating %s on line %d from %s to %s" % (my_lvalue.name, my_rvalue.lineno, my_rvalue.value, incrementedVal))
                     my_rvalue.value = incrementedVal
+                elif my_lvalue.__class__.__name__ == 'Identifier' and my_rvalue.__class__.__name__ in ['Plus', 'Minus', 'Times', 'Divide', 'Mod']  and my_rvalue.lineno == self.mutateAt:
+                    new_child = vast.Plus(my_rvalue, vast.IntConst(1))
+                    print("Changing %s on line %s to %s" % (my_rvalue, ast.right.var.lineno, new_child))
+                    ast.right.var = new_child
         elif self.mutation == "decrement_identifier":
             if ast.__class__.__name__ == 'NonblockingSubstitution':
                 my_lvalue = ast.left.var
@@ -81,6 +85,10 @@ class Mutate(ASTCodeGenerator):
                     decrementedVal = my_rvalue.value + " - 1"
                     print("Updating %s on line %d from %s to %s" % (my_lvalue.name, my_rvalue.lineno, my_rvalue.value, decrementedVal))
                     my_rvalue.value = decrementedVal
+                elif my_lvalue.__class__.__name__ == 'Identifier' and my_rvalue.__class__.__name__ in ['Plus', 'Minus', 'Times', 'Divide', 'Mod']  and my_rvalue.lineno == self.mutateAt:
+                    new_child = vast.Minus(my_rvalue, vast.IntConst(1))
+                    print("Changing %s on line %s to %s" % (my_rvalue, ast.right.var.lineno, new_child))
+                    ast.right.var = new_child
         elif self.mutation == "flip_if_cond":
             if ast.__class__.__name__ == 'IfStatement' and ast.lineno == self.mutateAt:
                 if ast.cond.__class__.__name__ == "Eq":
