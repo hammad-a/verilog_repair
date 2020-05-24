@@ -135,11 +135,11 @@ class Mutate(ASTCodeGenerator):
             if ast.__class__.__name__ == "Cond" and ast.lineno == self.mutateAt:
                 p = random.random()
                 if p > 0.5 and ast.true_value.__class__.__name__ == "IntConst":
-                    decrementedVal = ast.true_value.value + " + 1"
+                    decrementedVal = ast.true_value.value + " - 1"
                     print("Changing the true value %s on line %s to %s" % (ast.true_value, ast.true_value.lineno, decrementedVal))
                     ast.true_value.value = decrementedVal
                 elif ast.false_value.__class__.__name__ == "IntConst":
-                    decrementedVal = ast.false_value.value + " + 1"
+                    decrementedVal = ast.false_value.value + " - 1"
                     print("Changing the false value %s on line %s to %s" % (ast.false_value, ast.false_value.lineno, decrementedVal))
                     ast.false_value.value = decrementedVal
         elif self.mutation not in VALID_MUTATIONS or self.mutateAt == -1:
@@ -204,7 +204,7 @@ def main():
     # depth_edits = 1
     # try_all_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, depth_edits)
 
-    try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 500)
+    try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 1000)
 
 def try_all_mutations(mutation_op, candidates, codegen, ast, depth, uniq=set()):
     for choice in VALID_MUTATIONS:
