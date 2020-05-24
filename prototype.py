@@ -16,12 +16,13 @@ import pyverilog.vparser.ast as vast
 """
 Valid mutation operators supported by the algorithm.
 """
-VALID_MUTATIONS = ["swap_plus_minus", "increment_identifier", "decrement_identifier", "flip_if_cond", "flip_all_sens_edge", "flip_random_sens_edge"]
+VALID_MUTATIONS = ["swap_plus_minus", "increment_identifier", "decrement_identifier", "increment_rhand_eq", "decrement_rhand_eq",
+    "flip_if_cond", "flip_all_sens_edge", "flip_random_sens_edge", "increment_cond_vals", "decrement_cond_vals"]
 
 """
 Valid mutation operators supported by the algorithm.
 """
-MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfStatement", "SensList"]
+MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfStatement", "SensList", "Eq", "Cond"]
 
 WRITE_TO_FILE = True
 
@@ -89,6 +90,18 @@ class Mutate(ASTCodeGenerator):
                     new_child = vast.Minus(my_rvalue, vast.IntConst(1))
                     print("Changing %s on line %s to %s" % (my_rvalue, ast.right.var.lineno, new_child))
                     ast.right.var = new_child
+        elif self.mutation == "increment_rhand_eq":
+            if ast.__class__.__name__ == 'Eq':
+                if ast.right.__class__.__name__ == 'IntConst' and ast.right.lineno == self.mutateAt:
+                    incrementedVal = ast.right.value + " + 1"
+                    print("Changing %s on line %s to %s" % (ast.right, ast.right.lineno, incrementedVal))
+                    ast.right.value = incrementedVal
+        elif self.mutation == "decrement_rhand_eq":
+            if ast.__class__.__name__ == 'Eq':
+                if ast.right.__class__.__name__ == 'IntConst' and ast.right.lineno == self.mutateAt:
+                    decrementedVal = ast.right.value + " - 1"
+                    print("Changing %s on line %s to %s" % (ast.right, ast.right.lineno, decrementedVal))
+                    ast.right.value = decrementedVal
         elif self.mutation == "flip_if_cond":
             if ast.__class__.__name__ == 'IfStatement' and ast.lineno == self.mutateAt:
                 if ast.cond.__class__.__name__ == "Eq":
@@ -107,6 +120,28 @@ class Mutate(ASTCodeGenerator):
                 newType = random.choice(("posedge", "negedge", "level", "all"))
                 print("Changing sens %s type on line %s from %s to %s" % (sens.sig, ast.lineno, sens.type, newType))
                 sens.type = newType
+        elif self.mutation == "increment_cond_vals":
+            if ast.__class__.__name__ == "Cond" and ast.lineno == self.mutateAt:
+                p = random.random()
+                if p > 0.5 and ast.true_value.__class__.__name__ == "IntConst":
+                    incrementedVal = ast.true_value.value + " + 1"
+                    print("Changing the true value %s on line %s to %s" % (ast.true_value, ast.true_value.lineno, incrementedVal))
+                    ast.true_value.value = incrementedVal
+                elif ast.false_value.__class__.__name__ == "IntConst":
+                    incrementedVal = ast.false_value.value + " + 1"
+                    print("Changing the false value %s on line %s to %s" % (ast.false_value, ast.false_value.lineno, incrementedVal))
+                    ast.false_value.value = incrementedVal
+        elif self.mutation == "decrement_cond_vals":
+            if ast.__class__.__name__ == "Cond" and ast.lineno == self.mutateAt:
+                p = random.random()
+                if p > 0.5 and ast.true_value.__class__.__name__ == "IntConst":
+                    decrementedVal = ast.true_value.value + " + 1"
+                    print("Changing the true value %s on line %s to %s" % (ast.true_value, ast.true_value.lineno, decrementedVal))
+                    ast.true_value.value = decrementedVal
+                elif ast.false_value.__class__.__name__ == "IntConst":
+                    decrementedVal = ast.false_value.value + " + 1"
+                    print("Changing the false value %s on line %s to %s" % (ast.false_value, ast.false_value.lineno, decrementedVal))
+                    ast.false_value.value = decrementedVal
         elif self.mutation not in VALID_MUTATIONS or self.mutateAt == -1:
             print("Not a valid mutation: %s at line %d" % (self.mutation, self.mutateAt))
 
