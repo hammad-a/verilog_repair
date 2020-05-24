@@ -37,7 +37,7 @@ class CandidateCollector(ASTCodeGenerator):
     def visit(self, ast):
         if ast.__class__.__name__ in MUTATIONS_TARGETS:
             self.my_candidates.add(ast.lineno)
-        if ast.__class__.__name__ == "Identifier":
+        if ast.__class__.__name__ in [ 'Port', 'Input', 'Wire' ]:
             self.my_identifiers.add(ast.name)
 
         for c in ast.children():
@@ -225,6 +225,7 @@ def main():
     # try_all_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, depth_edits)
 
     try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 1000)
+    print(list(candidatecollector.my_identifiers))
 
 def try_all_mutations(mutation_op, candidates, codegen, ast, depth, uniq=set()):
     for choice in VALID_MUTATIONS:
