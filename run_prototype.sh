@@ -17,14 +17,12 @@ python3 prototype.py $PROG
 
 if [ ! -f output_oracle.txt ]; then
     echo "Output oracle does not exist." 
-    echo "Attempting to generate oracle. What is the directory of the bug-free .v file?"
-    read dir
-    echo "What is the name of the bug-free .v file?"
+    echo "Attempting to generate oracle. What is the name of the bug-free .v file?"
     read correct_prog
     echo timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh $TESTBENCH "$correct_prog"  -o simv -R
     timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh $TESTBENCH "$correct_prog"  -o simv -R
-    echo mv "$dir"/output.txt output_oracle.txt
-    mv "$dir"/output.txt output_oracle.txt
+    echo mv output.txt output_oracle.txt
+    mv output.txt output_oracle.txt
     if [ ! -f output_oracle.txt ]; then
         echo "Generation of oracle failed. Terminating."
         exit 1
