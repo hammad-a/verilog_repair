@@ -36,7 +36,8 @@ for filename in ./repair_candidates/*.v; do
         #Compare with the current output with the output oracle
         #record the end time of this run
         if [ -e ./output.txt ]; then
-            if [ -z `diff ./output.txt ./output_oracle.txt` ]; then
+            cmp ./output.txt ./output_oracle.txt
+            if [ $? -eq 0  ]; then
                 echo "!!!!!!!!!!!!!!!"
                 echo "Repair FOUND: $filename"
                 cp "$filename" ./repair_fixes/
