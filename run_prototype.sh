@@ -21,7 +21,9 @@ if [ ! -f output_oracle.txt ]; then
     read dir
     echo "What is the name of the bug-free .v file?"
     read correct_prog
+    echo timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh $TESTBENCH "$correct_prog"  -o simv -R
     timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh $TESTBENCH "$correct_prog"  -o simv -R
+    echo mv "$dir"/output.txt output_oracle.txt
     mv "$dir"/output.txt output_oracle.txt
     if [ ! -f output_oracle.txt ]; then
         echo "Generation of oracle failed. Terminating."
