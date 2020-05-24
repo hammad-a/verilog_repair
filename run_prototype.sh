@@ -51,3 +51,6 @@ for filename in ./repair_candidates/*.v; do
     fi
 
 done
+
+echo "A total of `ls -1 ./repair_fixes | wc -l` repairs found. See ./repair_fixes for more details."
+echo "A total of `ls -1 ./infinite_runs | wc -l` runs timed out. See ./infinite_runs for more details."
