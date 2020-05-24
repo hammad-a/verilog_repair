@@ -23,7 +23,7 @@ Valid mutation operators supported by the algorithm.
 """
 MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfStatement", "SensList"]
 
-WRITE_TO_FILE = False
+WRITE_TO_FILE = True
 
 """
 Returns a set of line numbers as potential targets for mutations.
