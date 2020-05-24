@@ -16,8 +16,17 @@ echo "Generating repair candidates through mutation:"
 python3 prototype.py $PROG
 
 if [ ! -f output_oracle.txt ]; then
-    echo "Output oracle does not exist."
-    exit 1
+    echo "Output oracle does not exist." 
+    echo "Attempting to generate oracle. What is the directory of the bug-free .v file?"
+    read dir
+    echo "What is the name of the bug-free .v file?"
+    read correct_prog
+    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh $TESTBENCH "$correct_prog"  -o simv -R
+    mv "$dir"/output.txt output_oracle.txt
+    if [ ! -f output_oracle.txt ]; then
+        echo "Generation of oracle failed. Termianting."
+        exit 1
+    fi
 fi
 
 DONE=0
