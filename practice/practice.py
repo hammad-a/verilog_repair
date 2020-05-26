@@ -9,6 +9,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pyverilog.vparser.parser import parse
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
+# from pyverilog.dataflow.dataflow_codegen import VerilogCodeGenerator
+from pyverilog.dataflow.dataflow_analyzer import VerilogDataflowAnalyzer
+# from pyverilog.dataflow.graphgen import VerilogGraphGenerator
 import pyverilog.vparser.ast as vast
 
 class CandidateCollector(ASTCodeGenerator):
@@ -222,9 +225,9 @@ def main():
     ast.show()
     
 
-    codegen = ASTCodeGenerator()
+    # codegen = ASTCodeGenerator()
 
-    print(codegen.visit(ast))
+    # print(codegen.visit(ast))
 
     print("\n\n")
 
@@ -256,12 +259,35 @@ def main():
     # swapplusminus.visit(ast)
     # print(codegen.visit(ast))
 
-    mutation_op = Mutate()
-    mutation_op.set_mutation("swap_plus_minus", 42)
-    tmp = copy.deepcopy(ast)
-    mutation_op.visit(tmp)
-    print(codegen.visit(tmp))
-    
+    # mutation_op = Mutate()
+    # mutation_op.set_mutation("swap_plus_minus", 42)
+    # tmp = copy.deepcopy(ast)
+    # mutation_op.visit(tmp)
+    # print(codegen.visit(tmp))
+
+    df = VerilogDataflowAnalyzer(filelist, topmodule="first_counter", preprocess_include=options.include, preprocess_define=options.define)
+    df.generate()
+    print("Experimenting with the dataflow object...")
+    print("Instances", df.getInstances())
+    print("Signals", df.getSignals())
+    print("Constants", df.getConsts())
+    print("Terms", df.getTerms())
+    print("Binddict", df.getBinddict())
+
+    print("\nExperimenting with the binddict...")
+    k = list(df.getBinddict().keys())[0]
+    bind = df.getBinddict().get(k)[0]
+    print(bind.tostr())
+    print(bind.tocode())
+    print(bind.getdest())
+
+    print("\nExperimenting with the frametable...")
+    ft = df.getFrameTable()
+    ft.getAlwaysStatus()
+
+
+    #gg = VerilogGraphGenerator(df.frametable.getModuleName(), df.terms, df.binddict, {}, {}, df.getConsts(), "graph.png")
+    #(topmodule, terms, binddict, resolved_terms, resolved_binddict, constlist, filename, withcolor=False)
     
     # try:
     #     dirName = os.getcwd()+"/pv_candidates"
