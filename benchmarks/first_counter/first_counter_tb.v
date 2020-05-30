@@ -30,10 +30,12 @@ end
 always
     #5 clk = !clk;
 
+/*
 initial begin
     $dumpfile ("first_counter.vcd"); //dumpfile is for specifying the file that simulator will use to store the waveform
     $dumpvars; // dumpvars instructs the Verilog compiler to start dumping all signals to the dumpfile.
 end
+*/
 
 initial begin
     $display("\t\ttime,\tclk,\treset,\tenable,\tcount_out");
@@ -69,14 +71,12 @@ end
 initial begin: TEST_CASE_1
     #10 -> reset_trigger;
 end
-*/
-
 
 
 // Test Case 2: Assert/Deassert enable after reset is applied
 // trigger the reset logic and wait for it to complete. Then drive
 // enable to 1
-/*
+
 reg temp_event1;
 
 initial begin
@@ -84,9 +84,8 @@ initial begin
        #10;
     temp_event1 = 1;
 end
-*/
 
-/*
+
 initial begin: TEST_CASE_2
     #10 -> reset_trigger;
    // @(posedge temp_event1);
