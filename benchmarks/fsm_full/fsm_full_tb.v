@@ -9,7 +9,7 @@ integer f;
 
 initial begin
   f = $fopen("output.txt");
-  $display("Time\t    R0 R1 R2 R3 G0 G1 G2 G3");
+  $fwrite(f, "Time\t    R0 R1 R2 R3 G0 G1 G2 G3\n");
   $fmonitor(f, "%g\t    %b  %b  %b  %b  %b  %b  %b  %b", 
     $time, req_0, req_1, req_2, req_3, gnt_0, gnt_1, gnt_2, gnt_3);
   clock = 0;
@@ -28,7 +28,6 @@ initial begin
   #20 req_2 = 0;
   #10 req_3 = 1;
   #20 req_3 = 0;
-  //#10 $finish;
   #10
   $fclose(f);
   $finish;
