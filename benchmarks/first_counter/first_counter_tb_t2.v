@@ -40,7 +40,7 @@ end
 integer f;
 initial begin
     f = $fopen("output.txt");
-    $display("\t\ttime,\tclk,\treset,\tenable,\tcount_out");
+    $fwrite(f, "\t\ttime,\tclk,\treset,\tenable,\tcount_out\n");
     $fmonitor(f,"%d, \t%b, \t%b, \t%b, \t%d", $time, clk, reset, enable, counter_out);
 
 end
