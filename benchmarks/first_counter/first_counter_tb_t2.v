@@ -65,8 +65,9 @@ end
 
 initial begin
     @(terminate_sim);
+    # 5
     $fclose(f);
-    #5 $finish;
+    $finish;
 end
 
 /*
