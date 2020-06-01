@@ -17,7 +17,7 @@ first_counter U0(
     .reset (reset),
     .enable (enable),
     .counter_out (counter_out),
-    .overflow_out
+    .overflow_out (overflow_out)
 );
 
 // step2: add clock generator logic. Before this we need to drive all
@@ -42,7 +42,7 @@ integer f;
 initial begin
     f = $fopen("output.txt");
     $fwrite(f, "\t\ttime,\tclk,\treset,\tenable,\tcount_out,\toverflow_out\n");
-    $fmonitor(f,"%d, \t%b, \t%b, \t%b, \t%d, \t%b", $time, clk, reset, enable, counter_out, overflow_out);
+    $fmonitor(f,"%d, \t%b, \t%b, \t%b, \t%d, \t\t%b", $time, clk, reset, enable, counter_out, overflow_out);
 
 end
 
