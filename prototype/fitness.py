@@ -55,6 +55,7 @@ def main():
 
     fitness, total_possible = calculate_fitness(oracle_lines, sim_lines)
     ff = fitness/total_possible
+    if ff < 0: ff = 0
     print(ff)
     
 
