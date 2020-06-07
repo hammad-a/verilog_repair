@@ -12,6 +12,7 @@ def strip_bits(bits):
 
 def calculate_fitness(oracle, sim):
     if len(oracle) != len(sim): # TODO: change this to append the sim file to match oracle length with x-bits
+        # resize_sim(oracle, sim)
         return 0
 
     fitness = 0
@@ -20,23 +21,27 @@ def calculate_fitness(oracle, sim):
         clk = oracle[i].split(",")[0]
         tmp_oracle = strip_bits(oracle[i].split(",")[1:])
         tmp_sim = strip_bits(sim[i].split(",")[1:])
+
+        # cycle_weight = 1/(2**(i-1))
+        cycle_weight = 1
         
         # print("Clock cycle: %s" % clk)
+        # print("Clocl cycle number: %s" % i)
         for b in range(len(tmp_oracle)):
             if (tmp_oracle[b], tmp_sim[b]) in (('0', '0'), ('1', '1')):
-                fitness += 1
-                total_possible += 1
+                fitness += cycle_weight * 1
+                total_possible += cycle_weight * 1
             elif (tmp_oracle[b], tmp_sim[b]) == ('x', 'x'):
-                fitness += X_WEIGHT * 1
-                total_possible += 1
+                fitness += cycle_weight * X_WEIGHT * 1
+                total_possible += cycle_weight * X_WEIGHT * 1
             elif (tmp_oracle[b], tmp_sim[b]) in (('0', '1'), ('1', '0')):
                 if DEBUG: print("Mismatch in bit %s of clock cycle %s (at time %s)..." % (b, i, clk))
-                fitness -= 1
-                total_possible += 1
+                fitness -= cycle_weight * 1
+                total_possible += cycle_weight * 1
             elif (tmp_oracle[b], tmp_sim[b]) in (('0', 'x'), ('1', 'x'), ('x', '0'), ('x', '1')):
                 if DEBUG: print("Mismatch in x-bit %s of clock cycle %s (at time %s)..." % (b, i, clk))
-                fitness -= X_WEIGHT * 1
-                total_possible += X_WEIGHT * 1
+                fitness -= cycle_weight * X_WEIGHT * 1
+                total_possible += cycle_weight * X_WEIGHT * 1
         # print("Fitness = %s out of a total of %s" % (fitness, total_possible))
     return fitness, total_possible
 
