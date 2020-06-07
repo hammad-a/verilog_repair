@@ -61,6 +61,7 @@ class Mutate(ASTCodeGenerator):
     def visit(self, ast):
 
         if self.mutation == "swap_plus_minus":
+            # TODO: change to include blocking substitution as well?
             if ast.__class__.__name__ == 'NonblockingSubstitution' and ast.right.var:
                 if ast.right.var.__class__.__name__ == "Plus" and ast.right.var.lineno == self.mutateAt:
                     new_child = vast.Minus(ast.right.var.left, ast.right.var.right)
