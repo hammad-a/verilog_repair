@@ -9,8 +9,8 @@ integer f;
 
 initial begin
   f = $fopen("output.txt");
-  $display("Time\t    R0 R1 R2 R3 G0 G1 G2 G3");
-  $fwrite(f, "Time,G0,G1,G2,G3\n");
+  $display("time\t    req_0 req_1 req_2 req_3 gnt_0 gnt_1 gnt_2 gnt_3");
+  $fwrite(f, "time,gnt_0,gnt_1,gnt_2,gnt_3\n");
   $monitor("%g\t    %b  %b  %b  %b  %b  %b  %b  %b", 
     $time, req_0, req_1, req_2, req_3, gnt_0, gnt_1, gnt_2, gnt_3);
   forever begin
