@@ -35,8 +35,19 @@ class OutputAnalyzer(ASTCodeGenerator):
 
     def assign_weigts(self):
         weights = dict()
+        inverted_weights = dict()
+        total = 0
         for var in self.assignment_counts:
-            weights[var] = self.assignment_counts[var]/self.output_bits_length[var]
+            if self.assignment_counts[var] != 0:
+                total += self.assignment_counts[var]
+        for var in self.assignment_counts:
+            if self.assignment_counts[var] != 0:
+                inverted_weights[var] = 1/(self.assignment_counts[var]/total)
+        inverted_total = sum(inverted_weights.values())
+        # print(inverted_weights)
+        # print(inverted_total)
+        for var in inverted_weights:
+            weights[var] = inverted_weights[var]/(inverted_total * self.output_bits_length[var])
         return weights
 
 def main():
