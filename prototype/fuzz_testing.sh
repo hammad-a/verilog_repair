@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#module load vcs/2017.12-SP2-1
+module load vcs/2017.12-SP2-1
 
 PROG=$1
 TESTBENCH=$2
