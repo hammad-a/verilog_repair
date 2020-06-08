@@ -1,4 +1,4 @@
-<ins>For the fitness function:</ins>
+<ins><b>For the fitness function:</b></ins>
 1. Modify the test bench to produce an output file similar to the format below:
     time,out_1,out_2,out_3,out_4
     5,x,x,x,x
