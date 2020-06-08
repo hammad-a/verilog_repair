@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source /etc/profile.d/modules.sh
 module load vcs/2017.12-SP2-1
 
 PROG=$1
@@ -14,7 +15,7 @@ for (( i=0; i<$K; i++ ))
 do
     rm fuzzed_input.txt
     touch fuzzed_input.txt
-    for (( i=0; i<$NUM_INPUTS; i++ )) 
+    for (( j=0; j<$NUM_INPUTS; j++ )) 
     do
         echo $(((RANDOM%2))) >> fuzzed_input.txt
     done
