@@ -19,17 +19,22 @@ class OutputAnalyzer(ASTCodeGenerator):
 
     def visit(self, ast):
         #TODO: change to recognize inouts too
-        if ast.__class__.__name__ == "Output":
-            if ast.width:
+        if ast.__class__.__name__ in ('Output', 'Inout'):
+            if ast.width and ast.width.msb.__class__.__name__ == "IntConst": # TODO: fix this, e.g. X = [Y-1:0]
                 self.output_bits_length[ast.name] = int(ast.width.msb.value) - int(ast.width.lsb.value) + 1
             else:
                 self.output_bits_length[ast.name] = 1
             self.assignment_counts[ast.name] = 0
 
-        if ast.__class__.__name__ in ('NonblockingSubstitution','BlockingSubstitution') and ast.right.var:
-            var_name = ast.left.var.name
-            if var_name in self.assignment_counts:
-                self.assignment_counts[var_name] += 1
+        if ast.__class__.__name__ in ('NonblockingSubstitution','BlockingSubstitution', 'Assign') and ast.right.var:
+            if ast.left.var.__class__.__name__ == "LConcat":
+                for tmp in ast.left.var.list:
+                    if tmp.name in self.assignment_counts:
+                        self.assignment_counts[tmp.name] += 1
+            elif ast.left.var.__class__.__name__ == "Identifier":
+                var_name = ast.left.var.name
+                if var_name in self.assignment_counts:
+                    self.assignment_counts[var_name] += 1
 
         for c in ast.children():
             self.visit(c)
@@ -102,6 +107,9 @@ def main():
         print("Each bit of %s should have a weight of %s." % (var, weights[var]))
         f.write("%s=%s\n" % (var, weights[var]))
     f.close()
+
+    print(outputanalyzer.output_bits_length)
+    print(outputanalyzer.assignment_counts)
 
 if __name__ == '__main__':
     main()
