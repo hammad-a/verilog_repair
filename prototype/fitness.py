@@ -59,15 +59,15 @@ def calculate_fitness(oracle, sim, weights_file):
             if (tmp_oracle[b], tmp_sim[b]) in (('0', '0'), ('1', '1')):
                 fitness += bit_weight * cycle_weight * 1
                 total_possible += bit_weight * cycle_weight * 1
-            elif (tmp_oracle[b], tmp_sim[b]) == ('x', 'x'):
+            elif (tmp_oracle[b], tmp_sim[b]) in (('x', 'x'), ('z','z')):
                 fitness += bit_weight * cycle_weight * X_WEIGHT * 1
                 total_possible += bit_weight * cycle_weight * X_WEIGHT * 1
             elif (tmp_oracle[b], tmp_sim[b]) in (('0', '1'), ('1', '0')):
                 if DEBUG: print("Mismatch in bit %s of clock cycle %s (at time %s)..." % (b, i, clk))
                 fitness -= bit_weight * cycle_weight * 1
                 total_possible += bit_weight * cycle_weight * 1
-            elif (tmp_oracle[b], tmp_sim[b]) in (('0', 'x'), ('1', 'x'), ('x', '0'), ('x', '1')):
-                if DEBUG: print("Mismatch in x-bit %s of clock cycle %s (at time %s)..." % (b, i, clk))
+            elif (tmp_oracle[b], tmp_sim[b]) in (('0', 'x'), ('1', 'x'), ('x', '0'), ('x', '1'), ('0', 'z'), ('1', 'z'), ('z', '0'), ('z', '1')):
+                if DEBUG: print("Mismatch in x or z-bit %s of clock cycle %s (at time %s)..." % (b, i, clk))
                 fitness -= bit_weight * cycle_weight * X_WEIGHT * 1
                 total_possible += bit_weight * cycle_weight * X_WEIGHT * 1
 
