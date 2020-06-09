@@ -20,12 +20,20 @@ first_counter U0(
     .overflow_out (overflow_out)
 );
 
+integer fuzz;
+integer status;
+reg value;
 // step2: add clock generator logic. Before this we need to drive all
 // inputs of DUT to some known state.
 initial begin // initial block only executes once 
-    clk = 0;
-    reset = 0;
-    enable = 0;
+    fuzz = $fopen("fuzzed_input.txt", "r");
+    status = $fscanf(fuzz,"%b",value);
+    clk = value;
+    status = $fscanf(fuzz,"%b",value);
+    reset = value;
+    status = $fscanf(fuzz,"%b",value);
+    enable = value;
+    $display("clk=%b,reset=%b,enable=%b",clk,reset,enable);
 end
 
 always
@@ -33,11 +41,8 @@ always
 
 
 integer f;
-integer fuzz;
-integer status;
-reg value;
 initial begin
-    f = $fopen("output.txt");
+    f = $fopen("fuzzed_output.txt");
     $display("\t\ttime,\tclk,\treset,\tenable,\tcount_out,\toverflow_out\n");
     $fwrite(f, "time,counter_out[3],counter_out[2],counter_out[1],counter_out[0],overflow_out\n");
     $monitor("%d, \t%b, \t%b, \t%b, \t%d, \t\t%b", $time, clk, reset, enable, counter_out, overflow_out);
