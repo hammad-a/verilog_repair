@@ -11,7 +11,7 @@ def strip_bits(bits):
     return bits
 
 # parse the weights file
-def get_weights(weights_file, oracle):
+def get_weights_static(weights_file, oracle):
     weights_by_varname = dict()
     weights_by_bit = dict()
     
@@ -29,11 +29,33 @@ def get_weights(weights_file, oracle):
     
     return weights_by_bit
 
-def calculate_fitness(oracle, sim, weights_file):
+# parse the weights file
+# TODO: refactor this!
+def get_weights_fuzz(weights_file, oracle):
+    weights_by_varname = dict()
+    weights_by_bit = dict()
+    
+    for line in weights_file:
+        line = line.strip()
+        tmp = line.split("=")
+        weights_by_varname[tmp[0]] = float(tmp[1])
+
+    print(weights_by_varname)
+    
+    bits = strip_bits(oracle[0].split(","))
+    for i in range(1, len(bits)):
+        varname = bits[i]
+        weights_by_bit[i] = weights_by_varname.get(varname)
+    
+    return weights_by_bit
+
+def calculate_fitness(oracle, sim, weights_file, weighting):
 
     weights = None
-    if weights_file:
-        weights = get_weights(weights_file, oracle)
+    if weights_file and weighting == "static":
+        weights = get_weights_static(weights_file, oracle)
+    elif weights_file and weighting == "fuzz":
+        weights = get_weights_fuzz(weights_file, oracle)
     print(weights)
     
     if len(oracle) != len(sim): # TODO: change this to append the sim file to match oracle length with x-bits
@@ -74,8 +96,8 @@ def calculate_fitness(oracle, sim, weights_file):
     return fitness, total_possible
 
 def main():
-    if len(sys.argv) != 3 and len(sys.argv) != 4:
-        print("USAGE: python3 fitness.py <oracle.txt> <output.txt> [weights.txt]")
+    if len(sys.argv) != 3 and len(sys.argv) != 5:
+        print("USAGE: python3 fitness.py <oracle.txt> <output.txt> [weights.txt] [fuzz|static]")
         sys.exit(1)
 
     f = open(sys.argv[1], "r")
@@ -87,12 +109,15 @@ def main():
     f.close()
 
     weights = None
-    if len(sys.argv) == 4:
+    weighing = None
+    if len(sys.argv) == 5:
+        weighting = sys.argv[4]
         f = open(sys.argv[3], "r")
         weights = f.readlines()
         f.close()
-        
-    fitness, total_possible = calculate_fitness(oracle_lines, sim_lines, weights)
+
+
+    fitness, total_possible = calculate_fitness(oracle_lines, sim_lines, weights, weighting)
     ff = fitness/total_possible
     if ff < 0: ff = 0
     print(ff)
