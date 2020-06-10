@@ -37,7 +37,7 @@ begin: COUNTER //block name
     //If active, we load the counter output with 4'b0000
     if(reset==1'b1) begin
         counter_out <= #1 4'b0000;
-        overflow_out <= #1 1'b0;
+        overflow_out <= #1 1'b1;
     end
     //If enable is active, we increment the counter
     else if(enable == 1'b1) begin
@@ -46,7 +46,7 @@ begin: COUNTER //block name
     // if it overflows, set overflow_out to be 1
     if(counter_out >= 4'b1110)
     begin
-        overflow_out <= 1'b0;
+        overflow_out <= 1'b1;
     end
 end // End of block COUNTER
 
