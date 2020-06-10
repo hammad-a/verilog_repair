@@ -25,8 +25,9 @@ def get_differing_degree(arr, b):
 # TODO: change this to use entropy instead?
 def get_weights(results):
     weights = dict()
-    var_names = strip_bits(results[0].split(","))
+    var_names = strip_bits(results[0].split(","))[1:]
     arr = []
+    print(var_names)
 
     # generate 2d array
     for i in range(1,len(results)):
@@ -39,19 +40,17 @@ def get_weights(results):
         for j in range(len(arr[i])):
             if arr[i][j] != arr[i+1][j]:
                 diff.add(j)
-    
+
     # compute weights
-    for b in range(1, len(var_names)):
+    for b in range(0, len(var_names)):
         if b not in diff:
             weights[var_names[b]] = 1
         else:
             d = get_differing_degree(arr,b)
-            print(d)
             weights[var_names[b]] = 2 * (1/2**d)
             # weights[var_names[b]] = 2 * (1/math.e**d)
     
-    for i in arr:
-        print(i)
+    for i in arr: print(i)
 
     return weights
 
