@@ -26,8 +26,6 @@ def get_differing_degree(arr, b):
 def get_weights(results):
     weights = dict()
     var_names = strip_bits(results[0].split(","))[1:]
-    for i in range(len(var_names)):
-        if "[" in var_names[i]: var_names[i] = var_names[i].split("[")[0]
     arr = []
     print(var_names)
 
