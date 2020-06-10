@@ -70,8 +70,9 @@ module sdram_controller_tb();
       #8 data_r = 16'hbbbb;
       #2 data_r = 16'hzzzz;
       
-      #1000 $fclose(f);
-      #1005 $finish;
+      #1000
+      $fclose(f);
+      $finish;
     end
 
 
