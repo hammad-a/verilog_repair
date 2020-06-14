@@ -15,7 +15,7 @@ import pyverilog.vparser.ast as vast
 class OutputAnalyzer(ASTCodeGenerator):
     def __init__(self):
         self.output_bits_length = dict()
-        self.assignment_counts = dict()
+        self.assignment_counts = dict() # each variable key has a value (<special_assign>,<assignment_count>)
 
     def visit(self, ast, repeated=1):
 
@@ -24,7 +24,7 @@ class OutputAnalyzer(ASTCodeGenerator):
                 self.output_bits_length[ast.name] = int(ast.width.msb.value) - int(ast.width.lsb.value) + 1
             else:
                 self.output_bits_length[ast.name] = 1
-            self.assignment_counts[ast.name] = 0
+            self.assignment_counts[ast.name] = (False, 0)
 
         #TODO: This weighting assigns each bit in a wire uniform widths. Change it to assign individual
         #      bits their own weights. e.g. if op[7] gets more assignments than op[1], the former should
@@ -33,15 +33,15 @@ class OutputAnalyzer(ASTCodeGenerator):
             if ast.left.var.__class__.__name__ == "LConcat":
                 for tmp in ast.left.var.list:
                     if tmp.name in self.assignment_counts:
-                        self.assignment_counts[tmp.name] += repeated * 1
+                        self.assignment_counts[tmp.name] = (ast.__class__.__name__ == 'Assign', self.assignment_counts[tmp.name][1] + repeated * 1)
             elif ast.left.var.__class__.__name__ == "Identifier":
                 var_name = ast.left.var.name
                 if var_name in self.assignment_counts:
-                    self.assignment_counts[var_name] += repeated * 1
+                    self.assignment_counts[var_name] = (ast.__class__.__name__ == 'Assign', self.assignment_counts[var_name][1] + repeated * 1)
             elif ast.left.var.__class__.__name__ == "Pointer":
                 var_name = ast.left.var.var.name
                 if var_name in self.assignment_counts:
-                    self.assignment_counts[var_name] += repeated * 1
+                    self.assignment_counts[var_name] = (ast.__class__.__name__ == 'Assign', self.assignment_counts[var_name][1] + repeated * 1)
 
         for c in ast.children():
             if c.__class__.__name__ == "ForStatement":
@@ -75,14 +75,15 @@ class OutputAnalyzer(ASTCodeGenerator):
         inverted_weights = dict()
         total = 0
         for var in self.assignment_counts:
-            if self.assignment_counts[var] != 0:
-                total += self.assignment_counts[var]
+            if self.assignment_counts[var][1] != 0:
+                total += self.assignment_counts[var][1]
+            if self.assignment_counts[var][0]:
+                self.assignment_counts[var] = (True, self.assignment_counts[var][0] * 2)
         for var in self.assignment_counts:
-            if self.assignment_counts[var] != 0:
-                inverted_weights[var] = 1/(self.assignment_counts[var]/total)
+            if self.assignment_counts[var][1] != 0:
+                inverted_weights[var] = 1/(self.assignment_counts[var][1]/total)
         inverted_total = sum(inverted_weights.values())
-        # print(inverted_weights)
-        # print(inverted_total)
+
         for var in inverted_weights:
             weights[var] = inverted_weights[var]/(inverted_total * self.output_bits_length[var])
         return weights
