@@ -109,7 +109,7 @@ def main():
     f.close()
 
     weights = None
-    weighing = None
+    weighting = None
     if len(sys.argv) == 5:
         weighting = sys.argv[4]
         f = open(sys.argv[3], "r")
