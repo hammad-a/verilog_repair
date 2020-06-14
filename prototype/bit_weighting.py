@@ -18,7 +18,6 @@ class OutputAnalyzer(ASTCodeGenerator):
         self.assignment_counts = dict()
 
     def visit(self, ast):
-        #TODO: change to recognize inouts too
         if ast.__class__.__name__ in ('Output', 'Inout'):
             if ast.width and ast.width.msb.__class__.__name__ == "IntConst": # TODO: fix this, e.g. X = [Y-1:0]
                 self.output_bits_length[ast.name] = int(ast.width.msb.value) - int(ast.width.lsb.value) + 1
