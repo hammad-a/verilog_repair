@@ -17,7 +17,8 @@ class OutputAnalyzer(ASTCodeGenerator):
         self.output_bits_length = dict()
         self.assignment_counts = dict()
 
-    def visit(self, ast):
+    def visit(self, ast, repeated=1):
+
         if ast.__class__.__name__ in ('Output', 'Inout'):
             if ast.width and ast.width.msb.__class__.__name__ == "IntConst": # TODO: fix this, e.g. X = [Y-1:0]
                 self.output_bits_length[ast.name] = int(ast.width.msb.value) - int(ast.width.lsb.value) + 1
@@ -25,18 +26,49 @@ class OutputAnalyzer(ASTCodeGenerator):
                 self.output_bits_length[ast.name] = 1
             self.assignment_counts[ast.name] = 0
 
+        #TODO: This weighting assigns each bit in a wire uniform widths. Change it to assign individual
+        #      bits their own weights. e.g. if op[7] gets more assignments than op[1], the former should
+        #      have a higher weight than the latter.
         if ast.__class__.__name__ in ('NonblockingSubstitution','BlockingSubstitution', 'Assign') and ast.right.var:
             if ast.left.var.__class__.__name__ == "LConcat":
                 for tmp in ast.left.var.list:
                     if tmp.name in self.assignment_counts:
-                        self.assignment_counts[tmp.name] += 1
+                        self.assignment_counts[tmp.name] += repeated * 1
             elif ast.left.var.__class__.__name__ == "Identifier":
                 var_name = ast.left.var.name
                 if var_name in self.assignment_counts:
-                    self.assignment_counts[var_name] += 1
+                    self.assignment_counts[var_name] += repeated * 1
+            elif ast.left.var.__class__.__name__ == "Pointer":
+                var_name = ast.left.var.var.name
+                if var_name in self.assignment_counts:
+                    self.assignment_counts[var_name] += repeated * 1
 
         for c in ast.children():
-            self.visit(c)
+            if c.__class__.__name__ == "ForStatement":
+                self.visit(c,self.get_repeated_for(c))
+            elif repeated != 1:
+                self.visit(c,repeated)
+            else:
+                self.visit(c)
+
+    #TODO: Only supports the format (i=?; i{<,<=}}x; i=i{op}y). Update if needed.
+    #      Also does not support nested for loops. It is only an approximation, does not
+    #      need very accurate estimations.
+    def get_repeated_for(self, ast):
+        ret = 1
+        if ast.pre.right.var:
+            begin = int(ast.pre.right.var.value)
+        if ast.cond.__class__.__name__ == "LessThan":
+            end = int(ast.cond.right.value)
+        elif ast.cond.__class__.__name__ == "LessEq":
+            end = int(ast.cond.right.value) + 1
+        if ast.post.right:
+            step = int(ast.post.right.var.right.value)
+        try:
+            ret = (end - begin) // step
+        except UnboundLocalError:
+            print("WARNING: For loop parsing not supported for this Verilog program. Defaulting to a value of 1.")
+        return ret
 
     def assign_weigts(self):
         weights = dict()
