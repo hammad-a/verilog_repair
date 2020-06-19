@@ -1,4 +1,4 @@
-import sys
+import sys, inspect
 import os
 from optparse import OptionParser
 import copy
@@ -12,6 +12,11 @@ from pyverilog.vparser.parser import parse, NodeNumbering
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 import pyverilog.vparser.ast as vast
 
+AST_CLASSES = []
+
+for name, obj in inspect.getmembers(vast):
+    if inspect.isclass(obj):
+        AST_CLASSES.append(obj)
 
 """
 Valid mutation operators supported by the algorithm.
@@ -175,7 +180,7 @@ class MutationOp(ASTCodeGenerator):
     def __init__(self):
         self.ast_from_text = None
 
-    def get_ast_from_text(self, new_expression):
+    def make_ast_from_text(self, new_expression):
         tmp = open("tmp.txt", 'w+')
         tmp.write("module tmp ();\n")
         tmp.write("initial begin\n" + new_expression + "\nend\n")
@@ -197,27 +202,40 @@ class MutationOp(ASTCodeGenerator):
     Replace node_x with new_expresssion in the AST.
     """
     def replace(self, ast, old_node_id, new_expression):
-        if ast.__class__.__name__ == "Block": # TODO: this operator only works for statements between begin ... end in the Verilog code. Fix this if needed!
-            for i in range(len(ast.statements)):
-                c = ast.statements[i]
-                if c.node_id == old_node_id:
-                    self.get_ast_from_text(new_expression)
-                    new_ast = self.ast_from_text
-
-                    def fix_lineno(a):
-                        a.lineno = c.lineno
-                        
-                        for c1 in a.children():
-                            fix_lineno(c1)
-
-                    fix_lineno(self.ast_from_text) # fix the line numbers to match the line being replaced
-
-                    ast.statements[i] = self.ast_from_text
+        attr = vars(ast)
+        for key in attr: # loop through all attributes of this AST
+            if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
+                # print(key, attr[key], attr[key].node_id)
+                if attr[key].node_id == old_node_id:
+                    self.get_ast_replacement(attr[key], new_expression)
+                    attr[key] = self.ast_from_text
                     self.ast_from_text = None # reset self.ast_from_text for the next mutation
+            elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
+                for i in range(len(attr[key])): # loop through each AST in that list or tuple
+                    tmp = attr[key][i]
+                    if tmp.__class__ in AST_CLASSES and tmp.node_id == old_node_id:
+                        self.get_ast_replacement(tmp, new_expression)
+                        try:
+                            attr[key][i] = self.ast_from_text
+                        except:
+                            print("Fix the code to allow for mutation of attributes represented as a tuple!")
+                        finally:
+                            self.ast_from_text = None # reset self.ast_from_text for the next mutation
 
         for c in ast.children():
             self.replace(c, old_node_id, new_expression)
     
+    def get_ast_replacement(self, old, expression):
+        self.make_ast_from_text(expression)
+        new_ast = self.ast_from_text
+
+        def fix_lineno(a):
+            a.lineno = old.lineno
+            
+            for c1 in a.children():
+                fix_lineno(c1)
+
+        fix_lineno(self.ast_from_text) # fix the line numbers to match the line being replaced
 
 def main():
     INFO = "Verilog code parser"
@@ -258,9 +276,12 @@ def main():
 
     ast.show()
     print(codegen.visit(ast))
-    print("\n\n")
+    print("\n")
 
     mutation_op = MutationOp()
+    # mutation_op.replace(ast, 48, "if (enable == 1'b0 & reset == 1'b0) counter_out <= #1 counter_out - 1;")
+    # numbering.visit(ast)
+
     mutation_op.replace(ast, 53, "counter_out <= #1 counter_out - 1;")
     numbering.visit(ast)
 
