@@ -8,7 +8,7 @@ import random
 # the next line can be removed after installation
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pyverilog.vparser.parser import parse
+from pyverilog.vparser.parser import parse, NodeNumbering
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 import pyverilog.vparser.ast as vast
 
@@ -170,6 +170,55 @@ class Mutate(ASTCodeGenerator):
         for c in ast.children():
             self.visit(c)
 
+class MutationOp(ASTCodeGenerator):
+
+    def __init__(self):
+        self.ast_from_text = None
+
+    def get_ast_from_text(self, new_expression):
+        tmp = open("tmp.txt", 'w+')
+        tmp.write("module tmp ();\n")
+        tmp.write("initial begin\n" + new_expression + "\nend\n")
+        tmp.write("endmodule\n")
+        tmp.close()
+        new_ast = parse(["tmp.txt"])[0]
+        os.remove("tmp.txt")
+
+        def sub_visit(ast):
+            if ast.__class__.__name__ == "Block":
+                self.ast_from_text = ast.statements[0]
+            
+            for c in ast.children():
+                sub_visit(c)
+
+        sub_visit(new_ast)
+
+    """ 
+    Replace node_x with new_expresssion in the AST.
+    """
+    def replace(self, ast, old_node_id, new_expression):
+        if ast.__class__.__name__ == "Block": # TODO: this operator only works for statements between begin ... end in the Verilog code. Fix this if needed!
+            for i in range(len(ast.statements)):
+                c = ast.statements[i]
+                if c.node_id == old_node_id:
+                    self.get_ast_from_text(new_expression)
+                    new_ast = self.ast_from_text
+
+                    def fix_lineno(a):
+                        a.lineno = c.lineno
+                        
+                        for c1 in a.children():
+                            fix_lineno(c1)
+
+                    fix_lineno(self.ast_from_text) # fix the line numbers to match the line being replaced
+
+                    ast.statements[i] = self.ast_from_text
+                    self.ast_from_text = None # reset self.ast_from_text for the next mutation
+
+        for c in ast.children():
+            self.replace(c, old_node_id, new_expression)
+    
+
 def main():
     INFO = "Verilog code parser"
     USAGE = "Usage: python example_parser.py file ..."
@@ -199,6 +248,7 @@ def main():
         showVersion()
 
     codegen = ASTCodeGenerator()
+    numbering = NodeNumbering()
 
 
     # parse the files (in filelist) to ASTs (PyVerilog ast)
@@ -210,22 +260,29 @@ def main():
     print(codegen.visit(ast))
     print("\n\n")
 
-    candidatecollector = CandidateCollector()
-    candidatecollector.visit(ast)
+    mutation_op = MutationOp()
+    mutation_op.replace(ast, 53, "counter_out <= #1 counter_out - 1;")
+    numbering.visit(ast)
 
-    mutation_op = Mutate(list(candidatecollector.my_identifiers))
+    ast.show()
+    print(codegen.visit(ast))
 
-    try:
-        dirName = os.getcwd()+"/repair_candidates"
-        os.mkdir(dirName)
-        print("Directory " , dirName ,  " created ") 
-    except:
-        print("Directory " , dirName ,  " already exists")
+    # candidatecollector = CandidateCollector()
+    # candidatecollector.visit(ast)
+
+    # mutation_op = Mutate(list(candidatecollector.my_identifiers))
+
+    # try:
+    #     dirName = os.getcwd()+"/repair_candidates"
+    #     os.mkdir(dirName)
+    #     print("Directory " , dirName ,  " created ") 
+    # except:
+    #     print("Directory " , dirName ,  " already exists")
 
     # depth_edits = 1
     # try_all_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, depth_edits)
 
-    try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 1000)
+    # try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 1000)
 
 def try_all_mutations(mutation_op, candidates, codegen, ast, depth, uniq=set()):
     for choice in VALID_MUTATIONS:

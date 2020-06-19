@@ -88,6 +88,8 @@ class OutputAnalyzer(ASTCodeGenerator):
             weights[var] = inverted_weights[var]/(inverted_total * self.output_bits_length[var])
         return weights
 
+
+
 def main():
     INFO = "Verilog code parser"
     USAGE = "Usage: python example_parser.py file ..."
