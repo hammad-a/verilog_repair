@@ -179,6 +179,7 @@ class MutationOp(ASTCodeGenerator):
 
     def __init__(self):
         self.ast_from_text = None
+        self.node_for_insert = None
 
     def make_ast_from_text(self, new_expression):
         tmp = open("tmp.txt", 'w+')
@@ -218,7 +219,7 @@ class MutationOp(ASTCodeGenerator):
                         self.ast_from_text = None # reset self.ast_from_text for the next mutation
 
         for c in ast.children():
-            self.replace_with_expression(c, old_node_id, new_expression)
+            if c: self.replace_with_expression(c, old_node_id, new_expression)
     
     def get_ast_replacement(self, old, expression):
         self.make_ast_from_text(expression)
@@ -228,7 +229,7 @@ class MutationOp(ASTCodeGenerator):
             a.lineno = old.lineno
             
             for c1 in a.children():
-                fix_lineno(c1)
+                if c1: fix_lineno(c1)
 
         fix_lineno(self.ast_from_text) # fix the line numbers to match the line being replaced
     
@@ -250,8 +251,36 @@ class MutationOp(ASTCodeGenerator):
                         attr[key][i] = None
 
         for c in ast.children():
-            if c:
-                self.delete_node(c, node_id)
+            if c: self.delete_node(c, node_id)
+    
+    """
+    Insert node with node_id after node with after_id.
+    """
+    def insert_node(self, ast, node_id, after_id):
+        attr = vars(ast)
+        for key in attr: # loop through all attributes of this AST
+            if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
+                if attr[key].node_id == old_node_id:
+                    self.get_ast_replacement(attr[key], new_expression)
+                    attr[key] = self.ast_from_text
+                    self.ast_from_text = None # reset self.ast_from_text for the next mutation
+            elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
+                for i in range(len(attr[key])): # loop through each AST in that list or tuple
+                    tmp = attr[key][i]
+                    if tmp.__class__ in AST_CLASSES and tmp.node_id == old_node_id:
+                        self.get_ast_replacement(tmp, new_expression)
+                        attr[key][i] = self.ast_from_text
+                        self.ast_from_text = None # reset self.ast_from_text for the next mutation
+
+        for c in ast.children():
+            if c: self.insert_node(c, node_id, after_id)
+    
+    def get_node_for_insert(self, ast, node_id):
+        if ast.node_id = node_id:
+            self.node_for_insert = ast
+
+        for c in ast.children():
+            if c: self.get_node_for_insert(c, node_id)
 
 def main():
     INFO = "Verilog code parser"
@@ -298,15 +327,15 @@ def main():
     # mutation_op.replace_with_expression(ast, 48, "if (enable == 1'b0 & reset == 1'b0) counter_out <= #1 counter_out - 1;")
     # numbering.visit(ast)
 
-    # mutation_op.replace_with_expression(ast, 53, "counter_out <= #1 counter_out + 2 - 1;")
-    # numbering.visit(ast)
-    # ast.show()
-    # print(codegen.visit(ast))
-
-    mutation_op.delete_node(ast, 53)
+    mutation_op.replace_with_expression(ast, 41, "counter_out <= 4'b0001;")
     numbering.visit(ast)
     ast.show()
     print(codegen.visit(ast))
+
+    # mutation_op.delete_node(ast, 53)
+    # numbering.visit(ast)
+    # ast.show()
+    # print(codegen.visit(ast))
 
     # candidatecollector = CandidateCollector()
     # candidatecollector.visit(ast)
