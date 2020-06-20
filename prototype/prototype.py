@@ -201,11 +201,10 @@ class MutationOp(ASTCodeGenerator):
     """ 
     Replace node_x with new_expresssion in the AST.
     """
-    def replace(self, ast, old_node_id, new_expression):
+    def replace_with_expression(self, ast, old_node_id, new_expression):
         attr = vars(ast)
         for key in attr: # loop through all attributes of this AST
             if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
-                # print(key, attr[key], attr[key].node_id)
                 if attr[key].node_id == old_node_id:
                     self.get_ast_replacement(attr[key], new_expression)
                     attr[key] = self.ast_from_text
@@ -215,15 +214,11 @@ class MutationOp(ASTCodeGenerator):
                     tmp = attr[key][i]
                     if tmp.__class__ in AST_CLASSES and tmp.node_id == old_node_id:
                         self.get_ast_replacement(tmp, new_expression)
-                        try:
-                            attr[key][i] = self.ast_from_text
-                        except:
-                            print("Fix the code to allow for mutation of attributes represented as a tuple!")
-                        finally:
-                            self.ast_from_text = None # reset self.ast_from_text for the next mutation
+                        attr[key][i] = self.ast_from_text
+                        self.ast_from_text = None # reset self.ast_from_text for the next mutation
 
         for c in ast.children():
-            self.replace(c, old_node_id, new_expression)
+            self.replace_with_expression(c, old_node_id, new_expression)
     
     def get_ast_replacement(self, old, expression):
         self.make_ast_from_text(expression)
@@ -236,6 +231,27 @@ class MutationOp(ASTCodeGenerator):
                 fix_lineno(c1)
 
         fix_lineno(self.ast_from_text) # fix the line numbers to match the line being replaced
+    
+    """
+    Delete the node with the node_id provided, if such a node exists.
+    """
+    def delete_node(self, ast, node_id):
+        attr = vars(ast)
+        for key in attr: # loop through all attributes of this AST
+            if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
+                if attr[key].node_id == node_id:
+                    # attr[key] = vast.Block([], lineno=attr[key].lineno)
+                    attr[key] = None
+            elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
+                for i in range(len(attr[key])): # loop through each AST in that list or tuple
+                    tmp = attr[key][i]
+                    if tmp.__class__ in AST_CLASSES and tmp.node_id == node_id:
+                        # attr[key][i] = vast.Block([], lineno=attr[key][i].lineno)
+                        attr[key][i] = None
+
+        for c in ast.children():
+            if c:
+                self.delete_node(c, node_id)
 
 def main():
     INFO = "Verilog code parser"
@@ -279,12 +295,16 @@ def main():
     print("\n")
 
     mutation_op = MutationOp()
-    # mutation_op.replace(ast, 48, "if (enable == 1'b0 & reset == 1'b0) counter_out <= #1 counter_out - 1;")
+    # mutation_op.replace_with_expression(ast, 48, "if (enable == 1'b0 & reset == 1'b0) counter_out <= #1 counter_out - 1;")
     # numbering.visit(ast)
 
-    mutation_op.replace(ast, 53, "counter_out <= #1 counter_out - 1;")
-    numbering.visit(ast)
+    # mutation_op.replace_with_expression(ast, 53, "counter_out <= #1 counter_out + 2 - 1;")
+    # numbering.visit(ast)
+    # ast.show()
+    # print(codegen.visit(ast))
 
+    mutation_op.delete_node(ast, 53)
+    numbering.visit(ast)
     ast.show()
     print(codegen.visit(ast))
 
