@@ -29,7 +29,15 @@ Valid mutation operators supported by the algorithm.
 """
 MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfStatement", "SensList", "Eq", "Cond", "Identifier"]
 
+"""
+Valid targets for the delete and insert operators.
+"""
+DELETE_TARGETS = ["IfStatement", "Block", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Decl", "Case", "CaseStatement", "DelayStatement", "Localparam", "Wire", "Assign"]
+INSERT_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign"]
+
 WRITE_TO_FILE = True
+
+AST_BY_GEN = {}
 
 """
 Returns a set of line numbers as potential targets for mutations.
@@ -180,6 +188,10 @@ class MutationOp(ASTCodeGenerator):
     def __init__(self):
         self.ast_from_text = None
         self.node_for_insert = None
+        self.node_from_ast = None
+        self.deletable_nodes = []
+        self.insertable_nodes = []
+        self.stmt_nodes = []
 
     def make_ast_from_text(self, new_expression):
         tmp = open("tmp.txt", 'w+')
@@ -232,6 +244,31 @@ class MutationOp(ASTCodeGenerator):
                 if c1: fix_lineno(c1)
 
         fix_lineno(self.ast_from_text) # fix the line numbers to match the line being replaced
+
+    """ 
+    Replace node_x with node_y in the AST.
+    """
+    def replace_with_node(self, ast, old_node_id, new_node):
+        attr = vars(ast)
+        for key in attr: # loop through all attributes of this AST
+            if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
+                if attr[key].node_id == old_node_id:
+                    attr[key] = new_node
+            elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
+                for i in range(len(attr[key])): # loop through each AST in that list or tuple
+                    tmp = attr[key][i]
+                    if tmp.__class__ in AST_CLASSES and tmp.node_id == old_node_id:
+                        attr[key][i] = new_node
+
+        for c in ast.children():
+            if c: self.replace_with_node(c, old_node_id, new_node)
+        
+    def get_node_from_ast(self, ast, node_id):
+        if ast.node_id == node_id:
+            self.node_from_ast = ast
+        
+        for c in ast.children():
+            if c: self.get_node_from_ast(c, node_id)
     
     """
     Delete the node with the node_id provided, if such a node exists.
@@ -241,42 +278,64 @@ class MutationOp(ASTCodeGenerator):
         for key in attr: # loop through all attributes of this AST
             if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
                 if attr[key].node_id == node_id:
-                    # attr[key] = vast.Block([], lineno=attr[key].lineno)
                     attr[key] = None
             elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
                 for i in range(len(attr[key])): # loop through each AST in that list or tuple
                     tmp = attr[key][i]
                     if tmp.__class__ in AST_CLASSES and tmp.node_id == node_id:
-                        # attr[key][i] = vast.Block([], lineno=attr[key][i].lineno)
                         attr[key][i] = None
 
         for c in ast.children():
             if c: self.delete_node(c, node_id)
     
+    def get_deletable_nodes(self, ast):
+        if ast.__class__.__name__ in DELETE_TARGETS:
+            self.deletable_nodes.append(ast.node_id)
+
+        for c in ast.children():
+            if c: self.get_deletable_nodes(c) 
+
+    def get_insertable_nodes(self, ast):
+        if ast.__class__.__name__ in INSERT_TARGETS:
+            self.insertable_nodes.append(ast.node_id)
+
+        for c in ast.children():
+            if c: self.get_insertable_nodes(c) 
+
+    def get_nodes_in_block_stmt(self, ast):
+        if ast.__class__.__name__ == "Block":
+            for c in ast.statements:
+                self.stmt_nodes.append(c.node_id)
+        
+        for c in ast.children():
+            if c: self.get_nodes_in_block_stmt(c) 
+    
     """
     Insert node with node_id after node with after_id.
     """
-    def insert_node(self, ast, node_id, after_id):
-        attr = vars(ast)
-        for key in attr: # loop through all attributes of this AST
-            if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
-                if attr[key].node_id == old_node_id:
-                    self.get_ast_replacement(attr[key], new_expression)
-                    attr[key] = self.ast_from_text
-                    self.ast_from_text = None # reset self.ast_from_text for the next mutation
-            elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
-                for i in range(len(attr[key])): # loop through each AST in that list or tuple
-                    tmp = attr[key][i]
-                    if tmp.__class__ in AST_CLASSES and tmp.node_id == old_node_id:
-                        self.get_ast_replacement(tmp, new_expression)
-                        attr[key][i] = self.ast_from_text
-                        self.ast_from_text = None # reset self.ast_from_text for the next mutation
+    # BUG: if node_id is a parent of after_id, we get infinite recursion. e.g. id 41 and 53 for first_counter_overflow.
+    def insert_node(self, ast, node_id, after_id): # orig_ast keeps pointer to the root node to be used for get_node_for_insert
+        if self.node_for_insert == None:
+            self.get_node_for_insert(ast, node_id)
+
+        if ast.__class__.__name__ == "Block":
+            insert_point = -1
+            for i in range(len(ast.statements)):
+                stmt = ast.statements[i]
+                if stmt.node_id == after_id:
+                    insert_point = i + 1
+                    break
+            if insert_point != -1:
+                print(ast.statements)
+                ast.statements.insert(insert_point, copy.deepcopy(self.node_for_insert))
+                self.node_for_insert = None # reset the node for insert for the next mutation operation
+                print(ast.statements)
 
         for c in ast.children():
             if c: self.insert_node(c, node_id, after_id)
     
     def get_node_for_insert(self, ast, node_id):
-        if ast.node_id = node_id:
+        if ast.node_id == node_id:
             self.node_for_insert = ast
 
         for c in ast.children():
@@ -323,19 +382,42 @@ def main():
     print(codegen.visit(ast))
     print("\n")
 
+    AST_BY_GEN[0] = copy.deepcopy(ast)
+
     mutation_op = MutationOp()
-    # mutation_op.replace_with_expression(ast, 48, "if (enable == 1'b0 & reset == 1'b0) counter_out <= #1 counter_out - 1;")
-    # numbering.visit(ast)
 
-    mutation_op.replace_with_expression(ast, 41, "counter_out <= 4'b0001;")
-    numbering.visit(ast)
-    ast.show()
-    print(codegen.visit(ast))
-
-    # mutation_op.delete_node(ast, 53)
+    # replace node_x in current generation by node_y from the previous generation
+    # mutation_op.get_node_from_ast(AST_BY_GEN[0], 41)
+    # mutation_op.replace_with_node(ast, 74, mutation_op.node_from_ast)
+    # mutation_op.node_from_ast = None
     # numbering.visit(ast)
     # ast.show()
     # print(codegen.visit(ast))
+
+    # mutation_op.replace_with_expression(ast, 41, "1'b0;")
+    # numbering.visit(ast)
+    # ast.show()
+    # print(codegen.visit(ast))
+
+    # mutation_op.get_deletable_nodes(ast)
+    # nodeid = random.choice(mutation_op.deletable_nodes)
+    # print("Deleting node with id %s\n" % nodeid)
+    # mutation_op.delete_node(ast, nodeid)
+    # numbering.visit(ast)
+    # mutation_op.deletable_nodes = []
+    # ast.show()
+    # print(codegen.visit(ast))
+
+    mutation_op.get_insertable_nodes(ast)
+    mutation_op.get_nodes_in_block_stmt(ast)
+    after_id = random.choice(mutation_op.stmt_nodes) 
+    node_id = random.choice(mutation_op.insertable_nodes)
+    print("Inserting node with id %s after node with id %s\n" % (node_id, after_id))
+    mutation_op.insert_node(ast, node_id, after_id)
+    numbering.visit(ast)
+    mutation_op.insertable_nodes = []
+    ast.show()
+    print(codegen.visit(ast))
 
     # candidatecollector = CandidateCollector()
     # candidatecollector.visit(ast)
@@ -386,16 +468,16 @@ def try_random_mutations(mutation_op, candidates, codegen, ast, maxIters):
         if tmp != ast: # if the mutation was successful and/or resulted in a different ast
             uniq.add(tmp)
     
-    cand_num = 0
-    for tmp in uniq:
-        rslt = codegen.visit(tmp)
-        print(rslt)
-        print("#################\n")
-        if WRITE_TO_FILE:
-            outf = open("./repair_candidates/candidate_"+str(cand_num)+".v","w+")
-            outf.write(str(rslt))
-            outf.close()
-        cand_num += 1
+    # cand_num = 0
+    # for tmp in uniq:
+    #     rslt = codegen.visit(tmp)
+    #     print(rslt)
+    #     print("#################\n")
+    #     if WRITE_TO_FILE:
+    #         outf = open("./repair_candidates/candidate_"+str(cand_num)+".v","w+")
+    #         outf.write(str(rslt))
+    #         outf.close()
+    #     cand_num += 1
 
     print("A total of %d mutations were successful out of %d attempted mutations." % (len(uniq), maxIters))
 
