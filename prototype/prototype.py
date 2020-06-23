@@ -18,6 +18,20 @@ for name, obj in inspect.getmembers(vast):
     if inspect.isclass(obj):
         AST_CLASSES.append(obj)
 
+REPLACE_TARGETS = {} # dict from class to list of classes that are okay to substituite for the original class
+for i in range(len(AST_CLASSES)):
+    REPLACE_TARGETS[AST_CLASSES[i]] = []
+    REPLACE_TARGETS[AST_CLASSES[i]].append(AST_CLASSES[i]) # can always replace with a node of the same type
+    for j in range(len(AST_CLASSES)):
+        # get the immediate parent classes of both classes, and if the parent if not Node, the two classes can be swapped
+        if i != j and inspect.getmro(AST_CLASSES[i])[1] == inspect.getmro(AST_CLASSES[j])[1] and inspect.getmro(AST_CLASSES[j])[1] != vast.Node:
+            REPLACE_TARGETS[AST_CLASSES[i]].append(AST_CLASSES[j])
+       
+# for key in REPLACE_TARGETS:
+#     tmp = map(lambda x: x.__name__, REPLACE_TARGETS[key]) 
+#     print("Class %s can be replaced by the following: %s" % (key.__name__, list(tmp)))
+#     print()
+
 """
 Valid mutation operators supported by the algorithm.
 """
@@ -32,7 +46,7 @@ MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfState
 """
 Valid targets for the delete and insert operators.
 """
-DELETE_TARGETS = ["IfStatement", "Block", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Decl", "Case", "CaseStatement", "DelayStatement", "Localparam", "Wire", "Assign"]
+DELETE_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign"]
 INSERT_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign"]
 
 WRITE_TO_FILE = True
@@ -186,30 +200,15 @@ class Mutate(ASTCodeGenerator):
 class MutationOp(ASTCodeGenerator):
 
     def __init__(self):
-        self.ast_from_text = None
-        self.node_for_insert = None
-        self.node_from_ast = None
+        self.numbering = NodeNumbering()
+        # temporary variables used for storing data for the mutation operators
+        self.tmp_node = None 
         self.deletable_nodes = []
         self.insertable_nodes = []
+        self.replaceable_nodes = []
+        self.node_class_to_replace = None
         self.stmt_nodes = []
-
-    def make_ast_from_text(self, new_expression):
-        tmp = open("tmp.txt", 'w+')
-        tmp.write("module tmp ();\n")
-        tmp.write("initial begin\n" + new_expression + "\nend\n")
-        tmp.write("endmodule\n")
-        tmp.close()
-        new_ast = parse(["tmp.txt"])[0]
-        os.remove("tmp.txt")
-
-        def sub_visit(ast):
-            if ast.__class__.__name__ == "Block":
-                self.ast_from_text = ast.statements[0]
-            
-            for c in ast.children():
-                sub_visit(c)
-
-        sub_visit(new_ast)
+        self.max_node_id = -1
 
     """ 
     Replace node_x with new_expresssion in the AST.
@@ -231,8 +230,7 @@ class MutationOp(ASTCodeGenerator):
                         self.ast_from_text = None # reset self.ast_from_text for the next mutation
 
         for c in ast.children():
-            if c: self.replace_with_expression(c, old_node_id, new_expression)
-    
+            if c: self.replace_with_expression(c, old_node_id, new_expression) 
     def get_ast_replacement(self, old, expression):
         self.make_ast_from_text(expression)
         new_ast = self.ast_from_text
@@ -245,33 +243,35 @@ class MutationOp(ASTCodeGenerator):
 
         fix_lineno(self.ast_from_text) # fix the line numbers to match the line being replaced
 
+    """
+    Update the line number of an AST that has been inserted or replaced.
+    """
+    def fix_lineno(self, ast, orig_ast):
+        ast.lineno = orig_ast.lineno
+            
+        for c in ast.children():
+            if c: self.fix_lineno(c, orig_ast)
+
     """ 
-    Replace node_x with node_y in the AST.
+    Replaces the node corresponding to old_node_id with new_node.
     """
     def replace_with_node(self, ast, old_node_id, new_node):
         attr = vars(ast)
         for key in attr: # loop through all attributes of this AST
             if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
                 if attr[key].node_id == old_node_id:
-                    attr[key] = new_node
+                    attr[key] = copy.deepcopy(new_node)
             elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
                 for i in range(len(attr[key])): # loop through each AST in that list or tuple
                     tmp = attr[key][i]
                     if tmp.__class__ in AST_CLASSES and tmp.node_id == old_node_id:
-                        attr[key][i] = new_node
+                        attr[key][i] = copy.deepcopy(new_node)
 
         for c in ast.children():
             if c: self.replace_with_node(c, old_node_id, new_node)
-        
-    def get_node_from_ast(self, ast, node_id):
-        if ast.node_id == node_id:
-            self.node_from_ast = ast
-        
-        for c in ast.children():
-            if c: self.get_node_from_ast(c, node_id)
     
     """
-    Delete the node with the node_id provided, if such a node exists.
+    Deletes the node with the node_id provided, if such a node exists.
     """
     def delete_node(self, ast, node_id):
         attr = vars(ast)
@@ -288,36 +288,10 @@ class MutationOp(ASTCodeGenerator):
         for c in ast.children():
             if c: self.delete_node(c, node_id)
     
-    def get_deletable_nodes(self, ast):
-        if ast.__class__.__name__ in DELETE_TARGETS:
-            self.deletable_nodes.append(ast.node_id)
-
-        for c in ast.children():
-            if c: self.get_deletable_nodes(c) 
-
-    def get_insertable_nodes(self, ast):
-        if ast.__class__.__name__ in INSERT_TARGETS:
-            self.insertable_nodes.append(ast.node_id)
-
-        for c in ast.children():
-            if c: self.get_insertable_nodes(c) 
-
-    def get_nodes_in_block_stmt(self, ast):
-        if ast.__class__.__name__ == "Block":
-            for c in ast.statements:
-                self.stmt_nodes.append(c.node_id)
-        
-        for c in ast.children():
-            if c: self.get_nodes_in_block_stmt(c) 
-    
     """
-    Insert node with node_id after node with after_id.
+    Inserts node with node_id after node with after_id.
     """
-    # BUG: if node_id is a parent of after_id, we get infinite recursion. e.g. id 41 and 53 for first_counter_overflow.
-    def insert_node(self, ast, node_id, after_id): # orig_ast keeps pointer to the root node to be used for get_node_for_insert
-        if self.node_for_insert == None:
-            self.get_node_for_insert(ast, node_id)
-
+    def insert_stmt_node(self, ast, node, after_id): 
         if ast.__class__.__name__ == "Block":
             insert_point = -1
             for i in range(len(ast.statements)):
@@ -327,19 +301,120 @@ class MutationOp(ASTCodeGenerator):
                     break
             if insert_point != -1:
                 print(ast.statements)
-                ast.statements.insert(insert_point, copy.deepcopy(self.node_for_insert))
-                self.node_for_insert = None # reset the node for insert for the next mutation operation
+                ast.statements.insert(insert_point, copy.deepcopy(node))
                 print(ast.statements)
+                return
 
         for c in ast.children():
-            if c: self.insert_node(c, node_id, after_id)
+            if c: self.insert_stmt_node(c, node, after_id)
     
-    def get_node_for_insert(self, ast, node_id):
+    """
+    Gets the node matching the node_id provided, if one exists, by storing it in the temporary node variable.
+    Used by the insert and replace operators.
+    """    
+    def get_node_from_ast(self, ast, node_id):
         if ast.node_id == node_id:
-            self.node_for_insert = ast
+            self.tmp_node = ast
+        
+        for c in ast.children():
+            if c: self.get_node_from_ast(c, node_id)
+
+    """
+    Gets a list of all nodes that can be deleted.
+    """
+    def get_deletable_nodes(self, ast):
+        if ast.__class__.__name__ in DELETE_TARGETS:
+            self.deletable_nodes.append(ast.node_id)
 
         for c in ast.children():
-            if c: self.get_node_for_insert(c, node_id)
+            if c: self.get_deletable_nodes(c) 
+
+    """
+    Gets a list of all nodes that can be inserted into to a begin ... end block.
+    """
+    def get_insertable_nodes(self, ast):
+        if ast.__class__.__name__ in INSERT_TARGETS:
+            self.insertable_nodes.append(ast.node_id)
+
+        for c in ast.children():
+            if c: self.get_insertable_nodes(c) 
+    
+    """
+    Gets the class of the node being replaced in a replace operation. 
+    This class is used to find potential sources for the replacement.
+    """
+    def get_node_to_replace_class(self, ast, node_id):
+        if ast.node_id == node_id:
+            self.node_class_to_replace = ast.__class__
+
+        for c in ast.children():
+            if c: self.get_node_to_replace_class(c, node_id)
+    
+    """
+    Gets all nodes that compatible to be replaced with a node of the given class type. 
+    These nodes are potential sources for replace operations.
+    """
+    def get_replaceable_nodes_by_class(self, ast, node_type):
+        if ast.__class__ in REPLACE_TARGETS[node_type]:
+            self.replaceable_nodes.append(ast.node_id)
+
+        for c in ast.children():
+            if c: self.get_replaceable_nodes_by_class(c, node_type)
+
+    """
+    Gets all nodes that are found within a begin ... end block. 
+    These nodes are potential destinations for insert operations.
+    """
+    def get_nodes_in_block_stmt(self, ast):
+        if ast.__class__.__name__ == "Block":
+            for c in ast.statements:
+                self.stmt_nodes.append(c.node_id)
+        
+        for c in ast.children():
+            if c: self.get_nodes_in_block_stmt(c) 
+    
+    """
+    The delete, insert, and replace operators to be called from outside the class.
+    """
+    def delete(self, ast):
+        self.get_deletable_nodes(ast) # get all nodes that can be deleted without breaking the AST / syntax
+        node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
+        print("Deleting node with id %s\n" % node_id)
+        self.delete_node(ast, node_id) # delete the node corresponding to node_id
+        self.numbering.visit(ast) # renumber nodes
+        self.max_node_id = self.numbering.c # reset max_node_id
+        self.deletable_nodes = [] # reset deletable nodes for the next delete operation
+    
+    def insert(self, ast):
+        self.get_insertable_nodes(ast) # get all nodes with a type that is suited to insertion in block statements -> src
+        self.get_nodes_in_block_stmt(ast) # get all nodes within a block statement -> dest
+        after_id = random.choice(self.stmt_nodes) # choose a random src and dest
+        node_id = random.choice(self.insertable_nodes)
+        self.get_node_from_ast(ast, node_id) # get the node associated with the src node id
+        print("Inserting node with id %s after node with id %s\n" % (node_id, after_id))
+        self.insert_stmt_node(ast, self.tmp_node, after_id) # perform the insertion
+        self.numbering.visit(ast) # renumber nodes
+        self.max_node_id = self.numbering.c # reset max_node_id
+        self.insertable_nodes = [] # reset the temporary variables
+        self.tmp_node = None
+    
+    def replace(self, ast):
+        if self.max_node_id == -1: # if max_id is not know yet, traverse the AST to find the number of nodes -- needed to pick a random id to replace
+            self.numbering.visit(ast)
+            self.max_node_id = self.numbering.c
+            self.numbering.c = -1 # reset the counter for numbering
+        node_id = random.randint(0,self.max_node_id) # get random node id to replace
+        self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id (in current AST)
+        self.get_replaceable_nodes_by_class(AST_BY_GEN[0], self.node_class_to_replace) # get all valid nodes that have a class that could be substituted for the original node's class (from previous gen AST)
+        with_id = random.choice(self.replaceable_nodes) # get a random node id from the replaceable nodes
+        self.get_node_from_ast(AST_BY_GEN[0], with_id) # get the node associated with with_id
+        print("Replacing node id %s with node id %s" % (node_id,with_id))
+        self.replace_with_node(ast, node_id, self.tmp_node) # perform the replacement
+        self.tmp_node = None # reset the temporary variables
+        self.replaceable_nodes = []
+        self.node_class_to_replace = None
+        self.numbering.visit(ast) # renumber nodes
+        self.max_node_id = self.numbering.c # update max_node_id
 
 def main():
     INFO = "Verilog code parser"
@@ -370,8 +445,6 @@ def main():
         showVersion()
 
     codegen = ASTCodeGenerator()
-    numbering = NodeNumbering()
-
 
     # parse the files (in filelist) to ASTs (PyVerilog ast)
     ast, directives = parse(filelist,
@@ -387,37 +460,17 @@ def main():
     mutation_op = MutationOp()
 
     # replace node_x in current generation by node_y from the previous generation
-    # mutation_op.get_node_from_ast(AST_BY_GEN[0], 41)
-    # mutation_op.replace_with_node(ast, 74, mutation_op.node_from_ast)
-    # mutation_op.node_from_ast = None
-    # numbering.visit(ast)
-    # ast.show()
-    # print(codegen.visit(ast))
-
-    # mutation_op.replace_with_expression(ast, 41, "1'b0;")
-    # numbering.visit(ast)
-    # ast.show()
-    # print(codegen.visit(ast))
-
-    # mutation_op.get_deletable_nodes(ast)
-    # nodeid = random.choice(mutation_op.deletable_nodes)
-    # print("Deleting node with id %s\n" % nodeid)
-    # mutation_op.delete_node(ast, nodeid)
-    # numbering.visit(ast)
-    # mutation_op.deletable_nodes = []
-    # ast.show()
-    # print(codegen.visit(ast))
-
-    mutation_op.get_insertable_nodes(ast)
-    mutation_op.get_nodes_in_block_stmt(ast)
-    after_id = random.choice(mutation_op.stmt_nodes) 
-    node_id = random.choice(mutation_op.insertable_nodes)
-    print("Inserting node with id %s after node with id %s\n" % (node_id, after_id))
-    mutation_op.insert_node(ast, node_id, after_id)
-    numbering.visit(ast)
-    mutation_op.insertable_nodes = []
+    mutation_op.replace(ast)
     ast.show()
     print(codegen.visit(ast))
+
+    # mutation_op.delete(ast)
+    # ast.show()
+    # print(codegen.visit(ast))
+
+    # mutation_op.insert(ast)
+    # ast.show()
+    # print(codegen.visit(ast))
 
     # candidatecollector = CandidateCollector()
     # candidatecollector.visit(ast)
