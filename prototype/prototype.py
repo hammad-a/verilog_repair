@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pyverilog.vparser.parser import parse, NodeNumbering
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
+from pyverilog.vparser.plyparser import ParseError
 import pyverilog.vparser.ast as vast
 
 AST_CLASSES = []
@@ -17,6 +18,12 @@ AST_CLASSES = []
 for name, obj in inspect.getmembers(vast):
     if inspect.isclass(obj):
         AST_CLASSES.append(obj)
+
+# print(AST_CLASSES)
+# f = open("ast_classes.txt", "w+")
+# for item in AST_CLASSES:
+#     f.write(str(item) + "\n")
+# f.close()
 
 REPLACE_TARGETS = {} # dict from class to list of classes that are okay to substituite for the original class
 for i in range(len(AST_CLASSES)):
@@ -46,7 +53,7 @@ MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfState
 """
 Valid targets for the delete and insert operators.
 """
-DELETE_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign"]
+DELETE_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign", "Wire"]
 INSERT_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign"]
 
 WRITE_TO_FILE = True
@@ -201,6 +208,7 @@ class MutationOp(ASTCodeGenerator):
 
     def __init__(self):
         self.numbering = NodeNumbering()
+        self.patch_list = []
         # temporary variables used for storing data for the mutation operators
         self.tmp_node = None 
         self.deletable_nodes = []
@@ -261,11 +269,13 @@ class MutationOp(ASTCodeGenerator):
             if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
                 if attr[key].node_id == old_node_id:
                     attr[key] = copy.deepcopy(new_node)
+                    return
             elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
                 for i in range(len(attr[key])): # loop through each AST in that list or tuple
                     tmp = attr[key][i]
                     if tmp.__class__ in AST_CLASSES and tmp.node_id == old_node_id:
                         attr[key][i] = copy.deepcopy(new_node)
+                        return
 
         for c in ast.children():
             if c: self.replace_with_node(c, old_node_id, new_node)
@@ -296,7 +306,7 @@ class MutationOp(ASTCodeGenerator):
             insert_point = -1
             for i in range(len(ast.statements)):
                 stmt = ast.statements[i]
-                if stmt.node_id == after_id:
+                if stmt and stmt.node_id == after_id:
                     insert_point = i + 1
                     break
             if insert_point != -1:
@@ -367,8 +377,11 @@ class MutationOp(ASTCodeGenerator):
     """
     def get_nodes_in_block_stmt(self, ast):
         if ast.__class__.__name__ == "Block":
-            for c in ast.statements:
-                self.stmt_nodes.append(c.node_id)
+            if len(ast.statements) == 0: # if empty block, return the node id for the block (so that a node can be inserted into the empty block)
+                self.stmt_nodes.append(ast.node_id)
+            else:
+                for c in ast.statements:
+                    if c: self.stmt_nodes.append(c.node_id)
         
         for c in ast.children():
             if c: self.get_nodes_in_block_stmt(c) 
@@ -378,16 +391,24 @@ class MutationOp(ASTCodeGenerator):
     """
     def delete(self, ast):
         self.get_deletable_nodes(ast) # get all nodes that can be deleted without breaking the AST / syntax
+        if len(self.deletable_nodes) == 0: # if no nodes can be deleted, return without attepmting delete
+            print("Delete operation not possible. Returning with no-op.")
+            return 
         node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
         print("Deleting node with id %s\n" % node_id)
         self.delete_node(ast, node_id) # delete the node corresponding to node_id
         self.numbering.visit(ast) # renumber nodes
         self.max_node_id = self.numbering.c # reset max_node_id
+        self.numbering.c = -1
         self.deletable_nodes = [] # reset deletable nodes for the next delete operation
+        self.patch_list.append("delete(%s)" % node_id) # update patch list
     
     def insert(self, ast):
         self.get_insertable_nodes(ast) # get all nodes with a type that is suited to insertion in block statements -> src
         self.get_nodes_in_block_stmt(ast) # get all nodes within a block statement -> dest
+        if len(self.insertable_nodes) == 0 or len(self.stmt_nodes) == 0: # if no insertable nodes exist, exit gracefully
+            print("Insert operation not possible. Returning with no-op.")
+            return
         after_id = random.choice(self.stmt_nodes) # choose a random src and dest
         node_id = random.choice(self.insertable_nodes)
         self.get_node_from_ast(ast, node_id) # get the node associated with the src node id
@@ -395,8 +416,10 @@ class MutationOp(ASTCodeGenerator):
         self.insert_stmt_node(ast, self.tmp_node, after_id) # perform the insertion
         self.numbering.visit(ast) # renumber nodes
         self.max_node_id = self.numbering.c # reset max_node_id
+        self.numbering.c = -1
         self.insertable_nodes = [] # reset the temporary variables
         self.tmp_node = None
+        self.patch_list.append("insert(%s,%s)" % (node_id, after_id)) # update patch list
     
     def replace(self, ast):
         if self.max_node_id == -1: # if max_id is not know yet, traverse the AST to find the number of nodes -- needed to pick a random id to replace
@@ -404,8 +427,13 @@ class MutationOp(ASTCodeGenerator):
             self.max_node_id = self.numbering.c
             self.numbering.c = -1 # reset the counter for numbering
         node_id = random.randint(0,self.max_node_id) # get random node id to replace
+        print("Node to replace id: %s" % node_id)
         self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id (in current AST)
+        print("Node to replace class: %s" % self.node_class_to_replace)
         self.get_replaceable_nodes_by_class(AST_BY_GEN[0], self.node_class_to_replace) # get all valid nodes that have a class that could be substituted for the original node's class (from previous gen AST)
+        if len(self.replaceable_nodes) == 0: # if no replaceable nodes exist, exit gracefully
+            print("Replace operation not possible. Returning with no-op.")
+            return
         with_id = random.choice(self.replaceable_nodes) # get a random node id from the replaceable nodes
         self.get_node_from_ast(AST_BY_GEN[0], with_id) # get the node associated with with_id
         print("Replacing node id %s with node id %s" % (node_id,with_id))
@@ -415,6 +443,8 @@ class MutationOp(ASTCodeGenerator):
         self.node_class_to_replace = None
         self.numbering.visit(ast) # renumber nodes
         self.max_node_id = self.numbering.c # update max_node_id
+        self.numbering.c = -1
+        self.patch_list.append("replace(%s,%s)" % (node_id, with_id)) # update patch list
 
 def main():
     INFO = "Verilog code parser"
@@ -459,18 +489,37 @@ def main():
 
     mutation_op = MutationOp()
 
-    # replace node_x in current generation by node_y from the previous generation
-    mutation_op.replace(ast)
-    ast.show()
-    print(codegen.visit(ast))
+    GENS = 100
 
-    # mutation_op.delete(ast)
-    # ast.show()
-    # print(codegen.visit(ast))
+    failed = 0
 
-    # mutation_op.insert(ast)
-    # ast.show()
-    # print(codegen.visit(ast))
+    for i in range(GENS):
+        if i > 0: AST_BY_GEN[i-1] = copy.deepcopy(ast)
+        f = open("candidate.v", "w+")
+        p = random.random()
+        if p >= 0.5:
+            mutation_op.replace(ast)
+        elif p >= 0.25:
+            mutation_op.delete(ast)
+        else:
+            mutation_op.insert(ast)
+        ast.show()
+        rslt = codegen.visit(ast)
+        print(rslt)
+        f.write(rslt)
+        f.close()
+        print(mutation_op.patch_list, len(mutation_op.patch_list))
+
+        # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
+        try:
+            ast, directives = parse(["candidate.v"],
+                                preprocess_include=options.include,
+                                preprocess_define=options.define)
+        except ParseError:
+            failed += 1
+    
+    print(failed)
+        
 
     # candidatecollector = CandidateCollector()
     # candidatecollector.visit(ast)
