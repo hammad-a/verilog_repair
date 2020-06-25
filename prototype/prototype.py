@@ -208,6 +208,7 @@ class MutationOp(ASTCodeGenerator):
 
     def __init__(self):
         self.numbering = NodeNumbering()
+        self.generation = 0
         self.patch_list = []
         # temporary variables used for storing data for the mutation operators
         self.tmp_node = None 
@@ -397,7 +398,7 @@ class MutationOp(ASTCodeGenerator):
         node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
         print("Deleting node with id %s\n" % node_id)
         self.delete_node(ast, node_id) # delete the node corresponding to node_id
-        self.numbering.visit(ast) # renumber nodes
+        self.numbering.renumber(ast) # renumber nodes
         self.max_node_id = self.numbering.c # reset max_node_id
         self.numbering.c = -1
         self.deletable_nodes = [] # reset deletable nodes for the next delete operation
@@ -414,23 +415,25 @@ class MutationOp(ASTCodeGenerator):
         self.get_node_from_ast(ast, node_id) # get the node associated with the src node id
         print("Inserting node with id %s after node with id %s\n" % (node_id, after_id))
         self.insert_stmt_node(ast, self.tmp_node, after_id) # perform the insertion
-        self.numbering.visit(ast) # renumber nodes
+        self.numbering.renumber(ast) # renumber nodes
         self.max_node_id = self.numbering.c # reset max_node_id
         self.numbering.c = -1
         self.insertable_nodes = [] # reset the temporary variables
         self.tmp_node = None
         self.patch_list.append("insert(%s,%s)" % (node_id, after_id)) # update patch list
     
-    def replace(self, ast):
+    def replace(self, ast, gen_num):
         if self.max_node_id == -1: # if max_id is not know yet, traverse the AST to find the number of nodes -- needed to pick a random id to replace
-            self.numbering.visit(ast)
+            self.numbering.renumber(ast)
             self.max_node_id = self.numbering.c
             self.numbering.c = -1 # reset the counter for numbering
         node_id = random.randint(0,self.max_node_id) # get random node id to replace
         print("Node to replace id: %s" % node_id)
         self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id (in current AST)
         print("Node to replace class: %s" % self.node_class_to_replace)
-        self.get_replaceable_nodes_by_class(AST_BY_GEN[0], self.node_class_to_replace) # get all valid nodes that have a class that could be substituted for the original node's class (from previous gen AST)
+        if self.node_class_to_replace == None: # if the node does not exist (could have been a part of gen i but not i-1)
+            return
+        self.get_replaceable_nodes_by_class(AST_BY_GEN[max(0, gen_num - 1)], self.node_class_to_replace) # get all valid nodes that have a class that could be substituted for the original node's class (from previous gen AST)
         if len(self.replaceable_nodes) == 0: # if no replaceable nodes exist, exit gracefully
             print("Replace operation not possible. Returning with no-op.")
             return
@@ -441,7 +444,7 @@ class MutationOp(ASTCodeGenerator):
         self.tmp_node = None # reset the temporary variables
         self.replaceable_nodes = []
         self.node_class_to_replace = None
-        self.numbering.visit(ast) # renumber nodes
+        self.numbering.renumber(ast) # renumber nodes
         self.max_node_id = self.numbering.c # update max_node_id
         self.numbering.c = -1
         self.patch_list.append("replace(%s,%s)" % (node_id, with_id)) # update patch list
@@ -495,10 +498,11 @@ def main():
 
     for i in range(GENS):
         if i > 0: AST_BY_GEN[i-1] = copy.deepcopy(ast)
+        mutation_op.generation = i
         f = open("candidate.v", "w+")
         p = random.random()
         if p >= 0.5:
-            mutation_op.replace(ast)
+            mutation_op.replace(ast, i)
         elif p >= 0.25:
             mutation_op.delete(ast)
         else:
@@ -519,7 +523,6 @@ def main():
             failed += 1
     
     print(failed)
-        
 
     # candidatecollector = CandidateCollector()
     # candidatecollector.visit(ast)
