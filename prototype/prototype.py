@@ -34,10 +34,10 @@ for i in range(len(AST_CLASSES)):
         if i != j and inspect.getmro(AST_CLASSES[i])[1] == inspect.getmro(AST_CLASSES[j])[1] and inspect.getmro(AST_CLASSES[j])[1] != vast.Node:
             REPLACE_TARGETS[AST_CLASSES[i]].append(AST_CLASSES[j])
        
-# for key in REPLACE_TARGETS:
-#     tmp = map(lambda x: x.__name__, REPLACE_TARGETS[key]) 
-#     print("Class %s can be replaced by the following: %s" % (key.__name__, list(tmp)))
-#     print()
+for key in REPLACE_TARGETS:
+    tmp = map(lambda x: x.__name__, REPLACE_TARGETS[key]) 
+    print("Class %s can be replaced by the following: %s" % (key.__name__, list(tmp)))
+    print()
 
 """
 Valid mutation operators supported by the algorithm.
@@ -422,6 +422,7 @@ class MutationOp(ASTCodeGenerator):
         self.tmp_node = None
         self.patch_list.append("insert(%s,%s)" % (node_id, after_id)) # update patch list
     
+    # TODO: Possible bug -> sometimes replacement nodes are not compatible in terms of their classes.
     def replace(self, ast, gen_num):
         if self.max_node_id == -1: # if max_id is not know yet, traverse the AST to find the number of nodes -- needed to pick a random id to replace
             self.numbering.renumber(ast)
@@ -492,9 +493,10 @@ def main():
 
     mutation_op = MutationOp()
 
-    GENS = 100
+    GENS = 5
 
     failed = 0
+    fpatches = []
 
     for i in range(GENS):
         if i > 0: AST_BY_GEN[i-1] = copy.deepcopy(ast)
@@ -521,8 +523,10 @@ def main():
                                 preprocess_define=options.define)
         except ParseError:
             failed += 1
+            fpatches.append(mutation_op.patch_list[-1])
     
     print(failed)
+    print(fpatches)
 
     # candidatecollector = CandidateCollector()
     # candidatecollector.visit(ast)
