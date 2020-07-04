@@ -1,4 +1,4 @@
-import sys, inspect
+import sys, inspect, subprocess
 import os
 from optparse import OptionParser
 import copy
@@ -34,10 +34,10 @@ for i in range(len(AST_CLASSES)):
         if i != j and inspect.getmro(AST_CLASSES[i])[1] == inspect.getmro(AST_CLASSES[j])[1] and inspect.getmro(AST_CLASSES[j])[1] != vast.Node:
             REPLACE_TARGETS[AST_CLASSES[i]].append(AST_CLASSES[j])
        
-for key in REPLACE_TARGETS:
-    tmp = map(lambda x: x.__name__, REPLACE_TARGETS[key]) 
-    print("Class %s can be replaced by the following: %s" % (key.__name__, list(tmp)))
-    print()
+# for key in REPLACE_TARGETS:
+#     tmp = map(lambda x: x.__name__, REPLACE_TARGETS[key]) 
+#     print("Class %s can be replaced by the following: %s" % (key.__name__, list(tmp)))
+#     print()
 
 """
 Valid mutation operators supported by the algorithm.
@@ -58,7 +58,7 @@ INSERT_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitutio
 
 WRITE_TO_FILE = True
 
-AST_BY_GEN = {}
+PARENT_OF_GENOME = {}
 
 """
 Returns a set of line numbers as potential targets for mutations.
@@ -206,10 +206,11 @@ class Mutate(ASTCodeGenerator):
 
 class MutationOp(ASTCodeGenerator):
 
-    def __init__(self):
+    def __init__(self, popsize):
         self.numbering = NodeNumbering()
-        self.generation = 0
-        self.patch_list = []
+        self.popsize = popsize
+        self.patch_list = {} # dictionary from genome number to the patch_list
+        for i in range(self.popsize): self.patch_list[i] = []
         # temporary variables used for storing data for the mutation operators
         self.tmp_node = None 
         self.deletable_nodes = []
@@ -240,6 +241,8 @@ class MutationOp(ASTCodeGenerator):
 
         for c in ast.children():
             if c: self.replace_with_expression(c, old_node_id, new_expression) 
+
+    # not used anymore!        
     def get_ast_replacement(self, old, expression):
         self.make_ast_from_text(expression)
         new_ast = self.ast_from_text
@@ -389,29 +392,33 @@ class MutationOp(ASTCodeGenerator):
     
     """
     The delete, insert, and replace operators to be called from outside the class.
+    Note: node_id, with_id, and after_id would not be none if we are trying to regenerate AST from patch list, and would be none for a random mutation.
     """
-    def delete(self, ast):
-        self.get_deletable_nodes(ast) # get all nodes that can be deleted without breaking the AST / syntax
-        if len(self.deletable_nodes) == 0: # if no nodes can be deleted, return without attepmting delete
-            print("Delete operation not possible. Returning with no-op.")
-            return 
-        node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
+    def delete(self, ast, node_id=None):
+        if node_id == None:
+            self.get_deletable_nodes(ast) # get all nodes that can be deleted without breaking the AST / syntax
+            if len(self.deletable_nodes) == 0: # if no nodes can be deleted, return without attepmting delete
+                print("Delete operation not possible. Returning with no-op.")
+                return 
+            node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
+
         print("Deleting node with id %s\n" % node_id)
         self.delete_node(ast, node_id) # delete the node corresponding to node_id
         self.numbering.renumber(ast) # renumber nodes
         self.max_node_id = self.numbering.c # reset max_node_id
         self.numbering.c = -1
         self.deletable_nodes = [] # reset deletable nodes for the next delete operation
-        self.patch_list.append("delete(%s)" % node_id) # update patch list
+        # self.patch_list[genome_num].append("delete(%s)" % node_id) # update patch list
     
-    def insert(self, ast):
-        self.get_insertable_nodes(ast) # get all nodes with a type that is suited to insertion in block statements -> src
-        self.get_nodes_in_block_stmt(ast) # get all nodes within a block statement -> dest
-        if len(self.insertable_nodes) == 0 or len(self.stmt_nodes) == 0: # if no insertable nodes exist, exit gracefully
-            print("Insert operation not possible. Returning with no-op.")
-            return
-        after_id = random.choice(self.stmt_nodes) # choose a random src and dest
-        node_id = random.choice(self.insertable_nodes)
+    def insert(self, ast, node_id=None, after_id=None):
+        if node_id == None and after_id == None:
+            self.get_insertable_nodes(ast) # get all nodes with a type that is suited to insertion in block statements -> src
+            self.get_nodes_in_block_stmt(ast) # get all nodes within a block statement -> dest
+            if len(self.insertable_nodes) == 0 or len(self.stmt_nodes) == 0: # if no insertable nodes exist, exit gracefully
+                print("Insert operation not possible. Returning with no-op.")
+                return
+            after_id = random.choice(self.stmt_nodes) # choose a random src and dest
+            node_id = random.choice(self.insertable_nodes)
         self.get_node_from_ast(ast, node_id) # get the node associated with the src node id
         print("Inserting node with id %s after node with id %s\n" % (node_id, after_id))
         self.insert_stmt_node(ast, self.tmp_node, after_id) # perform the insertion
@@ -420,26 +427,30 @@ class MutationOp(ASTCodeGenerator):
         self.numbering.c = -1
         self.insertable_nodes = [] # reset the temporary variables
         self.tmp_node = None
-        self.patch_list.append("insert(%s,%s)" % (node_id, after_id)) # update patch list
+        # self.patch_list[genome_num].append("insert(%s,%s)" % (node_id, after_id)) # update patch list
     
-    # TODO: Possible bug -> sometimes replacement nodes are not compatible in terms of their classes.
-    def replace(self, ast, gen_num):
-        if self.max_node_id == -1: # if max_id is not know yet, traverse the AST to find the number of nodes -- needed to pick a random id to replace
-            self.numbering.renumber(ast)
-            self.max_node_id = self.numbering.c
-            self.numbering.c = -1 # reset the counter for numbering
-        node_id = random.randint(0,self.max_node_id) # get random node id to replace
+    # TODO: Possible bug -> sometimes replacement nodes are not compatible in terms of their classes?
+    def replace(self, ast, node_id=None, with_id=None):
+        if node_id == None:
+            if self.max_node_id == -1: # if max_id is not know yet, traverse the AST to find the number of nodes -- needed to pick a random id to replace
+                self.numbering.renumber(ast)
+                self.max_node_id = self.numbering.c
+                self.numbering.c = -1 # reset the counter for numbering
+            node_id = random.randint(0,self.max_node_id) # get random node id to replace
         print("Node to replace id: %s" % node_id)
-        self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id (in current AST)
-        print("Node to replace class: %s" % self.node_class_to_replace)
-        if self.node_class_to_replace == None: # if the node does not exist (could have been a part of gen i but not i-1)
-            return
-        self.get_replaceable_nodes_by_class(AST_BY_GEN[max(0, gen_num - 1)], self.node_class_to_replace) # get all valid nodes that have a class that could be substituted for the original node's class (from previous gen AST)
-        if len(self.replaceable_nodes) == 0: # if no replaceable nodes exist, exit gracefully
-            print("Replace operation not possible. Returning with no-op.")
-            return
-        with_id = random.choice(self.replaceable_nodes) # get a random node id from the replaceable nodes
-        self.get_node_from_ast(AST_BY_GEN[0], with_id) # get the node associated with with_id
+
+        if with_id == None: 
+            self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id
+            print("Node to replace class: %s" % self.node_class_to_replace)
+            if self.node_class_to_replace == None: # if the node does not exist (could have been a part of gen i but not i-1) -> TODO: is this still needed?
+                return
+            self.get_replaceable_nodes_by_class(ast, self.node_class_to_replace) # get all valid nodes that have a class that could be substituted for the original node's class
+            if len(self.replaceable_nodes) == 0: # if no replaceable nodes exist, exit gracefully
+                print("Replace operation not possible. Returning with no-op.")
+                return
+            with_id = random.choice(self.replaceable_nodes) # get a random node id from the replaceable nodes
+        self.get_node_from_ast(ast, with_id) # get the node associated with with_id
+        
         print("Replacing node id %s with node id %s" % (node_id,with_id))
         self.replace_with_node(ast, node_id, self.tmp_node) # perform the replacement
         self.tmp_node = None # reset the temporary variables
@@ -448,7 +459,26 @@ class MutationOp(ASTCodeGenerator):
         self.numbering.renumber(ast) # renumber nodes
         self.max_node_id = self.numbering.c # update max_node_id
         self.numbering.c = -1
-        self.patch_list.append("replace(%s,%s)" % (node_id, with_id)) # update patch list
+        # self.patch_list[genome_num].append("replace(%s,%s)" % (node_id, with_id)) # update patch list
+    
+    def ast_from_patchlist(self, ast, patch_list):
+        for m in patch_list:
+            operator = m.split('(')[0]
+            operands = m.split('(')[1].replace(')','').split(',')
+            print(operator, operands)
+            if operator == "replace":
+                self.replace(ast, int(operands[0]), int(operands[1]))
+            elif operator == "insert":
+                self.insert(ast, int(operands[0]), int(operands[1]))
+            elif operator == "delete":
+                self.delete(ast, int(operands[0]))
+            else:
+                print("Invalid operator in patch list: %s" % m)
+        return ast
+
+def tournament_selection(pop):
+    # TODO: implement this!
+    return random.choice(pop)
 
 def main():
     INFO = "Verilog code parser"
@@ -489,44 +519,99 @@ def main():
     print(codegen.visit(ast))
     print("\n")
 
-    AST_BY_GEN[0] = copy.deepcopy(ast)
+    # Generate the bit-weights
+    srcFile = sys.argv[1]
+    bashCmd = ["python3", "bit_weighting.py", srcFile]
+    process = subprocess.run(bashCmd, capture_output=True, check=True)
+    # print(process.stdout, process.stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
-    mutation_op = MutationOp()
+    GENS = 0
+    POPSIZE = 2
 
-    GENS = 5
+    mutation_op = MutationOp(POPSIZE)
 
+    pop = []
+    pop.append([])
+    # print(pop)
+
+        
     failed = 0
     fpatches = []
 
-    for i in range(GENS):
-        if i > 0: AST_BY_GEN[i-1] = copy.deepcopy(ast)
-        mutation_op.generation = i
-        f = open("candidate.v", "w+")
-        p = random.random()
-        if p >= 0.5:
-            mutation_op.replace(ast, i)
-        elif p >= 0.25:
-            mutation_op.delete(ast)
-        else:
-            mutation_op.insert(ast)
-        ast.show()
-        rslt = codegen.visit(ast)
-        print(rslt)
-        f.write(rslt)
-        f.close()
-        print(mutation_op.patch_list, len(mutation_op.patch_list))
+    tmp = ['delete(74)', 'insert(65,65)', 'replace(44,82)']
+    patch = copy.deepcopy(ast)
+    mutation_op.ast_from_patchlist(patch, tmp)
+    patch.show()
+    print(codegen.visit(patch))
 
-        # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
-        try:
-            ast, directives = parse(["candidate.v"],
-                                preprocess_include=options.include,
-                                preprocess_define=options.define)
-        except ParseError:
-            failed += 1
-            fpatches.append(mutation_op.patch_list[-1])
+
+
+    # for i in range(GENS): # for each generation
+    #     _children = []
+
+    #     while len(_children) < POPSIZE:
+    #         j = len(_children)
+    #         parent = tournament_selection(pop)
+    #         child = copy.deepcopy(parent)
+
+    #         f = open("candidate.v", "w+")
+    #         p = random.random()
+    #         if p >= 0.5:
+    #             mutation_op.replace(child, j)
+    #         elif p >= 0.25:
+    #             mutation_op.delete(child, j)
+    #         else:
+    #             mutation_op.insert(child, j)
+    #         ast.show()
+    #         rslt = codegen.visit(child)
+    #         print(rslt)
+    #         f.write(rslt)
+    #         f.close()
+    #         print("For genome %d:" % j, mutation_op.patch_list[j], len(mutation_op.patch_list[j]))
+
+    #         _children.append(child)
+    #         PARENT_OF_GENOME[child] = parent
+        
+
+
+
+        # for j in range(POPSIZE): # for each genome
+        #     genome = pop[j]
+        #     if i > 0: PARENT_OF_GENOME[j] = copy.deepcopy(genome)
+        #     f = open("candidate.v", "w+")
+        #     p = random.random()
+        #     if p >= 0.5:
+        #         mutation_op.replace(genome, j)
+        #     elif p >= 0.25:
+        #         mutation_op.delete(genome, j)
+        #     else:
+        #         mutation_op.insert(genome, j)
+        #     ast.show()
+        #     rslt = codegen.visit(genome)
+        #     print(rslt)
+        #     f.write(rslt)
+        #     f.close()
+        #     print("For genome %d:" % j, mutation_op.patch_list[j], len(mutation_op.patch_list[j]))
+        #     print()
+
+        #     # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
+        #     try:
+        #         ast, directives = parse(["candidate.v"],
+        #                             preprocess_include=options.include,
+        #                             preprocess_define=options.define)
+        #     except ParseError:
+        #         failed += 1
     
-    print(failed)
-    print(fpatches)
+    # print("%s candidates failed to compile" % failed)
+
+    for i in pop: print(codegen.visit(i))
+
+    # bashCmd = ["python3", "fitness.py", "../benchmarks/first_counter_overflow/oracle.txt", "../benchmarks/first_counter_overflow/output.txt", "weights.txt", "static"]
+    # process = subprocess.run(bashCmd, capture_output=True, check=True)
+    # print(process.stdout, process.stderr)
+
+    # output, error = process.communicate()
+    # print(output)
 
     # candidatecollector = CandidateCollector()
     # candidatecollector.visit(ast)
