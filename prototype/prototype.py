@@ -490,7 +490,7 @@ class MutationOp(ASTCodeGenerator):
 def tournament_selection(mutation_op, codegen, orig_ast, popn):
     # Choose 10 random candidates for parent selection
     pool = copy.deepcopy(popn)
-    while len(pool) > 10:
+    while len(pool) > 4:
         r = random.choice(pool)
         pool.remove(r)
 
@@ -503,8 +503,8 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
         parent_ast = copy.deepcopy(orig_ast)
         parent_ast = mutation_op.ast_from_patchlist(parent_ast, parent_patchlist)
 
-        if parent_patchlist in GENOME_FITNESS_CACHE:
-            parent_fitness = GENOME_FITNESS_CACHE[parent_patchlist]
+        if str(parent_patchlist) in GENOME_FITNESS_CACHE:
+            parent_fitness = GENOME_FITNESS_CACHE[str(parent_patchlist)]
         else:
             f = open("candidate.v", "w+")
             code = codegen.visit(parent_ast)
@@ -521,7 +521,7 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
             if parent_fitness == -1: # if the parent fitness was not 0, i.e. the parser did not throw syntax errors
                 parent_fitness = calc_candidate_fitness("candidate.v")
             
-            GENOME_FITNESS_CACHE[parent_patchlist] = parent_fitness
+            GENOME_FITNESS_CACHE[str(parent_patchlist)] = parent_fitness
         
         if parent_fitness > max_fitness:
             max_fitness = parent_fitness
@@ -579,7 +579,7 @@ def main():
     # print(process.stdout, process.stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
     GENS = 5
-    POPSIZE = 10
+    POPSIZE = 20
 
     mutation_op = MutationOp(POPSIZE)
 
@@ -613,9 +613,10 @@ def main():
 
             _children.append(child_patchlist)
         
-        popn = _children
+        popn = copy.deepcopy(_children)
 
-    for i in popn: print(i)
+        for i in popn: print(i)
+        print()
         
         # for j in range(POPSIZE): # for each genome
         #     genome = pop[j]
