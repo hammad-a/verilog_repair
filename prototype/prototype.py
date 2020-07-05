@@ -58,6 +58,8 @@ INSERT_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitutio
 
 WRITE_TO_FILE = True
 
+GENOME_FITNESS_CACHE = {}
+
 """
 Returns a set of line numbers as potential targets for mutations.
 """
@@ -501,27 +503,31 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
         parent_ast = copy.deepcopy(orig_ast)
         parent_ast = mutation_op.ast_from_patchlist(parent_ast, parent_patchlist)
 
-        f = open("candidate.v", "w+")
-        code = codegen.visit(parent_ast)
-        f.write(code)
-        f.close()
+        if parent_patchlist in GENOME_FITNESS_CACHE:
+            parent_fitness = GENOME_FITNESS_CACHE[parent_patchlist]
+        else:
+            f = open("candidate.v", "w+")
+            code = codegen.visit(parent_ast)
+            f.write(code)
+            f.close()
 
-        parent_fitness = -1
-        # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
-        try:
-            ast, directives = parse(["candidate.v"])
-        except ParseError:
-            parent_fitness = 0
-        
-        if parent_fitness == -1: # if the parent fitness was not 0, i.e. the parser did not throw syntax errors
-            parent_fitness = calc_candidate_fitness("candidate.v")
+            parent_fitness = -1
+            # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
+            try:
+                ast, directives = parse(["candidate.v"])
+            except ParseError:
+                parent_fitness = 0
+            
+            if parent_fitness == -1: # if the parent fitness was not 0, i.e. the parser did not throw syntax errors
+                parent_fitness = calc_candidate_fitness("candidate.v")
+            
+            GENOME_FITNESS_CACHE[parent_patchlist] = parent_fitness
         
         if parent_fitness > max_fitness:
             max_fitness = parent_fitness
             best_parent_ast = copy.deepcopy(parent_ast) # TODO: do we need to deepcopy here?
             best_parent_patchlist = copy.deepcopy(parent_patchlist)
     
-    # return ast (NOT patchlist, because the mutation op needs the ast anyways; would nee to reconstruct) corresponding to candidate with highest fitness
     return best_parent_patchlist, best_parent_ast
 
 def calc_candidate_fitness(fileName):
