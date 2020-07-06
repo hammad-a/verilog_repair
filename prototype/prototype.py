@@ -544,28 +544,32 @@ import time
 
 def calc_candidate_fitness(fileName):
     print("Running VCS simulation")
-    try:
-        process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
+    os.system("""source /etc/profile.d/modules.sh
+	module load vcs/2017.12-SP2-1
+	timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s candidate.v -o simv -R""" % TEST_BENCH)
+    #process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
 
-        f = open("oracle.txt", "r")
-        oracle_lines = f.readlines()
-        f.close()
+    if not os.path.exists("output.txt"): return 0 # if the code does not compile, return 0
 
-        f = open("output.txt", "r")
-        sim_lines = f.readlines()
-        f.close()
+    f = open("oracle.txt", "r")
+    oracle_lines = f.readlines()
+    f.close()
 
-        weighting = "static"
-        f = open("weights.txt", "r")
-        weights = f.readlines()
-        f.close()
+    f = open("output.txt", "r")
+    sim_lines = f.readlines()
+    f.close()
 
-        ff, total_possible = fitness.calculate_fitness(oracle_lines, sim_lines, weights, weighting)
-        normalized_ff = ff/total_possible
-        if normalized_ff < 0: normalized_ff = 0
-        #print(normalized_ff)
-    except subprocess.TimeoutExpired:
-        normalized_ff = 0
+    weighting = "static"
+    f = open("weights.txt", "r")
+    weights = f.readlines()
+    f.close()
+
+    ff, total_possible = fitness.calculate_fitness(oracle_lines, sim_lines, weights, weighting)
+    normalized_ff = ff/total_possible
+    if normalized_ff < 0: normalized_ff = 0
+    print("FITNESS = %f" % normalized_ff)
+
+    os.remove("output.txt")
 
     return normalized_ff
 
@@ -615,8 +619,8 @@ def main():
     # process = subprocess.run(bashCmd, capture_output=True, check=True)
     # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
-    GENS = 5
-    POPSIZE = 20
+    GENS = 2
+    POPSIZE = 150
 
     mutation_op = MutationOp(POPSIZE)
 
