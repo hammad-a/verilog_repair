@@ -540,8 +540,6 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
     
     return best_parent_patchlist, best_parent_ast
 
-import time
-
 def calc_candidate_fitness(fileName):
     print("Running VCS simulation")
     os.system("""source /etc/profile.d/modules.sh
