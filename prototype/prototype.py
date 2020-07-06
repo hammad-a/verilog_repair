@@ -13,6 +13,8 @@ from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 from pyverilog.vparser.plyparser import ParseError
 import pyverilog.vparser.ast as vast
 
+import fitness
+
 AST_CLASSES = []
 
 for name, obj in inspect.getmembers(vast):
@@ -59,6 +61,10 @@ INSERT_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitutio
 WRITE_TO_FILE = True
 
 GENOME_FITNESS_CACHE = {}
+
+SRC_FILE = sys.argv[1]
+#TEST_BENCH = sys.argv[2]
+TEST_BENCH = "/home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/first_counter_tb_t3.v"
 
 """
 Returns a set of line numbers as potential targets for mutations.
@@ -523,15 +529,45 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
             
             GENOME_FITNESS_CACHE[str(parent_patchlist)] = parent_fitness
         
-        if parent_fitness > max_fitness:
+        if parent_fitness == 1.0:
+            print("######## REPAIR FOUND ########")
+            print(code)
+            sys.exit(1)
+        elif parent_fitness > max_fitness:
             max_fitness = parent_fitness
             best_parent_ast = copy.deepcopy(parent_ast) # TODO: do we need to deepcopy here?
             best_parent_patchlist = copy.deepcopy(parent_patchlist)
     
     return best_parent_patchlist, best_parent_ast
 
+import time
+
 def calc_candidate_fitness(fileName):
-    return random.random()
+    print("Running VCS simulation")
+    try:
+        process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
+
+        f = open("oracle.txt", "r")
+        oracle_lines = f.readlines()
+        f.close()
+
+        f = open("output.txt", "r")
+        sim_lines = f.readlines()
+        f.close()
+
+        weighting = "static"
+        f = open("weights.txt", "r")
+        weights = f.readlines()
+        f.close()
+
+        ff, total_possible = fitness.calculate_fitness(oracle_lines, sim_lines, weights, weighting)
+        normalized_ff = ff/total_possible
+        if normalized_ff < 0: normalized_ff = 0
+        #print(normalized_ff)
+    except subprocess.TimeoutExpired:
+        normalized_ff = 0
+
+    return normalized_ff
 
 def main():
     INFO = "Verilog code parser"
@@ -573,8 +609,7 @@ def main():
     print("\n")
 
     # Generate the bit-weights
-    srcFile = sys.argv[1]
-    bashCmd = ["python3", "bit_weighting.py", srcFile]
+    bashCmd = ["python3", "bit_weighting.py", SRC_FILE]
     process = subprocess.Popen(bashCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
     # process = subprocess.run(bashCmd, capture_output=True, check=True)
