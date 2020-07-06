@@ -575,8 +575,10 @@ def main():
     # Generate the bit-weights
     srcFile = sys.argv[1]
     bashCmd = ["python3", "bit_weighting.py", srcFile]
-    process = subprocess.run(bashCmd, capture_output=True, check=True)
-    # print(process.stdout, process.stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
+    process = subprocess.Popen(bashCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    # process = subprocess.run(bashCmd, capture_output=True, check=True)
+    # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
     GENS = 5
     POPSIZE = 20
