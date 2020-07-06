@@ -63,8 +63,7 @@ WRITE_TO_FILE = True
 GENOME_FITNESS_CACHE = {}
 
 SRC_FILE = sys.argv[1]
-#TEST_BENCH = sys.argv[2]
-TEST_BENCH = "/home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/first_counter_tb_t3.v"
+TEST_BENCH = sys.argv[2]
 
 """
 Returns a set of line numbers as potential targets for mutations.
@@ -506,39 +505,16 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
     best_parent_patchlist = []
 
     for parent_patchlist in pool:
-        parent_ast = copy.deepcopy(orig_ast)
-        parent_ast = mutation_op.ast_from_patchlist(parent_ast, parent_patchlist)
+        parent_fitness = GENOME_FITNESS_CACHE[str(parent_patchlist)]
 
-        if str(parent_patchlist) in GENOME_FITNESS_CACHE:
-            parent_fitness = GENOME_FITNESS_CACHE[str(parent_patchlist)]
-        else:
-            f = open("candidate.v", "w+")
-            code = codegen.visit(parent_ast)
-            f.write(code)
-            f.close()
-
-            parent_fitness = -1
-            # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
-            try:
-                ast, directives = parse(["candidate.v"])
-            except ParseError:
-                parent_fitness = 0
-            
-            if parent_fitness == -1: # if the parent fitness was not 0, i.e. the parser did not throw syntax errors
-                parent_fitness = calc_candidate_fitness("candidate.v")
-            
-            GENOME_FITNESS_CACHE[str(parent_patchlist)] = parent_fitness
-        
-        if parent_fitness == 1.0:
-            print("######## REPAIR FOUND ########")
-            print(code)
-            sys.exit(1)
-        elif parent_fitness > max_fitness:
+        if parent_fitness > max_fitness:
             max_fitness = parent_fitness
-            best_parent_ast = copy.deepcopy(parent_ast) # TODO: do we need to deepcopy here?
-            best_parent_patchlist = copy.deepcopy(parent_patchlist)
+            winner_patchlist = parent_patchlist
     
-    return best_parent_patchlist, best_parent_ast
+    winner_ast = copy.deepcopy(orig_ast)
+    winner_ast = mutation_op.ast_from_patchlist(winner_ast, winner_patchlist)
+    
+    return copy.deepcopy(winner_patchlist), winner_ast
 
 def calc_candidate_fitness(fileName):
     print("Running VCS simulation")
@@ -602,7 +578,7 @@ def main():
     codegen = ASTCodeGenerator()
 
     # parse the files (in filelist) to ASTs (PyVerilog ast)
-    ast, directives = parse(filelist,
+    ast, directives = parse(list(filelist[1]),
                             preprocess_include=options.include,
                             preprocess_define=options.define)
 
@@ -648,7 +624,33 @@ def main():
             # rslt = codegen.visit(child_ast)
             # print(rslt)
             print(child_patchlist)
-            # print("\n################################################\n")
+
+            # calculate child fitness
+            if str(child_patchlist) in GENOME_FITNESS_CACHE:
+                child_fitness = GENOME_FITNESS_CACHE[str(child_patchlist)]
+            else:
+                f = open("candidate.v", "w+")
+                code = codegen.visit(child_ast)
+                f.write(code)
+                f.close()
+
+                child_fitness = -1
+                # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
+                try:
+                    ast, directives = parse(["candidate.v"])
+                except ParseError:
+                    child_fitness = 0
+                # if the child fitness was not 0, i.e. the parser did not throw syntax errors
+                if child_fitness == -1: 
+                    child_fitness = calc_candidate_fitness("candidate.v")
+                
+                GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
+
+                if parent_fitness == 1.0:
+                    print("######## REPAIR FOUND ########")
+                    print(code)
+                    print(child_patchlist)
+                    sys.exit(1)
 
             _children.append(child_patchlist)
         
