@@ -60,7 +60,7 @@ def calculate_fitness(oracle, sim, weights_file, weighting):
     
     if len(oracle) != len(sim): # TODO: change this to append the sim file to match oracle length with x-bits
         # resize_sim(oracle, sim)
-        return 0
+        return 0, 1
 
     fitness = 0
     total_possible = 0 
