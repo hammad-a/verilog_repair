@@ -3,6 +3,7 @@ import os
 from optparse import OptionParser
 import copy
 import random
+import time 
 
 # genprog: Class Rep: you need to write your own class 
 # the next line can be removed after installation
@@ -543,6 +544,7 @@ def calc_candidate_fitness(fileName):
     normalized_ff = ff/total_possible
     if normalized_ff < 0: normalized_ff = 0
     print("FITNESS = %f" % normalized_ff)
+    #time.sleep(10)
 
     os.remove("output.txt")
 
@@ -593,6 +595,8 @@ def main():
     print(codegen.visit(ast))
     print("\n")
 
+    start_time = time.time()
+
     # Generate the bit-weights
     bashCmd = ["python3", "bit_weighting.py", SRC_FILE]
     process = subprocess.Popen(bashCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -600,8 +604,8 @@ def main():
     # process = subprocess.run(bashCmd, capture_output=True, check=True)
     # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
-    GENS = 4
-    POPSIZE = 10
+    GENS = 6
+    POPSIZE = 100
 
     mutation_op = MutationOp(POPSIZE)
 
@@ -618,22 +622,25 @@ def main():
     # mutation_op.ast_from_patchlist(patch, tmp)
     # patch.show()
     # print(codegen.visit(patch))
-    import time 
+    
     for i in range(GENS): # for each generation
         print("IN GENERATION %d" % i)
-        time.sleep(3)
+        time.sleep(2)
         _children = []
 
         elite_parents = None
         if i > 0: elite_parents = get_elite_parents(popn)
-
-        if elite_parents:
-            print(elite_parents)
-            sys.exit(1)
         
         while len(_children) < POPSIZE:
             # time.sleep(2) # use this to slow down the processing for debugging purposes
-            parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
+            if elite_parents and random.random() < 0.15: # 15% chance of using a random elitist parent
+                print("Choosing an elitist parent")
+                tmp = random.choice(elite_parents)
+                parent_patchlist = copy.deepcopy(tmp[0])
+                parent_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), parent_patchlist)
+            else:
+                print("Choosing an tournament selection parent")
+                parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
 
             p = random.random()
             if p >= 0.5:
@@ -660,11 +667,12 @@ def main():
                 child_fitness = -1
                 # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
                 try:
-                    ast, directives = parse(["candidate.v"])
+                    tmp_ast, directives = parse(["candidate.v"])
                 except ParseError:
                     child_fitness = 0
                 # if the child fitness was not 0, i.e. the parser did not throw syntax errors
                 if child_fitness == -1: 
+                    
                     child_fitness = calc_candidate_fitness("candidate.v")
 
                 os.remove("candidate.v")
@@ -677,6 +685,8 @@ def main():
                     print("######## REPAIR FOUND ########")
                     print(code)
                     print(child_patchlist)
+                    total_time = time.time() - start_time
+                    print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
                     sys.exit(1)
 
             _children.append(child_patchlist)
