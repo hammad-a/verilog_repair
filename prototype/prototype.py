@@ -55,7 +55,7 @@ MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfState
 """
 Valid targets for the delete and insert operators.
 """
-DELETE_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign", "Wire"]
+DELETE_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign"]
 INSERT_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign"]
 
 WRITE_TO_FILE = True
@@ -495,7 +495,7 @@ class MutationOp(ASTCodeGenerator):
 def tournament_selection(mutation_op, codegen, orig_ast, popn):
     # Choose 10 random candidates for parent selection
     pool = copy.deepcopy(popn)
-    while len(pool) > 4:
+    while len(pool) > 5:
         r = random.choice(pool)
         pool.remove(r)
 
@@ -518,9 +518,10 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
 
 def calc_candidate_fitness(fileName):
     print("Running VCS simulation")
+    #os.system("cat %s" % fileName)
     os.system("""source /etc/profile.d/modules.sh
 	module load vcs/2017.12-SP2-1
-	timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s candidate.v -o simv -R""" % TEST_BENCH)
+	timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s %s -o simv -R""" % (TEST_BENCH, fileName))
     #process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
 
     if not os.path.exists("output.txt"): return 0 # if the code does not compile, return 0
@@ -546,6 +547,13 @@ def calc_candidate_fitness(fileName):
     os.remove("output.txt")
 
     return normalized_ff
+
+def get_elite_parents(popn):
+    elite = []
+    for parent in popn:
+        elite.append((parent, GENOME_FITNESS_CACHE[str(parent)]))
+    elite.sort(key = lambda x: x[1])
+    return elite[-3:]
 
 def main():
     INFO = "Verilog code parser"
@@ -576,9 +584,8 @@ def main():
         showVersion()
 
     codegen = ASTCodeGenerator()
-
     # parse the files (in filelist) to ASTs (PyVerilog ast)
-    ast, directives = parse(list(filelist[1]),
+    ast, directives = parse([sys.argv[1]],
                             preprocess_include=options.include,
                             preprocess_define=options.define)
 
@@ -593,24 +600,39 @@ def main():
     # process = subprocess.run(bashCmd, capture_output=True, check=True)
     # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
-    GENS = 2
-    POPSIZE = 150
+    GENS = 4
+    POPSIZE = 10
 
     mutation_op = MutationOp(POPSIZE)
 
     popn = []
     popn.append([])
 
+    # calculate fitness of the original buggy program
+    orig_fitness = calc_candidate_fitness(SRC_FILE)
+    GENOME_FITNESS_CACHE[str([])] = orig_fitness
+    print("Original program fitness = %f" % orig_fitness)
+
     # tmp = ['delete(74)', 'insert(65,65)', 'replace(44,82)']
     # patch = copy.deepcopy(ast)
     # mutation_op.ast_from_patchlist(patch, tmp)
     # patch.show()
     # print(codegen.visit(patch))
-
+    import time 
     for i in range(GENS): # for each generation
+        print("IN GENERATION %d" % i)
+        time.sleep(3)
         _children = []
 
+        elite_parents = None
+        if i > 0: elite_parents = get_elite_parents(popn)
+
+        if elite_parents:
+            print(elite_parents)
+            sys.exit(1)
+        
         while len(_children) < POPSIZE:
+            # time.sleep(2) # use this to slow down the processing for debugging purposes
             parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
 
             p = random.random()
@@ -623,8 +645,9 @@ def main():
             #child_ast.show()
             # rslt = codegen.visit(child_ast)
             # print(rslt)
+            print()
             print(child_patchlist)
-
+            
             # calculate child fitness
             if str(child_patchlist) in GENOME_FITNESS_CACHE:
                 child_fitness = GENOME_FITNESS_CACHE[str(child_patchlist)]
@@ -643,10 +666,14 @@ def main():
                 # if the child fitness was not 0, i.e. the parser did not throw syntax errors
                 if child_fitness == -1: 
                     child_fitness = calc_candidate_fitness("candidate.v")
+
+                os.remove("candidate.v")
                 
                 GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
+                print(child_fitness)
+                print("\n\n#################\n\n")
 
-                if parent_fitness == 1.0:
+                if child_fitness == 1.0:
                     print("######## REPAIR FOUND ########")
                     print(code)
                     print(child_patchlist)
