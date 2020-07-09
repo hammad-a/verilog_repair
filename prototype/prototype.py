@@ -550,14 +550,17 @@ def calc_candidate_fitness(fileName):
 
     return normalized_ff
 
-def get_elite_parents(popn):
+def get_elite_parents(popn, pop_size):
+    elite_size = int(5/100 * pop_size)
     elite = []
     for parent in popn:
         elite.append((parent, GENOME_FITNESS_CACHE[str(parent)]))
     elite.sort(key = lambda x: x[1])
-    return elite[-3:]
+    return elite[-elite_size:]
 
 def main():
+    start_time = time.time()
+
     INFO = "Verilog code parser"
     USAGE = "Usage: python example_parser.py file ..."
 
@@ -595,8 +598,6 @@ def main():
     print(codegen.visit(ast))
     print("\n")
 
-    start_time = time.time()
-
     # Generate the bit-weights
     bashCmd = ["python3", "bit_weighting.py", SRC_FILE]
     process = subprocess.Popen(bashCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -604,43 +605,32 @@ def main():
     # process = subprocess.run(bashCmd, capture_output=True, check=True)
     # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
-    GENS = 6
-    POPSIZE = 100
+    GENS = 3
+    POPSIZE = 10
 
     mutation_op = MutationOp(POPSIZE)
-
-    popn = []
-    popn.append([])
 
     # calculate fitness of the original buggy program
     orig_fitness = calc_candidate_fitness(SRC_FILE)
     GENOME_FITNESS_CACHE[str([])] = orig_fitness
     print("Original program fitness = %f" % orig_fitness)
 
-    # tmp = ['delete(74)', 'insert(65,65)', 'replace(44,82)']
-    # patch = copy.deepcopy(ast)
-    # mutation_op.ast_from_patchlist(patch, tmp)
-    # patch.show()
-    # print(codegen.visit(patch))
+    popn = []
+    popn.append([])
     
     for i in range(GENS): # for each generation
         print("IN GENERATION %d" % i)
         time.sleep(2)
         _children = []
 
-        elite_parents = None
-        if i > 0: elite_parents = get_elite_parents(popn)
+        if i > 0: 
+            elite_parents = get_elite_parents(popn, POPSIZE)
+            for parent in elite_parents:
+                _children.append(parent[0])
         
         while len(_children) < POPSIZE:
             # time.sleep(2) # use this to slow down the processing for debugging purposes
-            if elite_parents and random.random() < 0.15: # 15% chance of using a random elitist parent
-                print("Choosing an elitist parent")
-                tmp = random.choice(elite_parents)
-                parent_patchlist = copy.deepcopy(tmp[0])
-                parent_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), parent_patchlist)
-            else:
-                print("Choosing an tournament selection parent")
-                parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
+            parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
 
             p = random.random()
             if p >= 0.5:
@@ -695,6 +685,14 @@ def main():
 
         for i in popn: print(i)
         print()
+    
+    best_patches = get_elite_parents(popn, POPSIZE)
+    
+    total_time = time.time() - start_time
+    print("TOTAL TIME TAKEN = %f" % total_time)
+
+    for repair in best_patches:
+        print(repair)
         
         # for j in range(POPSIZE): # for each genome
         #     genome = pop[j]
