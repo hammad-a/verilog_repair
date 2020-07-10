@@ -606,7 +606,7 @@ def main():
     # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
     GENS = 3
-    POPSIZE = 10
+    POPSIZE = 500
 
     mutation_op = MutationOp(POPSIZE)
 
