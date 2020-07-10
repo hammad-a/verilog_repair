@@ -546,8 +546,6 @@ def calc_candidate_fitness(fileName):
     print("FITNESS = %f" % normalized_ff)
     #time.sleep(10)
 
-    os.remove("output.txt")
-
     return normalized_ff
 
 def get_elite_parents(popn, pop_size):
@@ -557,6 +555,47 @@ def get_elite_parents(popn, pop_size):
         elite.append((parent, GENOME_FITNESS_CACHE[str(parent)]))
     elite.sort(key = lambda x: x[1])
     return elite[-elite_size:]
+
+def strip_bits(bits):
+    for i in range(len(bits)):
+        bits[i] = bits[i].strip()
+    return bits
+
+def get_output_mismatch():
+    f = open("oracle.txt", "r")
+    oracle = f.readlines()
+    f.close()
+
+    f = open("output.txt", "r")
+    sim = f.readlines()
+    f.close()
+
+    diff_bits = []
+
+    headers = strip_bits(oracle[0].split(","))
+
+    if len(oracle) != len(sim): # if the output and oracle are not the same length, all output wires are defined to be mismatched
+        diff_bits = headers
+
+    for i in range(1, len(oracle)):
+        clk = oracle[i].split(",")[0]
+        tmp_oracle = strip_bits(oracle[i].split(",")[1:])
+        tmp_sim = strip_bits(sim[i].split(",")[1:])
+        
+        for b in range(len(tmp_oracle)):
+            if tmp_oracle[b] != tmp_sim[b]:
+                diff_bits.append(headers[b+1]) # offset by 1 since clk is also a header and is not an actual output
+   
+    res = set()
+
+    for i in range(len(diff_bits)):
+        tmp = diff_bits[i]
+        if "[" in tmp:      
+            res.add(tmp.split("[")[0])
+        else:
+            res.add(tmp)
+
+    return res
 
 def main():
     start_time = time.time()
@@ -578,7 +617,7 @@ def main():
                          default=[],help="Macro Definition")
     (options, args) = optparser.parse_args()
 
-    filelist = args
+    filelist = args[:-1]
     if options.showversion:
         showVersion()
 
@@ -598,6 +637,25 @@ def main():
     print(codegen.visit(ast))
     print("\n")
 
+    GENS = 3
+    POPSIZE = 500
+    FAULT_LOC = False
+    for i in range(3, len(sys.argv)):
+        param = sys.argv[i]        
+        if "gens" in param.lower():
+            GENS = int(param.split("=")[1])
+            print("Using GENS = %d" % GENS)
+        elif "popsize" in param.lower():
+            POPSIZE = int(param.split("=")[1])
+            print("Using POPSIZE = %d" % POPSIZE)
+        elif "fault_loc" in param.lower():
+            val = param.split("=")[1]            
+            if "true" in val.lower(): FAULT_LOC = True
+            if "false" in val.lower(): FAULT_LOC = False
+            print("Using FAULT_LOC = %s" % FAULT_LOC) 
+
+    print("\n\n")
+
     # Generate the bit-weights
     bashCmd = ["python3", "bit_weighting.py", SRC_FILE]
     process = subprocess.Popen(bashCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -605,15 +663,19 @@ def main():
     # process = subprocess.run(bashCmd, capture_output=True, check=True)
     # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
-    GENS = 3
-    POPSIZE = 500
-
     mutation_op = MutationOp(POPSIZE)
 
     # calculate fitness of the original buggy program
     orig_fitness = calc_candidate_fitness(SRC_FILE)
     GENOME_FITNESS_CACHE[str([])] = orig_fitness
     print("Original program fitness = %f" % orig_fitness)
+
+    mismatch_set = get_output_mismatch()
+    print(mismatch_set)
+    
+    os.remove("output.txt")
+
+    sys.exit(1)
 
     popn = []
     popn.append([])
@@ -664,6 +726,7 @@ def main():
                 if child_fitness == -1: 
                     
                     child_fitness = calc_candidate_fitness("candidate.v")
+                    os.remove("output.txt")
 
                 os.remove("candidate.v")
                 
