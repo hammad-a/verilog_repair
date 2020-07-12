@@ -68,12 +68,12 @@ TEST_BENCH = sys.argv[2]
 
 class MutationOp(ASTCodeGenerator):
 
-    def __init__(self, popsize):
+    def __init__(self, popsize, fault_loc):
         self.numbering = NodeNumbering()
         self.popsize = popsize
-        self.patch_list = {} # dictionary from genome number to the patch_list
-        for i in range(self.popsize): self.patch_list[i] = []
+        self.fault_loc = fault_loc
         # temporary variables used for storing data for the mutation operators
+        self.fault_loc_set = set()
         self.tmp_node = None 
         self.deletable_nodes = []
         self.insertable_nodes = []
@@ -169,17 +169,20 @@ class MutationOp(ASTCodeGenerator):
     """
     def insert_stmt_node(self, ast, node, after_id): 
         if ast.__class__.__name__ == "Block":
-            insert_point = -1
-            for i in range(len(ast.statements)):
-                stmt = ast.statements[i]
-                if stmt and stmt.node_id == after_id:
-                    insert_point = i + 1
-                    break
-            if insert_point != -1:
-                # print(ast.statements)
-                ast.statements.insert(insert_point, copy.deepcopy(node))
-                # print(ast.statements)
-                return
+            if after_id == ast.node_id:
+                ast.statements.insert(0, copy.deepcopy(node))
+            else:
+                insert_point = -1
+                for i in range(len(ast.statements)):
+                    stmt = ast.statements[i]
+                    if stmt and stmt.node_id == after_id:
+                        insert_point = i + 1
+                        break
+                if insert_point != -1:
+                    # print(ast.statements)
+                    ast.statements.insert(insert_point, copy.deepcopy(node))
+                    # print(ast.statements)
+                    return
 
         for c in ast.children():
             if c: self.insert_stmt_node(c, node, after_id)
@@ -209,8 +212,13 @@ class MutationOp(ASTCodeGenerator):
     Gets a list of all nodes that can be inserted into to a begin ... end block.
     """
     def get_insertable_nodes(self, ast):
-        if ast.__class__.__name__ in INSERT_TARGETS:
-            self.insertable_nodes.append(ast.node_id)
+        # with fault localization, make sure that any node being used is also in INSERT_TARGETS (to avoid inserting, e.g., overflow+1 into a block statement
+        if self.fault_loc and len(self.fault_loc_set) > 0: 
+            if ast.node_id in self.fault_loc_set and ast.__class__.__name__ in INSERT_TARGETS:
+                self.insertable_nodes.append(ast.node_id)
+        else:        
+            if ast.__class__.__name__ in INSERT_TARGETS:
+                self.insertable_nodes.append(ast.node_id)
 
         for c in ast.children():
             if c: self.get_insertable_nodes(c) 
@@ -250,7 +258,26 @@ class MutationOp(ASTCodeGenerator):
                     if c: self.stmt_nodes.append(c.node_id)
         
         for c in ast.children():
-            if c: self.get_nodes_in_block_stmt(c) 
+            if c: self.get_nodes_in_block_stmt(c)
+
+    """
+    Given a set of output wires that mismatch with the oracle, get a list of node IDs that are potential fault localization targets.
+    """
+    def get_fault_loc_targets(self, ast, mismatch_set, include_all_subnodes=False):
+        if ast.__class__.__name__ in ["BlockingSubstitution", "NonblockingSubstitution"]:
+            if ast.left and ast.left.var and ast.left.var.name in mismatch_set:
+                self.fault_loc_set.add(ast.node_id)
+                include_all_subnodes = True
+                for c in ast.children():
+                    if c: self.fault_loc_set.add(c.node_id)
+
+        if include_all_subnodes: # recurisvely ensure all children of a fault loc target are also included in the fault loc set
+            self.fault_loc_set.add(ast.node_id)
+            for c in ast.children():
+                if c: self.get_fault_loc_targets(c, mismatch_set, include_all_subnodes)
+        
+        for c in ast.children():
+            if c: self.get_fault_loc_targets(c, mismatch_set, include_all_subnodes)
     
     """
     The delete, insert, and replace operators to be called from outside the class.
@@ -258,11 +285,14 @@ class MutationOp(ASTCodeGenerator):
     """
     def delete(self, ast, patch_list, node_id=None):
         if node_id == None:
-            self.get_deletable_nodes(ast) # get all nodes that can be deleted without breaking the AST / syntax
-            if len(self.deletable_nodes) == 0: # if no nodes can be deleted, return without attepmting delete
-                print("Delete operation not possible. Returning with no-op.")
-                return patch_list, ast
-            node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
+            if self.fault_loc and len(self.fault_loc_set) > 0:
+                node_id = random.choice(tuple(self.fault_loc_set)) # get a fault loc target if fault localization is being used
+            else:
+                self.get_deletable_nodes(ast) # get all nodes that can be deleted without breaking the AST / syntax
+                if len(self.deletable_nodes) == 0: # if no nodes can be deleted, return without attepmting delete
+                    print("Delete operation not possible. Returning with no-op.")
+                    return patch_list, ast
+                node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
             print("Deleting node with id %s\n" % node_id)
 
         self.delete_node(ast, node_id) # delete the node corresponding to node_id
@@ -299,14 +329,16 @@ class MutationOp(ASTCodeGenerator):
 
         return child_patchlist, ast
     
-    # TODO: Possible bug -> sometimes replacement nodes are not compatible in terms of their classes?
     def replace(self, ast, patch_list, node_id=None, with_id=None):
         if node_id == None:
             if self.max_node_id == -1: # if max_id is not know yet, traverse the AST to find the number of nodes -- needed to pick a random id to replace
                 self.numbering.renumber(ast)
                 self.max_node_id = self.numbering.c
                 self.numbering.c = -1 # reset the counter for numbering
-            node_id = random.randint(0,self.max_node_id) # get random node id to replace
+            if self.fault_loc and len(self.fault_loc_set) > 0:
+                node_id = random.choice(tuple(self.fault_loc_set)) # get a fault loc target if fault localization is being used
+            else:            
+                node_id = random.randint(0,self.max_node_id) # get random node id to replace
             print("Node to replace id: %s" % node_id)
 
         if with_id == None: 
@@ -473,7 +505,8 @@ def main():
                          default=[],help="Macro Definition")
     (options, args) = optparser.parse_args()
 
-    filelist = args[:-1]
+    filelist = args[0:2]
+
     if options.showversion:
         showVersion()
 
@@ -493,7 +526,7 @@ def main():
     print(codegen.visit(ast))
     print("\n")
 
-    GENS = 3
+    GENS = 4
     POPSIZE = 500
     FAULT_LOC = False
     for i in range(3, len(sys.argv)):
@@ -519,99 +552,138 @@ def main():
     # process = subprocess.run(bashCmd, capture_output=True, check=True)
     # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
-    mutation_op = MutationOp(POPSIZE)
+    mutation_op = MutationOp(POPSIZE, FAULT_LOC)
+
+    #seed_patchlist, seed_ast = mutation_op.insert(copy.deepcopy(ast), [], 53, 78)
+    #seed_ast.show()
+    #tmp1 = codegen.visit(seed_ast)
+    #f = open("candidate.v", "w+")
+    #f.write(tmp1)
+    #f.close()
+    #ff_1 = calc_candidate_fitness("candidate.v")
+    #print(ff_1)
+    #os.remove("candidate.v")
+
+    #mutation_op.get_fault_loc_targets(seed_ast, mismatch_set) # compute fault localization for the parent
+    #print("Fault Localization:", str(mutation_op.fault_loc_set))
+    #exit(1)
+
+    #seed2_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), seed_patchlist)
+    #seed2_patchlist, seed2_ast = mutation_op.replace(seed2_ast, seed_patchlist, 83, 44)
+    #seed2_ast.show()
+    #tmp1 = codegen.visit(seed2_ast)
+    #f = open("candidate.v", "w+")
+    #f.write(tmp1)
+    #f.close()
+    #print(tmp1)
+    #print(seed2_patchlist)
+    #ff_1 = calc_candidate_fitness("candidate.v")
+    #print(ff_1)
+    #os.remove("candidate.v")
+    #exit(1)
 
     # calculate fitness of the original buggy program
     orig_fitness = calc_candidate_fitness(SRC_FILE)
+    #orig_fitness = ff_1
     GENOME_FITNESS_CACHE[str([])] = orig_fitness
+    #GENOME_FITNESS_CACHE[str(['insert(53,78)'])] = orig_fitness
     print("Original program fitness = %f" % orig_fitness)
 
     mismatch_set = get_output_mismatch()
     print(mismatch_set)
     
-    os.remove("output.txt")
+    if os.path.exists("output.txt"): os.remove("output.txt")
 
-    sys.exit(1)
+    best_patches = dict()
 
-    popn = []
-    popn.append([])
+    for restart_attempt in range(5):
+        popn = []
+        popn.append([])
+        #popn.append(['insert(53,78)'])
     
-    for i in range(GENS): # for each generation
-        print("IN GENERATION %d" % i)
-        time.sleep(2)
-        _children = []
+        for i in range(GENS): # for each generation
+            print("IN GENERATION %d OF ATTEMPT %d" % (i, restart_attempt))
+            time.sleep(2)
+            _children = []
 
-        if i > 0: 
-            elite_parents = get_elite_parents(popn, POPSIZE)
-            for parent in elite_parents:
-                _children.append(parent[0])
-        
-        while len(_children) < POPSIZE:
-            # time.sleep(2) # use this to slow down the processing for debugging purposes
-            parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
-
-            p = random.random()
-            if p >= 0.5:
-                child_patchlist, child_ast = mutation_op.replace(parent_ast, parent_patchlist)
-            elif p >= 0.25:
-                child_patchlist, child_ast = mutation_op.delete(parent_ast, parent_patchlist)
-            else:
-                child_patchlist, child_ast = mutation_op.insert(parent_ast, parent_patchlist)
-            #child_ast.show()
-            # rslt = codegen.visit(child_ast)
-            # print(rslt)
-            print()
-            print(child_patchlist)
+            if i > 0: 
+                elite_parents = get_elite_parents(popn, POPSIZE)
+                for parent in elite_parents:
+                    _children.append(parent[0])
             
-            # calculate child fitness
-            if str(child_patchlist) in GENOME_FITNESS_CACHE:
-                child_fitness = GENOME_FITNESS_CACHE[str(child_patchlist)]
-            else:
-                f = open("candidate.v", "w+")
-                code = codegen.visit(child_ast)
-                f.write(code)
-                f.close()
+            while len(_children) < POPSIZE:
+                # time.sleep(2) # use this to slow down the processing for debugging purposes
+                parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
 
-                child_fitness = -1
-                # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
-                try:
-                    tmp_ast, directives = parse(["candidate.v"])
-                except ParseError:
-                    child_fitness = 0
-                # if the child fitness was not 0, i.e. the parser did not throw syntax errors
-                if child_fitness == -1: 
-                    
-                    child_fitness = calc_candidate_fitness("candidate.v")
-                    os.remove("output.txt")
+                mutation_op.get_fault_loc_targets(parent_ast, mismatch_set) # compute fault localization for the parent
+                print("Fault Localization:", str(mutation_op.fault_loc_set))
 
-                os.remove("candidate.v")
+                p = random.random()
+                if p >= 2/3:
+                    child_patchlist, child_ast = mutation_op.replace(parent_ast, parent_patchlist)
+                elif p >= 1/3:
+                    child_patchlist, child_ast = mutation_op.delete(parent_ast, parent_patchlist)
+                else:
+                    child_patchlist, child_ast = mutation_op.insert(parent_ast, parent_patchlist)
+
+                #child_ast.show()
+                # rslt = codegen.visit(child_ast)
+                # print(rslt)
+                print()
+                print(child_patchlist)
                 
-                GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
-                print(child_fitness)
-                print("\n\n#################\n\n")
+                # calculate child fitness
+                if str(child_patchlist) in GENOME_FITNESS_CACHE:
+                    child_fitness = GENOME_FITNESS_CACHE[str(child_patchlist)]
+                else:
+                    f = open("candidate.v", "w+")
+                    code = codegen.visit(child_ast)
+                    f.write(code)
+                    f.close()
 
-                if child_fitness == 1.0:
-                    print("######## REPAIR FOUND ########")
-                    print(code)
-                    print(child_patchlist)
-                    total_time = time.time() - start_time
-                    print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
-                    sys.exit(1)
+                    child_fitness = -1
+                    # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
+                    try:
+                        tmp_ast, directives = parse(["candidate.v"])
+                    except ParseError:
+                        child_fitness = 0
+                    # if the child fitness was not 0, i.e. the parser did not throw syntax errors
+                    if child_fitness == -1: 
+                        
+                        child_fitness = calc_candidate_fitness("candidate.v")
+                        if os.path.exists("output.txt"): os.remove("output.txt")
 
-            _children.append(child_patchlist)
-        
-        popn = copy.deepcopy(_children)
+                    os.remove("candidate.v")
+                    
+                    GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
+                    print(child_fitness)
+                    print("\n\n#################\n\n")
 
-        for i in popn: print(i)
-        print()
+                    if child_fitness == 1.0:
+                        print("######## REPAIR FOUND IN ATTEMPT %d ########" % restart_attempt)
+                        print(code)
+                        print(child_patchlist)
+                        total_time = time.time() - start_time
+                        print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
+                        sys.exit(1)
+
+                _children.append(child_patchlist)
+                mutation_op.fault_loc_set = set() # reset the fault localization for the next parent
+            
+            popn = copy.deepcopy(_children)
+
+            for i in popn: print(i)
+            print()
     
-    best_patches = get_elite_parents(popn, POPSIZE)
+        best_patches[restart_attempt] = get_elite_parents(popn, POPSIZE)
     
     total_time = time.time() - start_time
     print("TOTAL TIME TAKEN = %f" % total_time)
 
-    for repair in best_patches:
-        print(repair)
+    for attempt in best_patches:
+        print("Attempt number %d" % attempt)
+        for candidate in best_patches[attempt]: print(candidate)
+        print()
         
         # for j in range(POPSIZE): # for each genome
         #     genome = pop[j]
