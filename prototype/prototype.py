@@ -74,6 +74,7 @@ class MutationOp(ASTCodeGenerator):
         self.fault_loc = fault_loc
         # temporary variables used for storing data for the mutation operators
         self.fault_loc_set = set()
+        self.new_vars_in_fault_loc = dict()
         self.tmp_node = None 
         self.deletable_nodes = []
         self.insertable_nodes = []
@@ -202,8 +203,13 @@ class MutationOp(ASTCodeGenerator):
     Gets a list of all nodes that can be deleted.
     """
     def get_deletable_nodes(self, ast):
-        if ast.__class__.__name__ in DELETE_TARGETS:
-            self.deletable_nodes.append(ast.node_id)
+        # with fault localization, make sure that any node being deleted is also in DELETE_TARGETS 
+        if self.fault_loc and len(self.fault_loc_set) > 0:
+            if ast.node_id in self.fault_loc_set and ast.__class__.__name__ in DELETE_TARGETS:
+                self.deletable_nodes.append(ast.node_id)
+        else:
+            if ast.__class__.__name__ in DELETE_TARGETS:
+                self.deletable_nodes.append(ast.node_id)
 
         for c in ast.children():
             if c: self.get_deletable_nodes(c) 
@@ -212,7 +218,7 @@ class MutationOp(ASTCodeGenerator):
     Gets a list of all nodes that can be inserted into to a begin ... end block.
     """
     def get_insertable_nodes(self, ast):
-        # with fault localization, make sure that any node being used is also in INSERT_TARGETS (to avoid inserting, e.g., overflow+1 into a block statement
+        # with fault localization, make sure that any node being used is also in INSERT_TARGETS (to avoid inserting, e.g., overflow+1 into a block statement)
         if self.fault_loc and len(self.fault_loc_set) > 0: 
             if ast.node_id in self.fault_loc_set and ast.__class__.__name__ in INSERT_TARGETS:
                 self.insertable_nodes.append(ast.node_id)
@@ -261,23 +267,55 @@ class MutationOp(ASTCodeGenerator):
             if c: self.get_nodes_in_block_stmt(c)
 
     """
+    Control dependency analysis of the given program branch.
+    """
+    def analyze_program_branch(self, ast, cond, mismatch_set, uniq_headers):
+        if ast:
+            if ast.__class__.__name__ == "Identifier" and (ast.name in mismatch_set or ast.name in tuple(self.new_vars_in_fault_loc.values())):
+                self.add_node_and_children_to_fault_loc(cond, mismatch_set, uniq_headers)
+
+            for c in ast.children():
+                self.analyze_program_branch(c, cond, mismatch_set, uniq_headers)
+
+    """
+    Add node and its children to the fault loc set.    
+    """
+    def add_node_and_children_to_fault_loc(self, ast, mismatch_set, uniq_headers):
+        self.fault_loc_set.add(ast.node_id)
+        for c in ast.children():
+            if c:
+                # add all children node (that were not in the output mismatch) to fault loc
+                if not (c.__class__.__name__ == "Identifier" and c.name in uniq_headers and c.name not in mismatch_set): self.fault_loc_set.add(c.node_id) 
+                # add all children identifiers to depedency set
+                if c.__class__.__name__ == "Identifier" and c.name not in mismatch_set and c.name not in uniq_headers: self.new_vars_in_fault_loc[c.node_id] = c.name 
+
+    """
     Given a set of output wires that mismatch with the oracle, get a list of node IDs that are potential fault localization targets.
     """
-    def get_fault_loc_targets(self, ast, mismatch_set, include_all_subnodes=False):
-        if ast.__class__.__name__ in ["BlockingSubstitution", "NonblockingSubstitution"]:
-            if ast.left and ast.left.var and ast.left.var.name in mismatch_set:
-                self.fault_loc_set.add(ast.node_id)
-                include_all_subnodes = True
-                for c in ast.children():
-                    if c: self.fault_loc_set.add(c.node_id)
+    def get_fault_loc_targets(self, ast, mismatch_set, uniq_headers, include_all_subnodes=False):
+        # data dependency analysis
+        if ast.__class__.__name__ in ["BlockingSubstitution", "NonblockingSubstitution", "Assign"]: # for assignment statements =, <=
+            if ast.left and ast.left.var:
+                if ast.left.var.__class__.__name__ == "Identifier" and ast.left.var.name in mismatch_set: # single assignment
+                    include_all_subnodes = True
+                    self.add_node_and_children_to_fault_loc(ast, mismatch_set, uniq_headers)
+                elif ast.left.var.__class__.__name__ == "LConcat": # l-concat / multiple assignments
+                    for v in ast.left.var.list: 
+                        if v.name in mismatch_set:
+                            include_all_subnodes = True
+                            self.add_node_and_children_to_fault_loc(ast, mismatch_set, uniq_headers)
+        
+        # control dependency analysis        
+        elif ast.__class__.__name__ == "IfStatement":
+            self.analyze_program_branch(ast.true_statement, ast.cond, mismatch_set, uniq_headers)
+            self.analyze_program_branch(ast.false_statement, ast.cond, mismatch_set, uniq_headers)
 
         if include_all_subnodes: # recurisvely ensure all children of a fault loc target are also included in the fault loc set
-            self.fault_loc_set.add(ast.node_id)
-            for c in ast.children():
-                if c: self.get_fault_loc_targets(c, mismatch_set, include_all_subnodes)
+            if not (ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name in uniq_headers): self.fault_loc_set.add(ast.node_id)
+            if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers: self.new_vars_in_fault_loc[ast.node_id] = ast.name
         
         for c in ast.children():
-            if c: self.get_fault_loc_targets(c, mismatch_set, include_all_subnodes)
+            if c: self.get_fault_loc_targets(c, mismatch_set, uniq_headers, include_all_subnodes)
     
     """
     The delete, insert, and replace operators to be called from outside the class.
@@ -285,14 +323,11 @@ class MutationOp(ASTCodeGenerator):
     """
     def delete(self, ast, patch_list, node_id=None):
         if node_id == None:
-            if self.fault_loc and len(self.fault_loc_set) > 0:
-                node_id = random.choice(tuple(self.fault_loc_set)) # get a fault loc target if fault localization is being used
-            else:
-                self.get_deletable_nodes(ast) # get all nodes that can be deleted without breaking the AST / syntax
-                if len(self.deletable_nodes) == 0: # if no nodes can be deleted, return without attepmting delete
-                    print("Delete operation not possible. Returning with no-op.")
-                    return patch_list, ast
-                node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
+            self.get_deletable_nodes(ast) # get all nodes that can be deleted without breaking the AST / syntax
+            if len(self.deletable_nodes) == 0: # if no nodes can be deleted, return without attepmting delete
+                print("Delete operation not possible. Returning with no-op.")
+                return patch_list, ast
+            node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
             print("Deleting node with id %s\n" % node_id)
 
         self.delete_node(ast, node_id) # delete the node corresponding to node_id
@@ -483,7 +518,15 @@ def get_output_mismatch():
         else:
             res.add(tmp)
 
-    return res
+    uniq_headers = set()
+    for i in range(len(headers)):
+        tmp = headers[i]
+        if "[" in tmp:      
+            uniq_headers.add(tmp.split("[")[0])
+        else:
+            uniq_headers.add(tmp)
+
+    return res, uniq_headers
 
 def main():
     start_time = time.time()
@@ -523,7 +566,8 @@ def main():
                             preprocess_define=options.define)
 
     ast.show()
-    print(codegen.visit(ast))
+    src_code = codegen.visit(ast)
+    print(src_code)
     print("\n")
 
     GENS = 4
@@ -564,8 +608,21 @@ def main():
     #print(ff_1)
     #os.remove("candidate.v")
 
+    #mismatch_set = get_output_mismatch()
+    #print(mismatch_set)
+
     #mutation_op.get_fault_loc_targets(seed_ast, mismatch_set) # compute fault localization for the parent
     #print("Fault Localization:", str(mutation_op.fault_loc_set))
+    #while len(mutation_op.new_vars_in_fault_loc) > 0:
+    #    new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
+    #    print("New vars in fault loc:", new_mismatch_set)
+    #    mutation_op.new_vars_in_fault_loc = dict()
+    #    mismatch_set = mismatch_set.union(new_mismatch_set)
+    #    mutation_op.get_fault_loc_targets(parent_ast, mismatch_set) # compute fault localization for the parent
+    #    print("Fault Localization:", str(mutation_op.fault_loc_set))
+    #new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
+    #print("Final mismatch set:", mismatch_set)
+    #print(len(mutation_op.fault_loc_set))
     #exit(1)
 
     #seed2_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), seed_patchlist)
@@ -589,10 +646,12 @@ def main():
     #GENOME_FITNESS_CACHE[str(['insert(53,78)'])] = orig_fitness
     print("Original program fitness = %f" % orig_fitness)
 
-    mismatch_set = get_output_mismatch()
+    mismatch_set, uniq_headers = get_output_mismatch()
     print(mismatch_set)
     
     if os.path.exists("output.txt"): os.remove("output.txt")
+
+    #sys.exit(1)
 
     best_patches = dict()
 
@@ -615,8 +674,18 @@ def main():
                 # time.sleep(2) # use this to slow down the processing for debugging purposes
                 parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
 
-                mutation_op.get_fault_loc_targets(parent_ast, mismatch_set) # compute fault localization for the parent
+                mutation_op.get_fault_loc_targets(parent_ast, mismatch_set, uniq_headers) # compute fault localization for the parent
                 print("Fault Localization:", str(mutation_op.fault_loc_set))
+                while len(mutation_op.new_vars_in_fault_loc) > 0:
+                    new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
+                    print("New vars in fault loc:", new_mismatch_set)
+                    mutation_op.new_vars_in_fault_loc = dict()
+                    mismatch_set = mismatch_set.union(new_mismatch_set)
+                    mutation_op.get_fault_loc_targets(parent_ast, mismatch_set, uniq_headers)
+                    print("Fault Localization:", str(mutation_op.fault_loc_set))
+                new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
+                print("Final mismatch set:", mismatch_set)
+                print(len(mutation_op.fault_loc_set))
 
                 p = random.random()
                 if p >= 2/3:
