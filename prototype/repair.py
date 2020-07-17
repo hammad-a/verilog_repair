@@ -4,6 +4,8 @@ from optparse import OptionParser
 import copy
 import random
 import time 
+from datetime import datetime
+import math
 
 # genprog: Class Rep: you need to write your own class 
 # the next line can be removed after installation
@@ -14,7 +16,7 @@ from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 from pyverilog.vparser.plyparser import ParseError
 import pyverilog.vparser.ast as vast
 
-import fitness
+import fitness, fitness_v2
 
 AST_CLASSES = []
 
@@ -43,17 +45,6 @@ for i in range(len(AST_CLASSES)):
 #     print()
 
 """
-Valid mutation operators supported by the algorithm.
-"""
-VALID_MUTATIONS = ["swap_plus_minus", "increment_identifier", "decrement_identifier", "increment_rhand_eq", "decrement_rhand_eq",
-    "flip_if_cond", "flip_all_sens_edge", "flip_random_sens_edge", "increment_cond_vals", "decrement_cond_vals", "change_identifier_name"]
-
-"""
-Valid mutation operators supported by the algorithm.
-"""
-MUTATIONS_TARGETS = ["BlockingSubstitution", "NonblockingSubstitution", "IfStatement", "SensList", "Eq", "Cond", "Identifier"]
-
-"""
 Valid targets for the delete and insert operators.
 """
 DELETE_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign"]
@@ -63,8 +54,70 @@ WRITE_TO_FILE = True
 
 GENOME_FITNESS_CACHE = {}
 
-SRC_FILE = sys.argv[1]
-TEST_BENCH = sys.argv[2]
+SRC_FILE = None
+TEST_BENCH = None
+ORACLE = None
+GENS = 5
+POPSIZE = 200
+RESTARTS = 1
+FAULT_LOC = True
+CONTROL_FLOW = True
+LIMIT_TRANSITIVE_DEPENDENCY_SET = False
+DEPENDENCY_SET_MAX = 5
+
+config_file = open("repair.conf", "r")
+configs = config_file.readlines()
+for c in configs:
+    if c != "\n":
+        c = c.strip().split("=")
+        param, val = c[0].lower(), c[1]
+        if param == "src_file":
+            SRC_FILE = val
+            print("Using SRC_FILE = %s" % SRC_FILE)
+        elif param == "test_bench":
+            TEST_BENCH = val
+            print("Using TEST_BENCH = %s" % TEST_BENCH)
+        elif param == "oracle":
+            ORACLE = val
+            print("Using ORACLE = %s" % ORACLE)
+        elif param == "gens":
+            GENS = int(val)
+            print("Using GENS = %d" % GENS)
+        elif param == "popsize":
+            POPSIZE = int(val)
+            print("Using POPSIZE = %d" % POPSIZE)
+        elif param == "restarts":
+            RESTARTS = int(val)
+            print("Using RESTARTS = %d" % RESTARTS)
+        elif param == "fault_loc":          
+            if val.lower() == "true": FAULT_LOC = True
+            if val.lower() == "false": FAULT_LOC = False
+            print("Using FAULT_LOC = %s" % FAULT_LOC) 
+        elif param == "control_flow":          
+            if val.lower() == "true": CONTROL_FLOW = True
+            if val.lower() == "false": CONTROL_FLOW = False
+            print("Using CONTROL_FLOW = %s" % CONTROL_FLOW) 
+        elif param == "limit_transitive_dependency_set":          
+            if val.lower() == "true": LIMIT_TRANSITIVE_DEPENDENCY_SET = True
+            if val.lower() == "false": LIMIT_TRANSITIVE_DEPENDENCY_SET = False
+            print("Using LIMIT_TRANSITIVE_DEPENDENCY_SET = %s" % LIMIT_TRANSITIVE_DEPENDENCY_SET) 
+        elif param == "dependency_set_max":
+            DEPENDENCY_SET_MAX = int(val)
+            print("Using DEPENDENCY_SET_MAX = %d" % DEPENDENCY_SET_MAX)
+        else:
+            print("ERROR: Invalid parameter: %s" % param)
+            exit(1)
+config_file.close()
+
+if not SRC_FILE:
+    print("SRC_FILE not specified. Please check the configuration file.")
+    exit(1)
+elif not TEST_BENCH:
+    print("TEST_BENCH not specified. Please check the configuration file.")
+    exit(1)
+elif not ORACLE:
+    print("ORACLE not specified. Please check the configuration file.")
+    exit(1)
 
 class MutationOp(ASTCodeGenerator):
 
@@ -84,50 +137,6 @@ class MutationOp(ASTCodeGenerator):
         self.node_class_to_replace = None
         self.stmt_nodes = []
         self.max_node_id = -1
-
-    """ 
-    Replace node_x with new_expresssion in the AST.
-    """
-    def replace_with_expression(self, ast, old_node_id, new_expression):
-        attr = vars(ast)
-        for key in attr: # loop through all attributes of this AST
-            if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
-                if attr[key].node_id == old_node_id:
-                    self.get_ast_replacement(attr[key], new_expression)
-                    attr[key] = self.ast_from_text
-                    self.ast_from_text = None # reset self.ast_from_text for the next mutation
-            elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
-                for i in range(len(attr[key])): # loop through each AST in that list or tuple
-                    tmp = attr[key][i]
-                    if tmp.__class__ in AST_CLASSES and tmp.node_id == old_node_id:
-                        self.get_ast_replacement(tmp, new_expression)
-                        attr[key][i] = self.ast_from_text
-                        self.ast_from_text = None # reset self.ast_from_text for the next mutation
-
-        for c in ast.children():
-            if c: self.replace_with_expression(c, old_node_id, new_expression) 
-
-    # not used anymore!        
-    def get_ast_replacement(self, old, expression):
-        self.make_ast_from_text(expression)
-        new_ast = self.ast_from_text
-
-        def fix_lineno(a):
-            a.lineno = old.lineno
-            
-            for c1 in a.children():
-                if c1: fix_lineno(c1)
-
-        fix_lineno(self.ast_from_text) # fix the line numbers to match the line being replaced
-
-    """
-    Update the line number of an AST that has been inserted or replaced.
-    """
-    def fix_lineno(self, ast, orig_ast):
-        ast.lineno = orig_ast.lineno
-            
-        for c in ast.children():
-            if c: self.fix_lineno(c, orig_ast)
 
     """ 
     Replaces the node corresponding to old_node_id with new_node.
@@ -285,15 +294,16 @@ class MutationOp(ASTCodeGenerator):
     def add_node_and_children_to_fault_loc(self, ast, mismatch_set, uniq_headers, parent=None):
         self.fault_loc_set.add(ast.node_id)
         if parent and parent.__class__.__name__ == "Identifier" and parent.name not in self.wires_brought_in: self.wires_brought_in[parent.name] = set()
-        if ast.__class__.__name__ == "Identifier" and len(self.wires_brought_in[parent.name]) < 4 and ast.name not in mismatch_set and ast.name not in uniq_headers: 
-            self.wires_brought_in[parent.name].add(ast.name)
-            self.new_vars_in_fault_loc[ast.node_id] = ast.name
+        if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers: 
+            if not LIMIT_TRANSITIVE_DEPENDENCY_SET or len(self.wires_brought_in[parent.name]) < DEPENDENCY_SET_MAX:
+                self.wires_brought_in[parent.name].add(ast.name)
+                self.new_vars_in_fault_loc[ast.node_id] = ast.name
         for c in ast.children():
             if c:
                 self.fault_loc_set.add(c.node_id) 
                 # add all children identifiers to depedency set
                 if c.__class__.__name__ == "Identifier" and c.name not in mismatch_set and c.name not in uniq_headers: 
-                    if len(self.wires_brought_in[parent.name]) < 4: 
+                    if not LIMIT_TRANSITIVE_DEPENDENCY_SET or len(self.wires_brought_in[parent.name]) < DEPENDENCY_SET_MAX: 
                         self.wires_brought_in[parent.name].add(c.name)
                         self.new_vars_in_fault_loc[c.node_id] = c.name
 
@@ -328,12 +338,15 @@ class MutationOp(ASTCodeGenerator):
         if include_all_subnodes: # recurisvely ensure all children of a fault loc target are also included in the fault loc set
             self.fault_loc_set.add(ast.node_id)
             if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers:
-                if parent and parent.__class__.__name__ == "Identifier" and len(self.wires_brought_in[parent.name]) < 4: 
-                    self.wires_brought_in[parent.name].add(ast.name)
-                    self.new_vars_in_fault_loc[ast.node_id] = ast.name
+                if parent and parent.__class__.__name__ == "Identifier":
+                    if not LIMIT_TRANSITIVE_DEPENDENCY_SET or len(self.wires_brought_in[parent.name]) < DEPENDENCY_SET_MAX: 
+                        self.wires_brought_in[parent.name].add(ast.name)
+                        self.new_vars_in_fault_loc[ast.node_id] = ast.name
 
         for c in ast.children():
             if c: self.get_fault_loc_targets(c, mismatch_set, uniq_headers, parent, include_all_subnodes)
+
+        # TODO: for sdram_controller, control_flow + limit gives smaller fl set than no control_flow + limit. why? is this a bug?
     
     """
     The delete, insert, and replace operators to be called from outside the class.
@@ -394,8 +407,6 @@ class MutationOp(ASTCodeGenerator):
                 node_id = random.randint(0,self.max_node_id) # get random node id to replace
             print("Node to replace id: %s" % node_id)
 
-        node_id = 411
-
         if with_id == None: 
             self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id
             print(self.node_class_to_replace)
@@ -446,14 +457,16 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
         pool.remove(r)
 
     # generate ast from patchlist for each candidate, compute fitness for each candidate
-    max_fitness = -1
+    # max_fitness = -1
+    max_fitness = math.inf
     best_parent_ast = orig_ast
     best_parent_patchlist = []
 
     for parent_patchlist in pool:
         parent_fitness = GENOME_FITNESS_CACHE[str(parent_patchlist)]
 
-        if parent_fitness > max_fitness:
+        # if parent_fitness > max_fitness:
+        if parent_fitness < max_fitness:
             max_fitness = parent_fitness
             winner_patchlist = parent_patchlist
     
@@ -469,10 +482,12 @@ def calc_candidate_fitness(fileName):
 	module load vcs/2017.12-SP2-1
 	timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s %s -o simv -R""" % (TEST_BENCH, fileName))
     #process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
+    
+    if not os.path.exists("output.txt"): 
+        return 0 # if the code does not compile, return 0
+        # return math.inf
 
-    if not os.path.exists("output.txt"): return 0 # if the code does not compile, return 0
-
-    f = open("oracle.txt", "r")
+    f = open(ORACLE, "r")
     oracle_lines = f.readlines()
     f.close()
 
@@ -489,9 +504,9 @@ def calc_candidate_fitness(fileName):
     normalized_ff = ff/total_possible
     if normalized_ff < 0: normalized_ff = 0
     print("FITNESS = %f" % normalized_ff)
-    #time.sleep(10)
 
     return normalized_ff
+    # return fitness_v2.calculate_badness(oracle_lines, sim_lines, weights, weighting)
 
 def get_elite_parents(popn, pop_size):
     elite_size = int(5/100 * pop_size)
@@ -500,6 +515,7 @@ def get_elite_parents(popn, pop_size):
         elite.append((parent, GENOME_FITNESS_CACHE[str(parent)]))
     elite.sort(key = lambda x: x[1])
     return elite[-elite_size:]
+    # return elite[:-elite_size]
 
 def strip_bits(bits):
     for i in range(len(bits)):
@@ -507,7 +523,7 @@ def strip_bits(bits):
     return bits
 
 def get_output_mismatch():
-    f = open("oracle.txt", "r")
+    f = open(ORACLE, "r")
     oracle = f.readlines()
     f.close()
 
@@ -570,7 +586,7 @@ def main():
                          default=[],help="Macro Definition")
     (options, args) = optparser.parse_args()
 
-    filelist = args[0:2]
+    filelist = [SRC_FILE, TEST_BENCH]
 
     if options.showversion:
         showVersion()
@@ -581,9 +597,19 @@ def main():
     if len(filelist) == 0:
         showVersion()
 
+    LOG = False
+
+    for i in range(1, len(sys.argv)):
+        cmd = sys.argv[i]
+        if "log" in cmd.lower():
+            val = cmd.split("=")[1]
+            if val.lower() == "true": LOG = True
+            elif val.lower() == "false": LOG = False
+            print("Using LOG = %s" % LOG)
+
     codegen = ASTCodeGenerator()
     # parse the files (in filelist) to ASTs (PyVerilog ast)
-    ast, directives = parse([sys.argv[1]],
+    ast, directives = parse([SRC_FILE],
                             preprocess_include=options.include,
                             preprocess_define=options.define)
 
@@ -591,33 +617,6 @@ def main():
     src_code = codegen.visit(ast)
     print(src_code)
     print("\n")
-
-    GENS = 4
-    POPSIZE = 500
-    FAULT_LOC = False
-    CONTROL_FLOW = False
-    for i in range(3, len(sys.argv)):
-        param = sys.argv[i]        
-        if "gens" in param.lower():
-            GENS = int(param.split("=")[1])
-            print("Using GENS = %d" % GENS)
-        elif "popsize" in param.lower():
-            POPSIZE = int(param.split("=")[1])
-            print("Using POPSIZE = %d" % POPSIZE)
-        elif "fault_loc" in param.lower():
-            val = param.split("=")[1]            
-            if "true" in val.lower(): FAULT_LOC = True
-            if "false" in val.lower(): FAULT_LOC = False
-            print("Using FAULT_LOC = %s" % FAULT_LOC) 
-        elif "control_flow" in param.lower():
-            val = param.split("=")[1]            
-            if "true" in val.lower(): CONTROL_FLOW = True
-            if "false" in val.lower(): CONTROL_FLOW = False
-            print("Using CONTROL_FLOW = %s" % CONTROL_FLOW) 
-        else:
-            print("ERROR: Invalid parameter: %s" % param)
-            print("Available parameters: [ gens, popsize, fault_loc, control_flow ]")
-            exit(1)
 
     print("\n\n")
 
@@ -687,25 +686,32 @@ def main():
     if os.path.exists("output.txt"): os.remove("output.txt")
 
     # create log file
-    log_file = open("experiment.log", "w+")
-    log_file.write("SOURCE FILE:\n\t %s\n" % SRC_FILE)
-    log_file.write("TEST BENCH:\n\t %s\n" % TEST_BENCH)
-    log_file.write("PARAMETERS:\n")
-    log_file.write("\tgens=%d\n" % GENS)
-    log_file.write("\tpopsize=%d\n" % POPSIZE)
-    log_file.write("\tfault_loc=%s\n" % FAULT_LOC)
-    log_file.write("\tcontrol_flow=%s\n\n" % CONTROL_FLOW)
+    if LOG:
+        time_now = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+        log_file = open("repair_%s.log" % time_now, "w+")
+        log_file.write("SOURCE FILE:\n\t %s\n" % SRC_FILE)
+        log_file.write("TEST BENCH:\n\t %s\n" % TEST_BENCH)
+        log_file.write("ORACLE:\n\t %s\n" % ORACLE)
+        log_file.write("PARAMETERS:\n")
+        log_file.write("\tgens=%d\n" % GENS)
+        log_file.write("\tpopsize=%d\n" % POPSIZE)
+        log_file.write("\trestarts=%d\n" % RESTARTS)
+        log_file.write("\tfault_loc=%s\n" % FAULT_LOC)
+        log_file.write("\tcontrol_flow=%s\n" % CONTROL_FLOW)
+        log_file.write("\tlimit_transitive_dependency_set=%s\n" % LIMIT_TRANSITIVE_DEPENDENCY_SET)
+        log_file.write("\tdependency_set_max=%s\n\n" % DEPENDENCY_SET_MAX)
+    
 
     best_patches = dict()
 
-    for restart_attempt in range(1):
+    for restart_attempt in range(RESTARTS):
         popn = []
         popn.append([])
         #popn.append(['insert(53,78)'])
     
         for i in range(GENS): # for each generation
             print("\nIN GENERATION %d OF ATTEMPT %d" % (i, restart_attempt))
-            log_file.write("IN GENERATION %d OF ATTEMPT %d\n" % (i, restart_attempt))
+            if LOG: log_file.write("IN GENERATION %d OF ATTEMPT %d\n" % (i, restart_attempt))
 
             time.sleep(1)
             _children = []
@@ -714,23 +720,23 @@ def main():
                 elite_parents = get_elite_parents(popn, POPSIZE)
                 for parent in elite_parents:
                     _children.append(parent[0])
-                    log_file.write("\t%s --elitism--> %s\t\t%f\n" % (str(parent[0]), str(parent[0]), parent[1]))
+                    if LOG: log_file.write("\t%s --elitism--> %s\t\t%f\n" % (str(parent[0]), str(parent[0]), parent[1]))
             
             while len(_children) < POPSIZE:
                 # time.sleep(2) # use this to slow down the processing for debugging purposes
                 parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
 
-                mutation_op.get_fault_loc_targets(parent_ast, mismatch_set, uniq_headers) # compute fault localization for the parent
+                tmp_mismatch_set = copy.deepcopy(mismatch_set)
+                mutation_op.get_fault_loc_targets(parent_ast, tmp_mismatch_set, uniq_headers) # compute fault localization for the parent
                 print("Fault Localization:", str(mutation_op.fault_loc_set))
                 while len(mutation_op.new_vars_in_fault_loc) > 0:
                     new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
                     print("New vars in fault loc:", new_mismatch_set)
                     mutation_op.new_vars_in_fault_loc = dict()
-                    mismatch_set = mismatch_set.union(new_mismatch_set)
-                    mutation_op.get_fault_loc_targets(parent_ast, mismatch_set, uniq_headers)
+                    tmp_mismatch_set = tmp_mismatch_set.union(new_mismatch_set)
+                    mutation_op.get_fault_loc_targets(parent_ast, tmp_mismatch_set, uniq_headers)
                     print("Fault Localization:", str(mutation_op.fault_loc_set))
-                new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
-                print("Final mismatch set:", mismatch_set)
+                print("Final mismatch set:", tmp_mismatch_set)
                 print("Final Fault Localization:", str(mutation_op.fault_loc_set))
                 print(len(mutation_op.fault_loc_set))
                 print(mutation_op.wires_brought_in)
@@ -740,15 +746,13 @@ def main():
                 p = random.random()
                 if p >= 2/3:
                     child_patchlist, child_ast = mutation_op.replace(parent_ast, parent_patchlist)
-                    log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
+                    if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
                 elif p >= 1/3:
                     child_patchlist, child_ast = mutation_op.delete(parent_ast, parent_patchlist)
-                    log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
+                    if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
                 else:
                     child_patchlist, child_ast = mutation_op.insert(parent_ast, parent_patchlist)
-                    log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
-
-                # exit(1)
+                    if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
 
                 #child_ast.show()
                 # rslt = codegen.visit(child_ast)
@@ -759,6 +763,7 @@ def main():
                 # calculate child fitness
                 if str(child_patchlist) in GENOME_FITNESS_CACHE:
                     child_fitness = GENOME_FITNESS_CACHE[str(child_patchlist)]
+                    print(child_fitness)
                 else:
                     f = open("candidate.v", "w+")
                     code = codegen.visit(child_ast)
@@ -771,6 +776,7 @@ def main():
                         tmp_ast, directives = parse(["candidate.v"])
                     except ParseError:
                         child_fitness = 0
+                        # child_fitness = math.inf
                     # if the child fitness was not 0, i.e. the parser did not throw syntax errors
                     if child_fitness == -1: 
                         
@@ -781,19 +787,21 @@ def main():
                     
                     GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
                     print(child_fitness)
-                    log_file.write("%f\n" % child_fitness)
-                    print("\n\n#################\n\n")
 
-                    if child_fitness == 1.0:
-                        print("######## REPAIR FOUND IN ATTEMPT %d ########" % restart_attempt)
-                        print(code)
-                        print(child_patchlist)
-                        total_time = time.time() - start_time
-                        print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
-                        sys.exit(1)
+                if LOG: log_file.write("%f\n" % child_fitness)
+                print("\n\n#################\n\n")
+
+                if child_fitness == 1.0:
+                    print("######## REPAIR FOUND IN ATTEMPT %d ########" % restart_attempt)
+                    print(code)
+                    print(child_patchlist)
+                    total_time = time.time() - start_time
+                    print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
+                    sys.exit(1)
 
                 _children.append(child_patchlist)
                 mutation_op.fault_loc_set = set() # reset the fault localization data structures for the next parent
+                mutation_op.new_vars_in_fault_loc = dict()
                 mutation_op.wires_brought_in = dict()
             
             popn = copy.deepcopy(_children)
@@ -805,18 +813,18 @@ def main():
     
     total_time = time.time() - start_time
     print("TOTAL TIME TAKEN = %f" % total_time)
-    log_file.write("\n\n\nTOTAL TIME TAKEN = %f\n\n" % total_time)
+    if LOG: log_file.write("\n\n\nTOTAL TIME TAKEN = %f\n\n" % total_time)
 
-    log_file.write("BEST PATCHES:\n")
+    if LOG: log_file.write("BEST PATCHES:\n")
     for attempt in best_patches:
         print("Attempt number %d" % attempt)
-        log_file.write("\tAttempt number %d:\n" % attempt)
+        if LOG: log_file.write("\tAttempt number %d:\n" % attempt)
         for candidate in best_patches[attempt]: 
             print(candidate)
-            log_file.write("\t\t%s\n" % str(candidate))
+            if LOG: log_file.write("\t\t%s\n" % str(candidate))
         print()
 
-    log_file.close()
+    if LOG: log_file.close()
         
         # for j in range(POPSIZE): # for each genome
         #     genome = pop[j]
