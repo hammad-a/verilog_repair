@@ -280,19 +280,20 @@ class MutationOp(ASTCodeGenerator):
                 self.analyze_program_branch(c, cond, mismatch_set, uniq_headers)
 
     """
-    Add node and its children to the fault loc set.    
+    Add node and its immediate children to the fault loc set.    
     """
     def add_node_and_children_to_fault_loc(self, ast, mismatch_set, uniq_headers, parent=None):
         self.fault_loc_set.add(ast.node_id)
         if parent and parent.__class__.__name__ == "Identifier" and parent.name not in self.wires_brought_in: self.wires_brought_in[parent.name] = set()
-        if ast.__class__.__name__ == "Identifier" and len(self.wires_brought_in[parent.name]) < 4: 
+        if ast.__class__.__name__ == "Identifier" and len(self.wires_brought_in[parent.name]) < 4 and ast.name not in mismatch_set and ast.name not in uniq_headers: 
             self.wires_brought_in[parent.name].add(ast.name)
+            self.new_vars_in_fault_loc[ast.node_id] = ast.name
         for c in ast.children():
             if c:
                 self.fault_loc_set.add(c.node_id) 
                 # add all children identifiers to depedency set
                 if c.__class__.__name__ == "Identifier" and c.name not in mismatch_set and c.name not in uniq_headers: 
-                    if len(self.wires_brought_in[parent.name]) < 3: 
+                    if len(self.wires_brought_in[parent.name]) < 4: 
                         self.wires_brought_in[parent.name].add(c.name)
                         self.new_vars_in_fault_loc[c.node_id] = c.name
 
@@ -330,7 +331,7 @@ class MutationOp(ASTCodeGenerator):
                 if parent and parent.__class__.__name__ == "Identifier" and len(self.wires_brought_in[parent.name]) < 4: 
                     self.wires_brought_in[parent.name].add(ast.name)
                     self.new_vars_in_fault_loc[ast.node_id] = ast.name
-                
+
         for c in ast.children():
             if c: self.get_fault_loc_targets(c, mismatch_set, uniq_headers, parent, include_all_subnodes)
     
@@ -733,7 +734,6 @@ def main():
                 print("Final Fault Localization:", str(mutation_op.fault_loc_set))
                 print(len(mutation_op.fault_loc_set))
                 print(mutation_op.wires_brought_in)
-                print(411 in mutation_op.fault_loc_set)
 
                 exit(1)
 
@@ -793,7 +793,8 @@ def main():
                         sys.exit(1)
 
                 _children.append(child_patchlist)
-                mutation_op.fault_loc_set = set() # reset the fault localization for the next parent
+                mutation_op.fault_loc_set = set() # reset the fault localization data structures for the next parent
+                mutation_op.wires_brought_in = dict()
             
             popn = copy.deepcopy(_children)
 
