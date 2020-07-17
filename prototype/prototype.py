@@ -68,13 +68,15 @@ TEST_BENCH = sys.argv[2]
 
 class MutationOp(ASTCodeGenerator):
 
-    def __init__(self, popsize, fault_loc):
+    def __init__(self, popsize, fault_loc, control_flow):
         self.numbering = NodeNumbering()
         self.popsize = popsize
         self.fault_loc = fault_loc
+        self.control_flow = control_flow
         # temporary variables used for storing data for the mutation operators
         self.fault_loc_set = set()
         self.new_vars_in_fault_loc = dict()
+        self.wires_brought_in = dict()
         self.tmp_node = None 
         self.deletable_nodes = []
         self.insertable_nodes = []
@@ -272,7 +274,7 @@ class MutationOp(ASTCodeGenerator):
     def analyze_program_branch(self, ast, cond, mismatch_set, uniq_headers):
         if ast:
             if ast.__class__.__name__ == "Identifier" and (ast.name in mismatch_set or ast.name in tuple(self.new_vars_in_fault_loc.values())):
-                self.add_node_and_children_to_fault_loc(cond, mismatch_set, uniq_headers)
+                self.add_node_and_children_to_fault_loc(cond, mismatch_set, uniq_headers, ast)
 
             for c in ast.children():
                 self.analyze_program_branch(c, cond, mismatch_set, uniq_headers)
@@ -280,42 +282,57 @@ class MutationOp(ASTCodeGenerator):
     """
     Add node and its children to the fault loc set.    
     """
-    def add_node_and_children_to_fault_loc(self, ast, mismatch_set, uniq_headers):
+    def add_node_and_children_to_fault_loc(self, ast, mismatch_set, uniq_headers, parent=None):
         self.fault_loc_set.add(ast.node_id)
+        if parent and parent.__class__.__name__ == "Identifier" and parent.name not in self.wires_brought_in: self.wires_brought_in[parent.name] = set()
+        if ast.__class__.__name__ == "Identifier" and len(self.wires_brought_in[parent.name]) < 4: 
+            self.wires_brought_in[parent.name].add(ast.name)
         for c in ast.children():
             if c:
-                # add all children node (that were not in the output mismatch) to fault loc
-                if not (c.__class__.__name__ == "Identifier" and c.name in uniq_headers and c.name not in mismatch_set): self.fault_loc_set.add(c.node_id) 
+                self.fault_loc_set.add(c.node_id) 
                 # add all children identifiers to depedency set
-                if c.__class__.__name__ == "Identifier" and c.name not in mismatch_set and c.name not in uniq_headers: self.new_vars_in_fault_loc[c.node_id] = c.name 
+                if c.__class__.__name__ == "Identifier" and c.name not in mismatch_set and c.name not in uniq_headers: 
+                    if len(self.wires_brought_in[parent.name]) < 3: 
+                        self.wires_brought_in[parent.name].add(c.name)
+                        self.new_vars_in_fault_loc[c.node_id] = c.name
 
     """
     Given a set of output wires that mismatch with the oracle, get a list of node IDs that are potential fault localization targets.
     """
-    def get_fault_loc_targets(self, ast, mismatch_set, uniq_headers, include_all_subnodes=False):
+    def get_fault_loc_targets(self, ast, mismatch_set, uniq_headers, parent=None, include_all_subnodes=False):
         # data dependency analysis
         if ast.__class__.__name__ in ["BlockingSubstitution", "NonblockingSubstitution", "Assign"]: # for assignment statements =, <=
             if ast.left and ast.left.var:
                 if ast.left.var.__class__.__name__ == "Identifier" and ast.left.var.name in mismatch_set: # single assignment
                     include_all_subnodes = True
-                    self.add_node_and_children_to_fault_loc(ast, mismatch_set, uniq_headers)
+                    parent = ast.left.var
+                    if parent and not parent.name in self.wires_brought_in: self.wires_brought_in[parent.name] = set()
+                    self.add_node_and_children_to_fault_loc(ast, mismatch_set, uniq_headers, parent)
                 elif ast.left.var.__class__.__name__ == "LConcat": # l-concat / multiple assignments
                     for v in ast.left.var.list: 
                         if v.name in mismatch_set:
+                            if not v.name in self.wires_brought_in: self.wires_brought_in[v.name] = set()
                             include_all_subnodes = True
-                            self.add_node_and_children_to_fault_loc(ast, mismatch_set, uniq_headers)
+                            parent = v
+                            self.add_node_and_children_to_fault_loc(ast, mismatch_set, uniq_headers, parent)
         
         # control dependency analysis        
-        elif ast.__class__.__name__ == "IfStatement":
+        elif self.control_flow and ast.__class__.__name__ == "IfStatement":
             self.analyze_program_branch(ast.true_statement, ast.cond, mismatch_set, uniq_headers)
             self.analyze_program_branch(ast.false_statement, ast.cond, mismatch_set, uniq_headers)
+        elif self.control_flow and ast.__class__.__name__ == "CaseStatement":
+            for c in ast.caselist: 
+                self.analyze_program_branch(c.statement, ast.comp, mismatch_set, uniq_headers)
 
         if include_all_subnodes: # recurisvely ensure all children of a fault loc target are also included in the fault loc set
-            if not (ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name in uniq_headers): self.fault_loc_set.add(ast.node_id)
-            if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers: self.new_vars_in_fault_loc[ast.node_id] = ast.name
-        
+            self.fault_loc_set.add(ast.node_id)
+            if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers:
+                if parent and parent.__class__.__name__ == "Identifier" and len(self.wires_brought_in[parent.name]) < 4: 
+                    self.wires_brought_in[parent.name].add(ast.name)
+                    self.new_vars_in_fault_loc[ast.node_id] = ast.name
+                
         for c in ast.children():
-            if c: self.get_fault_loc_targets(c, mismatch_set, uniq_headers, include_all_subnodes)
+            if c: self.get_fault_loc_targets(c, mismatch_set, uniq_headers, parent, include_all_subnodes)
     
     """
     The delete, insert, and replace operators to be called from outside the class.
@@ -376,8 +393,11 @@ class MutationOp(ASTCodeGenerator):
                 node_id = random.randint(0,self.max_node_id) # get random node id to replace
             print("Node to replace id: %s" % node_id)
 
+        node_id = 411
+
         if with_id == None: 
             self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id
+            print(self.node_class_to_replace)
             print("Node to replace class: %s" % self.node_class_to_replace)
             if self.node_class_to_replace == None: # if the node does not exist (could have been a part of gen i but not i-1) -> TODO: is this still needed?
                 return patch_list, ast
@@ -385,6 +405,7 @@ class MutationOp(ASTCodeGenerator):
             if len(self.replaceable_nodes) == 0: # if no replaceable nodes exist, exit gracefully
                 print("Replace operation not possible. Returning with no-op.")
                 return patch_list, ast
+            print(self.replaceable_nodes)
             with_id = random.choice(self.replaceable_nodes) # get a random node id from the replaceable nodes
             print("Replacing node id %s with node id %s" % (node_id,with_id))
 
@@ -573,6 +594,7 @@ def main():
     GENS = 4
     POPSIZE = 500
     FAULT_LOC = False
+    CONTROL_FLOW = False
     for i in range(3, len(sys.argv)):
         param = sys.argv[i]        
         if "gens" in param.lower():
@@ -586,6 +608,15 @@ def main():
             if "true" in val.lower(): FAULT_LOC = True
             if "false" in val.lower(): FAULT_LOC = False
             print("Using FAULT_LOC = %s" % FAULT_LOC) 
+        elif "control_flow" in param.lower():
+            val = param.split("=")[1]            
+            if "true" in val.lower(): CONTROL_FLOW = True
+            if "false" in val.lower(): CONTROL_FLOW = False
+            print("Using CONTROL_FLOW = %s" % CONTROL_FLOW) 
+        else:
+            print("ERROR: Invalid parameter: %s" % param)
+            print("Available parameters: [ gens, popsize, fault_loc, control_flow ]")
+            exit(1)
 
     print("\n\n")
 
@@ -596,48 +627,51 @@ def main():
     # process = subprocess.run(bashCmd, capture_output=True, check=True)
     # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
-    mutation_op = MutationOp(POPSIZE, FAULT_LOC)
+    mutation_op = MutationOp(POPSIZE, FAULT_LOC, CONTROL_FLOW)
 
-    #seed_patchlist, seed_ast = mutation_op.insert(copy.deepcopy(ast), [], 53, 78)
-    #seed_ast.show()
-    #tmp1 = codegen.visit(seed_ast)
-    #f = open("candidate.v", "w+")
-    #f.write(tmp1)
-    #f.close()
-    #ff_1 = calc_candidate_fitness("candidate.v")
-    #print(ff_1)
-    #os.remove("candidate.v")
+    # manually testing sdram_controller
+       
+    # seed_patchlist, seed_ast = mutation_op.insert(copy.deepcopy(ast), [], 53, 78)
+    # seed_ast.show()
+    # tmp1 = codegen.visit(seed_ast)
+    # f = open("candidate.v", "w+")
+    # f.write(tmp1)
+    # f.close()
+    # ff_1 = calc_candidate_fitness("candidate.v")
+    # print(ff_1)
+    # os.remove("candidate.v")
 
-    #mismatch_set = get_output_mismatch()
-    #print(mismatch_set)
+    # mismatch_set, uniq_headers = get_output_mismatch()
+    # print(mismatch_set)
 
-    #mutation_op.get_fault_loc_targets(seed_ast, mismatch_set) # compute fault localization for the parent
-    #print("Fault Localization:", str(mutation_op.fault_loc_set))
-    #while len(mutation_op.new_vars_in_fault_loc) > 0:
-    #    new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
-    #    print("New vars in fault loc:", new_mismatch_set)
-    #    mutation_op.new_vars_in_fault_loc = dict()
-    #    mismatch_set = mismatch_set.union(new_mismatch_set)
-    #    mutation_op.get_fault_loc_targets(parent_ast, mismatch_set) # compute fault localization for the parent
-    #    print("Fault Localization:", str(mutation_op.fault_loc_set))
-    #new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
-    #print("Final mismatch set:", mismatch_set)
-    #print(len(mutation_op.fault_loc_set))
-    #exit(1)
+    # mutation_op.get_fault_loc_targets(seed_ast, mismatch_set, uniq_headers) # compute fault localization for the parent
+    # print("Fault Localization:", str(mutation_op.fault_loc_set))
+    # while len(mutation_op.new_vars_in_fault_loc) > 0:
+    #     new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
+    #     print("New vars in fault loc:", new_mismatch_set)
+    #     mutation_op.new_vars_in_fault_loc = dict()
+    #     mismatch_set = mismatch_set.union(new_mismatch_set)
+    #     mutation_op.get_fault_loc_targets(seed_ast, mismatch_set, uniq_headers) # compute fault localization for the parent
+    #     print("Fault Localization:", str(mutation_op.fault_loc_set))
+    # new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
+    # print("Final mismatch set:", mismatch_set)
+    # print(len(mutation_op.fault_loc_set))
+    # exit(1)
+    
 
-    #seed2_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), seed_patchlist)
-    #seed2_patchlist, seed2_ast = mutation_op.replace(seed2_ast, seed_patchlist, 83, 44)
-    #seed2_ast.show()
-    #tmp1 = codegen.visit(seed2_ast)
-    #f = open("candidate.v", "w+")
-    #f.write(tmp1)
-    #f.close()
-    #print(tmp1)
-    #print(seed2_patchlist)
-    #ff_1 = calc_candidate_fitness("candidate.v")
-    #print(ff_1)
-    #os.remove("candidate.v")
-    #exit(1)
+    # seed2_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), seed_patchlist)
+    # seed2_patchlist, seed2_ast = mutation_op.replace(seed2_ast, seed_patchlist, 83, 44)
+    # seed2_ast.show()
+    # tmp1 = codegen.visit(seed2_ast)
+    # f = open("candidate.v", "w+")
+    # f.write(tmp1)
+    # f.close()
+    # print(tmp1)
+    # print(seed2_patchlist)
+    # ff_1 = calc_candidate_fitness("candidate.v")
+    # print(ff_1)
+    # os.remove("candidate.v")
+    # exit(1)
 
     # calculate fitness of the original buggy program
     orig_fitness = calc_candidate_fitness(SRC_FILE)
@@ -651,24 +685,35 @@ def main():
     
     if os.path.exists("output.txt"): os.remove("output.txt")
 
-    #sys.exit(1)
+    # create log file
+    log_file = open("experiment.log", "w+")
+    log_file.write("SOURCE FILE:\n\t %s\n" % SRC_FILE)
+    log_file.write("TEST BENCH:\n\t %s\n" % TEST_BENCH)
+    log_file.write("PARAMETERS:\n")
+    log_file.write("\tgens=%d\n" % GENS)
+    log_file.write("\tpopsize=%d\n" % POPSIZE)
+    log_file.write("\tfault_loc=%s\n" % FAULT_LOC)
+    log_file.write("\tcontrol_flow=%s\n\n" % CONTROL_FLOW)
 
     best_patches = dict()
 
-    for restart_attempt in range(5):
+    for restart_attempt in range(1):
         popn = []
         popn.append([])
         #popn.append(['insert(53,78)'])
     
         for i in range(GENS): # for each generation
-            print("IN GENERATION %d OF ATTEMPT %d" % (i, restart_attempt))
-            time.sleep(2)
+            print("\nIN GENERATION %d OF ATTEMPT %d" % (i, restart_attempt))
+            log_file.write("IN GENERATION %d OF ATTEMPT %d\n" % (i, restart_attempt))
+
+            time.sleep(1)
             _children = []
 
             if i > 0: 
                 elite_parents = get_elite_parents(popn, POPSIZE)
                 for parent in elite_parents:
                     _children.append(parent[0])
+                    log_file.write("\t%s --elitism--> %s\t\t%f\n" % (str(parent[0]), str(parent[0]), parent[1]))
             
             while len(_children) < POPSIZE:
                 # time.sleep(2) # use this to slow down the processing for debugging purposes
@@ -685,15 +730,25 @@ def main():
                     print("Fault Localization:", str(mutation_op.fault_loc_set))
                 new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
                 print("Final mismatch set:", mismatch_set)
+                print("Final Fault Localization:", str(mutation_op.fault_loc_set))
                 print(len(mutation_op.fault_loc_set))
+                print(mutation_op.wires_brought_in)
+                print(411 in mutation_op.fault_loc_set)
+
+                exit(1)
 
                 p = random.random()
                 if p >= 2/3:
                     child_patchlist, child_ast = mutation_op.replace(parent_ast, parent_patchlist)
+                    log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
                 elif p >= 1/3:
                     child_patchlist, child_ast = mutation_op.delete(parent_ast, parent_patchlist)
+                    log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
                 else:
                     child_patchlist, child_ast = mutation_op.insert(parent_ast, parent_patchlist)
+                    log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
+
+                # exit(1)
 
                 #child_ast.show()
                 # rslt = codegen.visit(child_ast)
@@ -726,6 +781,7 @@ def main():
                     
                     GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
                     print(child_fitness)
+                    log_file.write("%f\n" % child_fitness)
                     print("\n\n#################\n\n")
 
                     if child_fitness == 1.0:
@@ -748,11 +804,18 @@ def main():
     
     total_time = time.time() - start_time
     print("TOTAL TIME TAKEN = %f" % total_time)
+    log_file.write("\n\n\nTOTAL TIME TAKEN = %f\n\n" % total_time)
 
+    log_file.write("BEST PATCHES:\n")
     for attempt in best_patches:
         print("Attempt number %d" % attempt)
-        for candidate in best_patches[attempt]: print(candidate)
+        log_file.write("\tAttempt number %d:\n" % attempt)
+        for candidate in best_patches[attempt]: 
+            print(candidate)
+            log_file.write("\t\t%s\n" % str(candidate))
         print()
+
+    log_file.close()
         
         # for j in range(POPSIZE): # for each genome
         #     genome = pop[j]
