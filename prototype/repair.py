@@ -741,8 +741,6 @@ def main():
                 print(len(mutation_op.fault_loc_set))
                 print(mutation_op.wires_brought_in)
 
-                exit(1)
-
                 p = random.random()
                 if p >= 2/3:
                     child_patchlist, child_ast = mutation_op.replace(parent_ast, parent_patchlist)
