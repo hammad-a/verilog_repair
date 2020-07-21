@@ -358,6 +358,12 @@ class MutationOp(ASTCodeGenerator):
         elif self.control_flow and ast.__class__.__name__ == "CaseStatement":
             for c in ast.caselist: 
                 if c: self.analyze_program_branch(c.statement, ast.comp, mismatch_set, uniq_headers)
+        elif self.control_flow and ast.__class__.__name__ == "ForStatement":
+            # TODO: could improve efficiency by doing all of this in one function call instead of three; would need to add support for a list of conds
+            if ast.pre: self.analyze_program_branch(ast.statement, ast.pre, mismatch_set, uniq_headers)
+            if ast.cond: self.analyze_program_branch(ast.statement, ast.cond, mismatch_set, uniq_headers)
+            if ast.post: self.analyze_program_branch(ast.statement, ast.post, mismatch_set, uniq_headers)
+
 
         if include_all_subnodes: # recurisvely ensure all children of a fault loc target are also included in the fault loc set
             self.fault_loc_set.add(ast.node_id)
@@ -716,7 +722,12 @@ def main():
     # create log file
     if LOG:
         time_now = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        log_file = open("repair_%s.log" % time_now, "w+")
+        benchmark = SRC_FILE.split("/")[-2]
+        log_base_dir = "repair_logs/" + benchmark
+        if not os.path.exists(log_base_dir):
+            os.mkdir(log_base_dir)
+            print("dir created: "+ log_base_dir)
+        log_file = open("%s/repair_%s.log" % (log_base_dir, time_now), "w+")
         log_file.write("SOURCE FILE:\n\t %s\n" % SRC_FILE)
         log_file.write("TEST BENCH:\n\t %s\n" % TEST_BENCH)
         log_file.write("ORACLE:\n\t %s\n" % ORACLE)
