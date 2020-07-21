@@ -64,11 +64,15 @@ FAULT_LOC = True
 CONTROL_FLOW = True
 LIMIT_TRANSITIVE_DEPENDENCY_SET = False
 DEPENDENCY_SET_MAX = 5
+REPLACEMENT_RATE = 1/3
+DELETION_RATE = 1/3
+INSERTION_RATE = 1/3
+
 
 config_file = open("repair.conf", "r")
 configs = config_file.readlines()
 for c in configs:
-    if c != "\n":
+    if c != "\n" and not c.startswith("#"):
         c = c.strip().split("=")
         param, val = c[0].lower(), c[1]
         if param == "src_file":
@@ -86,6 +90,15 @@ for c in configs:
         elif param == "popsize":
             POPSIZE = int(val)
             print("Using POPSIZE = %d" % POPSIZE)
+        elif param == "deletion_rate":
+            DELETION_RATE = float(val)
+            print("Using DELETION_RATE = %f" % DELETION_RATE)
+        elif param == "insertion_rate":
+            INSERTION_RATE = float(val)
+            print("Using INSERTION_RATE = %f" % INSERTION_RATE)
+        elif param == "replacement_rate":
+            REPLACEMENT_RATE = float(val)
+            print("Using REPLACEMENT_RATE = %f" % REPLACEMENT_RATE)
         elif param == "restarts":
             RESTARTS = int(val)
             print("Using RESTARTS = %d" % RESTARTS)
@@ -110,13 +123,17 @@ for c in configs:
 config_file.close()
 
 if not SRC_FILE:
-    print("SRC_FILE not specified. Please check the configuration file.")
+    print("ERROR: SRC_FILE not specified. Please check the configuration file.")
     exit(1)
 elif not TEST_BENCH:
-    print("TEST_BENCH not specified. Please check the configuration file.")
+    print("ERROR: TEST_BENCH not specified. Please check the configuration file.")
     exit(1)
 elif not ORACLE:
-    print("ORACLE not specified. Please check the configuration file.")
+    print("ERROR: ORACLE not specified. Please check the configuration file.")
+    exit(1)
+
+if REPLACEMENT_RATE + INSERTION_RATE + DELETION_RATE != 1.0:
+    print("ERROR: The mutation operator rates should add up to 1.")
     exit(1)
 
 class MutationOp(ASTCodeGenerator):
@@ -130,6 +147,7 @@ class MutationOp(ASTCodeGenerator):
         self.fault_loc_set = set()
         self.new_vars_in_fault_loc = dict()
         self.wires_brought_in = dict()
+        self.blacklist = set()
         self.tmp_node = None 
         self.deletable_nodes = []
         self.insertable_nodes = []
@@ -292,26 +310,32 @@ class MutationOp(ASTCodeGenerator):
     Add node and its immediate children to the fault loc set.    
     """
     def add_node_and_children_to_fault_loc(self, ast, mismatch_set, uniq_headers, parent=None):
+        if ast.__class__.__name__ == "Identifier" and ast.name in self.blacklist: return
         self.fault_loc_set.add(ast.node_id)
         if parent and parent.__class__.__name__ == "Identifier" and parent.name not in self.wires_brought_in: self.wires_brought_in[parent.name] = set()
-        if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers: 
+        if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers and ast.name not in self.blacklist: 
             if not LIMIT_TRANSITIVE_DEPENDENCY_SET or len(self.wires_brought_in[parent.name]) < DEPENDENCY_SET_MAX:
                 self.wires_brought_in[parent.name].add(ast.name)
                 self.new_vars_in_fault_loc[ast.node_id] = ast.name
+            else:
+                self.blacklist.add(ast.name)
         for c in ast.children():
             if c:
                 self.fault_loc_set.add(c.node_id) 
                 # add all children identifiers to depedency set
-                if c.__class__.__name__ == "Identifier" and c.name not in mismatch_set and c.name not in uniq_headers: 
+                if c.__class__.__name__ == "Identifier" and c.name not in mismatch_set and c.name not in uniq_headers and c.name not in self.blacklist: 
                     if not LIMIT_TRANSITIVE_DEPENDENCY_SET or len(self.wires_brought_in[parent.name]) < DEPENDENCY_SET_MAX: 
                         self.wires_brought_in[parent.name].add(c.name)
                         self.new_vars_in_fault_loc[c.node_id] = c.name
+                    else:
+                        self.blacklist.add(c.name)
 
     """
     Given a set of output wires that mismatch with the oracle, get a list of node IDs that are potential fault localization targets.
     """
     def get_fault_loc_targets(self, ast, mismatch_set, uniq_headers, parent=None, include_all_subnodes=False):
         # data dependency analysis
+        if ast.__class__.__name__ == "Identifier" and ast.name in self.blacklist: return
         if ast.__class__.__name__ in ["BlockingSubstitution", "NonblockingSubstitution", "Assign"]: # for assignment statements =, <=
             if ast.left and ast.left.var:
                 if ast.left.var.__class__.__name__ == "Identifier" and ast.left.var.name in mismatch_set: # single assignment
@@ -333,15 +357,17 @@ class MutationOp(ASTCodeGenerator):
             self.analyze_program_branch(ast.false_statement, ast.cond, mismatch_set, uniq_headers)
         elif self.control_flow and ast.__class__.__name__ == "CaseStatement":
             for c in ast.caselist: 
-                self.analyze_program_branch(c.statement, ast.comp, mismatch_set, uniq_headers)
+                if c: self.analyze_program_branch(c.statement, ast.comp, mismatch_set, uniq_headers)
 
         if include_all_subnodes: # recurisvely ensure all children of a fault loc target are also included in the fault loc set
             self.fault_loc_set.add(ast.node_id)
-            if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers:
+            if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers and ast.name not in self.blacklist:
                 if parent and parent.__class__.__name__ == "Identifier":
                     if not LIMIT_TRANSITIVE_DEPENDENCY_SET or len(self.wires_brought_in[parent.name]) < DEPENDENCY_SET_MAX: 
                         self.wires_brought_in[parent.name].add(ast.name)
                         self.new_vars_in_fault_loc[ast.node_id] = ast.name
+                    else:
+                        self.blacklist.add(ast.name)
 
         for c in ast.children():
             if c: self.get_fault_loc_targets(c, mismatch_set, uniq_headers, parent, include_all_subnodes)
@@ -457,16 +483,16 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
         pool.remove(r)
 
     # generate ast from patchlist for each candidate, compute fitness for each candidate
-    # max_fitness = -1
-    max_fitness = math.inf
+    max_fitness = -1
+    # max_fitness = math.inf
     best_parent_ast = orig_ast
     best_parent_patchlist = []
 
     for parent_patchlist in pool:
         parent_fitness = GENOME_FITNESS_CACHE[str(parent_patchlist)]
 
-        # if parent_fitness > max_fitness:
-        if parent_fitness < max_fitness:
+        if parent_fitness > max_fitness:
+        # if parent_fitness < max_fitness:
             max_fitness = parent_fitness
             winner_patchlist = parent_patchlist
     
@@ -478,13 +504,15 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
 def calc_candidate_fitness(fileName):
     print("Running VCS simulation")
     #os.system("cat %s" % fileName)
+    t_start = time.time()
     os.system("""source /etc/profile.d/modules.sh
 	module load vcs/2017.12-SP2-1
 	timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s %s -o simv -R""" % (TEST_BENCH, fileName))
     #process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
+    t_finish = time.time()
     
     if not os.path.exists("output.txt"): 
-        return 0 # if the code does not compile, return 0
+        return 0, t_finish - t_start # if the code does not compile, return 0
         # return math.inf
 
     f = open(ORACLE, "r")
@@ -505,7 +533,7 @@ def calc_candidate_fitness(fileName):
     if normalized_ff < 0: normalized_ff = 0
     print("FITNESS = %f" % normalized_ff)
 
-    return normalized_ff
+    return normalized_ff, t_finish - t_start
     # return fitness_v2.calculate_badness(oracle_lines, sim_lines, weights, weighting)
 
 def get_elite_parents(popn, pop_size):
@@ -674,7 +702,7 @@ def main():
     # exit(1)
 
     # calculate fitness of the original buggy program
-    orig_fitness = calc_candidate_fitness(SRC_FILE)
+    orig_fitness, sim_time = calc_candidate_fitness(SRC_FILE)
     #orig_fitness = ff_1
     GENOME_FITNESS_CACHE[str([])] = orig_fitness
     #GENOME_FITNESS_CACHE[str(['insert(53,78)'])] = orig_fitness
@@ -704,6 +732,24 @@ def main():
 
     best_patches = dict()
 
+    # TODO: ['replace(879,540)'] -> check this to see if actually hangs!!!!
+    #       ['insert(459,569)']
+    #       ['insert(540,952)']
+    #       ['insert(464,640)']
+
+    tmp1 = mutation_op.ast_from_patchlist(copy.deepcopy(ast), ['insert(464,640)'])
+    tmp1.show()
+    lol = open("candidate.v", "w+")
+    lol.write(codegen.visit(tmp1))
+    lol.close()
+
+    tmp_ff, sim_time = calc_candidate_fitness("candidate.v")
+    print(tmp_ff)
+    print(sim_time)
+    os.remove("candidate.v")
+
+    exit(1)
+
     for restart_attempt in range(RESTARTS):
         popn = []
         popn.append([])
@@ -726,26 +772,30 @@ def main():
                 # time.sleep(2) # use this to slow down the processing for debugging purposes
                 parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
 
-                tmp_mismatch_set = copy.deepcopy(mismatch_set)
-                mutation_op.get_fault_loc_targets(parent_ast, tmp_mismatch_set, uniq_headers) # compute fault localization for the parent
-                print("Fault Localization:", str(mutation_op.fault_loc_set))
-                while len(mutation_op.new_vars_in_fault_loc) > 0:
-                    new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
-                    print("New vars in fault loc:", new_mismatch_set)
-                    mutation_op.new_vars_in_fault_loc = dict()
-                    tmp_mismatch_set = tmp_mismatch_set.union(new_mismatch_set)
-                    mutation_op.get_fault_loc_targets(parent_ast, tmp_mismatch_set, uniq_headers)
-                    print("Fault Localization:", str(mutation_op.fault_loc_set))
-                print("Final mismatch set:", tmp_mismatch_set)
-                print("Final Fault Localization:", str(mutation_op.fault_loc_set))
-                print(len(mutation_op.fault_loc_set))
-                print(mutation_op.wires_brought_in)
+                if mutation_op.fault_loc:
+                    tmp_mismatch_set = copy.deepcopy(mismatch_set)
+                    mutation_op.get_fault_loc_targets(parent_ast, tmp_mismatch_set, uniq_headers) # compute fault localization for the parent
+                    print("Initial Fault Localization:", str(mutation_op.fault_loc_set))
+                    while len(mutation_op.new_vars_in_fault_loc) > 0:
+                        new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
+                        print("New vars in fault loc:", new_mismatch_set)
+                        mutation_op.new_vars_in_fault_loc = dict()
+                        tmp_mismatch_set = tmp_mismatch_set.union(new_mismatch_set)
+                        mutation_op.get_fault_loc_targets(parent_ast, tmp_mismatch_set, uniq_headers)
+                        print("Fault Localization:", str(mutation_op.fault_loc_set))
+                    print("Final mismatch set:", tmp_mismatch_set)
+                    print("Final Fault Localization:", str(mutation_op.fault_loc_set))
+                    print(len(mutation_op.fault_loc_set))
+                    print(mutation_op.blacklist)
+                    # print(mutation_op.wires_brought_in)
+
+                # exit(1)
 
                 p = random.random()
-                if p >= 2/3:
+                if p >= REPLACEMENT_RATE:
                     child_patchlist, child_ast = mutation_op.replace(parent_ast, parent_patchlist)
                     if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
-                elif p >= 1/3:
+                elif p >= DELETION_RATE:
                     child_patchlist, child_ast = mutation_op.delete(parent_ast, parent_patchlist)
                     if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child_patchlist)))
                 else:
@@ -778,7 +828,7 @@ def main():
                     # if the child fitness was not 0, i.e. the parser did not throw syntax errors
                     if child_fitness == -1: 
                         
-                        child_fitness = calc_candidate_fitness("candidate.v")
+                        child_fitness, sim_time = calc_candidate_fitness("candidate.v")
                         if os.path.exists("output.txt"): os.remove("output.txt")
 
                     os.remove("candidate.v")
@@ -801,6 +851,7 @@ def main():
                 mutation_op.fault_loc_set = set() # reset the fault localization data structures for the next parent
                 mutation_op.new_vars_in_fault_loc = dict()
                 mutation_op.wires_brought_in = dict()
+                mutation_op.blacklist = set()
             
             popn = copy.deepcopy(_children)
 
@@ -823,104 +874,6 @@ def main():
         print()
 
     if LOG: log_file.close()
-        
-        # for j in range(POPSIZE): # for each genome
-        #     genome = pop[j]
-        #     if i > 0: PARENT_OF_GENOME[j] = copy.deepcopy(genome)
-        #     f = open("candidate.v", "w+")
-        #     p = random.random()
-        #     if p >= 0.5:
-        #         mutation_op.replace(genome, j)
-        #     elif p >= 0.25:
-        #         mutation_op.delete(genome, j)
-        #     else:
-        #         mutation_op.insert(genome, j)
-        #     ast.show()
-        #     rslt = codegen.visit(genome)
-        #     print(rslt)
-        #     f.write(rslt)
-        #     f.close()
-        #     print("For genome %d:" % j, mutation_op.patch_list[j], len(mutation_op.patch_list[j]))
-        #     print()
-
-        #     # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
-        #     try:
-        #         ast, directives = parse(["candidate.v"],
-        #                             preprocess_include=options.include,
-        #                             preprocess_define=options.define)
-        #     except ParseError:
-        #         failed += 1
-    
-    # print("%s candidates failed to compile" % failed)
-
-    # bashCmd = ["python3", "fitness.py", "../benchmarks/first_counter_overflow/oracle.txt", "../benchmarks/first_counter_overflow/output.txt", "weights.txt", "static"]
-    # process = subprocess.run(bashCmd, capture_output=True, check=True)
-    # print(process.stdout, process.stderr)
-
-    # output, error = process.communicate()
-    # print(output)
-
-    # candidatecollector = CandidateCollector()
-    # candidatecollector.visit(ast)
-
-    # mutation_op = Mutate(list(candidatecollector.my_identifiers))
-
-    # try:
-    #     dirName = os.getcwd()+"/repair_candidates"
-    #     os.mkdir(dirName)
-    #     print("Directory " , dirName ,  " created ") 
-    # except:
-    #     print("Directory " , dirName ,  " already exists")
-
-    # depth_edits = 1
-    # try_all_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, depth_edits)
-
-    # try_random_mutations(mutation_op, list(candidatecollector.my_candidates), codegen, ast, 1000)
-
-def try_all_mutations(mutation_op, candidates, codegen, ast, depth, uniq=set()):
-    for choice in VALID_MUTATIONS:
-        for line in candidates:
-            mutation_op.set_mutation(choice, line)
-            tmp = copy.deepcopy(ast)
-            mutation_op.visit(tmp)
-            mutation_op.reset_mutation()
-            if tmp != ast: # if the mutation was successful
-                uniq.add(tmp)
-                if depth > 1:
-                    try_all_mutations(mutation_op, candidates, codegen, tmp, depth - 1)
-
-    if depth == 1:
-        for tmp in uniq:
-            print(codegen.visit(tmp))
-            print("#################\n")
-        print("A total of %d mutations were performed." % (len(uniq)))
-
-
-def try_random_mutations(mutation_op, candidates, codegen, ast, maxIters):
-    uniq = set()
-    for i in range(maxIters):
-        # choose a random mutation and line; might not be a valid mutation
-        choice = random.choice(VALID_MUTATIONS)
-        line = random.choice(candidates)
-        mutation_op.set_mutation(choice, line)
-        tmp = copy.deepcopy(ast)
-        mutation_op.visit(tmp)
-        mutation_op.reset_mutation()
-        if tmp != ast: # if the mutation was successful and/or resulted in a different ast
-            uniq.add(tmp)
-    
-    # cand_num = 0
-    # for tmp in uniq:
-    #     rslt = codegen.visit(tmp)
-    #     print(rslt)
-    #     print("#################\n")
-    #     if WRITE_TO_FILE:
-    #         outf = open("./repair_candidates/candidate_"+str(cand_num)+".v","w+")
-    #         outf.write(str(rslt))
-    #         outf.close()
-    #     cand_num += 1
-
-    print("A total of %d mutations were successful out of %d attempted mutations." % (len(uniq), maxIters))
 
 if __name__ == '__main__':
     main()
