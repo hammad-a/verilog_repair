@@ -729,26 +729,7 @@ def main():
         log_file.write("\tlimit_transitive_dependency_set=%s\n" % LIMIT_TRANSITIVE_DEPENDENCY_SET)
         log_file.write("\tdependency_set_max=%s\n\n" % DEPENDENCY_SET_MAX)
     
-
     best_patches = dict()
-
-    # TODO: ['replace(879,540)'] -> check this to see if actually hangs!!!!
-    #       ['insert(459,569)']
-    #       ['insert(540,952)']
-    #       ['insert(464,640)']
-
-    tmp1 = mutation_op.ast_from_patchlist(copy.deepcopy(ast), ['insert(464,640)'])
-    tmp1.show()
-    lol = open("candidate.v", "w+")
-    lol.write(codegen.visit(tmp1))
-    lol.close()
-
-    tmp_ff, sim_time = calc_candidate_fitness("candidate.v")
-    print(tmp_ff)
-    print(sim_time)
-    os.remove("candidate.v")
-
-    exit(1)
 
     for restart_attempt in range(RESTARTS):
         popn = []
