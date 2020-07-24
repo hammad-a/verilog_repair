@@ -1066,8 +1066,10 @@ class Instance(Node):
         self.lineno = lineno
         self.module = module
         self.name = name
-        self.portlist = portlist
-        self.parameterlist = parameterlist
+        #self.portlist = portlist
+        #self.parameterlist = parameterlist
+        self.portlist = list(portlist)
+        self.parameterlist = list(parameterlist)
         self.array = array
         self.node_id = None
 
