@@ -56,6 +56,8 @@ GENOME_FITNESS_CACHE = {}
 
 SRC_FILE = None
 TEST_BENCH = None
+INCLUDE_DIR = ""
+DEP_FILES = ""
 ORACLE = None
 GENS = 5
 POPSIZE = 200
@@ -81,6 +83,12 @@ for c in configs:
         elif param == "test_bench":
             TEST_BENCH = val
             print("Using TEST_BENCH = %s" % TEST_BENCH)
+        elif param == "dependent_files":
+            DEP_FILES = val.replace(",", " ")
+            print("Using DEP_FILES = %s" % DEP_FILES)
+        elif param == "include_dir":
+            INCLUDE_DIR = val
+            print("Using INCLUDE_DIR = %s" % INCLUDE_DIR)
         elif param == "oracle":
             ORACLE = val
             print("Using ORACLE = %s" % ORACLE)
@@ -298,13 +306,14 @@ class MutationOp(ASTCodeGenerator):
     """
     Control dependency analysis of the given program branch.
     """
-    def analyze_program_branch(self, ast, cond, mismatch_set, uniq_headers):
+    def analyze_program_branch(self, ast, cond_list, mismatch_set, uniq_headers):
         if ast:
             if ast.__class__.__name__ == "Identifier" and (ast.name in mismatch_set or ast.name in tuple(self.new_vars_in_fault_loc.values())):
-                self.add_node_and_children_to_fault_loc(cond, mismatch_set, uniq_headers, ast)
+                for cond in cond_list:
+                    self.add_node_and_children_to_fault_loc(cond, mismatch_set, uniq_headers, ast)
 
             for c in ast.children():
-                self.analyze_program_branch(c, cond, mismatch_set, uniq_headers)
+                self.analyze_program_branch(c, cond_list, mismatch_set, uniq_headers)
 
     """
     Add node and its immediate children to the fault loc set.    
@@ -353,16 +362,21 @@ class MutationOp(ASTCodeGenerator):
         
         # control dependency analysis        
         elif self.control_flow and ast.__class__.__name__ == "IfStatement":
-            self.analyze_program_branch(ast.true_statement, ast.cond, mismatch_set, uniq_headers)
-            self.analyze_program_branch(ast.false_statement, ast.cond, mismatch_set, uniq_headers)
+            self.analyze_program_branch(ast.true_statement, [ast.cond], mismatch_set, uniq_headers)
+            self.analyze_program_branch(ast.false_statement, [ast.cond], mismatch_set, uniq_headers)
         elif self.control_flow and ast.__class__.__name__ == "CaseStatement":
             for c in ast.caselist: 
-                if c: self.analyze_program_branch(c.statement, ast.comp, mismatch_set, uniq_headers)
+                if c: 
+                    cond_list = [ast.comp]
+                    if c.cond: 
+                        for tmp_var in c.cond: cond_list.append(tmp_var)
+                    self.analyze_program_branch(c.statement, cond_list, mismatch_set, uniq_headers)
         elif self.control_flow and ast.__class__.__name__ == "ForStatement":
-            # TODO: could improve efficiency by doing all of this in one function call instead of three; would need to add support for a list of conds
-            if ast.pre: self.analyze_program_branch(ast.statement, ast.pre, mismatch_set, uniq_headers)
-            if ast.cond: self.analyze_program_branch(ast.statement, ast.cond, mismatch_set, uniq_headers)
-            if ast.post: self.analyze_program_branch(ast.statement, ast.post, mismatch_set, uniq_headers)
+            cond_list = []
+            if ast.pre: cond_list.append(ast.pre)
+            if ast.cond: cond_list.append(ast.cond)
+            if ast.post: cond_list.append(ast.post)
+            self.analyze_program_branch(ast.statement, cond_list, mismatch_set, uniq_headers)
 
 
         if include_all_subnodes: # recurisvely ensure all children of a fault loc target are also included in the fault loc set
@@ -452,7 +466,7 @@ class MutationOp(ASTCodeGenerator):
             print(self.replaceable_nodes)
             with_id = random.choice(self.replaceable_nodes) # get a random node id from the replaceable nodes
             print("Replacing node id %s with node id %s" % (node_id,with_id))
-
+            
         self.get_node_from_ast(ast, with_id) # get the node associated with with_id
         self.replace_with_node(ast, node_id, self.tmp_node) # perform the replacement
         self.tmp_node = None # reset the temporary variables
@@ -507,13 +521,20 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
     
     return copy.deepcopy(winner_patchlist), winner_ast
 
-def calc_candidate_fitness(fileName):
+def calc_candidate_fitness(fileName, dependencies="", include=""):
     print("Running VCS simulation")
     #os.system("cat %s" % fileName)
+
     t_start = time.time()
-    os.system("""source /etc/profile.d/modules.sh
-	module load vcs/2017.12-SP2-1
-	timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s %s -o simv -R""" % (TEST_BENCH, fileName))
+    if include != "" and dependencies != "": 
+        os.system("""source /etc/profile.d/modules.sh
+	    module load vcs/2017.12-SP2-1
+	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
+    else:
+        os.system("""source /etc/profile.d/modules.sh
+	    module load vcs/2017.12-SP2-1
+	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s %s %s -o simv -R""" % (TEST_BENCH, fileName, include))
+
     #process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
     t_finish = time.time()
     
@@ -643,21 +664,25 @@ def main():
 
     codegen = ASTCodeGenerator()
     # parse the files (in filelist) to ASTs (PyVerilog ast)
+
     ast, directives = parse([SRC_FILE],
-                            preprocess_include=options.include,
+                            preprocess_include=INCLUDE_DIR.split(","),
                             preprocess_define=options.define)
 
     ast.show()
     src_code = codegen.visit(ast)
     print(src_code)
-    print("\n")
 
     print("\n\n")
 
     # Generate the bit-weights
-    bashCmd = ["python3", "bit_weighting.py", SRC_FILE]
+    if INCLUDE_DIR == "":
+        bashCmd = ["python3", "bit_weighting.py", SRC_FILE]
+    else:
+        bashCmd = ["python3", "bit_weighting.py", SRC_FILE, "-I", INCLUDE_DIR]
     process = subprocess.Popen(bashCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
+
     # process = subprocess.run(bashCmd, capture_output=True, check=True)
     # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
 
@@ -708,7 +733,7 @@ def main():
     # exit(1)
 
     # calculate fitness of the original buggy program
-    orig_fitness, sim_time = calc_candidate_fitness(SRC_FILE)
+    orig_fitness, sim_time = calc_candidate_fitness(SRC_FILE, DEP_FILES, INCLUDE_DIR)
     #orig_fitness = ff_1
     GENOME_FITNESS_CACHE[str([])] = orig_fitness
     #GENOME_FITNESS_CACHE[str(['insert(53,78)'])] = orig_fitness
@@ -730,6 +755,8 @@ def main():
         log_file = open("%s/repair_%s.log" % (log_base_dir, time_now), "w+")
         log_file.write("SOURCE FILE:\n\t %s\n" % SRC_FILE)
         log_file.write("TEST BENCH:\n\t %s\n" % TEST_BENCH)
+        if INCLUDE_DIR != "": log_file.write("INCLUDE_DIR:\n\t %s\n" % INCLUDE_DIR)
+        if DEP_FILES != "": log_file.write("DEP_FILES:\n\t %s\n" % DEP_FILES)
         log_file.write("ORACLE:\n\t %s\n" % ORACLE)
         log_file.write("PARAMETERS:\n")
         log_file.write("\tgens=%d\n" % GENS)
@@ -781,8 +808,6 @@ def main():
                     print(mutation_op.blacklist)
                     # print(mutation_op.wires_brought_in)
 
-                # exit(1)
-
                 p = random.random()
                 if p >= REPLACEMENT_RATE:
                     child_patchlist, child_ast = mutation_op.replace(parent_ast, parent_patchlist)
@@ -820,7 +845,7 @@ def main():
                     # if the child fitness was not 0, i.e. the parser did not throw syntax errors
                     if child_fitness == -1: 
                         
-                        child_fitness, sim_time = calc_candidate_fitness("candidate.v")
+                        child_fitness, sim_time = calc_candidate_fitness("candidate.v", DEP_FILES, INCLUDE_DIR)
                         if os.path.exists("output.txt"): os.remove("output.txt")
 
                     os.remove("candidate.v")
@@ -837,6 +862,9 @@ def main():
                     print(child_patchlist)
                     total_time = time.time() - start_time
                     print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
+                    if LOG: 
+                        log_file.write("######## REPAIR FOUND ########\n\t\t%s\n" % str(child_patchlist))
+                        log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
                     sys.exit(1)
 
                 _children.append(child_patchlist)
