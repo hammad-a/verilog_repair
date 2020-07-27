@@ -1,0 +1,133 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/decoder_3_to_8/decoder_3_to_8_buggy_var.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/decoder_3_to_8/decoder_3_to_8_tb_t1.v
+ORACLE:
+	 oracle_decoder3_to_8.txt
+PARAMETERS:
+	gens=2
+	popsize=1000
+	restarts=2
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(47,59)']		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(89,98)']		0.892857
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(32,32)']		0.964286
+	[] --mutation--> ['replace(71,108)']		0.000000
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(60,105)']		0.892857
+	[] --mutation--> ['replace(105,61)']		0.857143
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(32,32)']		0.964286
+	[] --mutation--> ['replace(80,80)']		0.964286
+	[] --mutation--> ['replace(49,85)']		0.964286
+	[] --mutation--> ['replace(58,103)']		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(109,100)']		0.964286
+	[] --mutation--> ['replace(56,85)']		0.964286
+	[] --mutation--> ['replace(98,72)']		0.214286
+	[] --mutation--> ['replace(32,32)']		0.964286
+	[] --mutation--> ['replace(105,60)']		0.928571
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(97,116)']		0.892857
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(58,67)']		0.964286
+	[] --mutation--> ['replace(87,60)']		0.928571
+	[] --mutation--> ['replace(109,64)']		0.964286
+	[] --mutation--> ['replace(70,51)']		0.750000
+	[] --mutation--> []		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(116,96)']		0.607143
+	[] --mutation--> ['replace(89,72)']		0.214286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(73,91)']		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> []		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(57,76)']		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(79,70)']		0.892857
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(97,78)']		0.964286
+	[] --mutation--> ['replace(72,45)']		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(69,51)']		0.892857
+	[] --mutation--> ['replace(115,88)']		0.892857
+	[] --mutation--> ['replace(79,114)']		0.892857
+	[] --mutation--> []		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(59,101)']		0.928571
+	[] --mutation--> ['replace(62,107)']		0.500000
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(56,111)']		0.964286
+	[] --mutation--> ['replace(107,89)']		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(63,80)']		0.392857
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(65,83)']		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(59,103)']		0.964286
+	[] --mutation--> ['replace(60,87)']		0.892857
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(58,85)']		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(61,52)']		0.892857
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(116,97)']		0.892857
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(59,77)']		0.964286
+	[] --mutation--> ['replace(68,57)']		0.964286
+	[] --mutation--> ['replace(66,104)']		0.892857
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(40,66)']		0.460317
+	[] --mutation--> ['replace(115,51)']		0.964286
+	[] --mutation--> ['replace(57,95)']		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(56,56)']		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(62,89)']		0.678571
+	[] --mutation--> ['replace(38,104)']		0.253731
+	[] --mutation--> ['replace(66,40)']		0.928571
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> ['replace(40,58)']		0.460317
+	[] --mutation--> ['replace(79,78)']		0.892857
+	[] --mutation--> ['replace(45,107)']		0.178571
+	[] --mutation--> ['replace(70,97)']		0.821429
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(34,34)']		0.964286
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(33,33)']		0.964286
+	[] --mutation--> ['replace(43,43)']		0.964286
+	[] --mutation--> ['delete(32)']		0.000000
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(38,111)']		0.460317
+	[] --mutation--> []		0.964286
+	[] --mutation--> ['replace(91,46)']		0.964286
+	[] --mutation--> ['replace(82,64)']		0.964286
+	[] --mutation--> ['replace(46,82)']		1.000000

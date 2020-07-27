@@ -1,0 +1,36 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_master_top_buggy.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/tst_bench_top_t1.v
+INCLUDE_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c
+DEP_FILES:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/wb_master_model.v /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_slave_model.v /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_master_byte_ctrl.v /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_master_bit_ctrl.v
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/oracle.txt
+PARAMETERS:
+	gens=2
+	popsize=100
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['replace(382,544)']		0.999996
+	[] --mutation--> ['insert(227,257)']		0.999996
+	[] --mutation--> ['replace(239,426)']		0.999996
+	[] --mutation--> ['replace(136,141)']		0.000000
+	[] --mutation--> ['insert(231,639)']		0.000000
+	[] --mutation--> ['delete(183)']		0.000000
+	[] --mutation--> ['replace(549,197)']		0.999996
+	[] --mutation--> ['replace(289,309)']		0.999996
+	[] --mutation--> ['replace(331,385)']		0.000000
+	[] --mutation--> ['replace(191,637)']		0.999996
+	[] --mutation--> ['replace(246,317)']		0.999996
+	[] --mutation--> ['insert(227,611)']		0.999996
+	[] --mutation--> ['replace(170,374)']		1.000000
+######## REPAIR FOUND ########
+		['replace(170,374)']
+TOTAL TIME TAKEN TO FIND REPAIR = 45.098771
