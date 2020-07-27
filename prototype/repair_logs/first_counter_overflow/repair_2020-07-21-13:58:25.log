@@ -1,0 +1,15 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/first_counter_buggy_overflow.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/first_counter_tb_t3.v
+ORACLE:
+	 oracle_firstcounteroverflow.txt
+PARAMETERS:
+	gens=2
+	popsize=1000
+	restarts=2
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+

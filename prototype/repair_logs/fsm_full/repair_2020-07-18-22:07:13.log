@@ -1,0 +1,154 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_buggy_num.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_tb_t1.v
+ORACLE:
+	 oracle_fsmfull.txt
+PARAMETERS:
+	gens=3
+	popsize=500
+	restarts=4
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['replace(182,190)']		0.000000
+	[] --mutation--> ['delete(345)']		0.500000
+	[] --mutation--> ['insert(350,168)']		0.312500
+	[] --mutation--> ['insert(308,134)']		0.000000
+	[] --mutation--> ['delete(340)']		0.500000
+	[] --mutation--> ['insert(204,320)']		0.925000
+	[] --mutation--> ['insert(246,262)']		0.500000
+	[] --mutation--> ['replace(135,360)']		0.500000
+	[] --mutation--> ['delete(114)']		0.937500
+	[] --mutation--> ['replace(220,352)']		0.500000
+	[] --mutation--> ['replace(356,365)']		0.500000
+	[] --mutation--> ['delete(100)']		0.500000
+	[] --mutation--> ['delete(350)']		0.500000
+	[] --mutation--> ['delete(262)']		0.500000
+	[] --mutation--> ['replace(298,156)']		0.000000
+	[] --mutation--> ['delete(282)']		0.500000
+	[] --mutation--> ['insert(241,238)']		0.725000
+	[] --mutation--> ['delete(180)']		0.500000
+	[] --mutation--> ['delete(350)']		0.500000
+	[] --mutation--> ['delete(124)']		0.500000
+	[] --mutation--> ['delete(134)']		0.500000
+	[] --mutation--> ['delete(150)']		0.500000
+	[] --mutation--> ['delete(274)']		0.500000
+	[] --mutation--> ['insert(269,216)']		0.500000
+	[] --mutation--> ['delete(267)']		0.500000
+	[] --mutation--> ['delete(301)']		0.500000
+	[] --mutation--> ['replace(300,81)']		0.500000
+	[] --mutation--> ['replace(261,70)']		0.500000
+	[] --mutation--> ['replace(200,131)']		0.000000
+	[] --mutation--> ['delete(320)']		0.750000
+	[] --mutation--> ['insert(282,162)']		0.000000
+	[] --mutation--> ['insert(180,310)']		0.500000
+	[] --mutation--> ['delete(296)']		0.456790
+	[] --mutation--> ['replace(324,49)']		0.750000
+	[] --mutation--> ['insert(204,269)']		0.487500
+	[] --mutation--> ['insert(100,100)']		0.500000
+	[] --mutation--> ['insert(355,303)']		0.500000
+	[] --mutation--> ['insert(315,134)']		0.000000
+	[] --mutation--> ['insert(204,238)']		0.850000
+	[] --mutation--> ['replace(269,222)']		0.487500
+	[] --mutation--> ['delete(303)']		0.456790
+	[] --mutation--> ['replace(359,216)']		0.500000
+	[] --mutation--> ['delete(204)']		0.500000
+	[] --mutation--> ['insert(289,204)']		0.500000
+	[] --mutation--> ['replace(245,336)']		0.475000
+	[] --mutation--> ['delete(267)']		0.500000
+	[] --mutation--> ['replace(271,257)']		0.500000
+	[] --mutation--> ['replace(264,285)']		0.500000
+	[] --mutation--> ['delete(310)']		0.456790
+	[] --mutation--> ['replace(342,232)']		0.000000
+	[] --mutation--> ['insert(114,198)']		0.500000
+	[] --mutation--> ['replace(320,180)']		0.937500
+	[] --mutation--> ['replace(243,166)']		0.000000
+	[] --mutation--> ['delete(294)']		0.500000
+	[] --mutation--> ['delete(253)']		0.500000
+	[] --mutation--> ['insert(204,359)']		0.500000
+	[] --mutation--> ['delete(255)']		0.500000
+	[] --mutation--> ['replace(212,194)']		0.500000
+	[] --mutation--> ['delete(186)']		0.500000
+	[] --mutation--> ['delete(241)']		0.500000
+	[] --mutation--> ['insert(301,241)']		0.500000
+	[] --mutation--> ['replace(178,142)']		0.500000
+	[] --mutation--> ['insert(162,162)']		0.500000
+	[] --mutation--> ['delete(162)']		0.500000
+	[] --mutation--> ['insert(180,168)']		0.975000
+	[] --mutation--> ['delete(180)']		0.500000
+	[] --mutation--> ['insert(277,289)']		0.500000
+	[] --mutation--> ['delete(198)']		0.500000
+	[] --mutation--> ['replace(344,196)']		0.500000
+	[] --mutation--> ['replace(181,360)']		0.500000
+	[] --mutation--> ['delete(124)']		0.500000
+	[] --mutation--> ['replace(325,345)']		0.500000
+	[] --mutation--> ['insert(253,222)']		0.000000
+	[] --mutation--> ['replace(141,206)']		0.500000
+	[] --mutation--> ['replace(330,186)']		0.500000
+	[] --mutation--> ['delete(289)']		0.481481
+	[] --mutation--> ['replace(352,195)']		0.000000
+	[] --mutation--> ['replace(170,342)']		0.950000
+	[] --mutation--> ['insert(277,124)']		0.500000
+	[] --mutation--> ['replace(290,290)']		0.500000
+	[] --mutation--> ['replace(228,168)']		0.500000
+	[] --mutation--> ['delete(150)']		0.500000
+	[] --mutation--> ['insert(301,296)']		0.500000
+	[] --mutation--> ['replace(132,252)']		0.725000
+	[] --mutation--> ['delete(340)']		0.500000
+	[] --mutation--> ['delete(114)']		0.937500
+	[] --mutation--> ['insert(308,330)']		0.000000
+	[] --mutation--> ['insert(144,238)']		0.850000
+	[] --mutation--> ['replace(163,163)']		0.500000
+	[] --mutation--> ['replace(158,176)']		0.975000
+	[] --mutation--> ['insert(364,289)']		0.500000
+	[] --mutation--> ['insert(359,100)']		0.750000
+	[] --mutation--> ['replace(308,267)']		0.500000
+	[] --mutation--> ['delete(315)']		0.500000
+	[] --mutation--> ['delete(100)']		0.500000
+	[] --mutation--> ['delete(124)']		0.500000
+	[] --mutation--> ['replace(245,70)']		0.500000
+	[] --mutation--> ['insert(325,269)']		0.000000
+	[] --mutation--> ['insert(150,262)']		0.500000
+	[] --mutation--> ['delete(168)']		0.975000
+	[] --mutation--> ['replace(140,176)']		0.887500
+	[] --mutation--> ['replace(280,225)']		0.475000
+	[] --mutation--> ['insert(350,186)']		0.500000
+	[] --mutation--> ['replace(250,131)']		0.000000
+	[] --mutation--> ['delete(248)']		0.500000
+	[] --mutation--> ['delete(246)']		0.500000
+	[] --mutation--> ['delete(355)']		0.500000
+	[] --mutation--> ['delete(282)']		0.500000
+	[] --mutation--> ['insert(260,198)']		0.000000
+	[] --mutation--> ['delete(222)']		0.500000
+	[] --mutation--> ['delete(134)']		0.500000
+	[] --mutation--> ['replace(322,154)']		0.000000
+	[] --mutation--> ['insert(296,150)']		0.475000
+	[] --mutation--> ['delete(134)']		0.500000
+	[] --mutation--> ['replace(298,298)']		0.500000
+	[] --mutation--> ['insert(294,340)']		0.000000
+	[] --mutation--> ['delete(308)']		0.500000
+	[] --mutation--> ['delete(124)']		0.500000
+	[] --mutation--> ['insert(180,255)']		0.500000
+	[] --mutation--> ['insert(198,222)']		0.500000
+	[] --mutation--> ['insert(255,277)']		0.475000
+	[] --mutation--> ['insert(162,255)']		0.500000
+	[] --mutation--> ['replace(311,187)']		0.456790
+	[] --mutation--> ['delete(100)']		0.500000
+	[] --mutation--> ['replace(296,100)']		0.456790
+	[] --mutation--> ['replace(310,186)']		0.444444
+	[] --mutation--> ['replace(183,103)']		0.500000
+	[] --mutation--> ['delete(180)']		0.500000
+	[] --mutation--> ['insert(248,124)']		0.500000
+	[] --mutation--> ['insert(134,359)']		0.500000
+	[] --mutation--> ['delete(186)']		0.500000
+	[] --mutation--> ['insert(359,350)']		0.500000
+	[] --mutation--> ['insert(198,340)']		0.500000
+	[] --mutation--> ['replace(361,338)']		0.000000
+	[] --mutation--> ['insert(186,216)']		0.500000
+	[] --mutation--> ['insert(262,255)']		0.500000
+	[] --mutation--> ['replace(127,343)']		0.500000
+	[] --mutation--> ['replace(160,214)']		1.000000

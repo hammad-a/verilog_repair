@@ -1,0 +1,79 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/lshift_reg/lshift_reg_buggy_num.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/lshift_reg/lshift_reg_tb_t1.v
+ORACLE:
+	 oracle_lshiftreg.txt
+PARAMETERS:
+	gens=2
+	popsize=1000
+	restarts=2
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['delete(63)']		0.000000
+	[] --mutation--> ['delete(63)']		0.000000
+	[] --mutation--> ['insert(63,71)']		0.836207
+	[] --mutation--> ['replace(55,82)']		0.000000
+	[] --mutation--> ['insert(63,39)']		0.836207
+	[] --mutation--> ['replace(43,62)']		0.775862
+	[] --mutation--> ['insert(48,54)']		0.836207
+	[] --mutation--> ['insert(48,82)']		0.663793
+	[] --mutation--> ['insert(63,48)']		0.836207
+	[] --mutation--> ['insert(48,48)']		0.836207
+	[] --mutation--> ['replace(43,23)']		0.568966
+	[] --mutation--> ['insert(39,82)']		0.836207
+	[] --mutation--> ['replace(43,28)']		0.456897
+	[] --mutation--> ['replace(36,36)']		0.836207
+	[] --mutation--> ['delete(63)']		0.000000
+	[] --mutation--> ['delete(48)']		0.827586
+	[] --mutation--> ['replace(60,75)']		0.000000
+	[] --mutation--> ['insert(39,82)']		0.836207
+	[] --mutation--> ['insert(55,82)']		0.836207
+	[] --mutation--> ['replace(42,87)']		0.819742
+	[] --mutation--> ['replace(67,67)']		0.836207
+	[] --mutation--> ['replace(40,72)']		0.090278
+	[] --mutation--> ['insert(55,45)']		0.836207
+	[] --mutation--> ['insert(55,71)']		0.000000
+	[] --mutation--> ['replace(55,71)']		0.000000
+	[] --mutation--> ['delete(63)']		0.000000
+	[] --mutation--> ['delete(39)']		0.090278
+	[] --mutation--> ['replace(48,39)']		0.827586
+	[] --mutation--> ['replace(55,82)']		0.000000
+	[] --mutation--> ['replace(66,58)']		0.000000
+	[] --mutation--> ['delete(39)']		0.090278
+	[] --mutation--> ['delete(63)']		0.000000
+	[] --mutation--> ['replace(50,52)']		0.000000
+	[] --mutation--> ['replace(64,40)']		0.000000
+	[] --mutation--> ['insert(48,35)']		0.000000
+	[] --mutation--> ['replace(41,41)']		0.000000
+	[] --mutation--> ['replace(69,43)']		0.000000
+	[] --mutation--> ['insert(48,48)']		0.836207
+	[] --mutation--> ['delete(63)']		0.000000
+	[] --mutation--> ['replace(60,75)']		0.000000
+	[] --mutation--> ['replace(49,49)']		0.836207
+	[] --mutation--> ['replace(62,69)']		0.836207
+	[] --mutation--> ['replace(39,48)']		0.818966
+	[] --mutation--> ['replace(41,50)']		0.836207
+	[] --mutation--> ['insert(63,54)']		0.836207
+	[] --mutation--> ['replace(64,83)']		0.000000
+	[] --mutation--> ['replace(39,63)']		0.000000
+	[] --mutation--> ['replace(59,62)']		0.836207
+	[] --mutation--> ['delete(63)']		0.000000
+	[] --mutation--> ['delete(48)']		0.827586
+	[] --mutation--> ['delete(63)']		0.000000
+	[] --mutation--> ['replace(63,63)']		0.836207
+	[] --mutation--> ['insert(63,54)']		0.836207
+	[] --mutation--> ['delete(39)']		0.090278
+	[] --mutation--> ['replace(43,77)']		0.818966
+	[] --mutation--> ['replace(41,50)']		0.836207
+	[] --mutation--> ['replace(48,71)']		0.827586
+	[] --mutation--> ['insert(39,45)']		0.827586
+	[] --mutation--> ['replace(39,39)']		0.836207
+	[] --mutation--> ['replace(63,55)']		0.000000
+	[] --mutation--> ['replace(48,63)']		0.827586
+	[] --mutation--> ['replace(39,39)']		0.836207
+	[] --mutation--> ['replace(59,24)']		1.000000

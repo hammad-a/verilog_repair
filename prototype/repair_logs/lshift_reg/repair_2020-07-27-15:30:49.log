@@ -1,0 +1,27 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/lshift_reg/lshift_reg_buggy_num.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/lshift_reg/lshift_reg_tb_t1.v
+ORACLE:
+	 oracle_lshiftreg.txt
+PARAMETERS:
+	gens=10
+	popsize=50
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['replace(48,71)']		0.82758620689655171
+	[] --mutation--> ['replace(41,37)']		0
+	[] --mutation--> ['insert(55,54)']		0.83620689655172409
+	[] --mutation--> ['replace(55,82)']		0
+	[] --mutation--> ['insert(63,35)']		0.83620689655172409
+	[] --mutation--> ['replace(40,40)']		0.83620689655172409
+	[] --mutation--> ['replace(43,24)']		0.83620689655172409
+	[] --mutation--> ['replace(59,24)']		1
+######## REPAIR FOUND ########
+		['replace(59,24)']
+TOTAL TIME TAKEN TO FIND REPAIR = 11.486878

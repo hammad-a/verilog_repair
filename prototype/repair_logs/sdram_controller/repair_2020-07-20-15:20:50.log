@@ -1,0 +1,1561 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/sdram_controller/sdram_controller_buggy_var.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/sdram_controller/sdram_controller_tb_t1.v
+ORACLE:
+	 oracle_sdramcontroller.txt
+PARAMETERS:
+	gens=2
+	popsize=750
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['insert(879,759)']		0.997758
+	[] --mutation--> ['insert(422,866)']		0.997758
+	[] --mutation--> ['replace(341,719)']		0.000000
+	[] --mutation--> ['insert(793,944)']		0.762097
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['delete(514)']		0.000000
+	[] --mutation--> ['insert(459,944)']		0.997758
+	[] --mutation--> ['delete(526)']		0.000000
+	[] --mutation--> ['replace(417,983)']		0.095933
+	[] --mutation--> ['insert(957,456)']		0.997758
+	[] --mutation--> ['insert(540,695)']		0.000000
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['delete(685)']		0.095933
+	[] --mutation--> ['delete(514)']		0.000000
+	[] --mutation--> ['replace(579,646)']		0.997758
+	[] --mutation--> ['replace(373,579)']		0.997740
+	[] --mutation--> ['replace(654,654)']		0.997758
+	[] --mutation--> ['replace(507,690)']		0.995980
+	[] --mutation--> ['replace(362,626)']		0.000000
+	[] --mutation--> ['insert(451,952)']		0.997517
+	[] --mutation--> ['insert(845,879)']		0.997758
+	[] --mutation--> ['insert(793,417)']		0.997758
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['delete(685)']		0.095933
+	[] --mutation--> ['replace(529,517)']		0.997758
+	[] --mutation--> ['insert(451,574)']		0.992868
+	[] --mutation--> ['insert(526,972)']		0.996776
+	[] --mutation--> ['replace(656,323)']		0.000000
+	[] --mutation--> ['insert(918,717)']		0.766992
+	[] --mutation--> ['replace(612,724)']		0.000000
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['insert(412,456)']		0.993163
+	[] --mutation--> ['replace(659,598)']		0.997295
+	[] --mutation--> ['replace(679,561)']		0.997758
+	[] --mutation--> ['insert(603,978)']		0.995093
+	[] --mutation--> ['insert(574,730)']		0.997758
+	[] --mutation--> ['replace(671,558)']		0.997758
+	[] --mutation--> ['replace(892,879)']		0.992164
+	[] --mutation--> ['insert(514,806)']		0.997758
+	[] --mutation--> ['insert(459,892)']		0.095933
+	[] --mutation--> ['replace(678,937)']		0.997758
+	[] --mutation--> ['delete(446)']		0.837417
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['delete(360)']		0.713636
+	[] --mutation--> ['insert(459,488)']		0.997758
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['delete(334)']		0.000000
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['insert(459,407)']		0.997758
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['insert(422,704)']		0.997758
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['insert(407,417)']		0.997758
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['delete(879)']		0.997758
+	[] --mutation--> ['insert(879,456)']		0.997758
+	[] --mutation--> ['insert(451,879)']		0.997276
+	[] --mutation--> ['delete(422)']		0.997758
+	[] --mutation--> ['replace(698,667)']		0.895666
+	[] --mutation--> ['insert(535,603)']		0.996776
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['insert(879,435)']		0.997758
+	[] --mutation--> ['replace(609,71)']		0.997758
+	[] --mutation--> ['insert(526,669)']		0.997758
+	[] --mutation--> ['replace(425,438)']		0.997758
+	[] --mutation--> ['insert(446,471)']		0.997758
+	[] --mutation--> ['replace(362,855)']		0.000000
+	[] --mutation--> ['insert(407,775)']		0.997758
+	[] --mutation--> ['insert(685,759)']		0.997758
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['replace(425,342)']		0.997758
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['delete(526)']		0.000000
+	[] --mutation--> ['insert(412,887)']		0.997517
+	[] --mutation--> ['insert(640,505)']		0.996647
+	[] --mutation--> ['replace(514,555)']		0.996961
+	[] --mutation--> ['insert(417,430)']		0.997758
+	[] --mutation--> ['insert(407,440)']		0.997758
+	[] --mutation--> ['delete(603)']		0.997091
+	[] --mutation--> ['replace(675,653)']		0.997758
+	[] --mutation--> ['insert(334,814)']		0.000000
+	[] --mutation--> ['replace(535,832)']		0.988921
+	[] --mutation--> ['insert(360,767)']		0.000000
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['insert(685,931)']		0.767389
+	[] --mutation--> ['delete(422)']		0.997758
+	[] --mutation--> ['replace(457,524)']		0.682055
+	[] --mutation--> ['replace(820,973)']		0.997758
+	[] --mutation--> ['insert(417,690)']		0.095933
+	[] --mutation--> ['replace(376,318)']		0.997758
+	[] --mutation--> ['insert(451,735)']		0.997517
+	[] --mutation--> ['delete(892)']		0.994572
+	[] --mutation--> ['delete(514)']		0.000000
+	[] --mutation--> ['insert(918,412)']		0.997758
+	[] --mutation--> ['delete(464)']		0.095933
+	[] --mutation--> ['delete(451)']		0.995572
+	[] --mutation--> ['replace(667,659)']		0.997758
+	[] --mutation--> ['replace(428,89)']		0.997758
+	[] --mutation--> ['delete(931)']		0.767389
+	[] --mutation--> ['insert(669,722)']		0.997758
+	[] --mutation--> ['insert(464,417)']		0.095933
+	[] --mutation--> ['replace(747,524)']		0.095933
+	[] --mutation--> ['delete(464)']		0.095933
+	[] --mutation--> ['insert(685,488)']		0.997758
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['insert(845,775)']		0.997758
+	[] --mutation--> ['replace(334,284)']		0.000000
+	[] --mutation--> ['insert(422,793)']		0.997758
+	[] --mutation--> ['insert(535,754)']		0.997758
+	[] --mutation--> ['insert(422,814)']		0.997758
+	[] --mutation--> ['replace(698,618)']		0.895666
+	[] --mutation--> ['insert(417,918)']		0.000000
+	[] --mutation--> ['insert(931,775)']		0.997758
+	[] --mutation--> ['insert(334,446)']		0.000000
+	[] --mutation--> ['replace(467,843)']		0.095933
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['delete(422)']		0.997758
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['replace(427,373)']		0.997758
+	[] --mutation--> ['replace(380,352)']		0.997740
+	[] --mutation--> ['replace(847,894)']		0.997758
+	[] --mutation--> ['replace(576,842)']		0.995074
+	[] --mutation--> ['delete(451)']		0.995572
+	[] --mutation--> ['delete(640)']		0.997258
+	[] --mutation--> ['insert(459,591)']		0.000000
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['insert(793,918)']		0.994868
+	[] --mutation--> ['delete(464)']		0.095933
+	[] --mutation--> ['replace(620,665)']		0.996535
+	[] --mutation--> ['insert(407,913)']		0.995221
+	[] --mutation--> ['delete(879)']		0.997758
+	[] --mutation--> ['replace(667,545)']		0.997758
+	[] --mutation--> ['replace(376,568)']		0.974710
+	[] --mutation--> ['delete(451)']		0.995572
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['insert(640,793)']		0.997758
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['replace(458,638)']		0.682055
+	[] --mutation--> ['replace(643,123)']		0.997239
+	[] --mutation--> ['delete(918)']		0.997276
+	[] --mutation--> ['insert(407,801)']		0.997758
+	[] --mutation--> ['insert(407,505)']		0.835529
+	[] --mutation--> ['replace(659,829)']		0.997221
+	[] --mutation--> ['insert(892,582)']		0.997758
+	[] --mutation--> ['replace(542,857)']		0.000000
+	[] --mutation--> ['replace(581,810)']		0.997758
+	[] --mutation--> ['delete(603)']		0.997091
+	[] --mutation--> ['delete(879)']		0.997758
+	[] --mutation--> ['insert(412,957)']		0.997517
+	[] --mutation--> ['replace(670,494)']		0.997758
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['replace(656,961)']		0.000000
+	[] --mutation--> ['replace(603,965)']		0.997091
+	[] --mutation--> ['insert(957,435)']		0.997758
+	[] --mutation--> ['insert(892,983)']		0.997758
+	[] --mutation--> ['delete(892)']		0.994572
+	[] --mutation--> ['replace(879,931)']		0.997758
+	[] --mutation--> ['insert(507,806)']		0.997758
+	[] --mutation--> ['replace(378,937)']		0.997758
+	[] --mutation--> ['insert(507,582)']		0.995981
+	[] --mutation--> ['insert(892,926)']		0.997758
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['replace(603,704)']		0.997091
+	[] --mutation--> ['insert(640,628)']		0.997758
+	[] --mutation--> ['replace(793,417)']		0.997758
+	[] --mutation--> ['replace(618,623)']		0.997628
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['replace(958,385)']		0.000000
+	[] --mutation--> ['insert(819,892)']		0.992164
+	[] --mutation--> ['replace(525,339)']		0.996776
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['replace(527,875)']		0.996776
+	[] --mutation--> ['delete(640)']		0.997258
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['delete(334)']		0.000000
+	[] --mutation--> ['insert(540,628)']		0.000000
+	[] --mutation--> ['insert(574,806)']		0.997758
+	[] --mutation--> ['insert(793,780)']		0.997758
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['delete(446)']		0.837417
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['replace(541,940)']		0.872547
+	[] --mutation--> ['replace(657,909)']		0.000000
+	[] --mutation--> ['delete(892)']		0.994572
+	[] --mutation--> ['insert(451,704)']		0.997758
+	[] --mutation--> ['insert(892,582)']		0.997758
+	[] --mutation--> ['replace(605,437)']		0.984577
+	[] --mutation--> ['insert(603,488)']		0.997758
+	[] --mutation--> ['delete(931)']		0.767389
+	[] --mutation--> ['replace(542,876)']		0.872547
+	[] --mutation--> ['delete(879)']		0.997758
+	[] --mutation--> ['insert(360,931)']		0.000000
+	[] --mutation--> ['insert(793,422)']		0.997758
+	[] --mutation--> ['insert(540,767)']		0.997758
+	[] --mutation--> ['insert(845,451)']		0.761234
+	[] --mutation--> ['replace(365,388)']		0.996536
+	[] --mutation--> ['delete(640)']		0.997258
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['insert(640,730)']		0.997758
+	[] --mutation--> ['insert(892,905)']		0.995924
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['insert(603,551)']		0.997758
+	[] --mutation--> ['replace(657,264)']		0.000000
+	[] --mutation--> ['replace(407,603)']		0.989569
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['insert(334,505)']		0.000000
+	[] --mutation--> ['replace(921,31)']		0.993904
+	[] --mutation--> ['insert(459,978)']		0.758534
+	[] --mutation--> ['replace(614,388)']		0.000000
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['replace(896,650)']		0.990237
+	[] --mutation--> ['replace(427,427)']		0.997758
+	[] --mutation--> ['replace(614,240)']		0.000000
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['insert(685,853)']		0.997758
+	[] --mutation--> ['replace(510,975)']		0.995980
+	[] --mutation--> ['replace(373,675)']		0.997740
+	[] --mutation--> ['delete(446)']		0.837417
+	[] --mutation--> ['replace(796,167)']		0.997758
+	[] --mutation--> ['insert(459,685)']		0.758534
+	[] --mutation--> ['replace(845,775)']		0.997758
+	[] --mutation--> ['delete(957)']		0.769371
+	[] --mutation--> ['insert(334,879)']		0.000000
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['insert(819,690)']		0.729119
+	[] --mutation--> ['insert(451,900)']		0.997758
+	[] --mutation--> ['replace(536,452)']		0.917627
+	[] --mutation--> ['replace(545,638)']		0.996776
+	[] --mutation--> ['insert(685,866)']		0.997758
+	[] --mutation--> ['replace(534,534)']		0.997758
+	[] --mutation--> ['replace(616,388)']		0.000000
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['insert(669,952)']		0.997388
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['replace(919,527)']		0.995313
+	[] --mutation--> ['delete(422)']		0.997758
+	[] --mutation--> ['replace(587,587)']		0.997758
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['insert(412,456)']		0.993163
+	[] --mutation--> ['replace(642,697)']		0.900644
+	[] --mutation--> ['insert(640,780)']		0.997758
+	[] --mutation--> ['replace(408,880)']		0.989569
+	[] --mutation--> ['insert(669,669)']		0.997758
+	[] --mutation--> ['insert(360,801)']		0.000000
+	[] --mutation--> ['replace(420,955)']		0.997758
+	[] --mutation--> ['insert(931,446)']		0.761234
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['delete(464)']		0.095933
+	[] --mutation--> ['replace(462,981)']		0.739866
+	[] --mutation--> ['insert(879,669)']		0.997758
+	[] --mutation--> ['insert(640,574)']		0.995407
+	[] --mutation--> ['replace(648,587)']		0.997425
+	[] --mutation--> ['insert(422,866)']		0.997758
+	[] --mutation--> ['insert(422,446)']		0.995164
+	[] --mutation--> ['insert(451,866)']		0.997276
+	[] --mutation--> ['insert(793,735)']		0.987755
+	[] --mutation--> ['insert(535,685)']		0.996776
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['replace(670,820)']		0.997758
+	[] --mutation--> ['replace(338,53)']		0.000000
+	[] --mutation--> ['insert(685,551)']		0.997758
+	[] --mutation--> ['insert(669,628)']		0.997758
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['replace(621,270)']		0.992041
+	[] --mutation--> ['replace(648,50)']		0.997758
+	[] --mutation--> ['replace(447,893)']		0.837417
+	[] --mutation--> ['insert(640,505)']		0.996647
+	[] --mutation--> ['delete(892)']		0.994572
+	[] --mutation--> ['replace(417,832)']		0.095263
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['replace(616,655)']		0.000000
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['insert(540,435)']		0.997758
+	[] --mutation--> ['replace(640,952)']		0.997258
+	[] --mutation--> ['replace(665,616)']		0.997258
+	[] --mutation--> ['insert(514,407)']		0.997758
+	[] --mutation--> ['insert(845,845)']		0.997758
+	[] --mutation--> ['delete(918)']		0.997276
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['replace(607,356)']		0.997036
+	[] --mutation--> ['insert(669,965)']		0.997703
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['replace(655,655)']		0.997758
+	[] --mutation--> ['delete(957)']		0.769371
+	[] --mutation--> ['insert(334,551)']		0.000000
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['insert(407,879)']		0.961426
+	[] --mutation--> ['delete(918)']		0.997276
+	[] --mutation--> ['insert(464,827)']		0.997758
+	[] --mutation--> ['insert(422,861)']		0.997758
+	[] --mutation--> ['replace(607,356)']		0.997036
+	[] --mutation--> ['replace(640,879)']		0.997258
+	[] --mutation--> ['replace(797,177)']		0.997758
+	[] --mutation--> ['insert(640,874)']		0.997758
+	[] --mutation--> ['replace(700,637)']		0.838571
+	[] --mutation--> ['replace(608,885)']		0.996795
+	[] --mutation--> ['insert(514,931)']		0.996795
+	[] --mutation--> ['replace(882,720)']		0.997758
+	[] --mutation--> ['insert(918,669)']		0.997758
+	[] --mutation--> ['replace(361,361)']		0.997758
+	[] --mutation--> ['insert(845,754)']		0.997758
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['delete(451)']		0.995572
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['replace(646,673)']		0.997758
+	[] --mutation--> ['replace(574,887)']		0.995074
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['replace(797,36)']		0.997758
+	[] --mutation--> ['replace(344,485)']		0.872272
+	[] --mutation--> ['insert(360,685)']		0.000000
+	[] --mutation--> ['replace(341,976)']		0.000000
+	[] --mutation--> ['insert(422,498)']		0.995164
+	[] --mutation--> ['insert(793,690)']		0.729119
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['delete(879)']		0.997758
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['replace(675,653)']		0.997758
+	[] --mutation--> ['replace(614,611)']		0.997721
+	[] --mutation--> ['delete(526)']		0.000000
+	[] --mutation--> ['replace(459,814)']		0.763075
+	[] --mutation--> ['insert(526,591)']		0.996776
+	[] --mutation--> ['insert(412,505)']		0.993163
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['insert(540,819)']		0.997758
+	[] --mutation--> ['replace(848,529)']		0.997758
+	[] --mutation--> ['insert(412,690)']		0.990755
+	[] --mutation--> ['insert(603,866)']		0.997758
+	[] --mutation--> ['replace(922,86)']		0.993904
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['replace(470,676)']		0.095933
+	[] --mutation--> ['replace(795,732)']		0.997758
+	[] --mutation--> ['insert(514,685)']		0.992793
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['delete(451)']		0.995572
+	[] --mutation--> ['insert(412,569)']		0.995572
+	[] --mutation--> ['replace(340,411)']		0.468313
+	[] --mutation--> ['replace(795,891)']		0.000000
+	[] --mutation--> ['replace(340,264)']		0.000000
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['replace(410,491)']		0.995313
+	[] --mutation--> ['replace(581,659)']		0.995352
+	[] --mutation--> ['insert(793,451)']		0.724849
+	[] --mutation--> ['replace(545,602)']		0.996776
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['replace(820,484)']		0.997758
+	[] --mutation--> ['insert(640,840)']		0.997758
+	[] --mutation--> ['insert(464,551)']		0.000000
+	[] --mutation--> ['insert(879,591)']		0.997758
+	[] --mutation--> ['replace(715,842)']		0.736232
+	[] --mutation--> ['insert(417,417)']		0.997758
+	[] --mutation--> ['insert(918,730)']		0.993905
+	[] --mutation--> ['replace(450,626)']		0.000000
+	[] --mutation--> ['insert(685,892)']		0.994572
+	[] --mutation--> ['insert(931,628)']		0.997758
+	[] --mutation--> ['delete(422)']		0.997758
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['replace(342,517)']		0.388872
+	[] --mutation--> ['delete(422)']		0.997758
+	[] --mutation--> ['insert(407,430)']		0.997758
+	[] --mutation--> ['insert(931,735)']		0.993905
+	[] --mutation--> ['replace(621,369)']		0.996924
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['insert(640,780)']		0.997758
+	[] --mutation--> ['insert(845,775)']		0.997758
+	[] --mutation--> ['replace(341,756)']		0.000000
+	[] --mutation--> ['insert(603,978)']		0.995093
+	[] --mutation--> ['insert(892,569)']		0.997758
+	[] --mutation--> ['delete(879)']		0.997758
+	[] --mutation--> ['insert(334,983)']		0.000000
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['replace(510,486)']		0.996572
+	[] --mutation--> ['delete(334)']		0.000000
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['insert(360,788)']		0.000000
+	[] --mutation--> ['delete(526)']		0.000000
+	[] --mutation--> ['insert(407,569)']		0.835529
+	[] --mutation--> ['insert(407,498)']		0.835529
+	[] --mutation--> ['replace(918,793)']		0.994868
+	[] --mutation--> ['delete(957)']		0.769371
+	[] --mutation--> ['delete(931)']		0.767389
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['insert(845,806)']		0.997758
+	[] --mutation--> ['replace(845,866)']		0.997758
+	[] --mutation--> ['replace(654,104)']		0.997684
+	[] --mutation--> ['insert(507,819)']		0.997758
+	[] --mutation--> ['replace(579,653)']		0.997758
+	[] --mutation--> ['delete(422)']		0.997758
+	[] --mutation--> ['insert(459,861)']		0.997758
+	[] --mutation--> ['insert(464,905)']		0.633349
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['insert(640,574)']		0.995407
+	[] --mutation--> ['insert(819,478)']		0.997758
+	[] --mutation--> ['replace(428,302)']		0.997758
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['replace(935,182)']		0.765513
+	[] --mutation--> ['replace(373,653)']		0.997740
+	[] --mutation--> ['replace(935,434)']		0.767389
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['delete(879)']		0.997758
+	[] --mutation--> ['insert(957,498)']		0.997758
+	[] --mutation--> ['replace(361,541)']		0.000000
+	[] --mutation--> ['replace(341,566)']		0.000000
+	[] --mutation--> ['replace(527,385)']		0.000000
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['replace(894,878)']		0.000000
+	[] --mutation--> ['replace(933,633)']		0.766481
+	[] --mutation--> ['insert(957,874)']		0.997758
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['replace(364,583)']		0.995702
+	[] --mutation--> ['replace(545,503)']		0.996776
+	[] --mutation--> ['replace(603,562)']		0.996128
+	[] --mutation--> ['replace(458,969)']		0.682055
+	[] --mutation--> ['insert(819,879)']		0.997758
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['replace(584,583)']		0.997758
+	[] --mutation--> ['delete(685)']		0.095933
+	[] --mutation--> ['insert(514,574)']		0.992793
+	[] --mutation--> ['replace(536,465)']		0.980083
+	[] --mutation--> ['replace(676,182)']		0.997758
+	[] --mutation--> ['insert(535,435)']		0.997758
+	[] --mutation--> ['replace(822,830)']		0.997758
+	[] --mutation--> ['delete(360)']		0.713636
+	[] --mutation--> ['insert(407,944)']		0.903713
+	[] --mutation--> ['delete(640)']		0.997258
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['insert(574,422)']		0.997758
+	[] --mutation--> ['replace(662,79)']		0.997629
+	[] --mutation--> ['insert(603,730)']		0.997758
+	[] --mutation--> ['replace(677,660)']		0.997758
+	[] --mutation--> ['insert(845,446)']		0.761234
+	[] --mutation--> ['delete(603)']		0.997091
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['replace(640,685)']		0.997258
+	[] --mutation--> ['delete(640)']		0.997258
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['replace(669,483)']		0.997758
+	[] --mutation--> ['replace(847,719)']		0.997758
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['delete(931)']		0.767389
+	[] --mutation--> ['replace(920,928)']		0.997758
+	[] --mutation--> ['delete(514)']		0.000000
+	[] --mutation--> ['delete(879)']		0.997758
+	[] --mutation--> ['delete(446)']		0.837417
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['delete(892)']		0.994572
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['insert(685,741)']		0.997758
+	[] --mutation--> ['replace(650,368)']		0.997758
+	[] --mutation--> ['replace(408,742)']		0.996795
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['delete(464)']		0.095933
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['insert(640,874)']		0.997758
+	[] --mutation--> ['replace(604,570)']		0.996971
+	[] --mutation--> ['replace(543,387)']		0.996776
+	[] --mutation--> ['delete(451)']		0.995572
+	[] --mutation--> ['replace(459,669)']		0.763075
+	[] --mutation--> ['replace(669,845)']		0.997758
+	[] --mutation--> ['insert(507,892)']		0.996796
+	[] --mutation--> ['insert(514,806)']		0.997758
+	[] --mutation--> ['delete(464)']		0.095933
+	[] --mutation--> ['insert(640,952)']		0.997758
+	[] --mutation--> ['replace(688,986)']		0.724865
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['insert(407,861)']		0.969745
+	[] --mutation--> ['replace(450,608)']		0.603687
+	[] --mutation--> ['delete(514)']		0.000000
+	[] --mutation--> ['delete(918)']		0.997276
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['insert(535,451)']		0.997758
+	[] --mutation--> ['replace(666,715)']		0.994942
+	[] --mutation--> ['insert(514,505)']		0.994201
+	[] --mutation--> ['replace(517,142)']		0.996980
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['insert(574,840)']		0.997758
+	[] --mutation--> ['replace(932,736)']		0.766481
+	[] --mutation--> ['delete(603)']		0.997091
+	[] --mutation--> ['delete(931)']		0.767389
+	[] --mutation--> ['delete(514)']		0.000000
+	[] --mutation--> ['replace(823,182)']		0.997758
+	[] --mutation--> ['delete(603)']		0.997091
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['insert(507,690)']		0.993166
+	[] --mutation--> ['delete(360)']		0.713636
+	[] --mutation--> ['delete(334)']		0.000000
+	[] --mutation--> ['insert(540,412)']		0.997758
+	[] --mutation--> ['replace(958,901)']		0.904287
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['delete(931)']		0.767389
+	[] --mutation--> ['delete(931)']		0.767389
+	[] --mutation--> ['delete(446)']		0.837417
+	[] --mutation--> ['replace(673,673)']		0.904287
+	[] --mutation--> ['replace(609,637)']		0.904287
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['replace(539,961)']		0.997758
+	[] --mutation--> ['replace(507,801)']		0.995980
+	[] --mutation--> ['insert(507,456)']		0.995536
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['replace(577,738)']		0.996258
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['insert(407,574)']		0.835529
+	[] --mutation--> ['replace(540,446)']		0.996776
+	[] --mutation--> ['insert(540,767)']		0.997758
+	[] --mutation--> ['replace(533,437)']		0.988921
+	[] --mutation--> ['insert(640,717)']		0.997758
+	[] --mutation--> ['insert(540,730)']		0.995794
+	[] --mutation--> ['delete(526)']		0.000000
+	[] --mutation--> ['delete(918)']		0.997276
+	[] --mutation--> ['delete(514)']		0.000000
+	[] --mutation--> ['replace(685,473)']		0.095933
+	[] --mutation--> ['insert(540,944)']		0.000000
+	[] --mutation--> ['insert(446,478)']		0.997758
+	[] --mutation--> ['insert(669,853)']		0.997758
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['insert(507,827)']		0.997758
+	[] --mutation--> ['replace(728,386)']		0.992849
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['insert(360,435)']		0.000000
+	[] --mutation--> ['replace(610,617)']		0.000000
+	[] --mutation--> ['replace(958,807)']		0.768463
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['replace(641,385)']		0.000000
+	[] --mutation--> ['delete(685)']		0.095933
+	[] --mutation--> ['delete(446)']		0.837417
+	[] --mutation--> ['replace(848,916)']		0.997758
+	[] --mutation--> ['insert(603,574)']		0.994612
+	[] --mutation--> ['insert(685,926)']		0.997758
+	[] --mutation--> ['replace(454,903)']		0.617427
+	[] --mutation--> ['replace(541,556)']		0.846963
+	[] --mutation--> ['replace(362,475)']		0.000000
+	[] --mutation--> ['insert(459,931)']		0.159776
+	[] --mutation--> ['delete(603)']		0.997091
+	[] --mutation--> ['replace(688,123)']		0.997758
+	[] --mutation--> ['replace(366,552)']		0.997758
+	[] --mutation--> ['insert(464,900)']		0.633349
+	[] --mutation--> ['replace(428,273)']		0.997758
+	[] --mutation--> ['insert(685,801)']		0.997758
+	[] --mutation--> ['insert(360,866)']		0.000000
+	[] --mutation--> ['insert(603,978)']		0.995093
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['insert(507,759)']		0.997758
+	[] --mutation--> ['replace(702,885)']		0.976140
+	[] --mutation--> ['insert(514,879)']		0.997758
+	[] --mutation--> ['replace(376,95)']		0.974710
+	[] --mutation--> ['replace(576,969)']		0.000000
+	[] --mutation--> ['delete(464)']		0.095933
+	[] --mutation--> ['insert(451,569)']		0.992868
+	[] --mutation--> ['insert(422,551)']		0.995183
+	[] --mutation--> ['insert(526,972)']		0.996776
+	[] --mutation--> ['delete(892)']		0.994572
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['delete(918)']		0.997276
+	[] --mutation--> ['delete(793)']		0.997758
+	[] --mutation--> ['replace(846,945)']		0.997758
+	[] --mutation--> ['insert(918,887)']		0.997758
+	[] --mutation--> ['replace(645,645)']		0.997758
+	[] --mutation--> ['replace(697,954)']		0.000000
+	[] --mutation--> ['insert(574,806)']		0.997758
+	[] --mutation--> ['insert(464,690)']		0.000000
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['replace(346,104)']		0.000000
+	[] --mutation--> ['insert(446,690)']		0.000000
+	[] --mutation--> ['replace(379,168)']		0.000000
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['insert(540,717)']		0.900082
+	[] --mutation--> ['insert(957,754)']		0.997758
+	[] --mutation--> ['replace(795,402)']		0.000000
+	[] --mutation--> ['replace(417,704)']		0.895666
+	[] --mutation--> ['replace(446,926)']		0.837417
+	[] --mutation--> ['insert(685,972)']		0.997758
+	[] --mutation--> ['replace(527,641)']		0.996776
+	[] --mutation--> ['delete(526)']		0.000000
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['insert(879,471)']		0.997758
+	[] --mutation--> ['insert(931,690)']		0.761234
+	[] --mutation--> ['insert(892,913)']		0.997758
+	[] --mutation--> ['replace(961,192)']		0.769371
+	[] --mutation--> ['delete(685)']		0.095933
+	[] --mutation--> ['delete(918)']		0.997276
+	[] --mutation--> ['replace(608,898)']		0.996795
+	[] --mutation--> ['delete(685)']		0.095933
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['replace(422,900)']		0.969929
+	[] --mutation--> ['replace(845,983)']		0.997758
+	[] --mutation--> ['replace(423,460)']		0.997758
+	[] --mutation--> ['insert(526,861)']		0.997758
+	[] --mutation--> ['replace(574,488)']		0.987574
+	[] --mutation--> ['replace(364,351)']		0.995905
+	[] --mutation--> ['insert(526,430)']		0.997758
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['insert(879,446)']		0.724849
+	[] --mutation--> ['replace(371,941)']		0.997758
+	[] --mutation--> ['delete(464)']		0.095933
+	[] --mutation--> ['delete(526)']		0.000000
+	[] --mutation--> ['insert(574,926)']		0.997276
+	[] --mutation--> ['replace(337,633)']		0.000000
+	[] --mutation--> ['replace(535,832)']		0.988921
+	[] --mutation--> ['insert(892,780)']		0.997758
+	[] --mutation--> ['replace(823,322)']		0.997758
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['replace(958,413)']		0.768690
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['replace(658,658)']		0.997758
+	[] --mutation--> ['insert(879,819)']		0.997758
+	[] --mutation--> ['insert(334,471)']		0.000000
+	[] --mutation--> ['delete(514)']		0.000000
+	[] --mutation--> ['replace(367,909)']		0.996610
+	[] --mutation--> ['replace(688,757)']		0.722537
+	[] --mutation--> ['insert(535,874)']		0.997758
+	[] --mutation--> ['replace(675,653)']		0.997758
+	[] --mutation--> ['replace(377,70)']		0.997758
+	[] --mutation--> ['replace(880,385)']		0.000000
+	[] --mutation--> ['replace(576,782)']		0.995074
+	[] --mutation--> ['insert(526,874)']		0.997758
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['insert(793,939)']		0.762097
+	[] --mutation--> ['insert(535,801)']		0.997758
+	[] --mutation--> ['delete(819)']		0.997758
+	[] --mutation--> ['replace(362,792)']		0.000000
+	[] --mutation--> ['replace(666,477)']		0.994942
+	[] --mutation--> ['replace(517,693)']		0.996999
+	[] --mutation--> ['insert(603,874)']		0.997758
+	[] --mutation--> ['replace(529,454)']		0.995794
+	[] --mutation--> ['replace(750,876)']		0.870596
+	[] --mutation--> ['insert(526,767)']		0.997758
+	[] --mutation--> ['replace(618,576)']		0.000000
+	[] --mutation--> ['replace(620,544)']		0.992041
+	[] --mutation--> ['insert(464,793)']		0.997758
+	[] --mutation--> ['replace(542,638)']		0.000000
+	[] --mutation--> ['replace(848,712)']		0.997758
+	[] --mutation--> ['delete(892)']		0.994572
+	[] --mutation--> ['replace(533,805)']		0.988921
+	[] --mutation--> ['insert(334,422)']		0.000000
+	[] --mutation--> ['insert(931,832)']		0.997758
+	[] --mutation--> ['delete(669)']		0.997758
+	[] --mutation--> ['replace(671,576)']		0.997758
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['replace(534,458)']		0.996776
+	[] --mutation--> ['insert(417,759)']		0.997758
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['insert(451,417)']		0.994835
+	[] --mutation--> ['insert(685,827)']		0.997758
+	[] --mutation--> ['replace(583,365)']		0.991025
+	[] --mutation--> ['delete(892)']		0.994572
+	[] --mutation--> ['insert(459,819)']		0.997758
+	[] --mutation--> ['replace(645,578)']		0.997758
+	[] --mutation--> ['delete(514)']		0.000000
+	[] --mutation--> ['insert(507,866)']		0.997758
+	[] --mutation--> ['replace(367,601)']		0.997740
+	[] --mutation--> ['insert(640,685)']		0.994963
+	[] --mutation--> ['delete(464)']		0.095933
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['delete(507)']		0.000000
+	[] --mutation--> ['insert(422,972)']		0.997758
+	[] --mutation--> ['insert(464,905)']		0.633349
+	[] --mutation--> ['replace(336,564)']		0.000000
+	[] --mutation--> ['insert(603,978)']		0.995093
+	[] --mutation--> ['insert(892,451)']		0.761234
+	[] --mutation--> ['insert(422,488)']		0.997758
+	[] --mutation--> ['insert(526,483)']		0.997758
+	[] --mutation--> ['insert(603,741)']		0.997758
+	[] --mutation--> ['replace(674,578)']		0.997758
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['insert(574,569)']		0.997758
+	[] --mutation--> ['insert(640,456)']		0.996647
+	[] --mutation--> ['replace(612,974)']		0.000000
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['insert(879,709)']		0.993775
+	[] --mutation--> ['delete(685)']		0.095933
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['replace(896,650)']		0.990237
+	[] --mutation--> ['replace(669,430)']		0.997758
+	[] --mutation--> ['delete(360)']		0.713636
+	[] --mutation--> ['insert(669,793)']		0.997758
+	[] --mutation--> ['delete(451)']		0.995572
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['replace(337,340)']		0.711619
+	[] --mutation--> ['delete(845)']		0.997758
+	[] --mutation--> ['replace(576,542)']		0.994093
+	[] --mutation--> ['delete(540)']		0.996776
+	[] --mutation--> ['delete(360)']		0.713636
+	[] --mutation--> ['insert(407,407)']		0.997758
+	[] --mutation--> ['insert(507,498)']		0.995536
+	[] --mutation--> ['delete(574)']		0.995074
+	[] --mutation--> ['replace(544,620)']		0.996776
+	[] --mutation--> ['insert(535,952)']		0.996776
+	[] --mutation--> ['replace(659,795)']		0.994386
+	[] --mutation--> ['replace(605,293)']		0.996369
+	[] --mutation--> ['insert(334,853)']		0.000000
+	[] --mutation--> ['replace(412,540)']		0.991915
+	[] --mutation--> ['insert(669,819)']		0.997758
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['insert(514,446)']		0.995164
+	[] --mutation--> ['insert(526,780)']		0.997758
+	[] --mutation--> ['replace(541,815)']		0.872547
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['delete(412)']		0.991915
+	[] --mutation--> ['insert(892,887)']		0.997758
+	[] --mutation--> ['delete(535)']		0.000000
+	[] --mutation--> ['replace(543,486)']		0.995794
+	[] --mutation--> ['delete(879)']		0.997758
+	[] --mutation--> ['insert(407,628)']		0.900532
+	[] --mutation--> ['replace(452,499)']		0.995572
+	[] --mutation--> ['insert(845,814)']		0.997758
+	[] --mutation--> ['delete(417)']		0.095933
+	[] --mutation--> ['delete(446)']		0.837417
+	[] --mutation--> ['insert(685,440)']		0.997758
+	[] --mutation--> ['delete(918)']		0.997276
+	[] --mutation--> ['replace(407,730)']		0.986660
+	[] --mutation--> ['replace(643,387)']		0.997517
+	[] --mutation--> ['delete(918)']		0.997276
+	[] --mutation--> ['delete(407)']		0.989569
+	[] --mutation--> ['replace(577,822)']		0.997258
+	[] --mutation--> ['replace(339,763)']		0.000000
+	[] --mutation--> ['replace(823,676)']		0.997758
+	[] --mutation--> ['insert(957,591)']		0.997758
+	[] --mutation--> ['insert(412,926)']		0.997517
+	[] --mutation--> ['delete(446)']		0.837417
+	[] --mutation--> ['insert(685,931)']		0.767389
+	[] --mutation--> ['delete(640)']		0.997258
+	[] --mutation--> ['delete(685)']		0.095933
+	[] --mutation--> ['delete(459)']		0.000000
+	[] --mutation--> ['insert(334,900)']		0.000000
+	[] --mutation--> ['insert(407,717)']		0.997758
+	[] --mutation--> ['insert(417,887)']		0.095933
+	[] --mutation--> ['insert(464,853)']		0.941231
+	[] --mutation--> ['insert(793,488)']		0.997758
+IN GENERATION 1 OF ATTEMPT 0
+	['replace(377,70)'] --elitism--> ['replace(377,70)']		0.997758
+	['insert(526,874)'] --elitism--> ['insert(526,874)']		0.997758
+	['insert(535,801)'] --elitism--> ['insert(535,801)']		0.997758
+	['delete(819)'] --elitism--> ['delete(819)']		0.997758
+	['insert(603,874)'] --elitism--> ['insert(603,874)']		0.997758
+	['insert(526,767)'] --elitism--> ['insert(526,767)']		0.997758
+	['insert(464,793)'] --elitism--> ['insert(464,793)']		0.997758
+	['replace(848,712)'] --elitism--> ['replace(848,712)']		0.997758
+	['insert(931,832)'] --elitism--> ['insert(931,832)']		0.997758
+	['delete(669)'] --elitism--> ['delete(669)']		0.997758
+	['replace(671,576)'] --elitism--> ['replace(671,576)']		0.997758
+	['delete(845)'] --elitism--> ['delete(845)']		0.997758
+	['insert(417,759)'] --elitism--> ['insert(417,759)']		0.997758
+	['insert(685,827)'] --elitism--> ['insert(685,827)']		0.997758
+	['insert(459,819)'] --elitism--> ['insert(459,819)']		0.997758
+	['replace(645,578)'] --elitism--> ['replace(645,578)']		0.997758
+	['insert(507,866)'] --elitism--> ['insert(507,866)']		0.997758
+	['insert(422,972)'] --elitism--> ['insert(422,972)']		0.997758
+	['insert(422,488)'] --elitism--> ['insert(422,488)']		0.997758
+	['insert(526,483)'] --elitism--> ['insert(526,483)']		0.997758
+	['insert(603,741)'] --elitism--> ['insert(603,741)']		0.997758
+	['replace(674,578)'] --elitism--> ['replace(674,578)']		0.997758
+	['insert(574,569)'] --elitism--> ['insert(574,569)']		0.997758
+	['replace(669,430)'] --elitism--> ['replace(669,430)']		0.997758
+	['insert(669,793)'] --elitism--> ['insert(669,793)']		0.997758
+	['delete(845)'] --elitism--> ['delete(845)']		0.997758
+	['insert(407,407)'] --elitism--> ['insert(407,407)']		0.997758
+	['insert(669,819)'] --elitism--> ['insert(669,819)']		0.997758
+	['insert(526,780)'] --elitism--> ['insert(526,780)']		0.997758
+	['insert(892,887)'] --elitism--> ['insert(892,887)']		0.997758
+	['delete(879)'] --elitism--> ['delete(879)']		0.997758
+	['insert(845,814)'] --elitism--> ['insert(845,814)']		0.997758
+	['insert(685,440)'] --elitism--> ['insert(685,440)']		0.997758
+	['replace(823,676)'] --elitism--> ['replace(823,676)']		0.997758
+	['insert(957,591)'] --elitism--> ['insert(957,591)']		0.997758
+	['insert(407,717)'] --elitism--> ['insert(407,717)']		0.997758
+	['insert(793,488)'] --elitism--> ['insert(793,488)']		0.997758
+	['insert(957,874)'] --mutation--> ['insert(957,874)', 'delete(459)']		0.000000
+	['insert(685,759)'] --mutation--> ['insert(685,759)', 'insert(936,412)']		0.997758
+	['insert(669,853)'] --mutation--> ['insert(669,853)', 'replace(905,996)']		0.993609
+	['insert(640,780)'] --mutation--> ['insert(640,780)', 'insert(459,759)']		0.997758
+	['replace(654,654)'] --mutation--> ['replace(654,654)', 'insert(526,861)']		0.997758
+	['insert(446,471)'] --mutation--> ['insert(446,471)', 'insert(545,879)']		0.000000
+	['insert(446,471)'] --mutation--> ['insert(446,471)', 'delete(936)']		0.767389
+	['replace(579,646)'] --mutation--> ['replace(579,646)', 'replace(420,567)']		0.997758
+	['insert(417,430)'] --mutation--> ['insert(417,430)', 'delete(850)']		0.997758
+	['replace(795,732)'] --mutation--> ['replace(795,732)', 'delete(514)']		0.000000
+	['replace(425,342)'] --mutation--> ['replace(425,342)', 'replace(644,673)']		0.997221
+	['replace(675,653)'] --mutation--> ['replace(675,653)', 'replace(529,48)']		0.995794
+	['insert(957,435)'] --mutation--> ['insert(957,435)', 'insert(422,704)']		0.997758
+	['delete(669)'] --mutation--> ['delete(669)', 'insert(867,498)']		0.997758
+	['replace(423,460)'] --mutation--> ['replace(423,460)', 'delete(793)']		0.997758
+	['replace(676,182)'] --mutation--> ['replace(676,182)', 'delete(669)']		0.997758
+	['replace(845,866)'] --mutation--> ['replace(845,866)', 'replace(421,36)']		0.997758
+	['insert(574,422)'] --mutation--> ['insert(574,422)', 'delete(454)']		0.837417
+	['insert(451,704)'] --mutation--> ['insert(451,704)', 'delete(824)']		0.997758
+	['delete(819)'] --mutation--> ['delete(819)', 'replace(797,368)']		0.997758
+	['insert(879,456)'] --mutation--> ['insert(879,456)', 'delete(451)']		0.995572
+	['replace(845,775)'] --mutation--> ['replace(845,775)', 'replace(367,838)']		0.996610
+	['insert(845,754)'] --mutation--> ['insert(845,754)', 'delete(334)']		0.000000
+	['replace(678,937)'] --mutation--> ['replace(678,937)', 'insert(459,505)']		0.997758
+	['insert(407,430)'] --mutation--> ['insert(407,430)', 'replace(824,772)']		0.997758
+	['insert(540,767)'] --mutation--> ['insert(540,767)', 'delete(412)']		0.991915
+	['insert(407,775)'] --mutation--> ['insert(407,775)', 'replace(514,669)']		0.996906
+	['insert(407,440)'] --mutation--> ['insert(407,440)', 'insert(645,435)']		0.997758
+	['insert(417,430)'] --mutation--> ['insert(417,430)', 'replace(338,518)']		0.708336
+	['insert(422,498)'] --mutation--> ['insert(422,498)', 'insert(827,910)']		0.995164
+	['insert(845,806)'] --mutation--> ['insert(845,806)', 'delete(603)']		0.997091
+	['insert(535,435)'] --mutation--> ['insert(535,435)', 'replace(407,819)']		0.996980
+	['insert(819,478)'] --mutation--> ['insert(819,478)', 'insert(498,814)']		0.997758
+	['insert(892,983)'] --mutation--> ['insert(892,983)', 'insert(526,723)']		0.997758
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'insert(850,451)']		0.761234
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'replace(584,532)']		0.996795
+	['insert(879,435)'] --mutation--> ['insert(879,435)', 'delete(417)']		0.095933
+	['replace(822,830)'] --mutation--> ['replace(822,830)', 'delete(464)']		0.095933
+	['insert(879,456)'] --mutation--> ['insert(879,456)', 'insert(962,446)']		0.761234
+	['replace(797,36)'] --mutation--> ['replace(797,36)', 'delete(892)']		0.994572
+	['insert(819,478)'] --mutation--> ['insert(819,478)', 'insert(798,730)']		0.997758
+	['insert(535,754)'] --mutation--> ['insert(535,754)', 'delete(334)']		0.000000
+	['replace(676,182)'] --mutation--> ['replace(676,182)', 'replace(932,575)']		0.766935
+	['insert(603,574)'] --mutation--> ['insert(603,574)', 'replace(716,544)']		0.838571
+	['insert(535,451)'] --mutation--> ['insert(535,451)', 'replace(472,991)']		0.095933
+	['insert(507,819)'] --mutation--> ['insert(507,819)', 'insert(819,919)']		0.997758
+	['insert(892,926)'] --mutation--> ['insert(892,926)', 'insert(459,944)']		0.997758
+	['replace(667,545)'] --mutation--> ['replace(667,545)', 'insert(507,983)']		0.994942
+	['delete(892)'] --mutation--> ['delete(892)', 'delete(407)']		0.986384
+	['replace(534,534)'] --mutation--> ['replace(534,534)', 'insert(417,640)']		0.726866
+	['insert(685,440)'] --mutation--> ['insert(685,440)', 'insert(798,628)']		0.997758
+	['replace(670,494)'] --mutation--> ['replace(670,494)', 'replace(518,411)']		0.996961
+	['insert(514,407)'] --mutation--> ['insert(514,407)', 'replace(676,75)']		0.000000
+	['insert(514,446)'] --mutation--> ['insert(514,446)', 'delete(531)']		0.000000
+	['replace(534,534)'] --mutation--> ['replace(534,534)', 'delete(892)']		0.994572
+	['insert(407,430)'] --mutation--> ['insert(407,430)', 'replace(540,512)']		0.988921
+	['insert(640,717)'] --mutation--> ['insert(640,717)', 'insert(817,471)']		0.997758
+	['replace(643,387)'] --mutation--> ['replace(643,387)', 'replace(383,192)']		0.997499
+	['delete(819)'] --mutation--> ['delete(819)', 'insert(640,603)']		0.997536
+	['replace(669,483)'] --mutation--> ['replace(669,483)', 'delete(924)']		0.767389
+	['insert(845,845)'] --mutation--> ['insert(845,845)', 'insert(514,478)']		0.995164
+	['insert(918,887)'] --mutation--> ['insert(918,887)', 'delete(446)']		0.837417
+	['delete(412)'] --mutation--> ['delete(412)', 'insert(887,759)']		0.991915
+	['insert(892,582)'] --mutation--> ['insert(892,582)', 'insert(464,483)']		0.997758
+	['insert(669,722)'] --mutation--> ['insert(669,722)', 'delete(969)']		0.769371
+	['delete(918)'] --mutation--> ['delete(918)', 'delete(845)']		0.997276
+	['replace(529,517)'] --mutation--> ['replace(529,517)', 'delete(685)']		0.095933
+	['insert(514,407)'] --mutation--> ['insert(514,407)', 'replace(408,710)']		0.996795
+	['replace(797,177)'] --mutation--> ['replace(797,177)', 'replace(360,334)']		0.713636
+	['delete(793)'] --mutation--> ['delete(793)', 'replace(607,632)']		0.997165
+	['replace(603,965)'] --mutation--> ['replace(603,965)', 'replace(574,435)']		0.903920
+	['insert(451,417)'] --mutation--> ['insert(451,417)', 'replace(924,971)']		0.991428
+	['replace(678,937)'] --mutation--> ['replace(678,937)', 'delete(334)']		0.000000
+	['delete(412)'] --mutation--> ['delete(412)', 'replace(661,588)']		0.991915
+	['delete(669)'] --mutation--> ['delete(669)', 'delete(540)']		0.996776
+	['delete(879)'] --mutation--> ['delete(879)', 'delete(535)']		0.000000
+	['replace(820,484)'] --mutation--> ['replace(820,484)', 'replace(603,879)']		0.997091
+	['insert(574,806)'] --mutation--> ['insert(574,806)', 'delete(926)']		0.997276
+	['insert(685,759)'] --mutation--> ['insert(685,759)', 'replace(646,373)']		0.997758
+	['insert(640,793)'] --mutation--> ['insert(640,793)', 'delete(459)']		0.000000
+	['replace(845,866)'] --mutation--> ['replace(845,866)', 'insert(918,918)']		0.997758
+	['insert(640,874)'] --mutation--> ['insert(640,874)', 'replace(906,97)']		0.997758
+	['insert(459,407)'] --mutation--> ['insert(459,407)', 'delete(645)']		0.997258
+	['replace(420,955)'] --mutation--> ['replace(420,955)', 'delete(464)']		0.095933
+	['insert(535,435)'] --mutation--> ['insert(535,435)', 'insert(531,488)']		0.997758
+	['replace(879,931)'] --mutation--> ['replace(879,931)', 'insert(334,840)']		0.000000
+	['insert(819,478)'] --mutation--> ['insert(819,478)', 'replace(407,560)']		0.981862
+	['insert(603,866)'] --mutation--> ['insert(603,866)', 'insert(845,866)']		0.997276
+	['insert(446,478)'] --mutation--> ['insert(446,478)', 'replace(938,338)']		0.000000
+	['insert(507,866)'] --mutation--> ['insert(507,866)', 'replace(463,875)']		0.095933
+	['replace(376,318)'] --mutation--> ['replace(376,318)', 'delete(360)']		0.713636
+	['insert(879,591)'] --mutation--> ['insert(879,591)', 'insert(446,430)']		0.989569
+	['insert(685,551)'] --mutation--> ['insert(685,551)', 'replace(615,450)']		0.000000
+	['replace(527,875)'] --mutation--> ['replace(527,875)', 'insert(422,767)']		0.996776
+	['replace(675,653)'] --mutation--> ['replace(675,653)', 'delete(446)']		0.837417
+	['insert(507,819)'] --mutation--> ['insert(507,819)', 'delete(669)']		0.997758
+	['insert(540,819)'] --mutation--> ['insert(540,819)', 'replace(621,40)']		0.992041
+	['replace(670,494)'] --mutation--> ['replace(670,494)', 'replace(341,713)']		0.000000
+	['replace(581,810)'] --mutation--> ['replace(581,810)', 'insert(417,417)']		0.997758
+	['replace(848,529)'] --mutation--> ['replace(848,529)', 'delete(459)']		0.000000
+	['replace(534,534)'] --mutation--> ['replace(534,534)', 'replace(670,395)']		0.000000
+	['delete(879)'] --mutation--> ['delete(879)', 'replace(643,68)']		0.997239
+	['insert(417,430)'] --mutation--> ['insert(417,430)', 'insert(690,709)']		0.997758
+	['insert(603,730)'] --mutation--> ['insert(603,730)', 'delete(934)']		0.997276
+	['insert(931,775)'] --mutation--> ['insert(931,775)', 'replace(411,75)']		0.997758
+	['delete(422)'] --mutation--> ['delete(422)', 'replace(366,544)']		0.997758
+	['insert(535,952)'] --mutation--> ['insert(535,952)', 'delete(535)']		0.000000
+	['insert(957,456)'] --mutation--> ['insert(957,456)', 'insert(412,582)']		0.997758
+	['insert(417,430)'] --mutation--> ['insert(417,430)', 'delete(512)']		0.000000
+	['insert(879,435)'] --mutation--> ['insert(879,435)', 'replace(677,123)']		0.997758
+	['insert(459,944)'] --mutation--> ['insert(459,944)', 'replace(452,290)']		0.000000
+	['insert(845,879)'] --mutation--> ['insert(845,879)', 'delete(640)']		0.997258
+	['insert(957,874)'] --mutation--> ['insert(957,874)', 'delete(669)']		0.997758
+	['replace(667,659)'] --mutation--> ['replace(667,659)', 'replace(367,390)']		0.997758
+	['insert(540,767)'] --mutation--> ['insert(540,767)', 'delete(685)']		0.095933
+	['insert(446,478)'] --mutation--> ['insert(446,478)', 'replace(371,864)']		0.997758
+	['replace(654,654)'] --mutation--> ['replace(654,654)', 'replace(540,827)']		0.757482
+	['insert(640,793)'] --mutation--> ['insert(640,793)', 'replace(450,371)']		0.858875
+	['insert(422,866)'] --mutation--> ['insert(422,866)', 'insert(845,866)']		0.997276
+	['replace(654,654)'] --mutation--> ['replace(654,654)', 'delete(451)']		0.995572
+	['insert(845,754)'] --mutation--> ['insert(845,754)', 'delete(962)']		0.769371
+	['delete(793)'] --mutation--> ['delete(793)', 'insert(446,931)']		0.997758
+	['insert(892,582)'] --mutation--> ['insert(892,582)', 'insert(407,913)']		0.997758
+	['replace(428,302)'] --mutation--> ['replace(428,302)', 'replace(848,720)']		0.997758
+	['replace(796,167)'] --mutation--> ['replace(796,167)', 'replace(581,581)']		0.997758
+	['insert(685,741)'] --mutation--> ['insert(685,741)', 'delete(459)']		0.000000
+	['delete(793)'] --mutation--> ['delete(793)', 'replace(408,484)']		0.989569
+	['delete(918)'] --mutation--> ['delete(918)', 'insert(360,754)']		0.000000
+	['replace(659,829)'] --mutation--> ['replace(659,829)', 'insert(407,591)']		0.892494
+	['replace(879,931)'] --mutation--> ['replace(879,931)', 'replace(370,298)']		0.997758
+	['insert(845,879)'] --mutation--> ['insert(845,879)', 'insert(936,892)']		0.997758
+	['insert(422,704)'] --mutation--> ['insert(422,704)', 'replace(508,541)']		0.995980
+	['insert(526,483)'] --mutation--> ['insert(526,483)', 'insert(464,926)']		0.997758
+	['insert(422,861)'] --mutation--> ['insert(422,861)', 'replace(688,110)']		0.761234
+	['insert(514,879)'] --mutation--> ['insert(514,879)', 'delete(526)']		0.000000
+	['insert(603,488)'] --mutation--> ['insert(603,488)', 'delete(551)']		0.000000
+	['replace(361,361)'] --mutation--> ['replace(361,361)', 'replace(404,457)']		0.000000
+	['replace(579,653)'] --mutation--> ['replace(579,653)', 'insert(360,741)']		0.000000
+	['replace(378,937)'] --mutation--> ['replace(378,937)', 'insert(574,952)']		0.997406
+	['insert(514,931)'] --mutation--> ['insert(514,931)', 'insert(514,827)']		0.996795
+	['replace(539,961)'] --mutation--> ['replace(539,961)', 'delete(446)']		0.837417
+	['insert(918,669)'] --mutation--> ['insert(918,669)', 'insert(451,780)']		0.997758
+	['replace(678,937)'] --mutation--> ['replace(678,937)', 'insert(640,939)']		0.997406
+	['insert(407,417)'] --mutation--> ['insert(407,417)', 'insert(407,978)']		0.997758
+	['insert(640,874)'] --mutation--> ['insert(640,874)', 'insert(640,900)']		0.997758
+	['replace(361,361)'] --mutation--> ['replace(361,361)', 'replace(957,861)']		0.904769
+	['insert(535,754)'] --mutation--> ['insert(535,754)', 'delete(685)']		0.095933
+	['insert(640,793)'] --mutation--> ['insert(640,793)', 'replace(904,789)']		0.976155
+	['replace(645,578)'] --mutation--> ['replace(645,578)', 'insert(955,430)']		0.997758
+	['insert(892,582)'] --mutation--> ['insert(892,582)', 'insert(526,983)']		0.996776
+	['replace(671,558)'] --mutation--> ['replace(671,558)', 'delete(526)']		0.000000
+	['insert(574,730)'] --mutation--> ['insert(574,730)', 'replace(447,452)']		0.837417
+	['delete(845)'] --mutation--> ['delete(845)', 'insert(507,407)']		0.997758
+	['delete(669)'] --mutation--> ['delete(669)', 'insert(407,968)']		0.997758
+	['delete(669)'] --mutation--> ['delete(669)', 'replace(404,524)']		0.997758
+	['delete(422)'] --mutation--> ['delete(422)', 'replace(664,113)']		0.997758
+	['insert(793,417)'] --mutation--> ['insert(793,417)', 'replace(647,466)']		0.321093
+	['insert(640,874)'] --mutation--> ['insert(640,874)', 'insert(819,591)']		0.997758
+	['insert(514,806)'] --mutation--> ['insert(514,806)', 'insert(412,754)']		0.997758
+	['insert(879,435)'] --mutation--> ['insert(879,435)', 'replace(886,834)']		0.976155
+	['insert(957,456)'] --mutation--> ['insert(957,456)', 'replace(926,869)']		0.996795
+	['insert(422,814)'] --mutation--> ['insert(422,814)', 'insert(459,767)']		0.997758
+	['delete(793)'] --mutation--> ['delete(793)', 'delete(887)']		0.994572
+	['insert(685,926)'] --mutation--> ['insert(685,926)', 'insert(603,879)']		0.997758
+	['replace(534,534)'] --mutation--> ['replace(534,534)', 'delete(685)']		0.095933
+	['insert(422,498)'] --mutation--> ['insert(422,498)', 'insert(548,505)']		0.995164
+	['insert(845,775)'] --mutation--> ['insert(845,775)', 'insert(850,978)']		0.997758
+	['insert(540,435)'] --mutation--> ['insert(540,435)', 'delete(440)']		0.997758
+	['replace(823,182)'] --mutation--> ['replace(823,182)', 'insert(845,853)']		0.996795
+	['replace(658,658)'] --mutation--> ['replace(658,658)', 'replace(795,396)']		0.000000
+	['replace(797,177)'] --mutation--> ['replace(797,177)', 'delete(407)']		0.989569
+	['replace(820,973)'] --mutation--> ['replace(820,973)', 'replace(337,976)']		0.000000
+	['replace(425,342)'] --mutation--> ['replace(425,342)', 'replace(932,494)']		0.767162
+	['replace(848,529)'] --mutation--> ['replace(848,529)', 'insert(464,407)']		0.997758
+	['insert(526,767)'] --mutation--> ['insert(526,767)', 'insert(407,931)']		0.900293
+	['delete(845)'] --mutation--> ['delete(845)', 'insert(640,983)']		0.997758
+	['delete(451)'] --mutation--> ['delete(451)', 'insert(874,832)']		0.995572
+	['insert(422,704)'] --mutation--> ['insert(422,704)', 'delete(360)']		0.713636
+	['replace(845,775)'] --mutation--> ['replace(845,775)', 'replace(525,842)']		0.996776
+	['insert(422,704)'] --mutation--> ['insert(422,704)', 'replace(422,440)']		0.997758
+	['replace(848,712)'] --mutation--> ['replace(848,712)', 'insert(892,806)']		0.997758
+	['delete(879)'] --mutation--> ['delete(879)', 'delete(412)']		0.991915
+	['delete(879)'] --mutation--> ['delete(879)', 'replace(640,628)']		0.997258
+	['replace(667,659)'] --mutation--> ['replace(667,659)', 'insert(451,931)']		0.997517
+	['insert(845,806)'] --mutation--> ['insert(845,806)', 'insert(464,814)']		0.997758
+	['insert(892,582)'] --mutation--> ['insert(892,582)', 'insert(681,866)']		0.997276
+	['insert(640,730)'] --mutation--> ['insert(640,730)', 'insert(942,690)']		0.761234
+	['replace(425,438)'] --mutation--> ['replace(425,438)', 'replace(422,889)']		0.997758
+	['insert(793,422)'] --mutation--> ['insert(793,422)', 'replace(623,733)']		0.000000
+	['insert(892,569)'] --mutation--> ['insert(892,569)', 'delete(507)']		0.000000
+	['replace(525,339)'] --mutation--> ['replace(525,339)', 'replace(670,295)']		0.000000
+	['delete(422)'] --mutation--> ['delete(422)', 'delete(785)']		0.997758
+	['insert(535,874)'] --mutation--> ['insert(535,874)', 'insert(845,957)']		0.997758
+	['insert(507,456)'] --mutation--> ['insert(507,456)', 'delete(446)']		0.836010
+	['insert(892,582)'] --mutation--> ['insert(892,582)', 'delete(897)']		0.994572
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'insert(507,591)']		0.996796
+	['insert(640,840)'] --mutation--> ['insert(640,840)', 'replace(906,966)']		0.997758
+	['insert(640,793)'] --mutation--> ['insert(640,793)', 'replace(799,570)']		0.997758
+	['insert(793,422)'] --mutation--> ['insert(793,422)', 'replace(900,167)']		0.633349
+	['replace(378,937)'] --mutation--> ['replace(378,937)', 'delete(535)']		0.000000
+	['replace(667,545)'] --mutation--> ['replace(667,545)', 'replace(379,823)']		0.997758
+	['delete(845)'] --mutation--> ['delete(845)', 'insert(422,957)']		0.997758
+	['delete(819)'] --mutation--> ['delete(819)', 'insert(574,866)']		0.997758
+	['insert(918,412)'] --mutation--> ['insert(918,412)', 'replace(337,416)']		0.000000
+	['replace(848,916)'] --mutation--> ['replace(848,916)', 'delete(879)']		0.997758
+	['delete(879)'] --mutation--> ['delete(879)', 'insert(926,767)']		0.997758
+	['delete(407)'] --mutation--> ['delete(407)', 'insert(952,957)']		0.989569
+	['replace(648,50)'] --mutation--> ['replace(648,50)', 'insert(422,759)']		0.997758
+	['insert(879,456)'] --mutation--> ['insert(879,456)', 'delete(334)']		0.000000
+	['replace(428,302)'] --mutation--> ['replace(428,302)', 'insert(918,422)']		0.997758
+	['insert(793,780)'] --mutation--> ['insert(793,780)', 'replace(364,69)']		0.948901
+	['insert(451,900)'] --mutation--> ['insert(451,900)', 'replace(415,848)']		0.995794
+	['replace(376,318)'] --mutation--> ['replace(376,318)', 'replace(616,648)']		0.000000
+	['replace(584,583)'] --mutation--> ['replace(584,583)', 'delete(673)']		0.997758
+	['insert(464,827)'] --mutation--> ['insert(464,827)', 'delete(360)']		0.713636
+	['delete(819)'] --mutation--> ['delete(819)', 'insert(535,574)']		0.996776
+	['insert(422,972)'] --mutation--> ['insert(422,972)', 'insert(535,923)']		0.997758
+	['replace(677,660)'] --mutation--> ['replace(677,660)', 'insert(819,806)']		0.997758
+	['insert(422,866)'] --mutation--> ['insert(422,866)', 'insert(603,440)']		0.997758
+	['insert(407,775)'] --mutation--> ['insert(407,775)', 'delete(412)']		0.991915
+	['delete(793)'] --mutation--> ['delete(793)', 'replace(427,675)']		0.997758
+	['insert(451,879)'] --mutation--> ['insert(451,879)', 'insert(603,446)']		0.995943
+	['replace(793,417)'] --mutation--> ['replace(793,417)', 'delete(514)']		0.000000
+	['insert(685,759)'] --mutation--> ['insert(685,759)', 'delete(850)']		0.997758
+	['replace(797,177)'] --mutation--> ['replace(797,177)', 'delete(819)']		0.997758
+	['replace(667,545)'] --mutation--> ['replace(667,545)', 'insert(685,645)']		0.997758
+	['replace(581,810)'] --mutation--> ['replace(581,810)', 'delete(819)']		0.997758
+	['replace(823,182)'] --mutation--> ['replace(823,182)', 'replace(728,959)']		0.992849
+	['delete(845)'] --mutation--> ['delete(845)', 'insert(526,827)']		0.997758
+	['insert(422,704)'] --mutation--> ['insert(422,704)', 'insert(669,735)']		0.997758
+	['insert(407,440)'] --mutation--> ['insert(407,440)', 'replace(626,41)']		0.992041
+	['replace(670,820)'] --mutation--> ['replace(670,820)', 'insert(669,931)']		0.767389
+	['replace(671,558)'] --mutation--> ['replace(671,558)', 'insert(892,767)']		0.997758
+	['insert(507,759)'] --mutation--> ['insert(507,759)', 'delete(412)']		0.991915
+	['delete(540)'] --mutation--> ['delete(540)', 'delete(838)']		0.996776
+	['insert(793,417)'] --mutation--> ['insert(793,417)', 'delete(798)']		0.997758
+	['delete(669)'] --mutation--> ['delete(669)', 'delete(574)']		0.995074
+	['replace(797,177)'] --mutation--> ['replace(797,177)', 'replace(604,494)']		0.996369
+	['delete(540)'] --mutation--> ['delete(540)', 'insert(950,417)']		0.996776
+	['delete(422)'] --mutation--> ['delete(422)', 'delete(407)']		0.957163
+	['insert(526,669)'] --mutation--> ['insert(526,669)', 'delete(690)']		0.095933
+	['replace(543,387)'] --mutation--> ['replace(543,387)', 'insert(577,939)']		0.996776
+	['replace(378,937)'] --mutation--> ['replace(378,937)', 'insert(459,741)']		0.997758
+	['replace(678,937)'] --mutation--> ['replace(678,937)', 'delete(360)']		0.713636
+	['replace(847,894)'] --mutation--> ['replace(847,894)', 'replace(793,569)']		0.997758
+	['insert(957,498)'] --mutation--> ['insert(957,498)', 'replace(515,775)']		0.995980
+	['replace(654,654)'] --mutation--> ['replace(654,654)', 'delete(446)']		0.837417
+	['replace(529,517)'] --mutation--> ['replace(529,517)', 'delete(514)']		0.000000
+	['insert(514,806)'] --mutation--> ['insert(514,806)', 'delete(526)']		0.000000
+	['insert(459,944)'] --mutation--> ['insert(459,944)', 'delete(451)']		0.995572
+	['insert(845,775)'] --mutation--> ['insert(845,775)', 'replace(898,705)']		0.992034
+	['insert(879,669)'] --mutation--> ['insert(879,669)', 'replace(457,457)']		0.997758
+	['insert(793,417)'] --mutation--> ['insert(793,417)', 'replace(538,797)']		0.988921
+	['replace(688,123)'] --mutation--> ['replace(688,123)', 'delete(334)']		0.000000
+	['replace(447,893)'] --mutation--> ['replace(447,893)', 'delete(931)']		0.837417
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'replace(508,880)']		0.995980
+	['delete(918)'] --mutation--> ['delete(918)', 'delete(819)']		0.997276
+	['insert(464,827)'] --mutation--> ['insert(464,827)', 'replace(344,455)']		0.993423
+	['insert(879,819)'] --mutation--> ['insert(879,819)', 'insert(850,582)']		0.997758
+	['replace(820,973)'] --mutation--> ['replace(820,973)', 'insert(412,978)']		0.992941
+	['insert(407,440)'] --mutation--> ['insert(407,440)', 'delete(360)']		0.713636
+	['replace(544,620)'] --mutation--> ['replace(544,620)', 'replace(739,473)']		0.996535
+	['insert(603,488)'] --mutation--> ['insert(603,488)', 'delete(590)']		0.995074
+	['insert(535,754)'] --mutation--> ['insert(535,754)', 'insert(417,741)']		0.728348
+	['insert(685,488)'] --mutation--> ['insert(685,488)', 'insert(417,875)']		0.997758
+	['replace(667,545)'] --mutation--> ['replace(667,545)', 'insert(540,819)']		0.997758
+	['replace(428,302)'] --mutation--> ['replace(428,302)', 'insert(892,879)']		0.997758
+	['replace(425,438)'] --mutation--> ['replace(425,438)', 'delete(600)']		0.997091
+	['insert(892,582)'] --mutation--> ['insert(892,582)', 'replace(577,693)']		0.997758
+	['replace(676,182)'] --mutation--> ['replace(676,182)', 'insert(526,900)']		0.995794
+	['replace(845,983)'] --mutation--> ['replace(845,983)', 'delete(669)']		0.997758
+	['insert(540,435)'] --mutation--> ['insert(540,435)', 'insert(521,913)']		0.997758
+	['insert(422,866)'] --mutation--> ['insert(422,866)', 'insert(926,780)']		0.997758
+	['insert(417,430)'] --mutation--> ['insert(417,430)', 'delete(884)']		0.997758
+	['insert(514,407)'] --mutation--> ['insert(514,407)', 'delete(674)']		0.997758
+	['insert(574,840)'] --mutation--> ['insert(574,840)', 'delete(793)']		0.997758
+	['replace(670,494)'] --mutation--> ['replace(670,494)', 'insert(793,574)']		0.997758
+	['insert(446,471)'] --mutation--> ['insert(446,471)', 'delete(923)']		0.997276
+	['insert(845,879)'] --mutation--> ['insert(845,879)', 'insert(507,972)']		0.997758
+	['insert(931,832)'] --mutation--> ['insert(931,832)', 'insert(507,412)']		0.997758
+	['insert(446,471)'] --mutation--> ['insert(446,471)', 'delete(962)']		0.769371
+	['insert(526,669)'] --mutation--> ['insert(526,669)', 'delete(507)']		0.000000
+	['replace(367,601)'] --mutation--> ['replace(367,601)', 'replace(604,841)']		0.997073
+	['delete(793)'] --mutation--> ['delete(793)', 'delete(412)']		0.991915
+	['insert(422,704)'] --mutation--> ['insert(422,704)', 'delete(459)']		0.000000
+	['insert(540,819)'] --mutation--> ['insert(540,819)', 'replace(604,484)']		0.984577
+	['replace(678,937)'] --mutation--> ['replace(678,937)', 'insert(957,801)']		0.997758
+	['replace(427,427)'] --mutation--> ['replace(427,427)', 'insert(422,767)']		0.997758
+	['insert(526,669)'] --mutation--> ['insert(526,669)', 'delete(574)']		0.995074
+	['insert(535,754)'] --mutation--> ['insert(535,754)', 'insert(507,866)']		0.997758
+	['insert(574,730)'] --mutation--> ['insert(574,730)', 'replace(375,644)']		0.959981
+	['replace(879,931)'] --mutation--> ['replace(879,931)', 'insert(535,628)']		0.996776
+	['replace(882,720)'] --mutation--> ['replace(882,720)', 'replace(581,851)']		0.997758
+	['insert(526,861)'] --mutation--> ['insert(526,861)', 'insert(459,628)']		0.000000
+	['insert(574,926)'] --mutation--> ['insert(574,926)', 'insert(918,704)']		0.995813
+	['replace(797,36)'] --mutation--> ['replace(797,36)', 'replace(616,263)']		0.997573
+	['delete(540)'] --mutation--> ['delete(540)', 'delete(885)']		0.993590
+	['insert(669,722)'] --mutation--> ['insert(669,722)', 'replace(970,489)']		0.769144
+	['replace(797,177)'] --mutation--> ['replace(797,177)', 'insert(669,827)']		0.997758
+	['delete(819)'] --mutation--> ['delete(819)', 'replace(542,886)']		0.000000
+	['insert(526,669)'] --mutation--> ['insert(526,669)', 'insert(962,754)']		0.997758
+	['insert(514,879)'] --mutation--> ['insert(514,879)', 'delete(574)']		0.995074
+	['replace(654,654)'] --mutation--> ['replace(654,654)', 'delete(918)']		0.997276
+	['insert(422,861)'] --mutation--> ['insert(422,861)', 'insert(965,446)']		0.761234
+	['insert(407,430)'] --mutation--> ['insert(407,430)', 'insert(962,430)']		0.997758
+	['insert(526,972)'] --mutation--> ['insert(526,972)', 'insert(360,451)']		0.000000
+	['insert(640,780)'] --mutation--> ['insert(640,780)', 'delete(869)']		0.997758
+	['insert(918,412)'] --mutation--> ['insert(918,412)', 'replace(886,293)']		0.997758
+	['insert(514,407)'] --mutation--> ['insert(514,407)', 'insert(674,900)']		0.997758
+	['replace(659,598)'] --mutation--> ['replace(659,598)', 'insert(603,911)']		0.997295
+	['replace(646,673)'] --mutation--> ['replace(646,673)', 'delete(514)']		0.000000
+	['delete(422)'] --mutation--> ['delete(422)', 'insert(566,939)']		0.997758
+	['insert(459,944)'] --mutation--> ['insert(459,944)', 'delete(412)']		0.991915
+	['replace(676,182)'] --mutation--> ['replace(676,182)', 'insert(819,788)']		0.997758
+	['insert(459,819)'] --mutation--> ['insert(459,819)', 'replace(465,441)']		0.095933
+	['insert(451,900)'] --mutation--> ['insert(451,900)', 'replace(662,333)']		0.997629
+	['replace(425,438)'] --mutation--> ['replace(425,438)', 'replace(366,352)']		0.997758
+	['replace(640,879)'] --mutation--> ['replace(640,879)', 'insert(938,978)']		0.997258
+	['insert(685,759)'] --mutation--> ['insert(685,759)', 'replace(655,600)']		0.997721
+	['replace(581,810)'] --mutation--> ['replace(581,810)', 'replace(338,638)']		0.000000
+	['insert(540,435)'] --mutation--> ['insert(540,435)', 'delete(422)']		0.997758
+	['insert(535,754)'] --mutation--> ['insert(535,754)', 'delete(603)']		0.997091
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'replace(514,910)']		0.996961
+	['insert(603,866)'] --mutation--> ['insert(603,866)', 'insert(871,840)']		0.997758
+	['insert(640,780)'] --mutation--> ['insert(640,780)', 'insert(459,430)']		0.997758
+	['insert(451,866)'] --mutation--> ['insert(451,866)', 'insert(407,952)']		0.997276
+	['replace(662,79)'] --mutation--> ['replace(662,79)', 'replace(382,280)']		0.997629
+	['insert(640,717)'] --mutation--> ['insert(640,717)', 'replace(583,41)']		0.991025
+	['replace(648,50)'] --mutation--> ['replace(648,50)', 'replace(515,670)']		0.996776
+	['delete(669)'] --mutation--> ['delete(669)', 'delete(446)']		0.837417
+	['replace(427,427)'] --mutation--> ['replace(427,427)', 'replace(583,660)']		0.991025
+	['insert(603,874)'] --mutation--> ['insert(603,874)', 'delete(895)']		0.997758
+	['insert(669,965)'] --mutation--> ['insert(669,965)', 'replace(340,750)']		0.000000
+	['delete(819)'] --mutation--> ['delete(819)', 'replace(465,979)']		0.095933
+	['insert(514,879)'] --mutation--> ['insert(514,879)', 'delete(669)']		0.997758
+	['delete(540)'] --mutation--> ['delete(540)', 'insert(924,952)']		0.996776
+	['insert(957,754)'] --mutation--> ['insert(957,754)', 'replace(543,887)']		0.996776
+	['insert(422,861)'] --mutation--> ['insert(422,861)', 'replace(641,927)']		0.997258
+	['delete(879)'] --mutation--> ['delete(879)', 'delete(459)']		0.000000
+	['insert(685,801)'] --mutation--> ['insert(685,801)', 'replace(335,527)']		0.000000
+	['replace(376,318)'] --mutation--> ['replace(376,318)', 'insert(640,754)']		0.997758
+	['insert(407,440)'] --mutation--> ['insert(407,440)', 'delete(412)']		0.991915
+	['insert(540,412)'] --mutation--> ['insert(540,412)', 'insert(514,717)']		0.997758
+	['replace(796,167)'] --mutation--> ['replace(796,167)', 'replace(697,533)']		0.997758
+	['insert(819,478)'] --mutation--> ['insert(819,478)', 'replace(372,948)']		0.995442
+	['insert(459,944)'] --mutation--> ['insert(459,944)', 'insert(669,913)']		0.997591
+	['delete(793)'] --mutation--> ['delete(793)', 'delete(926)']		0.767389
+	['insert(892,569)'] --mutation--> ['insert(892,569)', 'delete(459)']		0.000000
+	['insert(845,754)'] --mutation--> ['insert(845,754)', 'replace(898,441)']		0.994572
+	['replace(654,654)'] --mutation--> ['replace(654,654)', 'insert(422,730)']		0.997758
+	['insert(603,488)'] --mutation--> ['insert(603,488)', 'insert(895,741)']		0.997758
+	['insert(422,704)'] --mutation--> ['insert(422,704)', 'replace(685,835)']		0.095933
+	['insert(459,861)'] --mutation--> ['insert(459,861)', 'delete(526)']		0.000000
+	['insert(845,775)'] --mutation--> ['insert(845,775)', 'insert(923,768)']		0.997758
+	['insert(892,926)'] --mutation--> ['insert(892,926)', 'delete(892)']		0.994572
+	['insert(685,551)'] --mutation--> ['insert(685,551)', 'insert(514,762)']		0.997758
+	['delete(640)'] --mutation--> ['delete(640)', 'replace(455,487)']		0.000000
+	['delete(879)'] --mutation--> ['delete(879)', 'insert(793,412)']		0.997758
+	['insert(669,965)'] --mutation--> ['insert(669,965)', 'replace(537,264)']		0.000000
+	['insert(669,628)'] --mutation--> ['insert(669,628)', 'replace(579,665)']		0.997758
+	['insert(507,759)'] --mutation--> ['insert(507,759)', 'delete(540)']		0.996776
+	['insert(793,780)'] --mutation--> ['insert(793,780)', 'replace(422,806)']		0.996980
+	['replace(675,653)'] --mutation--> ['replace(675,653)', 'delete(360)']		0.713636
+	['replace(679,561)'] --mutation--> ['replace(679,561)', 'insert(879,422)']		0.997758
+	['insert(459,407)'] --mutation--> ['insert(459,407)', 'insert(427,709)']		0.997758
+	['insert(819,478)'] --mutation--> ['insert(819,478)', 'replace(702,883)']		0.895666
+	['insert(507,806)'] --mutation--> ['insert(507,806)', 'replace(701,708)']		0.996776
+	['replace(688,123)'] --mutation--> ['replace(688,123)', 'replace(587,624)']		0.997258
+	['insert(685,853)'] --mutation--> ['insert(685,853)', 'delete(514)']		0.000000
+	['replace(793,417)'] --mutation--> ['replace(793,417)', 'insert(446,866)']		0.997276
+	['insert(417,759)'] --mutation--> ['insert(417,759)', 'replace(616,655)']		0.000000
+	['insert(957,435)'] --mutation--> ['insert(957,435)', 'replace(799,765)']		0.997758
+	['replace(670,494)'] --mutation--> ['replace(670,494)', 'replace(343,607)']		0.000000
+	['replace(646,673)'] --mutation--> ['replace(646,673)', 'insert(799,780)']		0.997758
+	['insert(793,417)'] --mutation--> ['insert(793,417)', 'replace(940,382)']		0.767389
+	['delete(422)'] --mutation--> ['delete(422)', 'delete(451)']		0.000000
+	['replace(667,659)'] --mutation--> ['replace(667,659)', 'replace(380,352)']		0.997740
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'delete(540)']		0.996776
+	['insert(640,952)'] --mutation--> ['insert(640,952)', 'replace(696,468)']		0.841223
+	['replace(793,417)'] --mutation--> ['replace(793,417)', 'insert(507,840)']		0.997758
+	['replace(648,50)'] --mutation--> ['replace(648,50)', 'delete(334)']		0.000000
+	['insert(640,717)'] --mutation--> ['insert(640,717)', 'delete(903)']		0.997758
+	['replace(845,983)'] --mutation--> ['replace(845,983)', 'delete(446)']		0.837417
+	['insert(892,569)'] --mutation--> ['insert(892,569)', 'insert(674,887)']		0.997758
+	['insert(845,814)'] --mutation--> ['insert(845,814)', 'insert(574,412)']		0.997758
+	['replace(820,973)'] --mutation--> ['replace(820,973)', 'replace(361,295)']		0.563608
+	['insert(451,900)'] --mutation--> ['insert(451,900)', 'replace(621,700)']		0.996924
+	['delete(819)'] --mutation--> ['delete(819)', 'delete(526)']		0.000000
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'insert(574,505)']		0.997314
+	['delete(669)'] --mutation--> ['delete(669)', 'insert(334,685)']		0.997758
+	['insert(931,832)'] --mutation--> ['insert(931,832)', 'delete(422)']		0.997758
+	['replace(576,542)'] --mutation--> ['replace(576,542)', 'replace(535,900)']		0.994093
+	['insert(526,483)'] --mutation--> ['insert(526,483)', 'insert(690,767)']		0.997758
+	['delete(845)'] --mutation--> ['delete(845)', 'delete(685)']		0.095933
+	['delete(819)'] --mutation--> ['delete(819)', 'delete(535)']		0.000000
+	['replace(618,623)'] --mutation--> ['replace(618,623)', 'insert(334,939)']		0.000000
+	['delete(819)'] --mutation--> ['delete(819)', 'insert(540,412)']		0.997758
+	['delete(422)'] --mutation--> ['delete(422)', 'insert(949,505)']		0.997758
+	['insert(535,435)'] --mutation--> ['insert(535,435)', 'insert(451,669)']		0.997758
+	['insert(407,775)'] --mutation--> ['insert(407,775)', 'insert(962,819)']		0.997758
+	['replace(420,955)'] --mutation--> ['replace(420,955)', 'replace(609,479)']		0.000000
+	['replace(534,534)'] --mutation--> ['replace(534,534)', 'replace(373,644)']		0.819419
+	['insert(459,407)'] --mutation--> ['insert(459,407)', 'insert(456,422)']		0.994835
+	['insert(669,722)'] --mutation--> ['insert(669,722)', 'insert(417,814)']		0.997758
+	['insert(574,730)'] --mutation--> ['insert(574,730)', 'replace(407,459)']		0.989569
+	['insert(603,874)'] --mutation--> ['insert(603,874)', 'replace(938,266)']		0.997276
+	['insert(459,407)'] --mutation--> ['insert(459,407)', 'replace(531,478)']		0.996776
+	['replace(671,576)'] --mutation--> ['replace(671,576)', 'insert(422,471)']		0.995164
+	['insert(640,874)'] --mutation--> ['insert(640,874)', 'delete(916)']		0.994572
+	['delete(793)'] --mutation--> ['delete(793)', 'replace(750,865)']		0.870596
+	['replace(577,822)'] --mutation--> ['replace(577,822)', 'insert(928,695)']		0.997258
+	['insert(451,879)'] --mutation--> ['insert(451,879)', 'delete(603)']		0.996609
+	['replace(427,373)'] --mutation--> ['replace(427,373)', 'replace(662,373)']		0.997721
+	['insert(464,827)'] --mutation--> ['insert(464,827)', 'delete(574)']		0.995074
+	['delete(819)'] --mutation--> ['delete(819)', 'replace(644,653)']		0.997258
+	['insert(574,840)'] --mutation--> ['insert(574,840)', 'delete(535)']		0.000000
+	['delete(819)'] --mutation--> ['delete(819)', 'delete(412)']		0.991915
+	['replace(579,646)'] --mutation--> ['replace(579,646)', 'replace(457,524)']		0.682055
+	['delete(918)'] --mutation--> ['delete(918)', 'replace(953,789)']		0.903806
+	['insert(526,874)'] --mutation--> ['insert(526,874)', 'replace(361,807)']		0.000000
+	['insert(446,471)'] --mutation--> ['insert(446,471)', 'replace(515,100)']		0.995980
+	['replace(654,654)'] --mutation--> ['replace(654,654)', 'delete(845)']		0.997758
+	['replace(584,583)'] --mutation--> ['replace(584,583)', 'replace(935,417)']		0.159776
+	['replace(797,36)'] --mutation--> ['replace(797,36)', 'delete(931)']		0.767389
+	['insert(446,471)'] --mutation--> ['insert(446,471)', 'replace(523,774)']		0.996980
+	['delete(669)'] --mutation--> ['delete(669)', 'replace(738,951)']		0.356872
+	['insert(892,582)'] --mutation--> ['insert(892,582)', 'replace(514,858)']		0.996961
+	['delete(669)'] --mutation--> ['delete(669)', 'replace(459,417)']		0.682055
+	['replace(650,368)'] --mutation--> ['replace(650,368)', 'insert(422,483)']		0.997758
+	['insert(957,456)'] --mutation--> ['insert(957,456)', 'replace(550,881)']		0.996776
+	['insert(526,972)'] --mutation--> ['insert(526,972)', 'insert(918,905)']		0.994942
+	['delete(793)'] --mutation--> ['delete(793)', 'insert(640,483)']		0.997758
+	['replace(820,484)'] --mutation--> ['replace(820,484)', 'delete(685)']		0.095933
+	['replace(670,494)'] --mutation--> ['replace(670,494)', 'insert(819,412)']		0.997758
+	['insert(603,488)'] --mutation--> ['insert(603,488)', 'delete(701)']		0.095933
+	['insert(845,845)'] --mutation--> ['insert(845,845)', 'delete(334)']		0.000000
+	['replace(848,529)'] --mutation--> ['replace(848,529)', 'replace(362,522)']		0.000000
+	['delete(669)'] --mutation--> ['delete(669)', 'insert(673,879)']		0.997758
+	['insert(507,806)'] --mutation--> ['insert(507,806)', 'delete(603)']		0.997091
+	['insert(845,814)'] --mutation--> ['insert(845,814)', 'replace(408,395)']		0.000000
+	['insert(685,926)'] --mutation--> ['insert(685,926)', 'replace(422,814)']		0.997943
+	['replace(603,965)'] --mutation--> ['replace(603,965)', 'delete(464)']		0.283464
+	['replace(796,167)'] --mutation--> ['replace(796,167)', 'insert(845,422)']		0.997758
+	['insert(422,814)'] --mutation--> ['insert(422,814)', 'delete(853)']		0.997758
+	['replace(678,937)'] --mutation--> ['replace(678,937)', 'delete(793)']		0.997758
+	['replace(587,587)'] --mutation--> ['replace(587,587)', 'insert(535,806)']		0.997758
+	['insert(417,430)'] --mutation--> ['insert(417,430)', 'delete(608)']		0.997091
+	['insert(669,722)'] --mutation--> ['insert(669,722)', 'replace(624,468)']		0.994482
+	['replace(793,417)'] --mutation--> ['replace(793,417)', 'insert(464,806)']		0.997758
+	['insert(640,717)'] --mutation--> ['insert(640,717)', 'insert(869,488)']		0.997758
+	['delete(669)'] --mutation--> ['delete(669)', 'replace(653,373)']		0.997721
+	['replace(603,704)'] --mutation--> ['replace(603,704)', 'insert(574,735)']		0.997091
+	['insert(669,722)'] --mutation--> ['insert(669,722)', 'insert(943,767)']		0.997758
+	['insert(412,887)'] --mutation--> ['insert(412,887)', 'insert(936,874)']		0.997517
+	['replace(667,659)'] --mutation--> ['replace(667,659)', 'replace(407,827)']		0.996795
+	['insert(540,412)'] --mutation--> ['insert(540,412)', 'delete(514)']		0.000000
+	['replace(848,529)'] --mutation--> ['replace(848,529)', 'replace(663,107)']		0.000000
+	['insert(931,832)'] --mutation--> ['insert(931,832)', 'delete(360)']		0.713636
+	['replace(669,483)'] --mutation--> ['replace(669,483)', 'insert(526,832)']		0.997758
+	['replace(361,361)'] --mutation--> ['replace(361,361)', 'insert(957,879)']		0.997758
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'insert(540,759)']		0.997758
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'delete(685)']		0.095933
+	['replace(879,931)'] --mutation--> ['replace(879,931)', 'delete(793)']		0.997758
+	['replace(796,167)'] --mutation--> ['replace(796,167)', 'replace(346,359)']		0.539129
+	['insert(407,417)'] --mutation--> ['insert(407,417)', 'insert(469,498)']		0.997758
+	['delete(603)'] --mutation--> ['delete(603)', 'insert(624,591)']		0.997536
+	['delete(669)'] --mutation--> ['delete(669)', 'replace(580,197)']		0.997758
+	['insert(407,801)'] --mutation--> ['insert(407,801)', 'replace(530,178)']		0.997758
+	['insert(793,417)'] --mutation--> ['insert(793,417)', 'replace(927,243)']		0.997276
+	['replace(366,552)'] --mutation--> ['replace(366,552)', 'replace(534,737)']		0.988921
+	['insert(574,806)'] --mutation--> ['insert(574,806)', 'replace(680,679)']		0.997758
+	['replace(879,931)'] --mutation--> ['replace(879,931)', 'delete(685)']		0.095933
+	['delete(918)'] --mutation--> ['delete(918)', 'insert(507,551)']		0.995500
+	['insert(879,759)'] --mutation--> ['insert(879,759)', 'insert(574,900)']		0.997758
+	['insert(819,879)'] --mutation--> ['insert(819,879)', 'delete(459)']		0.000000
+	['replace(579,646)'] --mutation--> ['replace(579,646)', 'insert(446,819)']		0.997758
+	['insert(451,704)'] --mutation--> ['insert(451,704)', 'replace(422,735)']		0.972462
+	['delete(793)'] --mutation--> ['delete(793)', 'replace(612,402)']		0.000000
+	['insert(640,730)'] --mutation--> ['insert(640,730)', 'insert(412,957)']		0.997758
+	['replace(845,775)'] --mutation--> ['replace(845,775)', 'replace(641,592)']		0.997138
+	['replace(648,50)'] --mutation--> ['replace(648,50)', 'delete(407)']		0.989569
+	['insert(459,488)'] --mutation--> ['insert(459,488)', 'delete(531)']		0.000000
+	['replace(427,427)'] --mutation--> ['replace(427,427)', 'insert(793,456)']		0.997758
+	['replace(669,430)'] --mutation--> ['replace(669,430)', 'insert(334,775)']		0.997758
+	['insert(446,471)'] --mutation--> ['insert(446,471)', 'delete(360)']		0.713636
+	['insert(685,440)'] --mutation--> ['insert(685,440)', 'replace(410,100)']		0.997943
+	['delete(819)'] --mutation--> ['delete(819)', 'delete(459)']		0.000000
+	['delete(879)'] --mutation--> ['delete(879)', 'insert(451,498)']		0.997758
+	['replace(581,810)'] --mutation--> ['replace(581,810)', 'insert(540,709)']		0.996776
+	['replace(427,427)'] --mutation--> ['replace(427,427)', 'delete(957)']		0.769371
+	['replace(650,368)'] --mutation--> ['replace(650,368)', 'insert(918,879)']		0.997758
+	['replace(423,460)'] --mutation--> ['replace(423,460)', 'delete(574)']		0.995074
+	['replace(428,89)'] --mutation--> ['replace(428,89)', 'replace(922,73)']		0.994386
+	['replace(579,646)'] --mutation--> ['replace(579,646)', 'insert(360,936)']		0.997758
+	['replace(427,427)'] --mutation--> ['replace(427,427)', 'insert(793,741)']		0.756162
+	['delete(845)'] --mutation--> ['delete(845)', 'replace(697,190)']		0.895666
+	['replace(425,342)'] --mutation--> ['replace(425,342)', 'delete(446)']		0.837417
+	['replace(882,720)'] --mutation--> ['replace(882,720)', 'delete(446)']		0.837417
+	['replace(848,529)'] --mutation--> ['replace(848,529)', 'replace(345,248)']		0.000000
+	['replace(428,89)'] --mutation--> ['replace(428,89)', 'insert(819,412)']		0.997758
+	['delete(793)'] --mutation--> ['delete(793)', 'replace(373,373)']		0.997758
+	['insert(793,735)'] --mutation--> ['insert(793,735)', 'replace(743,775)']		0.990052
+	['insert(603,551)'] --mutation--> ['insert(603,551)', 'insert(417,957)']		0.997758
+	['replace(529,454)'] --mutation--> ['replace(529,454)', 'insert(535,952)']		0.996776
+	['insert(603,730)'] --mutation--> ['insert(603,730)', 'replace(532,743)']		0.996776
+	['insert(535,435)'] --mutation--> ['insert(535,435)', 'delete(334)']		0.000000
+	['insert(407,801)'] --mutation--> ['insert(407,801)', 'delete(793)']		0.997758
+	['delete(793)'] --mutation--> ['delete(793)', 'insert(417,819)']		0.997758
+	['replace(823,182)'] --mutation--> ['replace(823,182)', 'delete(451)']		0.995572
+	['replace(670,494)'] --mutation--> ['replace(670,494)', 'insert(446,931)']		0.765599
+	['replace(534,458)'] --mutation--> ['replace(534,458)', 'delete(685)']		0.095933
+	['insert(417,430)'] --mutation--> ['insert(417,430)', 'delete(936)']		0.767389
+	['insert(422,866)'] --mutation--> ['insert(422,866)', 'delete(459)']		0.000000
+	['delete(793)'] --mutation--> ['delete(793)', 'delete(459)']		0.000000
+	['insert(514,806)'] --mutation--> ['insert(514,806)', 'insert(640,505)']		0.996647
+	['delete(845)'] --mutation--> ['delete(845)', 'replace(823,358)']		0.997758
+	['insert(514,806)'] --mutation--> ['insert(514,806)', 'insert(540,498)']		0.997758
+	['delete(845)'] --mutation--> ['delete(845)', 'insert(334,887)']		0.000000
+	['insert(417,759)'] --mutation--> ['insert(417,759)', 'delete(574)']		0.995074
+	['delete(879)'] --mutation--> ['delete(879)', 'delete(819)']		0.997758
+	['delete(669)'] --mutation--> ['delete(669)', 'delete(945)']		0.769371
+	['insert(845,845)'] --mutation--> ['insert(845,845)', 'insert(540,952)']		0.997758
+	['delete(879)'] --mutation--> ['delete(879)', 'replace(927,413)']		0.766708
+	['replace(795,732)'] --mutation--> ['replace(795,732)', 'replace(748,698)']		0.758534
+	['insert(892,887)'] --mutation--> ['insert(892,887)', 'replace(820,629)']		0.997758
+	['insert(459,488)'] --mutation--> ['insert(459,488)', 'delete(936)']		0.767389
+	['replace(796,167)'] --mutation--> ['replace(796,167)', 'insert(526,978)']		0.996776
+	['insert(603,488)'] --mutation--> ['insert(603,488)', 'delete(451)']		0.995572
+	['replace(420,955)'] --mutation--> ['replace(420,955)', 'delete(360)']		0.713636
+	['insert(957,498)'] --mutation--> ['insert(957,498)', 'replace(608,910)']		0.997091
+	['replace(820,973)'] --mutation--> ['replace(820,973)', 'insert(574,853)']		0.997758
+	['insert(685,741)'] --mutation--> ['insert(685,741)', 'insert(603,853)']		0.997758
+	['replace(608,898)'] --mutation--> ['replace(608,898)', 'insert(451,735)']		0.996554
+	['insert(669,722)'] --mutation--> ['insert(669,722)', 'replace(542,702)']		0.000000
+	['insert(407,417)'] --mutation--> ['insert(407,417)', 'delete(531)']		0.000000
+	['insert(422,814)'] --mutation--> ['insert(422,814)', 'replace(669,685)']		0.997758
+	['insert(892,582)'] --mutation--> ['insert(892,582)', 'delete(923)']		0.997276
+	['insert(931,628)'] --mutation--> ['insert(931,628)', 'insert(798,412)']		0.997758
+	['insert(507,827)'] --mutation--> ['insert(507,827)', 'insert(669,471)']		0.997202
+	['insert(422,793)'] --mutation--> ['insert(422,793)', 'insert(574,926)']		0.997610
+	['replace(797,36)'] --mutation--> ['replace(797,36)', 'insert(446,754)']		0.997758
+	['insert(422,793)'] --mutation--> ['insert(422,793)', 'delete(685)']		0.095933
+	['replace(845,775)'] --mutation--> ['replace(845,775)', 'replace(343,343)']		0.997758
+	['delete(574)'] --mutation--> ['delete(574)', 'delete(785)']		0.995074
+	['insert(957,754)'] --mutation--> ['insert(957,754)', 'delete(884)']		0.997758
+	['delete(845)'] --mutation--> ['delete(845)', 'replace(337,463)']		0.000000
+	['replace(678,937)'] --mutation--> ['replace(678,937)', 'insert(669,505)']		0.997202
+	['insert(459,944)'] --mutation--> ['insert(459,944)', 'replace(610,748)']		0.000000
+	['insert(451,900)'] --mutation--> ['insert(451,900)', 'insert(417,936)']		0.159776
+	['insert(892,887)'] --mutation--> ['insert(892,887)', 'replace(577,119)']		0.997591
+	['delete(793)'] --mutation--> ['delete(793)', 'delete(685)']		0.095933
+	['insert(603,866)'] --mutation--> ['insert(603,866)', 'delete(640)']		0.997258
+	['insert(407,417)'] --mutation--> ['insert(407,417)', 'replace(426,929)']		0.933604
+	['delete(412)'] --mutation--> ['delete(412)', 'insert(775,926)']		0.990953
+	['insert(793,780)'] --mutation--> ['insert(793,780)', 'replace(652,578)']		0.997721
+	['insert(459,944)'] --mutation--> ['insert(459,944)', 'insert(407,793)']		0.997758
+	['insert(535,874)'] --mutation--> ['insert(535,874)', 'insert(446,690)']		0.000000
+	['insert(507,806)'] --mutation--> ['insert(507,806)', 'insert(811,832)']		0.997758
+	['insert(879,456)'] --mutation--> ['insert(879,456)', 'insert(417,767)']		0.997758
+	['replace(539,961)'] --mutation--> ['replace(539,961)', 'replace(688,560)']		0.997758
+	['insert(845,806)'] --mutation--> ['insert(845,806)', 'delete(464)']		0.095933
+	['insert(640,793)'] --mutation--> ['insert(640,793)', 'insert(981,918)']		0.997758
+	['insert(422,814)'] --mutation--> ['insert(422,814)', 'replace(515,883)']		0.996961
+	['insert(845,879)'] --mutation--> ['insert(845,879)', 'insert(669,936)']		0.997276
+	['replace(793,417)'] --mutation--> ['replace(793,417)', 'delete(535)']		0.000000
+	['insert(422,814)'] --mutation--> ['insert(422,814)', 'delete(540)']		0.996776
+	['insert(526,767)'] --mutation--> ['insert(526,767)', 'delete(451)']		0.995572
+	['insert(793,780)'] --mutation--> ['insert(793,780)', 'insert(412,900)']		0.997758
+	['insert(451,900)'] --mutation--> ['insert(451,900)', 'delete(334)']		0.000000
+	['replace(428,273)'] --mutation--> ['replace(428,273)', 'insert(451,412)']		0.994835
+	['replace(679,561)'] --mutation--> ['replace(679,561)', 'replace(881,982)']		0.970745
+	['insert(507,806)'] --mutation--> ['insert(507,806)', 'delete(793)']		0.997758
+	['insert(640,952)'] --mutation--> ['insert(640,952)', 'delete(417)']		0.095933
+	['replace(587,587)'] --mutation--> ['replace(587,587)', 'replace(380,352)']		0.997740
+	['insert(879,456)'] --mutation--> ['insert(879,456)', 'delete(824)']		0.997758
+	['replace(534,534)'] --mutation--> ['replace(534,534)', 'delete(459)']		0.000000
+	['delete(819)'] --mutation--> ['delete(819)', 'delete(535)']		0.000000
+	['insert(412,456)'] --mutation--> ['insert(412,456)', 'insert(531,819)']		0.993163
+	['insert(603,866)'] --mutation--> ['insert(603,866)', 'delete(451)']		0.995572
+	['replace(376,318)'] --mutation--> ['replace(376,318)', 'delete(918)']		0.997276
+	['replace(846,945)'] --mutation--> ['replace(846,945)', 'replace(649,518)']		0.994609
+	['delete(845)'] --mutation--> ['delete(845)', 'replace(421,530)']		0.997758
+	['insert(931,775)'] --mutation--> ['insert(931,775)', 'delete(824)']		0.997758
+	['replace(882,720)'] --mutation--> ['replace(882,720)', 'insert(892,918)']		0.997758
+	['insert(451,900)'] --mutation--> ['insert(451,900)', 'insert(669,949)']		0.997703
+	['insert(669,853)'] --mutation--> ['insert(669,853)', 'replace(667,386)']		0.997758
+	['insert(526,483)'] --mutation--> ['insert(526,483)', 'delete(923)']		0.997276
+	['insert(451,704)'] --mutation--> ['insert(451,704)', 'delete(446)']		0.892920
+	['replace(581,810)'] --mutation--> ['replace(581,810)', 'insert(892,690)']		0.761234
+	['insert(640,628)'] --mutation--> ['insert(640,628)', 'replace(510,979)']		0.995980
+	['replace(671,558)'] --mutation--> ['replace(671,558)', 'insert(459,574)']		0.000000
+	['replace(373,675)'] --mutation--> ['replace(373,675)', 'insert(922,801)']		0.997740
+	['replace(427,373)'] --mutation--> ['replace(427,373)', 'insert(360,801)']		0.997758
+	['insert(603,741)'] --mutation--> ['insert(603,741)', 'replace(908,735)']		0.994331
+	['insert(407,775)'] --mutation--> ['insert(407,775)', 'replace(924,718)']		0.994349
+	['delete(819)'] --mutation--> ['delete(819)', 'delete(459)']		0.000000
+	['insert(603,551)'] --mutation--> ['insert(603,551)', 'insert(535,582)']		0.997758
+	['insert(685,551)'] --mutation--> ['insert(685,551)', 'delete(412)']		0.991915
+	['replace(425,342)'] --mutation--> ['replace(425,342)', 'delete(892)']		0.994572
+	['replace(846,945)'] --mutation--> ['replace(846,945)', 'replace(535,407)']		0.959443
+	['delete(603)'] --mutation--> ['delete(603)', 'replace(404,457)']		0.000000
+	['insert(793,417)'] --mutation--> ['insert(793,417)', 'replace(520,696)']		0.996961
+	['replace(679,561)'] --mutation--> ['replace(679,561)', 'replace(508,348)']		0.000000
+	['replace(797,36)'] --mutation--> ['replace(797,36)', 'replace(587,584)']		0.997332
+	['insert(417,759)'] --mutation--> ['insert(417,759)', 'insert(360,887)']		0.997758
+	['insert(451,417)'] --mutation--> ['insert(451,417)', 'replace(522,960)']		0.994020
+	['insert(507,498)'] --mutation--> ['insert(507,498)', 'insert(512,551)']		0.995536
+	['replace(535,832)'] --mutation--> ['replace(535,832)', 'replace(896,266)']		0.985736
+	['delete(669)'] --mutation--> ['delete(669)', 'replace(645,578)']		0.997758
+	['replace(879,931)'] --mutation--> ['replace(879,931)', 'delete(918)']		0.997276
+	['replace(677,660)'] --mutation--> ['replace(677,660)', 'insert(685,446)']		0.763075
+	['delete(451)'] --mutation--> ['delete(451)', 'insert(598,874)']		0.995572
+	['replace(380,352)'] --mutation--> ['replace(380,352)', 'insert(918,847)']		0.997740
+	['insert(879,591)'] --mutation--> ['insert(879,591)', 'delete(884)']		0.997758
+	['insert(417,417)'] --mutation--> ['insert(417,417)', 'replace(705,369)']		0.996776
+	['replace(676,182)'] --mutation--> ['replace(676,182)', 'insert(407,801)']		0.997758
+	['insert(879,819)'] --mutation--> ['insert(879,819)', 'insert(417,780)']		0.997758
+	['delete(918)'] --mutation--> ['delete(918)', 'replace(620,389)']		0.996443
+	['insert(422,814)'] --mutation--> ['insert(422,814)', 'replace(457,457)']		0.997758
+	['insert(451,900)'] --mutation--> ['insert(451,900)', 'replace(413,489)']		0.991915
+	['replace(654,654)'] --mutation--> ['replace(654,654)', 'insert(507,440)']		0.997758
+	['insert(685,488)'] --mutation--> ['insert(685,488)', 'delete(493)']		0.997758
+	['insert(640,730)'] --mutation--> ['insert(640,730)', 'replace(744,780)']		0.997758
+	['insert(446,471)'] --mutation--> ['insert(446,471)', 'insert(798,551)']		0.997758
+	['insert(407,440)'] --mutation--> ['insert(407,440)', 'replace(584,678)']		0.997258
+	['replace(793,417)'] --mutation--> ['replace(793,417)', 'insert(574,972)']		0.997758
+	['insert(669,722)'] --mutation--> ['insert(669,722)', 'replace(467,462)']		0.997758
+	['delete(422)'] --mutation--> ['delete(422)', 'delete(456)']		0.095933
+	['insert(507,827)'] --mutation--> ['insert(507,827)', 'delete(897)']		0.994572
+	['delete(422)'] --mutation--> ['delete(422)', 'replace(910,892)']		0.019142
+	['replace(581,810)'] --mutation--> ['replace(581,810)', 'insert(918,483)']		0.997758
+	['insert(685,866)'] --mutation--> ['insert(685,866)', 'delete(884)']		0.997758
+	['replace(796,167)'] --mutation--> ['replace(796,167)', 'replace(654,332)']		0.997684
+	['insert(514,931)'] --mutation--> ['insert(514,931)', 'replace(918,569)']		0.996072
+	['insert(422,488)'] --mutation--> ['insert(422,488)', 'delete(407)']		0.989569
+	['insert(459,488)'] --mutation--> ['insert(459,488)', 'delete(512)']		0.000000
+	['insert(407,440)'] --mutation--> ['insert(407,440)', 'replace(692,737)']		0.095933
+	['replace(670,820)'] --mutation--> ['replace(670,820)', 'insert(879,505)']		0.997758
+	['insert(514,931)'] --mutation--> ['insert(514,931)', 'replace(460,802)']		0.762167
+	['insert(459,407)'] --mutation--> ['insert(459,407)', 'replace(539,718)']		0.988921
+	['delete(640)'] --mutation--> ['delete(640)', 'insert(360,478)']		0.000000
+	['replace(669,430)'] --mutation--> ['replace(669,430)', 'insert(334,435)']		0.000000
+	['insert(514,806)'] --mutation--> ['insert(514,806)', 'replace(447,880)']		0.837417
+	['insert(407,801)'] --mutation--> ['insert(407,801)', 'insert(806,965)']		0.997758
+	['insert(417,417)'] --mutation--> ['insert(417,417)', 'replace(938,437)']		0.767389
+	['replace(579,653)'] --mutation--> ['replace(579,653)', 'insert(451,957)']		0.997517
+	['delete(640)'] --mutation--> ['delete(640)', 'delete(535)']		0.000000
+	['delete(422)'] --mutation--> ['delete(422)', 'insert(456,608)']		0.997758
+	['replace(667,659)'] --mutation--> ['replace(667,659)', 'insert(640,944)']		0.997406
+	['replace(380,352)'] --mutation--> ['replace(380,352)', 'delete(754)']		0.997740
+	['replace(793,417)'] --mutation--> ['replace(793,417)', 'insert(412,952)']		0.997517
+	['insert(957,754)'] --mutation--> ['insert(957,754)', 'delete(407)']		0.989569
+	['delete(918)'] --mutation--> ['delete(918)', 'delete(412)']		0.991434
+	['replace(614,611)'] --mutation--> ['replace(614,611)', 'replace(619,40)']		0.992004
+	['delete(793)'] --mutation--> ['delete(793)', 'insert(926,690)']		0.761234
+	['insert(574,569)'] --mutation--> ['insert(574,569)', 'insert(677,772)']		0.997758
+	['delete(793)'] --mutation--> ['delete(793)', 'delete(640)']		0.997258
+	['insert(422,814)'] --mutation--> ['insert(422,814)', 'replace(967,795)']		0.997758
+	['insert(507,827)'] --mutation--> ['insert(507,827)', 'replace(574,806)']		0.995074
+	['replace(420,955)'] --mutation--> ['replace(420,955)', 'replace(612,954)']		0.000000
+	['replace(654,654)'] --mutation--> ['replace(654,654)', 'replace(645,374)']		0.997758
+	['insert(957,435)'] --mutation--> ['insert(957,435)', 'delete(360)']		0.713636
+	['insert(407,417)'] --mutation--> ['insert(407,417)', 'insert(519,574)']		0.992793
+	['replace(847,894)'] --mutation--> ['replace(847,894)', 'insert(540,827)']		0.997758
+	['insert(879,456)'] --mutation--> ['insert(879,456)', 'insert(512,430)']		0.997758
+	['delete(845)'] --mutation--> ['delete(845)', 'replace(696,50)']		0.836409
+	['insert(407,417)'] --mutation--> ['insert(407,417)', 'insert(897,633)']		0.997758
+	['replace(427,427)'] --mutation--> ['replace(427,427)', 'replace(373,646)']		0.997740
+	['insert(957,435)'] --mutation--> ['insert(957,435)', 'insert(923,569)']		0.997758
+	['replace(793,417)'] --mutation--> ['replace(793,417)', 'replace(662,680)']		0.000000
+	['insert(459,488)'] --mutation--> ['insert(459,488)', 'replace(343,612)']		0.000000
+	['insert(464,827)'] --mutation--> ['insert(464,827)', 'insert(464,456)']		0.682055
+	['replace(581,810)'] --mutation--> ['replace(581,810)', 'replace(525,339)']		0.996776
+	['insert(535,451)'] --mutation--> ['insert(535,451)', 'replace(378,826)']		0.000000
+	['replace(584,583)'] --mutation--> ['replace(584,583)', 'delete(451)']		0.995572
+	['delete(845)'] --mutation--> ['delete(845)', 'delete(793)']		0.997758
+	['delete(819)'] --mutation--> ['delete(819)', 'insert(464,827)']		0.997758
+	['replace(671,558)'] --mutation--> ['replace(671,558)', 'delete(422)']		0.997758
+	['insert(507,819)'] --mutation--> ['insert(507,819)', 'delete(422)']		0.997758
+	['insert(685,759)'] --mutation--> ['insert(685,759)', 'replace(525,264)']		0.996776
+	['replace(646,673)'] --mutation--> ['replace(646,673)', 'delete(898)']		0.994572
+	['replace(446,926)'] --mutation--> ['replace(446,926)', 'insert(535,591)']		0.837417
+	['replace(795,732)'] --mutation--> ['replace(795,732)', 'replace(584,270)']		0.991025
+	['insert(526,430)'] --mutation--> ['insert(526,430)', 'replace(475,318)']		0.095933
+	['insert(931,628)'] --mutation--> ['insert(931,628)', 'replace(611,609)']		0.000000
+	['insert(957,874)'] --mutation--> ['insert(957,874)', 'delete(685)']		0.095933
+	['insert(879,435)'] --mutation--> ['insert(879,435)', 'replace(382,217)']		0.997758
+	['insert(685,551)'] --mutation--> ['insert(685,551)', 'insert(334,498)']		0.000000
+	['insert(640,874)'] --mutation--> ['insert(640,874)', 'insert(640,407)']		0.997758
+	['insert(892,582)'] --mutation--> ['insert(892,582)', 'insert(936,952)']		0.997758
+	['replace(373,579)'] --mutation--> ['replace(373,579)', 'insert(660,505)']		0.997740
+	['insert(412,926)'] --mutation--> ['insert(412,926)', 'insert(507,887)']		0.996555
+	['insert(640,780)'] --mutation--> ['insert(640,780)', 'insert(451,863)']		0.997758
+	['insert(526,767)'] --mutation--> ['insert(526,767)', 'replace(538,543)']		0.988921
+	['insert(574,730)'] --mutation--> ['insert(574,730)', 'delete(900)']		0.994572
+	['replace(427,427)'] --mutation--> ['replace(427,427)', 'replace(576,761)']		0.995074
+	['delete(574)'] --mutation--> ['delete(574)', 'delete(526)']		0.000000
+	['replace(361,361)'] --mutation--> ['replace(361,361)', 'insert(892,819)']		0.997758
+	['insert(931,775)'] --mutation--> ['insert(931,775)', 'delete(412)']		0.991915
+	['delete(819)'] --mutation--> ['delete(819)', 'delete(464)']		0.095933
+	['insert(422,814)'] --mutation--> ['insert(422,814)', 'replace(659,371)']		0.997240
+	['insert(918,887)'] --mutation--> ['insert(918,887)', 'replace(339,241)']		0.000000
+	['replace(670,494)'] --mutation--> ['replace(670,494)', 'delete(507)']		0.000000
+	['replace(525,339)'] --mutation--> ['replace(525,339)', 'delete(640)']		0.996276
+	['delete(669)'] --mutation--> ['delete(669)', 'replace(337,866)']		0.000000
+	['replace(823,182)'] --mutation--> ['replace(823,182)', 'replace(427,373)']		0.997758
+	['replace(823,676)'] --mutation--> ['replace(823,676)', 'replace(795,708)']		0.000000
+	['replace(539,961)'] --mutation--> ['replace(539,961)', 'delete(918)']		0.997276
+	['insert(918,887)'] --mutation--> ['insert(918,887)', 'replace(467,167)']		0.095933
+	['insert(879,456)'] --mutation--> ['insert(879,456)', 'delete(459)']		0.000000
+	['delete(603)'] --mutation--> ['delete(603)', 'delete(777)']		0.997091
+	['delete(422)'] --mutation--> ['delete(422)', 'delete(811)']		0.997758
+	['replace(410,491)'] --mutation--> ['replace(410,491)', 'delete(446)']		0.895666
+
+
+
+TOTAL TIME TAKEN = 2143.711717
+
+BEST PATCHES:
+	Attempt number 0:
+		(['insert(417,759)', 'insert(360,887)'], 0.9977581798643796)
+		(['delete(669)', 'replace(645,578)'], 0.9977581798643796)
+		(['insert(879,591)', 'delete(884)'], 0.9977581798643796)
+		(['replace(676,182)', 'insert(407,801)'], 0.9977581798643796)
+		(['insert(879,819)', 'insert(417,780)'], 0.9977581798643796)
+		(['insert(422,814)', 'replace(457,457)'], 0.9977581798643796)
+		(['replace(654,654)', 'insert(507,440)'], 0.9977581798643796)
+		(['insert(685,488)', 'delete(493)'], 0.9977581798643796)
+		(['insert(640,730)', 'replace(744,780)'], 0.9977581798643796)
+		(['insert(446,471)', 'insert(798,551)'], 0.9977581798643796)
+		(['replace(793,417)', 'insert(574,972)'], 0.9977581798643796)
+		(['insert(669,722)', 'replace(467,462)'], 0.9977581798643796)
+		(['replace(581,810)', 'insert(918,483)'], 0.9977581798643796)
+		(['insert(685,866)', 'delete(884)'], 0.9977581798643796)
+		(['replace(670,820)', 'insert(879,505)'], 0.9977581798643796)
+		(['insert(407,801)', 'insert(806,965)'], 0.9977581798643796)
+		(['delete(422)', 'insert(456,608)'], 0.9977581798643796)
+		(['insert(574,569)', 'insert(677,772)'], 0.9977581798643796)
+		(['insert(422,814)', 'replace(967,795)'], 0.9977581798643796)
+		(['replace(654,654)', 'replace(645,374)'], 0.9977581798643796)
+		(['replace(847,894)', 'insert(540,827)'], 0.9977581798643796)
+		(['insert(879,456)', 'insert(512,430)'], 0.9977581798643796)
+		(['insert(407,417)', 'insert(897,633)'], 0.9977581798643796)
+		(['insert(957,435)', 'insert(923,569)'], 0.9977581798643796)
+		(['delete(845)', 'delete(793)'], 0.9977581798643796)
+		(['delete(819)', 'insert(464,827)'], 0.9977581798643796)
+		(['replace(671,558)', 'delete(422)'], 0.9977581798643796)
+		(['insert(507,819)', 'delete(422)'], 0.9977581798643796)
+		(['insert(879,435)', 'replace(382,217)'], 0.9977581798643796)
+		(['insert(640,874)', 'insert(640,407)'], 0.9977581798643796)
+		(['insert(892,582)', 'insert(936,952)'], 0.9977581798643796)
+		(['insert(640,780)', 'insert(451,863)'], 0.9977581798643796)
+		(['replace(361,361)', 'insert(892,819)'], 0.9977581798643796)
+		(['replace(823,182)', 'replace(427,373)'], 0.9977581798643796)
+		(['delete(422)', 'delete(811)'], 0.9977581798643796)
+		(['insert(685,926)', 'replace(422,814)'], 0.9979434542557531)
+		(['insert(685,440)', 'replace(410,100)'], 0.9979434542557531)
