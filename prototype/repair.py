@@ -527,13 +527,16 @@ def calc_candidate_fitness(fileName, dependencies="", include=""):
 
     t_start = time.time()
     if include != "" and dependencies != "": 
+        print("""source /etc/profile.d/modules.sh
+	    module load vcs/2017.12-SP2-1
+	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
         os.system("""source /etc/profile.d/modules.sh
 	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
+	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
     else:
         os.system("""source /etc/profile.d/modules.sh
 	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 sys_defs.vh %s %s %s -o simv -R""" % (TEST_BENCH, fileName, include))
+	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s -o simv -R""" % (TEST_BENCH, fileName))
 
     #process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
     t_finish = time.time()
@@ -653,6 +656,7 @@ def main():
         showVersion()
 
     LOG = False
+    CODE_FROM_PATCHLIST = False
 
     for i in range(1, len(sys.argv)):
         cmd = sys.argv[i]
@@ -661,6 +665,11 @@ def main():
             if val.lower() == "true": LOG = True
             elif val.lower() == "false": LOG = False
             print("Using LOG = %s" % LOG)
+        elif "code_from_patchlist" in cmd.lower():
+            val = cmd.split("=")[1]
+            if val.lower() == "true": CODE_FROM_PATCHLIST = True
+            elif val.lower() == "false": CODE_FROM_PATCHLIST = False
+            print("Using CODE_FROM_PATCHLIST = %s" % CODE_FROM_PATCHLIST)
 
     codegen = ASTCodeGenerator()
     # parse the files (in filelist) to ASTs (PyVerilog ast)
@@ -731,6 +740,19 @@ def main():
     # print(ff_1)
     # os.remove("candidate.v")
     # exit(1)
+
+    if CODE_FROM_PATCHLIST:
+        patch_list = eval(input("Please enter the patchlist representation of candidate... "))
+        new_ast = mutation_op.ast_from_patchlist(ast, patch_list)
+        new_ast.show()
+
+        tmp_f = open("patchlist_code.v", "w+")
+        tmp_f.write(codegen.visit(new_ast))
+        tmp_f.close()
+        code_fitness, sim_time = calc_candidate_fitness("patchlist_code.v", DEP_FILES, INCLUDE_DIR)
+        print(code_fitness)
+
+        exit(1)
 
     # calculate fitness of the original buggy program
     orig_fitness, sim_time = calc_candidate_fitness(SRC_FILE, DEP_FILES, INCLUDE_DIR)
@@ -853,7 +875,7 @@ def main():
                     GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
                     print(child_fitness)
 
-                if LOG: log_file.write("%f\n" % child_fitness)
+                if LOG: log_file.write("%s\n" % "{:.17g}".format(child_fitness))
                 print("\n\n#################\n\n")
 
                 if child_fitness == 1.0:
