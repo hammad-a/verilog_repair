@@ -1,7 +1,7 @@
 import sys
 import os
 
-X_WEIGHT = 1
+X_WEIGHT = 2
 DEBUG = False
 
 # remove '\n' or other white space from bitlist 
@@ -49,6 +49,27 @@ def get_weights_fuzz(weights_file, oracle):
     
     return weights_by_bit
 
+def resize_sim(oracle, sim):
+    oracle_len = len(oracle)
+    sim_len = len(sim)
+    num_bits = len(oracle[0].split(",")) - 1
+    clk_len = float(oracle[2].split(",")[0]) - float(oracle[1].split(",")[0])
+    last_clk = eval(oracle[oracle_len-1].split(",")[0])
+    
+    if oracle_len > sim_len:
+        for i in range(oracle_len-sim_len):
+            tmp_str = str(last_clk + (i+1) * clk_len)
+            for i in range(num_bits):
+                tmp_str += ",x"
+            tmp_str += "\n"
+            sim.append(tmp_str)
+    elif oracle_len < sim_len:
+        for i in range(sim_len-oracle_len):
+            sim.pop()
+
+    return oracle, sim
+
+
 def calculate_fitness(oracle, sim, weights_file, weighting):
 
     weights = None
@@ -58,9 +79,8 @@ def calculate_fitness(oracle, sim, weights_file, weighting):
         weights = get_weights_fuzz(weights_file, oracle)
     print(weights)
     
-    if len(oracle) != len(sim): # TODO: change this to append the sim file to match oracle length with x-bits
-        # resize_sim(oracle, sim)
-        return 0, 1
+    if len(oracle) != len(sim): 
+        oracle, sim = resize_sim(oracle, sim)
 
     fitness = 0
     total_possible = 0 
@@ -75,6 +95,7 @@ def calculate_fitness(oracle, sim, weights_file, weighting):
         for b in range(len(tmp_oracle)):
             if weights:
                 bit_weight = weights[b+1] # off-set by 1 since time not included in b
+                if not bit_weight: bit_weight = 1 # if the bit weight was not present in the weights file (e.g. it never got an assignment)
             else:
                 bit_weight = 1
 
