@@ -31,8 +31,13 @@ while(True):
         gen = int(line.split(" ")[2])
         raw_data[gen] = []
     elif "-->" in line:
-        fval = float(line.split("\t\t")[1])
-        raw_data[gen].append(fval)
+        fval = line.split("\t\t")[1]
+        if " " in fval: # crossover
+            fvals = fval.split(" ")
+            for tmp in fvals:
+                raw_data[gen].append(float(tmp))
+        else: # mutation
+            raw_data[gen].append(float(fval))
 
 means = []
 mins = []
@@ -58,9 +63,28 @@ for i in gens:
 # print(mins)
 # print(maxes)
 # print(medians)
-
+plt.ylabel('Normalized Fitness')
+plt.xlabel('Generation #')
+plt.xticks(range(0,len(gens)))
+plt.title('Mean Fitness')
 plt.plot(gens, means, 'r') 
-plt.plot(gens, mins, 'b')
-plt.plot(gens, maxes, 'g') 
 plt.show()
+plt.clf()
+
+plt.ylabel('Normalized Fitness')
+plt.xlabel('Generation #')
+plt.xticks(range(0,len(gens)))
+plt.title('Max Fitness')
+plt.plot(gens, maxes, 'r') 
+plt.show()
+plt.clf()
+
+plt.ylabel('Normalized Fitness')
+plt.xlabel('Generation #')
+plt.xticks(range(0,len(gens)))
+plt.title('Min Fitness')
+plt.plot(gens, mins, 'r') 
+plt.show()
+plt.clf()
+
 
