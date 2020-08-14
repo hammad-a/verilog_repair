@@ -537,6 +537,32 @@ class MutationOp(ASTCodeGenerator):
             else:
                 print("Invalid operator in patch list: %s" % m)
         return ast
+    
+def minimize_patch(mutation_op, ast, patch_list, codegen, dependencies, include):
+    print("\n\nMinimizing patchlist...")
+    minimized = copy.deepcopy(patch_list)
+    # print(minimized)
+
+    for i in range(len(patch_list)-1, -1, -1): # iterate over the list in reverse order 
+        op = patch_list.pop(i)
+        # print(patch_list)
+        tmp_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), patch_list)
+        f = open("minimized.v", "w+")
+        f.write(codegen.visit(tmp_ast))
+        f.close()
+
+        ff, _ = calc_candidate_fitness("minimized.v", dependencies, include)
+        if ff == 1:
+            tmp = minimized.pop(i)
+            print("Removed operator: %s" % tmp)
+        else:
+            patch_list.insert(len(patch_list), op)
+        
+        os.remove("minimized.v")
+        # print(patch_list)
+
+    return minimized
+
 
 def tournament_selection(mutation_op, codegen, orig_ast, popn):
     # Choose 10 random candidates for parent selection
@@ -569,17 +595,19 @@ def calc_candidate_fitness(fileName, dependencies="", include=""):
     #os.system("cat %s" % fileName)
 
     t_start = time.time()
+    
+    # TODO: decide whether or not we are supporting sverilog -- we see syntax errors sometimes when some verilog programs use sverilog keywords
     if include != "" and dependencies != "": 
         print("""source /etc/profile.d/modules.sh
 	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
+	    timeout 20 vcs +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
         os.system("""source /etc/profile.d/modules.sh
 	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
+	    timeout 20 vcs +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
     else:
         os.system("""source /etc/profile.d/modules.sh
 	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s -o simv -R""" % (TEST_BENCH, fileName))
+	    timeout 20 vcs +vc -Mupdate -line -full64 %s %s -o simv -R""" % (TEST_BENCH, fileName))
 
     #process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
     t_finish = time.time()
@@ -666,7 +694,7 @@ def get_output_mismatch():
             uniq_headers.add(tmp.split("[")[0])
         else:
             uniq_headers.add(tmp)
-
+        
     return res, uniq_headers
 
 def main():
@@ -844,6 +872,12 @@ def main():
     
     best_patches = dict()
 
+    ### Testing minimizing patchlist with fsm_full...
+
+    # minimized = minimize_patch(mutation_op, ast, ['delete(274)','replace(104,275)', 'delete(162)'], codegen, DEP_FILES, INCLUDE_DIR)
+    # print(minimized)
+    # exit(1)
+
     for restart_attempt in range(RESTARTS):
         popn = []
         popn.append([])
@@ -956,6 +990,10 @@ def main():
                         if LOG: 
                             log_file.write("######## REPAIR FOUND ########\n\t\t%s\n" % str(child_patchlist))
                             log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
+                        
+                        minimized = minimize_patch(mutation_op, ast, child_patchlist, codegen, DEP_FILES, INCLUDE_DIR)
+                        print(minimized)
+
                         sys.exit(1)
 
                     _children.append(child_patchlist)
