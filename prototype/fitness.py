@@ -69,6 +69,18 @@ def resize_sim(oracle, sim):
 
     return oracle, sim
 
+def resize_clkcycle_outputs(tmp_oracle, tmp_sim):
+    if len(tmp_oracle) > len(tmp_sim):
+        diff = len(tmp_oracle) - len(tmp_sim)
+        for i in range(diff):
+            tmp_sim.append('x')
+    else:
+        diff = len(tmp_sim) - len(tmp_oracle)
+        for i in range(diff):
+            tmp_oracle.pop()
+
+    return tmp_oracle, tmp_sim
+
 
 def calculate_fitness(oracle, sim, weights_file, weighting):
 
@@ -92,6 +104,9 @@ def calculate_fitness(oracle, sim, weights_file, weighting):
         # cycle_weight = 1/(2**(i-1))
         cycle_weight = 1
         
+        if len(tmp_oracle) != len(tmp_sim):
+            tmp_oracle, tmp_sim = resize_clkcycle_outputs(tmp_oracle, tmp_sim)
+
         for b in range(len(tmp_oracle)):
             if weights:
                 bit_weight = weights[b+1] # off-set by 1 since time not included in b
