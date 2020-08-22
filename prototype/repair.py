@@ -219,7 +219,10 @@ class MutationOp(ASTCodeGenerator):
     def insert_stmt_node(self, ast, node, after_id): 
         if ast.__class__.__name__ == "Block":
             if after_id == ast.node_id:
+                # node.show()
+                # input("...")
                 ast.statements.insert(0, copy.deepcopy(node))
+                return
             else:
                 insert_point = -1
                 for i in range(len(ast.statements)):
@@ -357,7 +360,7 @@ class MutationOp(ASTCodeGenerator):
         # data dependency analysis
         # if ast.__class__.__name__ == "Identifier" and ast.name in self.blacklist: return
         if ast.__class__.__name__ in ["BlockingSubstitution", "NonblockingSubstitution", "Assign"]: # for assignment statements =, <=
-            if ast.left and ast.left.var:
+            if ast.left and ast.left.__class__.__name__ == "Lvalue" and ast.left.var:
                 if ast.left.var.__class__.__name__ == "Identifier" and ast.left.var.name in mismatch_set: # single assignment
                     include_all_subnodes = True
                     parent = ast.left.var
@@ -557,6 +560,7 @@ def minimize_patch(mutation_op, ast, patch_list, codegen, dependencies, include)
             print("Removed operator: %s" % tmp)
         else:
             patch_list.insert(len(patch_list), op)
+            print("Removing operator %s causes a drop in fitness; inserting it back into the patchlist..." % op)
         
         os.remove("minimized.v")
         # print(patch_list)
@@ -899,7 +903,8 @@ def main():
             while len(_children) < POPSIZE:
                 # time.sleep(2) # use this to slow down the processing for debugging purposes
                 parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
-
+                print(parent_patchlist)
+                
                 if mutation_op.fault_loc:
                     tmp_mismatch_set = copy.deepcopy(mismatch_set)
                     mutation_op.get_fault_loc_targets(parent_ast, tmp_mismatch_set, uniq_headers) # compute fault localization for the parent
@@ -992,7 +997,8 @@ def main():
                             log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
                         
                         minimized = minimize_patch(mutation_op, ast, child_patchlist, codegen, DEP_FILES, INCLUDE_DIR)
-                        print(minimized)
+                        print("\n\n")
+                        print("Minimized patch: %s" % str(minimized))
 
                         sys.exit(1)
 
