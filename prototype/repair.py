@@ -71,7 +71,7 @@ DELETION_RATE = 1/3
 INSERTION_RATE = 1/3
 MUTATION_RATE = 1/2
 CROSSOVER_RATE = 1/2
-
+FITNESS_MODE = "outputwires"
 
 config_file = open("repair.conf", "r")
 configs = config_file.readlines()
@@ -91,6 +91,9 @@ for c in configs:
         elif param == "include_dir":
             INCLUDE_DIR = val
             print("Using INCLUDE_DIR = %s" % INCLUDE_DIR)
+        elif param == "fitness_mode":
+            FITNESS_MODE = val
+            print("Using FITNESS_MODE = %s" % FITNESS_MODE)
         elif param == "oracle":
             ORACLE = val
             print("Using ORACLE = %s" % ORACLE)
@@ -147,6 +150,13 @@ elif not TEST_BENCH:
 elif not ORACLE:
     print("ERROR: ORACLE not specified. Please check the configuration file.")
     exit(1)
+elif FITNESS_MODE not in ["outputwires", "testcases"]:
+    print("ERROR: FITNESS_MODE incorrectly specified. Please check the configuration file.")
+    exit(1)
+elif FITNESS_MODE == "testcases" and FAULT_LOC == True:
+    print("WARNING: Cannot use fault localization unless output wires are being used for fitness metrics. Turning off fault localization.")
+    time.sleep(1)
+    FAULT_LOC = False
 
 if REPLACEMENT_RATE + INSERTION_RATE + DELETION_RATE != 1.0:
     print("ERROR: The mutation operator rates should add up to 1.")
@@ -604,14 +614,14 @@ def calc_candidate_fitness(fileName, dependencies="", include=""):
     if include != "" and dependencies != "": 
         print("""source /etc/profile.d/modules.sh
 	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
+	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
         os.system("""source /etc/profile.d/modules.sh
 	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
+	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
     else:
         os.system("""source /etc/profile.d/modules.sh
 	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs +vc -Mupdate -line -full64 %s %s -o simv -R""" % (TEST_BENCH, fileName))
+	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s -o simv -R""" % (TEST_BENCH, fileName))
 
     #process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
     t_finish = time.time()
@@ -628,10 +638,10 @@ def calc_candidate_fitness(fileName, dependencies="", include=""):
     sim_lines = f.readlines()
     f.close()
 
-    weighting = "static"
-    f = open("weights.txt", "r")
-    weights = f.readlines()
-    f.close()
+    # weighting = "static"
+    # f = open("weights.txt", "r")
+    # weights = f.readlines()
+    # f.close()
 
     # ff, total_possible = fitness.calculate_fitness(oracle_lines, sim_lines, weights, weighting)
     ff, total_possible = fitness.calculate_fitness(oracle_lines, sim_lines, None, "")
@@ -841,8 +851,9 @@ def main():
     #GENOME_FITNESS_CACHE[str(['insert(53,78)'])] = orig_fitness
     print("Original program fitness = %f" % orig_fitness)
 
-    mismatch_set, uniq_headers = get_output_mismatch()
-    print(mismatch_set)
+    if FITNESS_MODE == "outputwires":
+        mismatch_set, uniq_headers = get_output_mismatch()
+        print(mismatch_set)
     
     if os.path.exists("output.txt"): os.remove("output.txt")
 
@@ -859,15 +870,16 @@ def main():
         log_file.write("TEST BENCH:\n\t %s\n" % TEST_BENCH)
         if INCLUDE_DIR != "": log_file.write("INCLUDE_DIR:\n\t %s\n" % INCLUDE_DIR)
         if DEP_FILES != "": log_file.write("DEP_FILES:\n\t %s\n" % DEP_FILES)
+        log_file.write("FITNESS_MODE:\n\t %s\n" % FITNESS_MODE)
         log_file.write("ORACLE:\n\t %s\n" % ORACLE)
         log_file.write("PARAMETERS:\n")
         log_file.write("\tgens=%d\n" % GENS)
         log_file.write("\tpopsize=%d\n" % POPSIZE)
-        log_file.write("\tmutation_rate=%d\n" % MUTATION_RATE)
-        log_file.write("\tcrossover_rate=%d\n" % CROSSOVER_RATE)
-        log_file.write("\treplacement_rate=%d\n" % REPLACEMENT_RATE)
-        log_file.write("\tinsertion_rate=%d\n" % INSERTION_RATE)
-        log_file.write("\tdeletion_rate=%d\n" % DELETION_RATE)
+        log_file.write("\tmutation_rate=%f\n" % MUTATION_RATE)
+        log_file.write("\tcrossover_rate=%f\n" % CROSSOVER_RATE)
+        log_file.write("\treplacement_rate=%f\n" % REPLACEMENT_RATE)
+        log_file.write("\tinsertion_rate=%f\n" % INSERTION_RATE)
+        log_file.write("\tdeletion_rate=%f\n" % DELETION_RATE)
         log_file.write("\trestarts=%d\n" % RESTARTS)
         log_file.write("\tfault_loc=%s\n" % FAULT_LOC)
         log_file.write("\tcontrol_flow=%s\n" % CONTROL_FLOW)
@@ -1006,10 +1018,11 @@ def main():
                 
                 if LOG: log_file.write("\n")
 
-                mutation_op.fault_loc_set = set() # reset the fault localization data structures for the next parent
-                mutation_op.new_vars_in_fault_loc = dict()
-                mutation_op.wires_brought_in = dict()
-                # mutation_op.blacklist = set()
+                if mutation_op.fault_loc:
+                    mutation_op.fault_loc_set = set() # reset the fault localization data structures for the next parent
+                    mutation_op.new_vars_in_fault_loc = dict()
+                    mutation_op.wires_brought_in = dict()
+                    # mutation_op.blacklist = set()
             
             popn = copy.deepcopy(_children)
 
