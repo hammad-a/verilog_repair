@@ -56,8 +56,9 @@ GENOME_FITNESS_CACHE = {}
 
 SRC_FILE = None
 TEST_BENCH = None
-INCLUDE_DIR = ""
-DEP_FILES = ""
+PROJ_DIR = None
+EVAL_SCRIPT = None
+ORIG_FILE = ""
 ORACLE = None
 GENS = 5
 POPSIZE = 200
@@ -85,12 +86,15 @@ for c in configs:
         elif param == "test_bench":
             TEST_BENCH = val
             print("Using TEST_BENCH = %s" % TEST_BENCH)
-        elif param == "dependent_files":
-            DEP_FILES = val.replace(",", " ")
-            print("Using DEP_FILES = %s" % DEP_FILES)
-        elif param == "include_dir":
-            INCLUDE_DIR = val
-            print("Using INCLUDE_DIR = %s" % INCLUDE_DIR)
+        elif param == "eval_script":
+            EVAL_SCRIPT = val
+            print("Using EVAL_SCRIPT = %s" % EVAL_SCRIPT)
+        elif param == "orig_file":
+            ORIG_FILE = val
+            print("Using ORIG_FILE = %s" % ORIG_FILE)
+        elif param == "proj_dir":
+            PROJ_DIR = val
+            print("Using PROJ_DIR = %s" % PROJ_DIR)
         elif param == "fitness_mode":
             FITNESS_MODE = val
             print("Using FITNESS_MODE = %s" % FITNESS_MODE)
@@ -147,11 +151,20 @@ if not SRC_FILE:
 elif not TEST_BENCH:
     print("ERROR: TEST_BENCH not specified. Please check the configuration file.")
     exit(1)
+elif not EVAL_SCRIPT:
+    print("ERROR: EVAL_SCRIPT not specified. Please check the configuration file.")
+    exit(1)
+elif not PROJ_DIR:
+    print("ERROR: PROJ_DIR not specified. Please check the configuration file.")
+    exit(1)
 elif not ORACLE:
     print("ERROR: ORACLE not specified. Please check the configuration file.")
     exit(1)
 elif FITNESS_MODE not in ["outputwires", "testcases"]:
     print("ERROR: FITNESS_MODE incorrectly specified. Please check the configuration file.")
+    exit(1)
+elif ORIG_FILE == "":
+    print("ERROR: ORIG_FILE not specified. Please check the configuration file.")
     exit(1)
 elif FITNESS_MODE == "testcases" and FAULT_LOC == True:
     print("WARNING: Cannot use fault localization unless output wires are being used for fitness metrics. Turning off fault localization.")
@@ -551,7 +564,7 @@ class MutationOp(ASTCodeGenerator):
                 print("Invalid operator in patch list: %s" % m)
         return ast
     
-def minimize_patch(mutation_op, ast, patch_list, codegen, dependencies, include):
+def minimize_patch(mutation_op, ast, patch_list, codegen):
     print("\n\nMinimizing patchlist...")
     minimized = copy.deepcopy(patch_list)
     # print(minimized)
@@ -563,8 +576,9 @@ def minimize_patch(mutation_op, ast, patch_list, codegen, dependencies, include)
         f = open("minimized.v", "w+")
         f.write(codegen.visit(tmp_ast))
         f.close()
+        os.system("cp minimized.v %s/minimized.v" % PROJ_DIR)
 
-        ff, _ = calc_candidate_fitness("minimized.v", dependencies, include)
+        ff, _ = calc_candidate_fitness("minimized.v")
         if ff == 1:
             tmp = minimized.pop(i)
             print("Removed operator: %s" % tmp)
@@ -573,6 +587,7 @@ def minimize_patch(mutation_op, ast, patch_list, codegen, dependencies, include)
             print("Removing operator %s causes a drop in fitness; inserting it back into the patchlist..." % op)
         
         os.remove("minimized.v")
+        os.remove("%s/minimized.v" % PROJ_DIR)
         # print(patch_list)
 
     return minimized
@@ -604,26 +619,17 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
     
     return copy.deepcopy(winner_patchlist), winner_ast
 
-def calc_candidate_fitness(fileName, dependencies="", include=""):
+def calc_candidate_fitness(fileName):
     print("Running VCS simulation")
     #os.system("cat %s" % fileName)
 
     t_start = time.time()
-    
-    # TODO: decide whether or not we are supporting sverilog -- we see syntax errors sometimes when some verilog programs use sverilog keywords
-    if include != "" and dependencies != "": 
-        print("""source /etc/profile.d/modules.sh
-	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
-        os.system("""source /etc/profile.d/modules.sh
-	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s %s +incdir+%s+ -o simv -R""" % (TEST_BENCH, fileName, dependencies, include))
-    else:
-        os.system("""source /etc/profile.d/modules.sh
-	    module load vcs/2017.12-SP2-1
-	    timeout 20 vcs -sverilog +vc -Mupdate -line -full64 %s %s -o simv -R""" % (TEST_BENCH, fileName))
 
-    #process = subprocess.run("runvcs candidate.v " + TEST_BENCH, shell=True, executable='/usr/local/bin/interactive_zsh', timeout=20)
+    if "/" in fileName: fileName = fileName.split("/")[-1] # get the filename only if full path specified
+
+    # TODO: The test bench is currently hard coded in eval_script. Do we want to change that?
+    os.system("bash %s %s %s %s" % (EVAL_SCRIPT, ORIG_FILE, fileName, PROJ_DIR))
+    
     t_finish = time.time()
     
     if not os.path.exists("output.txt"): 
@@ -644,14 +650,22 @@ def calc_candidate_fitness(fileName, dependencies="", include=""):
     # f.close()
 
     # ff, total_possible = fitness.calculate_fitness(oracle_lines, sim_lines, weights, weighting)
-    ff, total_possible = fitness.calculate_fitness(oracle_lines, sim_lines, None, "")
-    
-    normalized_ff = ff/total_possible
-    if normalized_ff < 0: normalized_ff = 0
-    print("FITNESS = %f" % normalized_ff)
+    if FITNESS_MODE == "outputwires":
+        ff, total_possible = fitness.calculate_fitness(oracle_lines, sim_lines, None, "")
+        
+        normalized_ff = ff/total_possible
+        if normalized_ff < 0: normalized_ff = 0
+        print("FITNESS = %f" % normalized_ff)
 
-    return normalized_ff, t_finish - t_start
-    # return fitness_v2.calculate_badness(oracle_lines, sim_lines, weights, weighting)
+        return normalized_ff, t_finish - t_start
+        # return fitness_v2.calculate_badness(oracle_lines, sim_lines, weights, weighting)
+    elif FITNESS_MODE == "testcases":
+        total_possible = len(sim_lines)
+        count = 0
+        for l in sim_lines:
+            if "pass" in l.lower(): count += 1
+        print("%d out of %d testcases pass" % (count, total_possible))
+        return count/total_possible, t_finish - t_start
 
 def get_elite_parents(popn, pop_size):
     elite_size = int(5/100 * pop_size)
@@ -760,12 +774,9 @@ def main():
 
     codegen = ASTCodeGenerator()
     # parse the files (in filelist) to ASTs (PyVerilog ast)
-    
-    all_files = [SRC_FILE]
-    all_files.extend(DEP_FILES.split(","))
 
     ast, directives = parse([SRC_FILE],
-                            preprocess_include=INCLUDE_DIR.split(","),
+                            preprocess_include=PROJ_DIR.split(","),
                             preprocess_define=options.define)
 
     ast.show()
@@ -836,20 +847,26 @@ def main():
         new_ast = mutation_op.ast_from_patchlist(ast, patch_list)
         new_ast.show()
 
+        gencode = codegen.visit(new_ast)
         tmp_f = open("patchlist_code.v", "w+")
-        tmp_f.write(codegen.visit(new_ast))
+        tmp_f.write(gencode)
         tmp_f.close()
-        code_fitness, sim_time = calc_candidate_fitness("patchlist_code.v", DEP_FILES, INCLUDE_DIR)
+        os.system("cp patchlist_code.v %s/patchlist_code.v" % PROJ_DIR)
+        code_fitness, sim_time = calc_candidate_fitness("patchlist_code.v")
         print(code_fitness)
+        # os.remove("patchlist_code.v")
+        os.remove("%s/patchlist_code.v" % PROJ_DIR)
 
         exit(1)
 
     # calculate fitness of the original buggy program
-    orig_fitness, sim_time = calc_candidate_fitness(SRC_FILE, DEP_FILES, INCLUDE_DIR)
+    orig_fitness, sim_time = calc_candidate_fitness(SRC_FILE)
     #orig_fitness = ff_1
     GENOME_FITNESS_CACHE[str([])] = orig_fitness
     #GENOME_FITNESS_CACHE[str(['insert(53,78)'])] = orig_fitness
     print("Original program fitness = %f" % orig_fitness)
+
+    # exit(1)
 
     if FITNESS_MODE == "outputwires":
         mismatch_set, uniq_headers = get_output_mismatch()
@@ -868,9 +885,9 @@ def main():
         log_file = open("%s/repair_%s.log" % (log_base_dir, time_now), "w+")
         log_file.write("SOURCE FILE:\n\t %s\n" % SRC_FILE)
         log_file.write("TEST BENCH:\n\t %s\n" % TEST_BENCH)
-        if INCLUDE_DIR != "": log_file.write("INCLUDE_DIR:\n\t %s\n" % INCLUDE_DIR)
-        if DEP_FILES != "": log_file.write("DEP_FILES:\n\t %s\n" % DEP_FILES)
+        log_file.write("PROJ_DIR:\n\t %s\n" % PROJ_DIR)
         log_file.write("FITNESS_MODE:\n\t %s\n" % FITNESS_MODE)
+        log_file.write("EVAL_SCRIPT:\n\t %s\n" % EVAL_SCRIPT)
         log_file.write("ORACLE:\n\t %s\n" % ORACLE)
         log_file.write("PARAMETERS:\n")
         log_file.write("\tgens=%d\n" % GENS)
@@ -977,6 +994,8 @@ def main():
                         f.write(code)
                         f.close()
 
+                        os.system("cp candidate.v %s/candidate.v" % PROJ_DIR)
+
                         child_fitness = -1
                         # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
                         try:
@@ -987,10 +1006,11 @@ def main():
                         # if the child fitness was not 0, i.e. the parser did not throw syntax errors
                         if child_fitness == -1: 
                             
-                            child_fitness, sim_time = calc_candidate_fitness("candidate.v", DEP_FILES, INCLUDE_DIR)
+                            child_fitness, sim_time = calc_candidate_fitness("candidate.v")
                             if os.path.exists("output.txt"): os.remove("output.txt")
 
                         os.remove("candidate.v")
+                        os.remove("%s/candidate.v" % PROJ_DIR)
                         
                         GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
                         print(child_fitness)
@@ -1005,12 +1025,16 @@ def main():
                         total_time = time.time() - start_time
                         print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
                         if LOG: 
-                            log_file.write("######## REPAIR FOUND ########\n\t\t%s\n" % str(child_patchlist))
+                            log_file.write("\n\n######## REPAIR FOUND ########\n\t\t%s\n" % str(child_patchlist))
                             log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
                         
-                        minimized = minimize_patch(mutation_op, ast, child_patchlist, codegen, DEP_FILES, INCLUDE_DIR)
+                        minimized = minimize_patch(mutation_op, ast, child_patchlist, codegen)
                         print("\n\n")
                         print("Minimized patch: %s" % str(minimized))
+
+                        if LOG:
+                            log_file.write("Minimized patch: %s\n" % str(minimized))
+                            log_file.close()
 
                         sys.exit(1)
 
@@ -1023,6 +1047,8 @@ def main():
                     mutation_op.new_vars_in_fault_loc = dict()
                     mutation_op.wires_brought_in = dict()
                     # mutation_op.blacklist = set()
+                
+                # exit(1)
             
             popn = copy.deepcopy(_children)
 
