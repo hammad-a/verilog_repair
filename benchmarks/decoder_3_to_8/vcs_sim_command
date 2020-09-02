@@ -1,0 +1,1 @@
+timeout 20 vcs -sverilog +vc -Mupdate -line -full64 decoder_3_to_8_tb_t1.v decoder_3_to_8.v -o simv -R
