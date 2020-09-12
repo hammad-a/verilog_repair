@@ -50,6 +50,16 @@ Valid targets for the delete and insert operators.
 DELETE_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign", "Block"]
 INSERT_TARGETS = ["IfStatement", "NonblockingSubstitution", "BlockingSubstitution", "ForStatement", "Always", "Case", "CaseStatement", "DelayStatement", "Localparam", "Assign"]
 
+TEMPLATE_MUTATIONS = { "increment_by_one": ("Identifier", "Plus"), "decrement_by_one": ("Identifier", "Minus"), 
+                        "negate_equality": ("Eq", "NotEq"), "negate_inequality": ("NotEq", "Eq"), "negate_ulnot": ("Ulnot", "Ulnot"),
+                        "sens_to_negedge": ("Sens", "Sens"), "sens_to_posedge": ("Sens", "Sens"), "sens_to_level": ("Sens", "Sens"), "sens_to_all": ("Sens", "Sens"),
+                        "blocking_to_nonblocking": ("BlockingSubstitution", "NonblockingSubstitution"), "nonblocking_to_blocking": ("NonblockingSubstitution", "BlockingSubstitution")}
+                        # "sll_to_sla": ("Sll", "Sla"), "sla_to_sll": ("Sla", "Sll"), 
+                        # "srl_to_sra": ("Srl", "Sra"), "sra_to_srl": ("Sra", "Srl")}
+                        # TODO: stmt to stmt in a block?
+                        # TODO: empty if then somewhere? with like a random identifier for cond?
+                        # TODO: use only registers for inc and dec by one?
+
 WRITE_TO_FILE = True
 
 GENOME_FITNESS_CACHE = {}
@@ -66,6 +76,7 @@ RESTARTS = 1
 FAULT_LOC = True
 CONTROL_FLOW = True
 LIMIT_TRANSITIVE_DEPENDENCY_SET = False
+# TODO: Update defaults!
 DEPENDENCY_SET_MAX = 5
 REPLACEMENT_RATE = 1/3
 DELETION_RATE = 1/3
@@ -73,6 +84,8 @@ INSERTION_RATE = 1/3
 MUTATION_RATE = 1/2
 CROSSOVER_RATE = 1/2
 FITNESS_MODE = "outputwires"
+
+TIME_NOW = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
 
 config_file = open("repair.conf", "r")
 configs = config_file.readlines()
@@ -195,6 +208,7 @@ class MutationOp(ASTCodeGenerator):
         self.insertable_nodes = []
         self.replaceable_nodes = []
         self.node_class_to_replace = None
+        self.nodes_by_class = []
         self.stmt_nodes = []
         self.max_node_id = -1
 
@@ -225,12 +239,12 @@ class MutationOp(ASTCodeGenerator):
         attr = vars(ast)
         for key in attr: # loop through all attributes of this AST
             if attr[key].__class__ in AST_CLASSES: # for each attribute that is also an AST
-                if attr[key].node_id == node_id:
+                if attr[key].node_id == node_id and attr[key].__class__.__name__ in DELETE_TARGETS:
                     attr[key] = None
             elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
                 for i in range(len(attr[key])): # loop through each AST in that list or tuple
                     tmp = attr[key][i]
-                    if tmp.__class__ in AST_CLASSES and tmp.node_id == node_id:
+                    if tmp.__class__ in AST_CLASSES and tmp.node_id == node_id and tmp.__class__.__name__ in DELETE_TARGETS:
                         attr[key][i] = None
 
         for c in ast.children():
@@ -324,6 +338,18 @@ class MutationOp(ASTCodeGenerator):
 
         for c in ast.children():
             if c: self.get_replaceable_nodes_by_class(c, node_type)
+    
+    """
+    Gets all nodes that are of the given class type. 
+    These nodes are used for applying mutation templates.
+    """
+    # TODO: do this only for fault loc set?
+    def get_nodes_by_class(self, ast, node_type):
+        if ast.__class__.__name__ == node_type:
+            self.nodes_by_class.append(ast.node_id)
+
+        for c in ast.children():
+            if c: self.get_nodes_by_class(c, node_type)
 
     """
     Gets all nodes that are found within a begin ... end block. 
@@ -347,7 +373,7 @@ class MutationOp(ASTCodeGenerator):
         if ast:
             if ast.__class__.__name__ == "Identifier" and (ast.name in mismatch_set or ast.name in tuple(self.new_vars_in_fault_loc.values())):
                 for cond in cond_list:
-                    self.add_node_and_children_to_fault_loc(cond, mismatch_set, uniq_headers, ast)
+                    if cond: self.add_node_and_children_to_fault_loc(cond, mismatch_set, uniq_headers, ast)
 
             for c in ast.children():
                 self.analyze_program_branch(c, cond_list, mismatch_set, uniq_headers)
@@ -379,6 +405,7 @@ class MutationOp(ASTCodeGenerator):
     """
     Given a set of output wires that mismatch with the oracle, get a list of node IDs that are potential fault localization targets.
     """
+    # TODO: add decl to fault loc targets?
     def get_fault_loc_targets(self, ast, mismatch_set, uniq_headers, parent=None, include_all_subnodes=False):
         # data dependency analysis
         # if ast.__class__.__name__ == "Identifier" and ast.name in self.blacklist: return
@@ -436,6 +463,8 @@ class MutationOp(ASTCodeGenerator):
     Note: node_id, with_id, and after_id would not be none if we are trying to regenerate AST from patch list, and would be none for a random mutation.
     """
     def delete(self, ast, patch_list, node_id=None):
+        self.deletable_nodes = [] # reset deletable nodes for the next delete operation, in case previous delete returned early
+
         if node_id == None:
             self.get_deletable_nodes(ast) # get all nodes that can be deleted without breaking the AST / syntax
             if len(self.deletable_nodes) == 0: # if no nodes can be deleted, return without attepmting delete
@@ -456,6 +485,9 @@ class MutationOp(ASTCodeGenerator):
         return child_patchlist, ast
     
     def insert(self, ast, patch_list, node_id=None, after_id=None):
+        self.insertable_nodes = [] # reset the temporary variables, in case previous insert returned early
+        self.tmp_node = None
+
         if node_id == None and after_id == None:
             self.get_insertable_nodes(ast) # get all nodes with a type that is suited to insertion in block statements -> src
             self.get_nodes_in_block_stmt(ast) # get all nodes within a block statement -> dest
@@ -470,8 +502,6 @@ class MutationOp(ASTCodeGenerator):
         self.numbering.renumber(ast) # renumber nodes
         self.max_node_id = self.numbering.c # reset max_node_id
         self.numbering.c = -1
-        self.insertable_nodes = [] # reset the temporary variables
-        self.tmp_node = None
         
         child_patchlist = copy.deepcopy(patch_list)
         child_patchlist.append("insert(%s,%s)" % (node_id, after_id)) # update patch list
@@ -479,6 +509,10 @@ class MutationOp(ASTCodeGenerator):
         return child_patchlist, ast
     
     def replace(self, ast, patch_list, node_id=None, with_id=None):
+        self.tmp_node = None # reset the temporary variables (in case previous replace returned sooner)
+        self.replaceable_nodes = []
+        self.node_class_to_replace = None
+
         if node_id == None:
             if self.max_node_id == -1: # if max_id is not know yet, traverse the AST to find the number of nodes -- needed to pick a random id to replace
                 self.numbering.renumber(ast)
@@ -490,8 +524,9 @@ class MutationOp(ASTCodeGenerator):
                 node_id = random.randint(0,self.max_node_id) # get random node id to replace
             print("Node to replace id: %s" % node_id)
 
-        if with_id == None: 
-            self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id
+        self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id
+
+        if with_id == None:   
             print(self.node_class_to_replace)
             print("Node to replace class: %s" % self.node_class_to_replace)
             if self.node_class_to_replace == None: # if the node does not exist (could have been a part of gen i but not i-1) -> TODO: is this still needed?
@@ -500,10 +535,13 @@ class MutationOp(ASTCodeGenerator):
             if len(self.replaceable_nodes) == 0: # if no replaceable nodes exist, exit gracefully
                 print("Replace operation not possible. Returning with no-op.")
                 return patch_list, ast
-            print(self.replaceable_nodes)
+            print("Replaceable nodes: %s" % str(self.replaceable_nodes))
             with_id = random.choice(self.replaceable_nodes) # get a random node id from the replaceable nodes
             print("Replacing node id %s with node id %s" % (node_id,with_id))
-            
+
+        # safety guard: this could happen if crossover makes the GA think a node is actually suitable for replacement when in reality it is not....    
+        if self.tmp_node.__class__ not in REPLACE_TARGETS[self.node_class_to_replace]: return patch_list, ast    
+        
         self.get_node_from_ast(ast, with_id) # get the node associated with with_id
         self.replace_with_node(ast, node_id, self.tmp_node) # perform the replacement
         self.tmp_node = None # reset the temporary variables
@@ -517,6 +555,97 @@ class MutationOp(ASTCodeGenerator):
         child_patchlist.append("replace(%s,%s)" % (node_id, with_id)) # update patch list
 
         return child_patchlist, ast
+    
+    def weighted_template_choice(self, templates):
+        p = random.random()
+        if p <= 0.3:
+            return random.choice(["increment_by_one", "decrement_by_one"])
+        elif p <= 0.6:
+            return random.choice(["negate_equality", "negate_inequality", "negate_ulnot"])
+        elif p <= 0.8:
+            return random.choice(["nonblocking_to_blocking", "blocking_to_nonblocking"])
+        else:
+            return random.choice(["sens_to_negedge", "sens_to_posedge", "sens_to_level", "sens_to_all"])
+
+    # TODO: make sure ast is a deepcopy
+    def apply_template(self, ast, patch_list, template=None, node_id=None):
+        self.tmp_node = None # reset the temporary variables, in case the previous template operator returned early
+        self.nodes_by_class = []
+
+        if template == None:
+            template = self.weighted_template_choice(list(TEMPLATE_MUTATIONS.keys()))
+            node_type = TEMPLATE_MUTATIONS[template][0]
+            # print(template)
+            # print(node_type)
+            self.get_nodes_by_class(ast, node_type)
+            # print(self.nodes_by_class)
+            if len(self.nodes_by_class) == 0: 
+                print("\nTemplate %s cannot be applied to AST. Returning with no-op." % template)
+                return patch_list, ast # no-op
+            node_id = random.choice(self.nodes_by_class)
+            # print(node_id)
+
+        self.get_node_from_ast(ast, node_id)
+
+        # safety guards: the following can be caused by crossover operations splitting a patchlist
+        if self.tmp_node == None:
+            print("Node with id %d does not exist. Returning with no-op." % node_id)
+            return patch_list, ast # no-op
+        elif not (self.tmp_node.__class__.__name__ == TEMPLATE_MUTATIONS[template][0]):
+            print("Node classes do not match for template. This could have been caused by a crossover operation. Returning with no-op.")
+            print("Node class was %s whereas expected class was %s..." % (self.tmp_node.__class__.__name__, TEMPLATE_MUTATIONS[template][0]))
+            return patch_list, ast # no-op
+
+        print("\nApplying template %s to node %d\nOld:" % (template, node_id))
+        self.tmp_node.show()
+
+        child_patchlist = copy.deepcopy(patch_list)
+        
+        if template == "increment_by_one":
+            new_node = vast.Plus(copy.deepcopy(self.tmp_node), vast.IntConst(1, copy.deepcopy(self.tmp_node.lineno)), copy.deepcopy(self.tmp_node.lineno))
+            new_node.node_id = node_id
+        elif template == "decrement_by_one":
+            new_node = vast.Minus(copy.deepcopy(self.tmp_node), vast.IntConst(1, copy.deepcopy(self.tmp_node.lineno)), copy.deepcopy(self.tmp_node.lineno))
+        elif template == "negate_equality":
+            new_node = vast.NotEq(copy.deepcopy(self.tmp_node.left), copy.deepcopy(self.tmp_node.right), copy.deepcopy(self.tmp_node.lineno))
+        elif template == "negate_inequality":
+            new_node = vast.Eq(copy.deepcopy(self.tmp_node.left), copy.deepcopy(self.tmp_node.right), copy.deepcopy(self.tmp_node.lineno))
+        elif template == "negate_ulnot":
+            new_node = vast.Ulnot(copy.deepcopy(self.tmp_node.right), copy.deepcopy(self.tmp_node.lineno))
+        elif template == "sens_to_negedge":
+            new_node = copy.deepcopy(self.tmp_node)
+            new_node.type = "negedge"
+        elif template == "sens_to_posedge":
+            new_node = copy.deepcopy(self.tmp_node)
+            new_node.type = "posedge"
+        elif template == "sens_to_level":
+            new_node = copy.deepcopy(self.tmp_node)
+            new_node.type = "level"
+        elif template == "sens_to_all":
+            new_node = copy.deepcopy(self.tmp_node)
+            new_node.type = "all"
+        elif template == "nonblocking_to_blocking":
+            new_node = vast.BlockingSubstitution(copy.deepcopy(self.tmp_node.left), copy.deepcopy(self.tmp_node.right), copy.deepcopy(self.tmp_node.ldelay), copy.deepcopy(self.tmp_node.rdelay), copy.deepcopy(self.tmp_node.lineno))
+        elif template == "blocking_to_nonblocking":
+            new_node = vast.NonblockingSubstitution(copy.deepcopy(self.tmp_node.left), copy.deepcopy(self.tmp_node.right), copy.deepcopy(self.tmp_node.ldelay), copy.deepcopy(self.tmp_node.rdelay), copy.deepcopy(self.tmp_node.lineno))
+            
+        new_node.node_id = node_id
+        print("New:")
+        new_node.show()
+        self.replace_with_node(ast, node_id, new_node) # replace with new template node
+        child_patchlist.append("template(%s,%s)" % (template, node_id))
+        self.numbering.renumber(ast) # renumber nodes
+        self.max_node_id = self.numbering.c # update max_node_id
+        self.numbering.c = -1
+
+        ast.show()
+
+        self.tmp_node = None # reset the temporary variables
+        self.nodes_by_class = []
+
+        return child_patchlist, ast
+
+
     
     def get_crossover_children(self, parent_1, parent_2):
         if len(parent_1) < 1 or len(parent_2) < 1:
@@ -560,6 +689,8 @@ class MutationOp(ASTCodeGenerator):
                 _, ast = self.insert(ast, patch_list, int(operands[0]), int(operands[1]))
             elif operator == "delete":
                 _, ast = self.delete(ast, patch_list, int(operands[0]))
+            elif operator == "template":
+                _, ast = self.apply_template(ast, patch_list, operands[0], int(operands[1]))
             else:
                 print("Invalid operator in patch list: %s" % m)
         return ast
@@ -620,6 +751,8 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
     return copy.deepcopy(winner_patchlist), winner_ast
 
 def calc_candidate_fitness(fileName):
+    if os.path.exists("output.txt"): os.remove("output.txt")
+
     print("Running VCS simulation")
     #os.system("cat %s" % fileName)
 
@@ -724,6 +857,69 @@ def get_output_mismatch():
             uniq_headers.add(tmp)
         
     return res, uniq_headers
+
+def seed_popn(ast, mutation_op, codegen, log, log_file):
+    seeded = []
+    start_time = time.time()
+    while len(seeded) < 999:
+        child, new_ast = mutation_op.apply_template(copy.deepcopy(ast), [])
+        code = codegen.visit(new_ast)
+        print(child)
+        print(code)
+        if str(child) not in GENOME_FITNESS_CACHE:
+            f = open("candidate.v", "w+")
+            f.write(code)
+            f.close()
+
+            os.system("cp candidate.v %s/candidate.v" % PROJ_DIR)
+
+            child_fitness = -1
+            # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
+            try:
+                tmp_ast, directives = parse(["candidate.v"])
+            except ParseError:
+                child_fitness = 0
+            # if the child fitness was not 0, i.e. the parser did not throw syntax errors
+            if child_fitness == -1: 
+                child_fitness, sim_time = calc_candidate_fitness("candidate.v")
+                if os.path.exists("output.txt"): os.remove("output.txt")
+
+            os.remove("candidate.v")
+            os.remove("%s/candidate.v" % PROJ_DIR)
+            
+            GENOME_FITNESS_CACHE[str(child)] = child_fitness
+            print(child_fitness)
+            if log and log_file:
+                log_file.write("\t%s --template_seeding--> %s\t\t%s\n" % ("[]", str(child), "{:.17g}".format(child_fitness)))
+
+            if child_fitness == 1.0:
+                print("\n######## REPAIR FOUND WHILE SEEDING INITIAL POPN ########")
+                print(code)
+                print(child)
+                total_time = time.time() - start_time
+                print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
+                if log and log_file: 
+                    log_file.write("\n\n######## REPAIR FOUND ########\n\t\t%s\n" % str(child))
+                    log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
+                
+                minimized = minimize_patch(mutation_op, ast, child, codegen)
+                print("\n\n")
+                print("Minimized patch: %s" % str(minimized))
+
+                if log and log_file:
+                    log_file.write("Minimized patch: %s\n" % str(minimized))
+                    log_file.close()
+
+                sys.exit(1)
+        else: # not a unique seed, log it anyways
+            if log and log_file:
+                log_file.write("\t%s --template_seeding--> %s\t\t%s\n" % ("[]", str(child), "{:.17g}".format(GENOME_FITNESS_CACHE[str(child)])))
+
+        seeded.append(child)
+        # input("...")
+    print(GENOME_FITNESS_CACHE)
+    print(len(GENOME_FITNESS_CACHE))
+    return seeded
 
 def main():
     start_time = time.time()
@@ -875,14 +1071,15 @@ def main():
     if os.path.exists("output.txt"): os.remove("output.txt")
 
     # create log file
+    log_file = None
     if LOG:
-        time_now = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+        # time_now = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
         benchmark = SRC_FILE.split("/")[-2]
         log_base_dir = "repair_logs/" + benchmark
         if not os.path.exists(log_base_dir):
             os.mkdir(log_base_dir)
             print("dir created: "+ log_base_dir)
-        log_file = open("%s/repair_%s.log" % (log_base_dir, time_now), "w+")
+        log_file = open("%s/repair_%s.log" % (log_base_dir, TIME_NOW), "w+")
         log_file.write("SOURCE FILE:\n\t %s\n" % SRC_FILE)
         log_file.write("TEST BENCH:\n\t %s\n" % TEST_BENCH)
         log_file.write("PROJ_DIR:\n\t %s\n" % PROJ_DIR)
@@ -915,6 +1112,22 @@ def main():
         popn = []
         popn.append([])
         #popn.append(['insert(53,78)'])
+
+        # seed initial population using repair templates
+        popn.extend(seed_popn(copy.deepcopy(ast), mutation_op, codegen, LOG, log_file))
+
+        # print(popn)
+
+        tmp_cnts = {}
+        for i in popn:
+            if str(i) in tmp_cnts: 
+                tmp_cnts[str(i)] += 1
+            else: 
+                tmp_cnts[str(i)] = 1
+        
+        print("Seeded popn:")
+        print(tmp_cnts)
+        print("\n\n")
     
         for i in range(GENS): # for each generation
             print("\nIN GENERATION %d OF ATTEMPT %d" % (i, restart_attempt))
@@ -952,36 +1165,43 @@ def main():
                     # print(mutation_op.wires_brought_in)
                 
                 # exit(1)
+                # input("About to mutate. Press any key.")
 
                 p = random.random()
                 _tmp_children = []
-                if i > 1 and 0 <= p and p < CROSSOVER_RATE and len(_children) <= POPSIZE - 2: # the last condition ensures that crossover does not result in a popn larger than popsize 
-                    # do crossover
-                    parent_2_patchlist, _ = tournament_selection(mutation_op, codegen, ast, popn)
-                    child_1, child_2, child_1_ast, child_2_ast = mutation_op.crossover(ast, parent_patchlist, parent_2_patchlist)
-                    _tmp_children.append((child_1, child_1_ast))
-                    _tmp_children.append((child_2, child_2_ast))
-                    if LOG: log_file.write("\t%s + %s --crossover--> %s + %s\t\t" % (str(parent_patchlist), str(parent_2_patchlist), str(child_1), str(child_2)))
-                    print(child_1, child_2)
-                else:
-                    # do mutation
-                    p = random.random()
-                    if 0 <= p and p <= REPLACEMENT_RATE:
-                        # TODO: optimization -> don't return ast from parent selection; compute it later (crossover doesn't need it)
-                        child, child_ast = mutation_op.replace(parent_ast, parent_patchlist)
-                        if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child)))
-                    elif REPLACEMENT_RATE < p and p <= REPLACEMENT_RATE + DELETION_RATE:
-                        child, child_ast = mutation_op.delete(parent_ast, parent_patchlist)
-                        if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child)))
-                    else:
-                        child, child_ast = mutation_op.insert(parent_ast, parent_patchlist)
-                        if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child)))
+                if p <= 0.2: # apply templates 20% of the time
+                    child, child_ast = mutation_op.apply_template(copy.deepcopy(parent_ast), copy.deepcopy(parent_patchlist))
                     _tmp_children.append((child, child_ast))
-                    #child_ast.show()
-                    # rslt = codegen.visit(child_ast)
-                    # print(rslt)
-                    print()
-                    print(child)
+                    if LOG: log_file.write("\t%s --template--> %s\t\t" % (str(parent_patchlist), str(child)))
+                else:
+                    p = random.random()
+                    if i > 1 and 0 <= p and p < CROSSOVER_RATE and len(_children) <= POPSIZE - 2: # the last condition ensures that crossover does not result in a popn larger than popsize 
+                        # do crossover
+                        parent_2_patchlist, _ = tournament_selection(mutation_op, codegen, ast, popn)
+                        child_1, child_2, child_1_ast, child_2_ast = mutation_op.crossover(ast, parent_patchlist, parent_2_patchlist)
+                        _tmp_children.append((child_1, child_1_ast))
+                        _tmp_children.append((child_2, child_2_ast))
+                        if LOG: log_file.write("\t%s + %s --crossover--> %s + %s\t\t" % (str(parent_patchlist), str(parent_2_patchlist), str(child_1), str(child_2)))
+                        print(child_1, child_2)
+                    else:
+                        # do mutation
+                        p = random.random()
+                        if 0 <= p and p <= REPLACEMENT_RATE:
+                            # TODO: optimization -> don't return ast from parent selection; compute it later (crossover doesn't need it)
+                            child, child_ast = mutation_op.replace(parent_ast, parent_patchlist)
+                            if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child)))
+                        elif REPLACEMENT_RATE < p and p <= REPLACEMENT_RATE + DELETION_RATE:
+                            child, child_ast = mutation_op.delete(parent_ast, parent_patchlist)
+                            if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child)))
+                        else:
+                            child, child_ast = mutation_op.insert(parent_ast, parent_patchlist)
+                            if LOG: log_file.write("\t%s --mutation--> %s\t\t" % (str(parent_patchlist), str(child)))
+                        _tmp_children.append((child, child_ast))
+                        #child_ast.show()
+                        # rslt = codegen.visit(child_ast)
+                        # print(rslt)
+                        print()
+                        print(child)
                 
                 # calculate children fitness
                 for (child_patchlist, child_ast) in _tmp_children:
@@ -1014,7 +1234,7 @@ def main():
                         
                         GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
                         print(child_fitness)
-
+                        
                     if LOG: log_file.write("%s " % "{:.17g}".format(child_fitness))
                     print("\n\n#################\n\n")
 
