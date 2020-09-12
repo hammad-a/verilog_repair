@@ -27,7 +27,9 @@ while(True):
     
     line = line.strip()
 
-    if line.startswith("IN GENERATION"):
+    if "--template_seeding-->" in line:
+        pass
+    elif line.startswith("IN GENERATION"):
         gen = int(line.split(" ")[2])
         raw_data[gen] = []
     elif "-->" in line:
