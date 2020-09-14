@@ -158,6 +158,8 @@ for c in configs:
             exit(1)
 config_file.close()
 
+TB_ID = TEST_BENCH.split("/")[-1].replace(".v","")
+
 if not SRC_FILE:
     print("ERROR: SRC_FILE not specified. Please check the configuration file.")
     exit(1)
@@ -525,24 +527,29 @@ class MutationOp(ASTCodeGenerator):
             print("Node to replace id: %s" % node_id)
 
         self.get_node_to_replace_class(ast, node_id) # get the class of the node associated with the random node id
+        print("Node to replace class: %s" % self.node_class_to_replace)
+        if self.node_class_to_replace == None: # if the node does not exist, return with no-op
+            return patch_list, ast
 
-        if with_id == None:   
-            print(self.node_class_to_replace)
-            print("Node to replace class: %s" % self.node_class_to_replace)
-            if self.node_class_to_replace == None: # if the node does not exist (could have been a part of gen i but not i-1) -> TODO: is this still needed?
-                return patch_list, ast
+        if with_id == None:       
             self.get_replaceable_nodes_by_class(ast, self.node_class_to_replace) # get all valid nodes that have a class that could be substituted for the original node's class
             if len(self.replaceable_nodes) == 0: # if no replaceable nodes exist, exit gracefully
                 print("Replace operation not possible. Returning with no-op.")
                 return patch_list, ast
             print("Replaceable nodes: %s" % str(self.replaceable_nodes))
             with_id = random.choice(self.replaceable_nodes) # get a random node id from the replaceable nodes
-            print("Replacing node id %s with node id %s" % (node_id,with_id))
-
-        # safety guard: this could happen if crossover makes the GA think a node is actually suitable for replacement when in reality it is not....    
-        if self.tmp_node.__class__ not in REPLACE_TARGETS[self.node_class_to_replace]: return patch_list, ast    
+            print("Replacing node id %s with node id %s" % (node_id,with_id))  
         
         self.get_node_from_ast(ast, with_id) # get the node associated with with_id
+
+
+
+        # safety guard: this could happen if crossover makes the GA think a node is actually suitable for replacement when in reality it is not....    
+        if self.tmp_node.__class__ not in REPLACE_TARGETS[self.node_class_to_replace]: 
+            print(self.tmp_node.__class__)
+            print(REPLACE_TARGETS[self.node_class_to_replace])
+            return patch_list, ast  
+
         self.replace_with_node(ast, node_id, self.tmp_node) # perform the replacement
         self.tmp_node = None # reset the temporary variables
         self.replaceable_nodes = []
@@ -704,12 +711,12 @@ def minimize_patch(mutation_op, ast, patch_list, codegen):
         op = patch_list.pop(i)
         # print(patch_list)
         tmp_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), patch_list)
-        f = open("minimized.v", "w+")
+        f = open("minimized_%s.v" % TB_ID, "w+")
         f.write(codegen.visit(tmp_ast))
         f.close()
-        os.system("cp minimized.v %s/minimized.v" % PROJ_DIR)
+        os.system("cp minimized_%s.v %s/minimized_%s.v" % (TB_ID, PROJ_DIR, TB_ID))
 
-        ff, _ = calc_candidate_fitness("minimized.v")
+        ff, _ = calc_candidate_fitness("minimized_%s.v" % TB_ID)
         if ff == 1:
             tmp = minimized.pop(i)
             print("Removed operator: %s" % tmp)
@@ -717,8 +724,8 @@ def minimize_patch(mutation_op, ast, patch_list, codegen):
             patch_list.insert(len(patch_list), op)
             print("Removing operator %s causes a drop in fitness; inserting it back into the patchlist..." % op)
         
-        os.remove("minimized.v")
-        os.remove("%s/minimized.v" % PROJ_DIR)
+        os.remove("minimized_%s.v" % TB_ID)
+        os.remove("%s/minimized_%s.v" % (PROJ_DIR, TB_ID))
         # print(patch_list)
 
     return minimized
@@ -751,7 +758,7 @@ def tournament_selection(mutation_op, codegen, orig_ast, popn):
     return copy.deepcopy(winner_patchlist), winner_ast
 
 def calc_candidate_fitness(fileName):
-    if os.path.exists("output.txt"): os.remove("output.txt")
+    if os.path.exists("output_%s.txt" % TB_ID): os.remove("output_%s.txt" % TB_ID)
 
     print("Running VCS simulation")
     #os.system("cat %s" % fileName)
@@ -765,7 +772,7 @@ def calc_candidate_fitness(fileName):
     
     t_finish = time.time()
     
-    if not os.path.exists("output.txt"): 
+    if not os.path.exists("output_%s.txt" % TB_ID): 
         return 0, t_finish - t_start # if the code does not compile, return 0
         # return math.inf
 
@@ -773,7 +780,7 @@ def calc_candidate_fitness(fileName):
     oracle_lines = f.readlines()
     f.close()
 
-    f = open("output.txt", "r")
+    f = open("output_%s.txt" % TB_ID, "r")
     sim_lines = f.readlines()
     f.close()
 
@@ -819,7 +826,7 @@ def get_output_mismatch():
     oracle = f.readlines()
     f.close()
 
-    f = open("output.txt", "r")
+    f = open("output_%s.txt" % TB_ID, "r")
     sim = f.readlines()
     f.close()
 
@@ -867,25 +874,25 @@ def seed_popn(ast, mutation_op, codegen, log, log_file):
         print(child)
         print(code)
         if str(child) not in GENOME_FITNESS_CACHE:
-            f = open("candidate.v", "w+")
+            f = open("candidate_%s.v" % TB_ID, "w+")
             f.write(code)
             f.close()
 
-            os.system("cp candidate.v %s/candidate.v" % PROJ_DIR)
+            os.system("cp candidate_%s.v %s/candidate_%s.v" % (TB_ID, PROJ_DIR, TB_ID))
 
             child_fitness = -1
             # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
             try:
-                tmp_ast, directives = parse(["candidate.v"])
+                tmp_ast, directives = parse(["candidate_%s.v" % TB_ID])
             except ParseError:
                 child_fitness = 0
             # if the child fitness was not 0, i.e. the parser did not throw syntax errors
             if child_fitness == -1: 
-                child_fitness, sim_time = calc_candidate_fitness("candidate.v")
-                if os.path.exists("output.txt"): os.remove("output.txt")
+                child_fitness, sim_time = calc_candidate_fitness("candidate_%s.v" % TB_ID)
+                if os.path.exists("output_%s.txt" % TB_ID): os.remove("output_%s.txt" % TB_ID)
 
-            os.remove("candidate.v")
-            os.remove("%s/candidate.v" % PROJ_DIR)
+            os.remove("candidate_%s.v" % TB_ID)
+            os.remove("%s/candidate_%s.v" % (PROJ_DIR, TB_ID))
             
             GENOME_FITNESS_CACHE[str(child)] = child_fitness
             print(child_fitness)
@@ -1068,7 +1075,7 @@ def main():
         mismatch_set, uniq_headers = get_output_mismatch()
         print(mismatch_set)
     
-    if os.path.exists("output.txt"): os.remove("output.txt")
+    if os.path.exists("output_%s.txt" % TB_ID): os.remove("output_%s.txt" % TB_ID)
 
     # create log file
     log_file = None
@@ -1209,28 +1216,28 @@ def main():
                         child_fitness = GENOME_FITNESS_CACHE[str(child_patchlist)]
                         print(child_fitness)
                     else:
-                        f = open("candidate.v", "w+")
+                        f = open("candidate_%s.v" % TB_ID, "w+")
                         code = codegen.visit(child_ast)
                         f.write(code)
                         f.close()
 
-                        os.system("cp candidate.v %s/candidate.v" % PROJ_DIR)
+                        os.system("cp candidate_%s.v %s/candidate_%s.v" % (TB_ID, PROJ_DIR, TB_ID))
 
                         child_fitness = -1
                         # re-parse the written candidate to check for syntax errors -> zero fitness if the candidate does not compile
                         try:
-                            tmp_ast, directives = parse(["candidate.v"])
+                            tmp_ast, directives = parse(["candidate_%s.v" % TB_ID])
                         except ParseError:
                             child_fitness = 0
                             # child_fitness = math.inf
                         # if the child fitness was not 0, i.e. the parser did not throw syntax errors
                         if child_fitness == -1: 
                             
-                            child_fitness, sim_time = calc_candidate_fitness("candidate.v")
-                            if os.path.exists("output.txt"): os.remove("output.txt")
+                            child_fitness, sim_time = calc_candidate_fitness("candidate_%s.v" % TB_ID)
+                            if os.path.exists("output_%s.txt" % TB_ID): os.remove("output_%s.txt" % TB_ID)
 
-                        os.remove("candidate.v")
-                        os.remove("%s/candidate.v" % PROJ_DIR)
+                        os.remove("candidate_%s.v" % TB_ID)
+                        os.remove("%s/candidate_%s.v" % (PROJ_DIR, TB_ID))
                         
                         GENOME_FITNESS_CACHE[str(child_patchlist)] = child_fitness
                         print(child_fitness)
