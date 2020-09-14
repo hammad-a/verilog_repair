@@ -53,8 +53,12 @@ def resize_sim(oracle, sim):
     oracle_len = len(oracle)
     sim_len = len(sim)
     num_bits = len(oracle[0].split(",")) - 1
-    clk_len = float(oracle[2].split(",")[0]) - float(oracle[1].split(",")[0])
-    last_clk = eval(oracle[oracle_len-1].split(",")[0])
+    if len(oracle) > 2:
+        clk_len = float(oracle[2].split(",")[0]) - float(oracle[1].split(",")[0])
+        last_clk = eval(oracle[oracle_len-1].split(",")[0])
+    else:
+        clk_len = 100 # arbirtray clk_len, doesn't matter anyways
+        last_clk = 0
     
     if oracle_len > sim_len:
         for i in range(oracle_len-sim_len):
