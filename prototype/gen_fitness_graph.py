@@ -81,12 +81,13 @@ plt.plot(gens, maxes, 'r')
 plt.show()
 plt.clf()
 
-plt.ylabel('Normalized Fitness')
-plt.xlabel('Generation #')
-plt.xticks(range(0,len(gens)))
-plt.title('Min Fitness')
-plt.plot(gens, mins, 'r') 
-plt.show()
-plt.clf()
+# Min is always 0 --> no need to generate this graph
+# plt.ylabel('Normalized Fitness')
+# plt.xlabel('Generation #')
+# plt.xticks(range(0,len(gens)))
+# plt.title('Min Fitness')
+# plt.plot(gens, mins, 'r') 
+# plt.show()
+# plt.clf()
 
 

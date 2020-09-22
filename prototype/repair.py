@@ -420,7 +420,7 @@ class MutationOp(ASTCodeGenerator):
                     self.add_node_and_children_to_fault_loc(ast, mismatch_set, uniq_headers, parent)
                 elif ast.left.var.__class__.__name__ == "LConcat": # l-concat / multiple assignments
                     for v in ast.left.var.list: 
-                        if v.name in mismatch_set:
+                        if v.__class__.__name__ == "Identifier" and v.name in mismatch_set:
                             if not v.name in self.wires_brought_in: self.wires_brought_in[v.name] = set()
                             include_all_subnodes = True
                             parent = v
@@ -797,6 +797,8 @@ def calc_candidate_fitness(fileName):
         if normalized_ff < 0: normalized_ff = 0
         print("FITNESS = %f" % normalized_ff)
 
+        # if os.path.exists("output_%s.txt" % TB_ID): os.remove("output_%s.txt" % TB_ID) # Do we need to do this here? Does it make a difference?
+
         return normalized_ff, t_finish - t_start
         # return fitness_v2.calculate_badness(oracle_lines, sim_lines, weights, weighting)
     elif FITNESS_MODE == "testcases":
@@ -974,6 +976,8 @@ def main():
             if val.lower() == "true": CODE_FROM_PATCHLIST = True
             elif val.lower() == "false": CODE_FROM_PATCHLIST = False
             print("Using CODE_FROM_PATCHLIST = %s" % CODE_FROM_PATCHLIST)
+        else:
+            print("Invalid command line argument: %s. Aborting." % cmd)
 
     codegen = ASTCodeGenerator()
     # parse the files (in filelist) to ASTs (PyVerilog ast)
@@ -1057,6 +1061,7 @@ def main():
         os.system("cp patchlist_code.v %s/patchlist_code.v" % PROJ_DIR)
         code_fitness, sim_time = calc_candidate_fitness("patchlist_code.v")
         print(code_fitness)
+        print(gencode)
         # os.remove("patchlist_code.v")
         os.remove("%s/patchlist_code.v" % PROJ_DIR)
 
