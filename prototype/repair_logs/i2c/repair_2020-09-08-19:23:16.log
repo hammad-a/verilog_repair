@@ -1,0 +1,56 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_slave_model_wadden_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/tst_bench_top_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/oracle.txt
+PARAMETERS:
+	gens=5
+	popsize=10000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(decrement_by_one,579)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,140)']		0.62783139214799999
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,153)']		0
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,549)']		0
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,508)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,218)']		0
+	[] --template_seeding--> ['template(sens_to_level,217)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,195)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_negedge,600)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_all,271)']		0
+	[] --template_seeding--> ['template(increment_by_one,516)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,363)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_posedge,176)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,278)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,116)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(sens_to_negedge,176)']		1
+
+
+######## REPAIR FOUND ########
+		['template(sens_to_negedge,176)']
+TOTAL TIME TAKEN TO FIND REPAIR = 48.589027
+Minimized patch: ['template(sens_to_negedge,176)']

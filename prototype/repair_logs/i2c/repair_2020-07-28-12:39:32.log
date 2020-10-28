@@ -1,0 +1,137 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_master_top_buggy_v2.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/tst_bench_top_t1.v
+INCLUDE_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c
+DEP_FILES:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/wb_master_model.v /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_slave_model.v /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_master_byte_ctrl.v /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_master_bit_ctrl.v
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/oracle.txt
+PARAMETERS:
+	gens=5
+	popsize=20
+	mutation_rate=0
+	crossover_rate=0
+	replacement_rate=0
+	insertion_rate=0
+	deletion_rate=0
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['replace(191,601)']		0.99999844171807439
+	[] --mutation--> ['delete(222)']		0
+	[] --mutation--> ['delete(332)']		0
+	[] --mutation--> ['insert(337,589)']		0.99999844171807439
+	[] --mutation--> ['replace(196,399)']		0.99999844171807439
+	[] --mutation--> ['delete(481)']		0
+	[] --mutation--> ['replace(266,476)']		0
+	[] --mutation--> ['replace(382,532)']		0
+	[] --mutation--> ['replace(382,149)']		0.99999844171807439
+	[] --mutation--> ['delete(481)']		0
+	[] --mutation--> ['replace(170,677)']		0.99999551994365377
+	[] --mutation--> ['delete(218)']		0
+	[] --mutation--> ['replace(487,324)']		0
+	[] --mutation--> ['replace(245,200)']		0.99999844171807439
+	[] --mutation--> ['replace(131,296)']		0
+	[] --mutation--> ['delete(204)']		0
+	[] --mutation--> ['insert(262,551)']		0.99999844171807439
+	[] --mutation--> ['delete(240)']		0
+	[] --mutation--> ['replace(219,713)']		0.99999844171807439
+	[] --mutation--> ['delete(286)']		0.99999844171807439
+IN GENERATION 1 OF ATTEMPT 0
+	['delete(286)'] --elitism--> ['delete(286)']		0.999998
+	['replace(191,601)'] --mutation--> ['replace(191,601)', 'replace(218,628)']		0.99999844171807439
+	['replace(191,601)'] + ['replace(191,601)'] --crossover--> ['replace(191,601)'] + ['replace(191,601)', 'replace(191,601)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)'] --mutation--> ['replace(191,601)', 'delete(288)']		0.99999844171807439
+	['insert(337,589)'] --mutation--> ['insert(337,589)', 'insert(264,596)']		0.99999844171807439
+	['replace(191,601)'] + ['insert(337,589)'] --crossover--> [] + ['insert(337,589)']		0.99999844171807439
+0.99999844171807439
+	['insert(337,589)'] + ['replace(196,399)'] --crossover--> [] + ['replace(196,399)']		0.99999844171807439
+0.99999844171807439
+	['replace(382,149)'] + ['replace(191,601)'] --crossover--> ['replace(191,601)'] + ['replace(191,601)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)'] + ['replace(196,399)'] --crossover--> ['replace(196,399)'] + ['replace(196,399)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)'] + ['replace(191,601)'] --crossover--> ['replace(191,601)', 'replace(191,601)'] + ['replace(191,601)', 'replace(191,601)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)'] --mutation--> ['replace(191,601)', 'insert(257,558)']		0.99999844171807439
+	['replace(191,601)'] + ['insert(337,589)'] --crossover--> [] + ['insert(337,589)']		0.99999844171807439
+0.99999844171807439
+	['insert(262,551)'] --mutation--> ['insert(262,551)', 'replace(184,241)']		0.99999844171807439
+IN GENERATION 2 OF ATTEMPT 0
+	['insert(262,551)', 'replace(184,241)'] --elitism--> ['insert(262,551)', 'replace(184,241)']		0.999998
+	['delete(286)'] + ['replace(191,601)', 'replace(218,628)'] --crossover--> ['delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)', 'replace(218,628)'] + ['replace(191,601)'] --crossover--> [] + ['replace(191,601)']		0.99999844171807439
+0.99999844171807439
+	['insert(337,589)', 'insert(264,596)'] + ['replace(191,601)', 'replace(218,628)'] --crossover--> ['insert(337,589)', 'insert(264,596)', 'replace(191,601)', 'replace(218,628)'] + ['insert(337,589)', 'insert(264,596)', 'replace(191,601)', 'replace(218,628)']		0
+0
+	['delete(286)'] + ['insert(337,589)', 'insert(264,596)'] --crossover--> ['insert(264,596)'] + ['insert(337,589)', 'insert(264,596)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)', 'delete(288)'] + ['replace(191,601)', 'delete(288)'] --crossover--> [] + ['replace(191,601)', 'delete(288)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)', 'replace(218,628)'] --mutation--> ['replace(191,601)', 'replace(218,628)', 'insert(195,582)']		0.99999844171807439
+	['replace(191,601)', 'replace(218,628)'] + ['replace(191,601)', 'replace(218,628)'] --crossover--> ['replace(191,601)', 'replace(218,628)'] + ['replace(191,601)', 'replace(218,628)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)', 'replace(218,628)'] --mutation--> ['replace(191,601)', 'replace(218,628)', 'replace(269,346)']		0.99999844171807439
+	['replace(191,601)'] + ['replace(191,601)', 'delete(288)'] --crossover--> ['replace(191,601)', 'replace(191,601)', 'delete(288)'] + ['replace(191,601)', 'replace(191,601)', 'delete(288)']		0.99999844171807439
+0.99999844171807439
+	['delete(286)'] --mutation--> ['delete(286)', 'replace(177,228)']		0.9999976236200635
+	['delete(286)'] + ['delete(286)'] --crossover--> ['delete(286)'] + ['delete(286)', 'delete(286)']		0.99999844171807439
+0.99999844171807439
+IN GENERATION 3 OF ATTEMPT 0
+	['delete(286)', 'delete(286)'] --elitism--> ['delete(286)', 'delete(286)']		0.999998
+	['insert(262,551)', 'replace(184,241)'] + [] --crossover--> ['insert(262,551)', 'replace(184,241)'] + []		0.99999844171807439
+0.99999844171807439
+	['delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)'] --crossover--> ['replace(191,601)', 'replace(218,628)', 'delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)', 'replace(218,628)', 'delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)'] --crossover--> ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)']		0.99999844171807439
+0.99999844171807439
+	['delete(286)'] + ['replace(191,601)'] --crossover--> ['delete(286)', 'replace(191,601)'] + ['delete(286)', 'replace(191,601)']		0
+0
+	['replace(191,601)', 'replace(218,628)', 'delete(286)'] --mutation--> ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'replace(236,209)']		0.99999844171807439
+	['replace(191,601)', 'replace(218,628)', 'delete(286)'] + ['insert(264,596)'] --crossover--> ['replace(191,601)', 'replace(218,628)'] + ['insert(264,596)', 'replace(191,601)', 'replace(218,628)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)', 'replace(218,628)', 'delete(286)'] + [] --crossover--> ['replace(191,601)', 'replace(218,628)', 'delete(286)'] + []		0.99999844171807439
+0.99999844171807439
+	['insert(262,551)', 'replace(184,241)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)'] --crossover--> ['delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)']		0.99999844171807439
+0.99999844171807439
+	['insert(262,551)', 'replace(184,241)'] --mutation--> ['insert(262,551)', 'replace(184,241)', 'insert(288,596)']		0.99999844171807439
+	['delete(286)'] --mutation--> ['delete(286)', 'insert(191,551)']		0.99999844171807439
+	['replace(191,601)', 'replace(218,628)', 'delete(286)'] + ['insert(262,551)', 'replace(184,241)'] --crossover--> ['insert(262,551)', 'replace(184,241)'] + ['insert(262,551)', 'replace(184,241)']		0.99999844171807439
+0.99999844171807439
+IN GENERATION 4 OF ATTEMPT 0
+	['insert(262,551)', 'replace(184,241)'] --elitism--> ['insert(262,551)', 'replace(184,241)']		0.999998
+	['delete(286)', 'delete(286)'] --mutation--> ['delete(286)', 'delete(286)', 'delete(209)']		0.99999844171807439
+	['delete(286)', 'delete(286)'] --mutation--> ['delete(286)', 'delete(286)', 'replace(254,254)']		0.99999844171807439
+	['insert(264,596)', 'replace(191,601)', 'replace(218,628)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)'] --crossover--> ['insert(264,596)', 'replace(191,601)', 'replace(218,628)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)', 'insert(264,596)', 'replace(191,601)', 'replace(218,628)']		0.99999844171807439
+0
+	['replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'replace(236,209)'] --crossover--> ['replace(191,601)', 'replace(218,628)', 'delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'replace(236,209)', 'replace(191,601)', 'replace(218,628)', 'delete(286)']		0.99999844171807439
+0
+	[] + ['delete(286)', 'delete(286)'] --crossover--> [] + ['delete(286)', 'delete(286)']		0.99999844171807439
+0.99999844171807439
+	['delete(286)', 'delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)'] --crossover--> ['delete(286)', 'delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)', 'delete(286)']		0.99999844171807439
+0.99999844171807439
+	['replace(191,601)', 'replace(218,628)', 'replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)'] --mutation--> ['replace(191,601)', 'replace(218,628)', 'replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)', 'insert(213,257)']		0.99999750674891952
+	['delete(286)', 'delete(286)'] --mutation--> ['delete(286)', 'delete(286)', 'insert(236,584)']		0.99999844171807439
+	['delete(286)', 'delete(286)'] --mutation--> ['delete(286)', 'delete(286)', 'replace(374,155)']		0
+	['replace(191,601)', 'replace(218,628)', 'delete(286)'] + ['delete(286)', 'delete(286)'] --crossover--> ['replace(191,601)', 'delete(286)', 'delete(286)'] + ['replace(191,601)', 'delete(286)', 'delete(286)']		0.99999844171807439
+0.99999844171807439
+	['delete(286)', 'delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)'] --crossover--> ['delete(286)', 'delete(286)', 'delete(286)'] + ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'delete(286)', 'delete(286)', 'delete(286)']		0.99999844171807439
+0
+	['replace(191,601)', 'replace(218,628)', 'delete(286)', 'replace(236,209)'] --mutation--> ['replace(191,601)', 'replace(218,628)', 'delete(286)', 'replace(236,209)', 'delete(209)']		0.99999844171807439
+	[] --mutation--> ['replace(223,717)']		0
+
+
+
+TOTAL TIME TAKEN = 186.332644
+
+BEST PATCHES:
+	Attempt number 0:
+		(['replace(191,601)', 'replace(218,628)', 'delete(286)', 'replace(236,209)', 'delete(209)'], 0.9999984417180744)

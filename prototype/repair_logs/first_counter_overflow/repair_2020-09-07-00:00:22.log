@@ -1,0 +1,31 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/first_counter_overflow_wadden_buggy2.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter/first_counter_tb_t3.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/run.sh
+ORACLE:
+	 oracle_firstcounteroverflow.txt
+PARAMETERS:
+	gens=5
+	popsize=10000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(nonblocking_to_blocking,46)']		0.91724137931034477
+	[] --template_seeding--> ['template(negate_equality,61)']		0.37931034482758619
+	[] --template_seeding--> []		0.91724137931034477
+	[] --template_seeding--> ['template(increment_by_one,55)']		0
+	[] --template_seeding--> ['template(decrement_by_one,70)']		0.37931034482758619

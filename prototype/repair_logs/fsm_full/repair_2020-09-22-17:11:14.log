@@ -1,0 +1,98 @@
+SEED:
+	 repair_2020-09-22-17:11:14
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_ssscrazy_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/run.sh
+ORACLE:
+	 oracle_fsmfull.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(negate_equality,187)']		0.77500000000000002
+	[] --template_seeding--> ['template(sens_to_level,89)']		0.9375
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.9375
+	[] --template_seeding--> ['template(negate_equality,123)']		0.6875
+	[] --template_seeding--> ['template(increment_by_one,195)']		0.82499999999999996
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.9375
+	[] --template_seeding--> ['template(sens_to_negedge,95)']		0
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> ['template(increment_by_one,285)']		0
+	[] --template_seeding--> ['template(decrement_by_one,119)']		0
+	[] --template_seeding--> ['template(increment_by_one,193)']		0
+	[] --template_seeding--> ['template(decrement_by_one,193)']		0
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> ['template(sens_to_posedge,93)']		0
+	[] --template_seeding--> ['template(negate_equality,205)']		0.92500000000000004
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> ['template(increment_by_one,145)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.9375
+	[] --template_seeding--> ['template(blocking_to_nonblocking,209)']		0.92500000000000004
+	[] --template_seeding--> ['template(sens_to_all,222)']		0.65000000000000002
+	[] --template_seeding--> ['template(blocking_to_nonblocking,173)']		0.92500000000000004
+	[] --template_seeding--> ['template(decrement_by_one,219)']		0.9375
+	[] --template_seeding--> ['template(negate_equality,123)']		0.6875
+	[] --template_seeding--> ['template(decrement_by_one,315)']		0.875
+	[] --template_seeding--> ['template(sens_to_posedge,89)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,242)']		0.9375
+	[] --template_seeding--> ['template(increment_by_one,274)']		0.5714285714285714
+	[] --template_seeding--> ['template(nonblocking_to_blocking,256)']		0.9375
+	[] --template_seeding--> ['template(negate_equality,123)']		0.6875
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> ['template(decrement_by_one,213)']		0.92500000000000004
+	[] --template_seeding--> ['template(blocking_to_nonblocking,155)']		0.9375
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> ['template(increment_by_one,119)']		0
+	[] --template_seeding--> ['template(increment_by_one,223)']		0
+	[] --template_seeding--> ['template(negate_equality,151)']		0.9375
+	[] --template_seeding--> ['template(nonblocking_to_blocking,327)']		0.9375
+	[] --template_seeding--> ['template(sens_to_posedge,89)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,297)']		0.9375
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> ['template(blocking_to_nonblocking,161)']		0.9375
+	[] --template_seeding--> ['template(decrement_by_one,181)']		0
+	[] --template_seeding--> ['template(increment_by_one,114)']		0.66249999999999998
+	[] --template_seeding--> ['template(negate_equality,103)']		0.65000000000000002
+	[] --template_seeding--> ['template(nonblocking_to_blocking,228)']		0.9375
+	[] --template_seeding--> ['template(sens_to_negedge,222)']		0.84999999999999998
+	[] --template_seeding--> ['template(sens_to_negedge,222)']		0.84999999999999998
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> ['template(sens_to_all,89)']		0
+	[] --template_seeding--> ['template(increment_by_one,170)']		0.61250000000000004
+	[] --template_seeding--> ['template(sens_to_all,93)']		0
+	[] --template_seeding--> ['template(increment_by_one,258)']		0
+	[] --template_seeding--> ['template(increment_by_one,188)']		0.77500000000000002
+	[] --template_seeding--> ['template(blocking_to_nonblocking,173)']		0.92500000000000004
+	[] --template_seeding--> ['template(decrement_by_one,139)']		0
+	[] --template_seeding--> []		0.9375
+	[] --template_seeding--> ['template(increment_by_one,111)']		0.9375
+	[] --template_seeding--> ['template(decrement_by_one,260)']		1
+
+
+######## REPAIR FOUND ########
+		['template(decrement_by_one,260)']
+TOTAL TIME TAKEN TO FIND REPAIR = 37.034066
+Minimized patch: ['template(decrement_by_one,260)']

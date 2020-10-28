@@ -1,0 +1,54 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/out_stage_buggy.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/RS_dec_tb_t1.v
+INCLUDE_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder
+DEP_FILES:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/input_syndromes.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/transport_in2out.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/BM_lamda.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/lamda_roots.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/Omega_Phy.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/error_correction.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/RS_dec.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/DP_RAM.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/GF_matrix_ascending_binary.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/GF_matrix_dec.v /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/GF_mult_add_syndromes.v
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/oracle.txt
+PARAMETERS:
+	gens=4
+	popsize=500
+	mutation_rate=0
+	crossover_rate=0
+	replacement_rate=0
+	insertion_rate=0
+	deletion_rate=0
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['delete(83)']		0.0058714845419146717 
+	[] --mutation--> ['insert(98,64)']		0 
+	[] --mutation--> ['delete(103)']		0 
+	[] --mutation--> ['delete(222)']		0.050895217991215484 
+	[] --mutation--> ['insert(90,159)']		0.63556464424911085 
+	[] --mutation--> ['replace(185,134)']		0 
+	[] --mutation--> ['replace(189,128)']		0.0019064267691343568 
+	[] --mutation--> ['delete(148)']		0.63556464424911085 
+	[] --mutation--> ['replace(123,148)']		0.63556464424911085 
+	[] --mutation--> ['insert(103,167)']		0.63556464424911085 
+	[] --mutation--> ['replace(213,209)']		0 
+	[] --mutation--> ['insert(189,232)']		0.63556464424911085 
+	[] --mutation--> ['insert(222,216)']		0.63556464424911085 
+	[] --mutation--> ['insert(237,148)']		0.63556464424911085 
+	[] --mutation--> ['insert(98,118)']		0.63539487354262059 
+	[] --mutation--> ['replace(124,134)']		0.63556464424911085 
+	[] --mutation--> ['replace(145,205)']		0.58676083134204182 
+	[] --mutation--> ['delete(211)']		0 
+	[] --mutation--> ['delete(184)']		0 
+	[] --mutation--> ['insert(138,189)']		0.77501790453722041 
+	[] --mutation--> ['replace(67,128)']		0.63556464424911085 
+	[] --mutation--> ['delete(67)']		0.63556464424911085 
+	[] --mutation--> ['insert(167,216)']		0.63556464424911085 
+	[] --mutation--> ['delete(148)']		0.63556464424911085 
+	[] --mutation--> ['insert(148,196)']		0.3284078477937013 
+	[] --mutation--> ['replace(80,146)']		0.63556464424911085 
+	[] --mutation--> ['replace(201,170)']		1 ######## REPAIR FOUND ########
+		['replace(201,170)']
+TOTAL TIME TAKEN TO FIND REPAIR = 131.501690

@@ -1,0 +1,54 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/first_counter_overflow_wadden_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter/first_counter_tb_t3.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/run.sh
+ORACLE:
+	 oracle_firstcounteroverflow.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(sens_to_all,38)']		0.07586206896551724
+	[] --template_seeding--> []		0.14482758620689656
+	[] --template_seeding--> ['template(sens_to_all,38)']		0.07586206896551724
+	[] --template_seeding--> ['template(increment_by_one,67)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,65)']		0.1310344827586207
+	[] --template_seeding--> ['template(sens_to_all,38)']		0.07586206896551724
+	[] --template_seeding--> ['template(negate_equality,75)']		0.020689655172413793
+	[] --template_seeding--> []		0.14482758620689656
+	[] --template_seeding--> ['template(increment_by_one,39)']		0
+	[] --template_seeding--> []		0.14482758620689656
+	[] --template_seeding--> ['template(sens_to_negedge,38)']		0.29655172413793102
+	[] --template_seeding--> ['template(decrement_by_one,76)']		0.17241379310344829
+	[] --template_seeding--> []		0.14482758620689656
+	[] --template_seeding--> ['template(decrement_by_one,76)']		0.17241379310344829
+	[] --template_seeding--> ['template(nonblocking_to_blocking,46)']		0.14482758620689656
+	[] --template_seeding--> ['template(decrement_by_one,76)']		0.17241379310344829
+	[] --template_seeding--> ['template(increment_by_one,39)']		0
+	[] --template_seeding--> []		0.14482758620689656
+	[] --template_seeding--> []		0.14482758620689656
+	[] --template_seeding--> []		0.14482758620689656
+	[] --template_seeding--> []		0.14482758620689656
+	[] --template_seeding--> ['template(sens_to_posedge,38)']		1
+
+
+######## REPAIR FOUND ########
+		['template(sens_to_posedge,38)']
+TOTAL TIME TAKEN TO FIND REPAIR = 9.964231
+Minimized patch: ['template(sens_to_posedge,38)']

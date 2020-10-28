@@ -1,0 +1,71 @@
+SEED:
+	 repair_2020-09-24-15:16:49
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/padder_ssscrazy_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/test_padder_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/run_padder.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/oracle_padder.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(sens_to_level,103)']		0
+	[] --template_seeding--> []		0.91674370691249107
+	[] --template_seeding--> ['template(increment_by_one,106)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,243)']		0
+	[] --template_seeding--> ['template(decrement_by_one,212)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,215)']		0
+	[] --template_seeding--> ['template(decrement_by_one,254)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,210)']		0
+	[] --template_seeding--> ['template(increment_by_one,180)']		0.94619509231622601
+	[] --template_seeding--> ['template(increment_by_one,234)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,243)']		0
+	[] --template_seeding--> []		0.91674370691249107
+	[] --template_seeding--> []		0.91674370691249107
+	[] --template_seeding--> []		0.91674370691249107
+	[] --template_seeding--> []		0.91674370691249107
+	[] --template_seeding--> ['template(increment_by_one,226)']		0
+	[] --template_seeding--> ['template(negate_equality,229)']		0
+	[] --template_seeding--> ['template(negate_equality,229)']		0
+	[] --template_seeding--> ['template(increment_by_one,162)']		0.54658073377532423
+	[] --template_seeding--> ['template(increment_by_one,139)']		0
+	[] --template_seeding--> ['template(increment_by_one,189)']		0.54956549301355029
+	[] --template_seeding--> ['template(sens_to_posedge,128)']		0.91674370691249107
+	[] --template_seeding--> ['template(decrement_by_one,70)']		0
+	[] --template_seeding--> ['template(increment_by_one,160)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,163)']		0.91674370691249107
+	[] --template_seeding--> ['template(increment_by_one,160)']		0
+	[] --template_seeding--> ['template(negate_equality,229)']		0
+	[] --template_seeding--> []		0.91674370691249107
+	[] --template_seeding--> ['template(decrement_by_one,70)']		0
+	[] --template_seeding--> []		0.91674370691249107
+	[] --template_seeding--> ['template(sens_to_negedge,159)']		0
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> ['template(decrement_by_one,104)']		0
+	[] --template_seeding--> ['template(decrement_by_one,88)']		0
+	[] --template_seeding--> ['template(increment_by_one,160)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,170)']		0.91674370691249107
+	[] --template_seeding--> ['template(sens_to_all,177)']		1
+
+
+######## REPAIR FOUND ########
+		['template(sens_to_all,177)']
+TOTAL TIME TAKEN TO FIND REPAIR = 49.810845
+Minimized patch: ['template(sens_to_all,177)']

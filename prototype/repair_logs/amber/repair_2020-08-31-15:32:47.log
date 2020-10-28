@@ -1,0 +1,33 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber/a23_multiply_buggy.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber/tb.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber
+FITNESS_MODE:
+	 testcases
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber/oracle.txt
+PARAMETERS:
+	gens=5
+	popsize=10000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=False
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['replace(221,219)']		1 
+
+######## REPAIR FOUND ########
+		['replace(221,219)']
+TOTAL TIME TAKEN TO FIND REPAIR = 30.573869
+Minimized patch: ['replace(221,219)']

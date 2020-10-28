@@ -1,0 +1,28 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/sdram_controller/sdram_controller_wadden_buggy2.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/sdram_controller/sdram_controller_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/sdram_controller/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/sdram_controller/run.sh
+ORACLE:
+	 oracle_sdramcontroller.txt
+PARAMETERS:
+	gens=5
+	popsize=10000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(negate_ulnot,747)']		0.16167709968417271
+	[] --template_seeding--> ['template(increment_by_one,836)']		0.16125860373647985
