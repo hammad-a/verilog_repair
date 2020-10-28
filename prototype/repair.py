@@ -64,6 +64,7 @@ WRITE_TO_FILE = True
 
 GENOME_FITNESS_CACHE = {}
 
+SEED = "None"
 SRC_FILE = None
 TEST_BENCH = None
 PROJ_DIR = None
@@ -93,7 +94,10 @@ for c in configs:
     if c != "\n" and not c.startswith("#"):
         c = c.strip().split("=")
         param, val = c[0].lower(), c[1]
-        if param == "src_file":
+        if param == "seed":
+            SEED = val
+            print("Using SEED = %s" % SEED)
+        elif param == "src_file":
             SRC_FILE = val
             print("Using SRC_FILE = %s" % SRC_FILE)
         elif param == "test_bench":
@@ -192,6 +196,15 @@ if REPLACEMENT_RATE + INSERTION_RATE + DELETION_RATE != 1.0:
 elif CROSSOVER_RATE + MUTATION_RATE != 1.0:
     print("ERROR: The mutation operator and crossover rates should add up to 1.")
     exit(1)
+
+if SEED == "None":
+    SEED = "repair_%s" % TIME_NOW
+
+SEED_CTR = 0
+def inc_seed():
+    global SEED_CTR
+    SEED_CTR += 1
+    return SEED + str(SEED_CTR)
 
 class MutationOp(ASTCodeGenerator):
 
@@ -472,6 +485,8 @@ class MutationOp(ASTCodeGenerator):
             if len(self.deletable_nodes) == 0: # if no nodes can be deleted, return without attepmting delete
                 print("Delete operation not possible. Returning with no-op.")
                 return patch_list, ast
+            
+            random.seed(inc_seed())
             node_id = random.choice(self.deletable_nodes) # choose a random node_id to delete
             print("Deleting node with id %s\n" % node_id)
 
@@ -496,7 +511,9 @@ class MutationOp(ASTCodeGenerator):
             if len(self.insertable_nodes) == 0 or len(self.stmt_nodes) == 0: # if no insertable nodes exist, exit gracefully
                 print("Insert operation not possible. Returning with no-op.")
                 return patch_list, ast
+            random.seed(inc_seed())
             after_id = random.choice(self.stmt_nodes) # choose a random src and dest
+            random.seed(inc_seed())
             node_id = random.choice(self.insertable_nodes)
             print("Inserting node with id %s after node with id %s\n" % (node_id, after_id))
         self.get_node_from_ast(ast, node_id) # get the node associated with the src node id
@@ -521,8 +538,10 @@ class MutationOp(ASTCodeGenerator):
                 self.max_node_id = self.numbering.c
                 self.numbering.c = -1 # reset the counter for numbering
             if self.fault_loc and len(self.fault_loc_set) > 0:
+                random.seed(inc_seed())
                 node_id = random.choice(tuple(self.fault_loc_set)) # get a fault loc target if fault localization is being used
-            else:            
+            else:      
+                random.seed(inc_seed())      
                 node_id = random.randint(0,self.max_node_id) # get random node id to replace
             print("Node to replace id: %s" % node_id)
 
@@ -537,6 +556,7 @@ class MutationOp(ASTCodeGenerator):
                 print("Replace operation not possible. Returning with no-op.")
                 return patch_list, ast
             print("Replaceable nodes: %s" % str(self.replaceable_nodes))
+            random.seed(inc_seed())
             with_id = random.choice(self.replaceable_nodes) # get a random node id from the replaceable nodes
             print("Replacing node id %s with node id %s" % (node_id,with_id))  
         
@@ -564,14 +584,19 @@ class MutationOp(ASTCodeGenerator):
         return child_patchlist, ast
     
     def weighted_template_choice(self, templates):
+        random.seed(inc_seed())
         p = random.random()
         if p <= 0.3:
+            random.seed(inc_seed())
             return random.choice(["increment_by_one", "decrement_by_one"])
         elif p <= 0.6:
+            random.seed(inc_seed())
             return random.choice(["negate_equality", "negate_inequality", "negate_ulnot"])
         elif p <= 0.8:
+            random.seed(inc_seed())
             return random.choice(["nonblocking_to_blocking", "blocking_to_nonblocking"])
         else:
+            random.seed(inc_seed())
             return random.choice(["sens_to_negedge", "sens_to_posedge", "sens_to_level", "sens_to_all"])
 
     # TODO: make sure ast is a deepcopy
@@ -589,6 +614,7 @@ class MutationOp(ASTCodeGenerator):
             if len(self.nodes_by_class) == 0: 
                 print("\nTemplate %s cannot be applied to AST. Returning with no-op." % template)
                 return patch_list, ast # no-op
+            random.seed(inc_seed())
             node_id = random.choice(self.nodes_by_class)
             # print(node_id)
 
@@ -658,7 +684,9 @@ class MutationOp(ASTCodeGenerator):
         if len(parent_1) < 1 or len(parent_2) < 1:
             return parent_1, parent_2
 
+        random.seed(inc_seed())
         sp_1 = random.randint(0, len(parent_1))
+        random.seed(inc_seed())
         sp_2 = random.randint(0, len(parent_2))
 
         parent_1_half_1 = copy.deepcopy(parent_1)[:sp_1]
@@ -732,9 +760,10 @@ def minimize_patch(mutation_op, ast, patch_list, codegen):
 
 
 def tournament_selection(mutation_op, codegen, orig_ast, popn):
-    # Choose 10 random candidates for parent selection
+    # Choose 5 random candidates for parent selection
     pool = copy.deepcopy(popn)
     while len(pool) > 5:
+        random.seed(inc_seed())
         r = random.choice(pool)
         pool.remove(r)
 
@@ -1092,6 +1121,7 @@ def main():
             os.mkdir(log_base_dir)
             print("dir created: "+ log_base_dir)
         log_file = open("%s/repair_%s.log" % (log_base_dir, TIME_NOW), "w+")
+        log_file.write("SEED:\n\t %s\n" % SEED)
         log_file.write("SOURCE FILE:\n\t %s\n" % SRC_FILE)
         log_file.write("TEST BENCH:\n\t %s\n" % TEST_BENCH)
         log_file.write("PROJ_DIR:\n\t %s\n" % PROJ_DIR)
@@ -1178,7 +1208,8 @@ def main():
                 
                 # exit(1)
                 # input("About to mutate. Press any key.")
-
+                
+                random.seed(inc_seed())
                 p = random.random()
                 _tmp_children = []
                 if p <= 0.2: # apply templates 20% of the time
@@ -1186,6 +1217,7 @@ def main():
                     _tmp_children.append((child, child_ast))
                     if LOG: log_file.write("\t%s --template--> %s\t\t" % (str(parent_patchlist), str(child)))
                 else:
+                    random.seed(inc_seed())
                     p = random.random()
                     if i > 1 and 0 <= p and p < CROSSOVER_RATE and len(_children) <= POPSIZE - 2: # the last condition ensures that crossover does not result in a popn larger than popsize 
                         # do crossover
@@ -1197,6 +1229,7 @@ def main():
                         print(child_1, child_2)
                     else:
                         # do mutation
+                        random.seed(inc_seed())
                         p = random.random()
                         if 0 <= p and p <= REPLACEMENT_RATE:
                             # TODO: optimization -> don't return ast from parent selection; compute it later (crossover doesn't need it)
