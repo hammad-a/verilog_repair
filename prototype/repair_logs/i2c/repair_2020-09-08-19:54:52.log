@@ -1,0 +1,37 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_slave_model_wadden_buggy2.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/tst_bench_top_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/oracle.txt
+PARAMETERS:
+	gens=5
+	popsize=10000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(sens_to_level,568)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,606)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,219)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,178)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		1
+
+
+######## REPAIR FOUND ########
+		['template(negate_equality,132)']
+TOTAL TIME TAKEN TO FIND REPAIR = 13.898732
+Minimized patch: ['template(negate_equality,132)']

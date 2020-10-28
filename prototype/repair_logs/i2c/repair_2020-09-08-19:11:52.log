@@ -1,0 +1,250 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/i2c_slave_model_wadden_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/tst_bench_top_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/i2c/oracle.txt
+PARAMETERS:
+	gens=5
+	popsize=10000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(nonblocking_to_blocking,487)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,362)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,278)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,171)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_all,269)']		0
+	[] --template_seeding--> ['template(negate_ulnot,278)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,436)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,323)']		0.80543994553153908
+	[] --template_seeding--> ['template(increment_by_one,399)']		0
+	[] --template_seeding--> ['template(sens_to_level,217)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,447)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,153)']		0
+	[] --template_seeding--> ['template(decrement_by_one,122)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,228)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,418)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,613)']		0
+	[] --template_seeding--> ['template(sens_to_level,140)']		0.59550261225210777
+	[] --template_seeding--> ['template(nonblocking_to_blocking,456)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_all,271)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,269)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(decrement_by_one,179)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,164)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,363)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,114)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(sens_to_level,140)']		0.59550261225210777
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(negate_ulnot,604)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,312)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,271)']		0.84772284914084495
+	[] --template_seeding--> ['template(sens_to_level,269)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,410)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,554)']		0
+	[] --template_seeding--> ['template(sens_to_level,217)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,140)']		0.59550261225210777
+	[] --template_seeding--> ['template(nonblocking_to_blocking,552)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,520)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,403)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,440)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_all,600)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,104)']		0
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(sens_to_posedge,176)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(negate_ulnot,164)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,295)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,228)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,600)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,203)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,266)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,574)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,554)']		0
+	[] --template_seeding--> ['template(increment_by_one,218)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,151)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,265)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,487)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,156)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,508)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(increment_by_one,512)']		0
+	[] --template_seeding--> ['template(decrement_by_one,137)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_posedge,600)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,512)']		0
+	[] --template_seeding--> ['template(negate_ulnot,604)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,604)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(decrement_by_one,335)']		0
+	[] --template_seeding--> ['template(negate_ulnot,363)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,508)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(increment_by_one,355)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,285)']		0.6346108807689006
+	[] --template_seeding--> ['template(decrement_by_one,265)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,104)']		0
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(nonblocking_to_blocking,116)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,374)']		0
+	[] --template_seeding--> ['template(negate_ulnot,278)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,335)']		0
+	[] --template_seeding--> ['template(negate_ulnot,604)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,613)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_all,176)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,262)']		0
+	[] --template_seeding--> ['template(decrement_by_one,320)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,600)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,492)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_all,228)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,470)']		0
+	[] --template_seeding--> ['template(increment_by_one,484)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,442)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,385)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,166)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,447)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,363)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,604)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,125)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,203)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,571)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,451)']		0
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(increment_by_one,405)']		0
+	[] --template_seeding--> ['template(increment_by_one,169)']		0
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(increment_by_one,166)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,604)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,269)']		0
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,278)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,478)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,275)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,111)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,523)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,584)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,600)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(negate_ulnot,440)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(increment_by_one,297)']		0
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(sens_to_all,176)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,285)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,403)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,177)']		0
+	[] --template_seeding--> ['template(decrement_by_one,484)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,520)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_posedge,114)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_negedge,600)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,633)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,600)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,433)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,399)']		0
+	[] --template_seeding--> ['template(decrement_by_one,275)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,501)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_posedge,217)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,269)']		0
+	[] --template_seeding--> ['template(increment_by_one,621)']		0
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,601)']		0
+	[] --template_seeding--> ['template(sens_to_level,140)']		0.59550261225210777
+	[] --template_seeding--> ['template(negate_ulnot,440)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,431)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,297)']		0
+	[] --template_seeding--> ['template(decrement_by_one,546)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_all,600)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,440)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,271)']		0
+	[] --template_seeding--> ['template(decrement_by_one,470)']		0
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(nonblocking_to_blocking,436)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,467)']		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,151)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,399)']		0
+	[] --template_seeding--> ['template(increment_by_one,290)']		0
+	[] --template_seeding--> ['template(decrement_by_one,601)']		0
+	[] --template_seeding--> ['template(decrement_by_one,290)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(nonblocking_to_blocking,144)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,631)']		0
+	[] --template_seeding--> ['template(negate_equality,132)']		0.50686197109581443
+	[] --template_seeding--> ['template(increment_by_one,484)']		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(increment_by_one,633)']		0.83834847595628825
+	[] --template_seeding--> ['template(decrement_by_one,270)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> []		0.83834847595628825
+	[] --template_seeding--> ['template(blocking_to_nonblocking,102)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,278)']		0.83834847595628825
+	[] --template_seeding--> ['template(negate_ulnot,363)']		0.83834847595628825
+	[] --template_seeding--> ['template(sens_to_level,176)']		1
+
+
+######## REPAIR FOUND ########
+		['template(sens_to_level,176)']
+TOTAL TIME TAKEN TO FIND REPAIR = 255.600929
+Minimized patch: ['template(sens_to_level,176)']

@@ -1,0 +1,34 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_ssscrazy_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/run.sh
+ORACLE:
+	 oracle_fsmfull.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(negate_equality,115)']		0.71250000000000002
+	[] --template_seeding--> ['template(blocking_to_nonblocking,157)']		1
+
+
+######## REPAIR FOUND ########
+		['template(blocking_to_nonblocking,157)']
+TOTAL TIME TAKEN TO FIND REPAIR = 2.562962
+Minimized patch: []

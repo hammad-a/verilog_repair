@@ -1,0 +1,1945 @@
+SEED:
+	 repair_2020-09-28-09:37:57
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/out_stage_ssscrazy_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/RS_dec_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/oracle.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(increment_by_one,79)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,98)']		0.16883195042847282
+	[] --template_seeding--> ['template(decrement_by_one,105)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,153)']		0.0058552033312489959
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,227)']		0.28654867991615307
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,141)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,175)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(increment_by_one,69)']		0
+	[] --template_seeding--> ['template(decrement_by_one,195)']		0.99914419784797659
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,105)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(decrement_by_one,88)']		0.0058552033312489959
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,158)']		0.039601010833540465
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,92)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,97)']		0.0058552033312489959
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,180)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,111)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(increment_by_one,177)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,97)']		0.79340382366623952
+	[] --template_seeding--> ['template(increment_by_one,203)']		0
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> ['template(decrement_by_one,60)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,167)']		0
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,133)']		0
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(decrement_by_one,195)']		0.99914419784797659
+	[] --template_seeding--> ['template(increment_by_one,184)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,186)']		0.60737217583785252
+	[] --template_seeding--> ['template(increment_by_one,133)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> ['template(nonblocking_to_blocking,209)']		0.90608082936978174
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,198)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,198)']		0
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(increment_by_one,69)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,220)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,211)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,175)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,67)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,237)']		0
+	[] --template_seeding--> ['template(decrement_by_one,94)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,126)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,203)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,170)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(decrement_by_one,177)']		0
+	[] --template_seeding--> ['template(increment_by_one,216)']		0
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(decrement_by_one,232)']		0
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(increment_by_one,74)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(increment_by_one,222)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,177)']		0
+	[] --template_seeding--> ['template(increment_by_one,184)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,182)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,172)']		0
+	[] --template_seeding--> ['template(decrement_by_one,114)']		0.0057737999234493071
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,228)']		0.35356708485814647
+	[] --template_seeding--> ['template(nonblocking_to_blocking,77)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,186)']		0.60737217583785252
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(increment_by_one,167)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,167)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(decrement_by_one,184)']		0
+	[] --template_seeding--> ['template(decrement_by_one,177)']		0
+	[] --template_seeding--> ['template(decrement_by_one,232)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,141)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,228)']		0.35356708485814647
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(decrement_by_one,138)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,128)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> ['template(increment_by_one,207)']		0.023666584028989811
+	[] --template_seeding--> ['template(decrement_by_one,177)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,196)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,116)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,184)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,172)']		0
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,138)']		0
+	[] --template_seeding--> ['template(increment_by_one,143)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,196)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> ['template(decrement_by_one,133)']		0
+	[] --template_seeding--> ['template(increment_by_one,65)']		0.0058552033312489959
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,216)']		0
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,126)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,103)']		0.0058552033312489959
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> ['template(nonblocking_to_blocking,136)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,74)']		0
+	[] --template_seeding--> ['template(increment_by_one,94)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,170)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,77)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,126)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,136)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,116)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,138)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,77)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,88)']		0.0058552033312489959
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,83)']		0.80289225684261456
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,128)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,203)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(decrement_by_one,65)']		0.0058533943187289361
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,180)']		0
+	[] --template_seeding--> ['template(decrement_by_one,97)']		0.79340382366623952
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,211)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,177)']		0
+	[] --template_seeding--> ['template(increment_by_one,227)']		0.28654867991615307
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,133)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,195)']		0.99914419784797659
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(increment_by_one,85)']		0
+	[] --template_seeding--> ['template(increment_by_one,60)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,209)']		0.90608082936978174
+	[] --template_seeding--> ['template(nonblocking_to_blocking,83)']		0.80289225684261456
+	[] --template_seeding--> ['template(decrement_by_one,92)']		0
+	[] --template_seeding--> ['template(increment_by_one,186)']		0.60737217583785252
+	[] --template_seeding--> ['template(increment_by_one,172)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(increment_by_one,138)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,182)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,114)']		0.0058552033312489959
+	[] --template_seeding--> ['template(decrement_by_one,216)']		0
+	[] --template_seeding--> ['template(increment_by_one,216)']		0
+	[] --template_seeding--> ['template(decrement_by_one,97)']		0.79340382366623952
+	[] --template_seeding--> ['template(increment_by_one,172)']		0
+	[] --template_seeding--> ['template(increment_by_one,138)']		0
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,118)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,97)']		0.79340382366623952
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(increment_by_one,79)']		0
+	[] --template_seeding--> ['template(decrement_by_one,133)']		0
+	[] --template_seeding--> ['template(decrement_by_one,105)']		0
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,98)']		0.16883195042847282
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,79)']		0
+	[] --template_seeding--> ['template(decrement_by_one,186)']		0.60973014548034754
+	[] --template_seeding--> ['template(decrement_by_one,222)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,186)']		0.60737217583785252
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,85)']		0
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(decrement_by_one,138)']		0
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,97)']		0.0058552033312489959
+	[] --template_seeding--> ['template(increment_by_one,128)']		0
+	[] --template_seeding--> ['template(decrement_by_one,216)']		0
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> ['template(decrement_by_one,211)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,170)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,148)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,182)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,222)']		0
+	[] --template_seeding--> ['template(decrement_by_one,158)']		0.04320837939839877
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,62)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,230)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,170)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,227)']		0.0036994485432405772
+	[] --template_seeding--> ['template(increment_by_one,195)']		0.99914419784797659
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,92)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> ['template(nonblocking_to_blocking,83)']		0.80289225684261456
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,141)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,214)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,180)']		0
+	[] --template_seeding--> ['template(increment_by_one,184)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,79)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,182)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,62)']		0
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,187)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,111)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(decrement_by_one,198)']		0
+	[] --template_seeding--> ['template(increment_by_one,143)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,62)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,196)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,136)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,227)']		0.0036994485432405772
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,189)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,165)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,167)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(nonblocking_to_blocking,103)']		0.0058552033312489959
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,198)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,111)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,85)']		0
+	[] --template_seeding--> ['template(increment_by_one,60)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,172)']		0
+	[] --template_seeding--> ['template(decrement_by_one,111)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,60)']		0
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(decrement_by_one,216)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,100)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(decrement_by_one,203)']		0
+	[] --template_seeding--> ['template(decrement_by_one,94)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(decrement_by_one,228)']		0.35356708485814647
+	[] --template_seeding--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,216)']		0
+	[] --template_seeding--> ['template(decrement_by_one,74)']		0
+	[] --template_seeding--> ['template(increment_by_one,203)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,219)']		0.60313649683226822
+	[] --template_seeding--> ['template(decrement_by_one,167)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,207)']		0.023666584028989811
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,165)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,172)']		0
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,143)']		0
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(decrement_by_one,227)']		0.0036994485432405772
+	[] --template_seeding--> ['template(nonblocking_to_blocking,230)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,103)']		0.0058552033312489959
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,227)']		0.28654867991615307
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(decrement_by_one,100)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,62)']		0
+	[] --template_seeding--> ['template(increment_by_one,65)']		0.0058552033312489959
+	[] --template_seeding--> ['template(decrement_by_one,184)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,146)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> ['template(increment_by_one,69)']		0
+	[] --template_seeding--> ['template(increment_by_one,128)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,148)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,209)']		0.90608082936978174
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,69)']		0
+	[] --template_seeding--> ['template(decrement_by_one,219)']		0.60313649683226822
+	[] --template_seeding--> ['template(increment_by_one,162)']		0.93114343472763283
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,196)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,128)']		0
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,186)']		0.60973014548034754
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,83)']		0.80289225684261456
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,187)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,100)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(decrement_by_one,85)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,141)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,209)']		0.90608082936978174
+	[] --template_seeding--> ['template(decrement_by_one,180)']		0.029054659711158917
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,220)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,60)']		0
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> ['template(nonblocking_to_blocking,67)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,177)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,69)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,148)']		0
+	[] --template_seeding--> ['template(decrement_by_one,92)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(decrement_by_one,167)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,195)']		0.99914419784797659
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,189)']		0
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(increment_by_one,100)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,232)']		0
+	[] --template_seeding--> ['template(increment_by_one,74)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,94)']		0
+	[] --template_seeding--> ['template(decrement_by_one,62)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,186)']		0.60973014548034754
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,209)']		0.90608082936978174
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,186)']		0.60737217583785252
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,94)']		0
+	[] --template_seeding--> ['template(increment_by_one,94)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,69)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,203)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,131)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,216)']		0
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,146)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,100)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,148)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,170)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,77)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,189)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,143)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,195)']		0.99914419784797659
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,207)']		0.023666584028989811
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,85)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(increment_by_one,138)']		0
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(decrement_by_one,97)']		0.79340382366623952
+	[] --template_seeding--> ['template(increment_by_one,186)']		0.60737217583785252
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,222)']		0
+	[] --template_seeding--> ['template(decrement_by_one,153)']		0.0058552033312489959
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,203)']		0
+	[] --template_seeding--> ['template(decrement_by_one,69)']		0
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,77)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,222)']		0
+	[] --template_seeding--> ['template(increment_by_one,153)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,198)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,198)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,126)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(decrement_by_one,74)']		0
+	[] --template_seeding--> ['template(decrement_by_one,158)']		0.04320837939839877
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(increment_by_one,219)']		0.60313649683226822
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,158)']		0.039601010833540465
+	[] --template_seeding--> ['template(decrement_by_one,167)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,201)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,198)']		0
+	[] --template_seeding--> ['template(decrement_by_one,232)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,128)']		0
+	[] --template_seeding--> ['template(increment_by_one,133)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,162)']		0.75210162093178878
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,207)']		0.023666584028989811
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,230)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,121)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,158)']		0.039601010833540465
+	[] --template_seeding--> ['template(increment_by_one,94)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,201)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,90)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,94)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,143)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,182)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,219)']		0.60313649683226822
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,230)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,146)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,121)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,196)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,162)']		0.93114343472763283
+	[] --template_seeding--> ['template(decrement_by_one,111)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> ['template(increment_by_one,128)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,83)']		0.80289225684261456
+	[] --template_seeding--> ['template(decrement_by_one,128)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(increment_by_one,186)']		0.60737217583785252
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(increment_by_one,207)']		0.023666584028989811
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,90)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,105)']		0
+	[] --template_seeding--> ['template(increment_by_one,158)']		0.039601010833540465
+	[] --template_seeding--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,85)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,198)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,128)']		0
+	[] --template_seeding--> ['template(increment_by_one,85)']		0
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,186)']		0.60737217583785252
+	[] --template_seeding--> ['template(decrement_by_one,100)']		0
+	[] --template_seeding--> ['template(decrement_by_one,211)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,77)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,67)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,133)']		0
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,133)']		0
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,77)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,126)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,143)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,184)']		0
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,100)']		0
+	[] --template_seeding--> ['template(decrement_by_one,222)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,237)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(decrement_by_one,138)']		0
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,167)']		0
+	[] --template_seeding--> ['template(decrement_by_one,92)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,219)']		0.60313649683226822
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,133)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,126)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(increment_by_one,100)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,175)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,222)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,203)']		0
+	[] --template_seeding--> ['template(increment_by_one,118)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> ['template(increment_by_one,222)']		0
+	[] --template_seeding--> ['template(increment_by_one,184)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,170)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,133)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,123)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,116)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,98)']		0.16883195042847282
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(decrement_by_one,69)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,177)']		0
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,90)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,60)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,105)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(increment_by_one,74)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,220)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,85)']		0
+	[] --template_seeding--> ['template(decrement_by_one,133)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,187)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(increment_by_one,203)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,196)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,143)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,201)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,177)']		0
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(decrement_by_one,172)']		0
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(decrement_by_one,79)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,85)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,121)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,195)']		0.99914419784797659
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(decrement_by_one,92)']		0
+	[] --template_seeding--> ['template(decrement_by_one,133)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,184)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,177)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,216)']		0
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,67)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,167)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(decrement_by_one,123)']		0
+	[] --template_seeding--> ['template(decrement_by_one,60)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,153)']		0.0058552033312489959
+	[] --template_seeding--> ['template(increment_by_one,216)']		0
+	[] --template_seeding--> ['template(decrement_by_one,148)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,128)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,60)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(increment_by_one,219)']		0.60313649683226822
+	[] --template_seeding--> ['template(sens_to_posedge,110)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,74)']		0
+	[] --template_seeding--> ['template(increment_by_one,88)']		0.0058552033312489959
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,65)']		0.0058533943187289361
+	[] --template_seeding--> ['template(increment_by_one,133)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,114)']		0.0057737999234493071
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_negedge,110)']		0.90908106091153651
+	[] --template_seeding--> ['template(decrement_by_one,133)']		0
+	[] --template_seeding--> ['template(increment_by_one,180)']		0
+	[] --template_seeding--> ['template(increment_by_one,216)']		0
+	[] --template_seeding--> ['template(decrement_by_one,94)']		0
+	[] --template_seeding--> ['template(decrement_by_one,158)']		0.04320837939839877
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,61)']		0
+	[] --template_seeding--> ['template(decrement_by_one,216)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,88)']		0.0058552033312489959
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,219)']		0.60313649683226822
+	[] --template_seeding--> ['template(increment_by_one,138)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(decrement_by_one,195)']		0.99914419784797659
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,187)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(sens_to_level,59)']		0
+	[] --template_seeding--> ['template(increment_by_one,138)']		0
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,162)']		0.93114343472763283
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,237)']		0
+	[] --template_seeding--> ['template(increment_by_one,138)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_all,110)']		0
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(increment_by_one,211)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,175)']		0.99997833412273363
+	[] --template_seeding--> ['template(nonblocking_to_blocking,196)']		0.99997833412273363
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,228)']		0.35356708485814647
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> []		0.99997833412273363
+	[] --template_seeding--> ['template(decrement_by_one,100)']		0
+	[] --template_seeding--> ['template(sens_to_all,59)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,61)']		0.99997592681752523
+	[] --template_seeding--> ['template(increment_by_one,227)']		0.28654867991615307
+	[] --template_seeding--> ['template(decrement_by_one,94)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,61)']		0.99997833412273363
+	[] --template_seeding--> ['template(increment_by_one,203)']		0
+	[] --template_seeding--> ['template(decrement_by_one,158)']		0.04320837939839877
+	[] --template_seeding--> ['template(increment_by_one,65)']		0.0058552033312489959
+	[] --template_seeding--> ['template(decrement_by_one,198)']		0
+	[] --template_seeding--> ['template(increment_by_one,92)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,201)']		0.99997833412273363
+	[] --template_seeding--> ['template(negate_equality,161)']		0.017917078669402186
+	[] --template_seeding--> ['template(nonblocking_to_blocking,103)']		0.0058552033312489959
+	[] --template_seeding--> ['template(sens_to_level,110)']		0.15209287489693607
+	[] --template_seeding--> ['template(increment_by_one,237)']		0
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(increment_by_one,198)']		0
+IN GENERATION 0 OF ATTEMPT 0
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'insert(103,116)']		0.99997833412273363 
+	['template(sens_to_negedge,61)'] --template--> ['template(sens_to_negedge,61)', 'template(sens_to_negedge,110)']		0.90908106091153651 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(139,168)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(141,201)']		0.93257940092645697 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(196,201)']		0.99914419784797659 
+	[] --template--> []		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(220)']		0.08870912897756919 
+	[] --template--> ['template(decrement_by_one,207)']		0.023666584028989811 
+	['template(nonblocking_to_blocking,175)'] --template--> ['template(nonblocking_to_blocking,175)', 'template(increment_by_one,207)']		0.023666584028989811 
+	[] --mutation--> ['replace(99,142)']		0.0027136511276186371 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'insert(67,131)']		0.99997833412273363 
+	['template(sens_to_negedge,61)'] --mutation--> ['template(sens_to_negedge,61)', 'replace(99,231)']		0.0058533943187289361 
+	[] --mutation--> ['delete(141)']		0.94128596614093341 
+	[] --mutation--> ['insert(136,77)']		0.99998074143083948 
+	[] --mutation--> ['replace(135,51)']		0.99997833412273363 
+	[] --mutation--> ['delete(209)']		0.0058552033312489959 
+	['template(sens_to_negedge,110)'] --mutation--> ['template(sens_to_negedge,110)', 'replace(148,111)']		0 
+	[] --template--> ['template(decrement_by_one,97)']		0.79340382366623952 
+	[] --mutation--> ['replace(186,227)']		0.20950602401662494 
+	[] --mutation--> ['replace(104,73)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'delete(131)']		0.99997833412273363 
+	['template(increment_by_one,219)'] --mutation--> ['template(increment_by_one,219)', 'replace(74,92)']		0.0058552033312489959 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'insert(235,152)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(138,207)']		0 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'replace(83,175)']		0.0058552033312489959 
+	[] --mutation--> ['replace(220,83)']		0.08870912897756919 
+	['template(nonblocking_to_blocking,136)'] --mutation--> ['template(nonblocking_to_blocking,136)', 'delete(83)']		0.0058552033312489959 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(235)']		0.30358287408694878 
+	[] --mutation--> ['replace(212,199)']		0.0058552033312489959 
+	[] --mutation--> ['delete(103)']		0.002734835572563289 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'replace(146,220)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,220)'] --mutation--> ['template(nonblocking_to_blocking,220)', 'delete(196)']		0.70172435678422029 
+	['template(nonblocking_to_blocking,182)'] --template--> ['template(nonblocking_to_blocking,182)', 'template(sens_to_negedge,59)']		0.99997833412273363 
+	[] --mutation--> ['replace(183,197)']		0.20950602401662494 
+	[] --mutation--> ['delete(165)']		0 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'insert(165,113)']		0.0058552033312489959 
+	[] --mutation--> ['replace(153,180)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,136)'] --mutation--> ['template(nonblocking_to_blocking,136)', 'insert(196,136)']		0.99997833412273363 
+	[] --mutation--> ['replace(155,120)']		0 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'delete(72)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(182,131)']		0.09816508074451176 
+	[] --template--> ['template(increment_by_one,133)']		0 
+	['template(nonblocking_to_blocking,136)'] --template--> ['template(nonblocking_to_blocking,136)', 'template(decrement_by_one,62)']		0 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'replace(228,203)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'insert(136,170)']		0.99997833412273363 
+	[] --template--> ['template(decrement_by_one,184)']		0 
+	[] --mutation--> ['replace(180,203)']		0.028955124896620794 
+	[] --mutation--> ['insert(182,187)']		0.99997833412273363 
+	[] --mutation--> ['replace(125,174)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'replace(104,142)']		0 
+	[] --template--> ['template(nonblocking_to_blocking,77)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(103,136)']		0.99997833412273363 
+	[] --mutation--> ['replace(136,103)']		0.9999470393810348 
+	[] --mutation--> ['insert(83,157)']		0.99997833412273363 
+	[] --mutation--> ['replace(88,232)']		0.0058552033312489959 
+	[] --mutation--> ['insert(103,230)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(105,189)']		0.015041625171871192 
+	['template(nonblocking_to_blocking,72)'] --template--> ['template(nonblocking_to_blocking,72)', 'template(blocking_to_nonblocking,72)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'delete(182)']		0.20950602401662494 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'delete(230)']		0.0058552033312489959 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'delete(131)']		0.99997833412273363 
+	[] --template--> ['template(increment_by_one,60)']		0 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'replace(223,223)']		0.99997833412273363 
+	[] --template--> ['template(nonblocking_to_blocking,209)']		0.90608082936978174 
+	[] --mutation--> ['insert(230,83)']		0.006809340125632243 
+	['template(nonblocking_to_blocking,131)'] --mutation--> ['template(nonblocking_to_blocking,131)', 'delete(136)']		0.9999470393810348 
+	[] --mutation--> ['replace(153,94)']		0.013932078301083508 
+	[] --mutation--> ['delete(230)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(125,239)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(175)']		0.029054659711158917 
+	['template(nonblocking_to_blocking,146)'] --template--> ['template(nonblocking_to_blocking,146)', 'template(decrement_by_one,228)']		0.35356708485814647 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'insert(182,131)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'insert(175,72)']		0.99997833412273363 
+	[] --mutation--> ['insert(67,214)']		0.91876740416911662 
+	[] --mutation--> ['replace(84,132)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'delete(141)']		0.94128596614093341 
+	[] --mutation--> ['replace(85,222)']		0.0058552033312489959 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(220,131)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(103)']		0.002734835572563289 
+	[] --mutation--> ['replace(103,126)']		0.002734835572563289 
+	[] --mutation--> ['insert(235,141)']		0.99997833412273363 
+	[] --mutation--> ['insert(165,67)']		0.99997833412273363 
+	['template(sens_to_negedge,110)'] --mutation--> ['template(sens_to_negedge,110)', 'replace(147,147)']		0.90908106091153651 
+	[] --mutation--> ['replace(180,237)']		0.028955124896620794 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(176,231)']		0.029054659711158917 
+	[] --mutation--> ['replace(195,60)']		0.99914419784797659 
+	[] --mutation--> ['delete(131)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(196,206)']		0.99914419784797659 
+	[] --mutation--> ['insert(83,131)']		0.62940757667764602 
+	['template(nonblocking_to_blocking,90)'] --template--> ['template(nonblocking_to_blocking,90)', 'template(increment_by_one,237)']		0 
+	[] --mutation--> ['delete(67)']		0.99997833412273363 
+	[] --mutation--> ['insert(98,209)']		0.35356708485814647 
+	['template(nonblocking_to_blocking,126)'] --template--> ['template(nonblocking_to_blocking,126)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,121)'] --mutation--> ['template(nonblocking_to_blocking,121)', 'replace(187,209)']		0.1704869827196574 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'insert(131,121)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'insert(196,170)']		0.99890346587834966 
+	[] --mutation--> ['delete(141)']		0.94128596614093341 
+	['template(decrement_by_one,186)'] --mutation--> ['template(decrement_by_one,186)', 'delete(222)']		0.054310937837588974 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'replace(132,215)']		0.017917078669402186 
+	[] --mutation--> ['delete(220)']		0.08870912897756919 
+	[] --template--> ['template(increment_by_one,219)']		0.60313649683226822 
+	['template(nonblocking_to_blocking,131)'] --template--> ['template(nonblocking_to_blocking,131)', 'template(blocking_to_nonblocking,131)']		0.99997833412273363 
+	[] --mutation--> ['delete(182)']		0.20950602401662494 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(148,228)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)', 'template(nonblocking_to_blocking,170)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'replace(140,174)']		0.99996268654470788 
+	['template(nonblocking_to_blocking,83)'] --mutation--> ['template(nonblocking_to_blocking,83)', 'delete(230)']		0.0058552033312489959 
+	[] --template--> ['template(sens_to_level,59)']		0 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'insert(165,201)']		0.99997833412273363 
+	[] --mutation--> ['replace(146,116)']		0.99997833412273363 
+	[] --mutation--> ['replace(84,78)']		0.0058552033312489959 
+	[] --mutation--> ['replace(124,190)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(141)']		0.94128596614093341 
+	[] --template--> ['template(decrement_by_one,158)']		0.04320837939839877 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'delete(83)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,77)'] --template--> ['template(nonblocking_to_blocking,77)', 'template(decrement_by_one,198)']		0 
+	[] --mutation--> ['insert(146,121)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,126)'] --template--> ['template(nonblocking_to_blocking,126)', 'template(blocking_to_nonblocking,126)']		0.99997833412273363 
+	[] --mutation--> ['replace(220,175)']		0 
+	[] --template--> ['template(sens_to_level,59)']		0 
+	[] --mutation--> ['insert(67,157)']		0.99997833412273363 
+	[] --mutation--> ['delete(131)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(96,218)']		0.0058552033312489959 
+	[] --mutation--> ['replace(144,190)']		0.99625541421245434 
+	['template(nonblocking_to_blocking,116)'] --mutation--> ['template(nonblocking_to_blocking,116)', 'replace(136,235)']		0.9999470393810348 
+	[] --mutation--> ['insert(141,201)']		0.93257940092645697 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'replace(155,181)']		0.99997833412273363 
+	[] --mutation--> ['delete(235)']		0.30358287408694878 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'replace(199,101)']		0.63554665747540429 
+	[] --template--> []		0.99997833412273363 
+	[] --template--> []		0.99997833412273363 
+	[] --mutation--> ['replace(180,219)']		0.033069603353764063 
+	['template(nonblocking_to_blocking,220)'] --mutation--> ['template(nonblocking_to_blocking,220)', 'delete(235)']		0.30358287408694878 
+	[] --mutation--> ['insert(131,214)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(83,83)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(105,123)']		0.002734835572563289 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'insert(136,141)']		0.99997833412273363 
+	[] --mutation--> ['insert(141,201)']		0.93257940092645697 
+	['template(sens_to_level,110)'] --mutation--> ['template(sens_to_level,110)', 'replace(179,179)']		0.15209287489693607 
+	[] --mutation--> ['delete(175)']		0.029054659711158917 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'delete(67)']		0.99997833412273363 
+	[] --mutation--> ['replace(124,204)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,220)'] --template--> ['template(nonblocking_to_blocking,220)', 'template(increment_by_one,65)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'delete(182)']		0.20950602401662494 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'replace(146,182)']		0.99997833412273363 
+	[] --template--> ['template(decrement_by_one,88)']		0.0058552033312489959 
+	[] --mutation--> ['delete(103)']		0.002734835572563289 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'replace(175,170)']		0 
+	[] --template--> ['template(decrement_by_one,237)']		0 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(196,136)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,165)'] --mutation--> ['template(nonblocking_to_blocking,165)', 'replace(230,141)']		0.0058552033312489959 
+	[] --mutation--> ['insert(220,214)']		0.99997833412273363 
+	[] --template--> ['template(sens_to_level,61)']		0 
+	[] --mutation--> ['insert(146,95)']		0.61421016743510315 
+	[] --mutation--> ['replace(125,125)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --template--> ['template(nonblocking_to_blocking,72)', 'template(sens_to_negedge,110)']		0.90908106091153651 
+	[] --template--> ['template(decrement_by_one,184)']		0 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(98,126)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'delete(131)']		0.99997833412273363 
+	[] --mutation--> ['insert(220,83)']		0.02900097801343049 
+	['template(sens_to_level,110)'] --template--> ['template(sens_to_level,110)', 'template(negate_equality,161)']		0.030775915090027819 
+	[] --mutation--> ['delete(196)']		0.70172435678422029 
+	[] --mutation--> ['delete(220)']		0.08870912897756919 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(220)']		0.08870912897756919 
+	[] --mutation--> ['delete(209)']		0.0058552033312489959 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(196,201)']		0.70172435678422029 
+	[] --mutation--> ['replace(96,218)']		0.0058552033312489959 
+	[] --template--> []		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(183,183)']		0.99997833412273363 
+	[] --mutation--> ['replace(106,199)']		0.99997833412273363 
+	['template(increment_by_one,195)'] --template--> ['template(increment_by_one,195)', 'template(nonblocking_to_blocking,98)']		0.16875250887849597 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'replace(176,210)']		0.029054659711158917 
+	['template(sens_to_negedge,110)'] --mutation--> ['template(sens_to_negedge,110)', 'replace(103,98)']		0 
+	[] --mutation--> ['replace(135,163)']		0.95886767512972293 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'delete(146)']		0.99997833412273363 
+	[] --mutation--> ['insert(165,235)']		0.0058552033312489959 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(196)']		0.70172435678422029 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'delete(230)']		0.0058552033312489959 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(182,83)']		0.14453363342188111 
+	['template(sens_to_negedge,61)'] --mutation--> ['template(sens_to_negedge,61)', 'replace(210,188)']		0.042072950523654749 
+	[] --mutation--> ['insert(131,141)']		0.99997833412273363 
+	[] --mutation--> ['insert(187,72)']		0.99997953777026694 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(186,180)']		0.2122431465112822 
+	[] --mutation--> ['replace(185,106)']		0.20950602401662494 
+	['template(nonblocking_to_blocking,230)'] --template--> ['template(nonblocking_to_blocking,230)', 'template(sens_to_all,59)']		0 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(196,126)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'delete(220)']		0.08870912897756919 
+	[] --mutation--> ['insert(196,214)']		0.99997833412273363 
+	[] --mutation--> ['replace(65,148)']		0.0058533943187289361 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'delete(103)']		0.002734835572563289 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(146)']		0.99997833412273363 
+	[] --mutation--> ['delete(141)']		0.94128596614093341 
+	[] --mutation--> ['insert(209,182)']		0.30358287408694878 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'insert(187,235)']		0.97973405590204599 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(150,18)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --template--> ['template(nonblocking_to_blocking,141)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,235)'] --template--> ['template(nonblocking_to_blocking,235)', 'template(nonblocking_to_blocking,214)']		0.99997833412273363 
+	['template(sens_to_negedge,61)'] --mutation--> ['template(sens_to_negedge,61)', 'insert(165,67)']		0.99997592681752523 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'insert(141,64)']		0.30034527148979501 
+	['template(nonblocking_to_blocking,165)'] --mutation--> ['template(nonblocking_to_blocking,165)', 'replace(68,104)']		0.99997833412273363 
+	[] --mutation--> ['delete(67)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'replace(185,106)']		0.20950602401662494 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'insert(235,126)']		0.99997833412273363 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'replace(186,172)']		0.0069384971945698091 
+	[] --mutation--> ['replace(233,124)']		0.0058552033312489959 
+	['template(negate_equality,161)'] --template--> ['template(negate_equality,161)']		0.017917078669402186 
+	['template(increment_by_one,186)'] --mutation--> ['template(increment_by_one,186)', 'delete(67)']		0.60737217583785252 
+	[] --mutation--> ['replace(124,144)']		0.99997833412273363 
+	[] --template--> ['template(sens_to_negedge,59)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --template--> ['template(nonblocking_to_blocking,77)', 'template(increment_by_one,114)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,90)'] --template--> ['template(nonblocking_to_blocking,90)', 'template(sens_to_posedge,61)']		0.99997833412273363 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'delete(67)']		0.99997833412273363 
+	[] --mutation--> ['replace(213,145)']		0.0058552033312489959 
+	[] --mutation--> ['replace(67,196)']		0.99998074143083948 
+	[] --mutation--> ['delete(235)']		0.30358287408694878 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'replace(97,79)']		0.0058552033312489959 
+	[] --template--> ['template(nonblocking_to_blocking,98)']		0.16883195042847282 
+	['template(decrement_by_one,88)'] --mutation--> ['template(decrement_by_one,88)', 'replace(152,91)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,175)'] --template--> ['template(nonblocking_to_blocking,175)', 'template(sens_to_posedge,59)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'replace(146,90)']		0.99997833412273363 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'replace(181,155)']		0.017917078669402186 
+	[] --template--> []		0.99997833412273363 
+	[] --mutation--> ['delete(103)']		0.002734835572563289 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(197,142)']		0.64706744154706175 
+	[] --mutation--> ['insert(72,126)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(121)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(220,90)']		0.08870912897756919 
+	['template(nonblocking_to_blocking,116)'] --mutation--> ['template(nonblocking_to_blocking,116)', 'delete(98)']		0 
+	['template(nonblocking_to_blocking,136)'] --mutation--> ['template(nonblocking_to_blocking,136)', 'replace(239,234)']		0.30358287408694878 
+	[] --template--> []		0.99997833412273363 
+	['template(sens_to_posedge,61)'] --template--> ['template(sens_to_posedge,61)', 'template(nonblocking_to_blocking,141)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'insert(141,67)']		0.99999759266871335 
+	[] --mutation--> ['insert(220,170)']		0.99997833412273363 
+	['template(negate_equality,161)'] --template--> ['template(negate_equality,161)', 'template(decrement_by_one,227)']		0.0037752791136730344 
+	['template(nonblocking_to_blocking,77)'] --template--> ['template(nonblocking_to_blocking,77)', 'template(nonblocking_to_blocking,230)']		0.99997833412273363 
+	[] --mutation--> ['delete(98)']		0 
+	[] --mutation--> ['replace(223,70)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,126)'] --template--> ['template(nonblocking_to_blocking,126)', 'template(increment_by_one,162)']		0.93114343472763283 
+	['template(nonblocking_to_blocking,146)'] --mutation--> ['template(nonblocking_to_blocking,146)', 'replace(105,79)']		0.032717054135288581 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'insert(98,209)']		0.35356708485814647 
+	[] --mutation--> ['delete(230)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'delete(209)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,175)'] --template--> ['template(nonblocking_to_blocking,175)', 'template(increment_by_one,153)']		0 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'delete(83)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,146)'] --template--> ['template(nonblocking_to_blocking,146)']		0.99997833412273363 
+	[] --template--> ['template(sens_to_posedge,110)']		0.99997833412273363 
+	[] --mutation--> ['insert(146,201)']		0.61421016743510315 
+	[] --mutation--> ['delete(182)']		0.20950602401662494 
+	['template(nonblocking_to_blocking,235)'] --template--> ['template(nonblocking_to_blocking,235)', 'template(decrement_by_one,222)']		0 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'delete(146)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'insert(103,141)']		0.99997833412273363 
+	[] --template--> ['template(sens_to_level,61)']		0 
+	['template(nonblocking_to_blocking,131)'] --template--> ['template(nonblocking_to_blocking,131)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(68,197)']		0.99998074143083948 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(123,111)']		0 
+	['template(nonblocking_to_blocking,146)'] --mutation--> ['template(nonblocking_to_blocking,146)', 'delete(98)']		0 
+	[] --mutation--> ['insert(146,67)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(166,210)']		0 
+	[] --mutation--> ['replace(138,216)']		0.9999470393810348 
+	[] --mutation--> ['replace(211,118)']		0.0058552033312489959 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(222,158)']		0.088603206910933388 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'replace(211,100)']		0.0058552033312489959 
+	[] --mutation--> ['insert(136,67)']		0.99998074143083948 
+	[] --template--> ['template(sens_to_level,59)']		0 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'delete(72)']		0.0058552033312489959 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)', 'template(sens_to_negedge,59)']		0.99997833412273363 
+	['template(sens_to_negedge,61)'] --mutation--> ['template(sens_to_negedge,61)', 'replace(155,18)']		0 
+	[] --template--> []		0.99997833412273363 
+	[] --mutation--> ['delete(230)']		0.0058552033312489959 
+	[] --mutation--> ['replace(72,235)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,187)'] --template--> ['template(nonblocking_to_blocking,187)', 'template(nonblocking_to_blocking,67)']		0.99997833412273363 
+	[] --mutation--> ['replace(210,122)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,141)'] --template--> ['template(nonblocking_to_blocking,141)', 'template(blocking_to_nonblocking,141)']		0.99997833412273363 
+	[] --mutation--> ['delete(196)']		0.70172435678422029 
+	[] --mutation--> ['replace(179,179)']		0.99997833412273363 
+	[] --mutation--> ['insert(146,214)']		0.0058552033312489959 
+	['template(increment_by_one,158)'] --mutation--> ['template(increment_by_one,158)', 'insert(167,182)']		0.039601010833540465 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(131)']		0.99997833412273363 
+	[] --mutation--> ['replace(195,216)']		0.85037606249190956 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(220)']		0.08870912897756919 
+	['template(nonblocking_to_blocking,136)'] --mutation--> ['template(nonblocking_to_blocking,136)', 'replace(228,207)']		0.23633439837168896 
+	[] --mutation--> ['replace(124,80)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,146)'] --template--> ['template(nonblocking_to_blocking,146)', 'template(blocking_to_nonblocking,146)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,214)'] --mutation--> ['template(nonblocking_to_blocking,214)', 'replace(167,172)']		0 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'replace(149,190)']		0.95886767512972293 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'delete(146)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(104,188)']		0.002734835572563289 
+	[] --mutation--> ['delete(235)']		0.30358287408694878 
+	['template(nonblocking_to_blocking,220)'] --mutation--> ['template(nonblocking_to_blocking,220)', 'replace(210,210)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,136)'] --mutation--> ['template(nonblocking_to_blocking,136)', 'insert(98,225)']		0.2703876862580416 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(165,72)']		0.056235765291593597 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'insert(67,220)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'insert(209,64)']		0.28654867991615307 
+	[] --template--> ['template(negate_equality,161)']		0.017917078669402186 
+	[] --template--> ['template(decrement_by_one,189)']		0 
+	[] --mutation--> ['insert(230,136)']		0.95886767512972293 
+	['template(sens_to_negedge,59)'] --template--> ['template(sens_to_negedge,59)', 'template(sens_to_posedge,59)']		0.99997833412273363 
+	[] --mutation--> ['delete(136)']		0.9999470393810348 
+	['template(nonblocking_to_blocking,235)'] --mutation--> ['template(nonblocking_to_blocking,235)', 'insert(230,90)']		0.006809340125632243 
+	[] --mutation--> ['replace(71,26)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'delete(131)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(235,90)']		0.61421016743510315 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'replace(84,142)']		0.0027052255086816974 
+	[] --template--> []		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(89,32)']		0.0058552033312489959 
+	[] --mutation--> ['delete(121)']		0.99997833412273363 
+	[] --mutation--> ['replace(122,236)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(196,165)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'insert(146,225)']		0.0058552033312489959 
+	[] --mutation--> ['delete(175)']		0.029054659711158917 
+	['template(sens_to_posedge,110)'] --template--> ['template(sens_to_posedge,110)', 'template(increment_by_one,186)']		0.60737217583785252 
+	[] --mutation--> ['replace(87,87)']		0.99997833412273363 
+	[] --mutation--> ['replace(85,195)']		0.0058552033312489959 
+	[] --mutation--> ['insert(67,83)']		0.99997833412273363 
+	[] --template--> ['template(increment_by_one,143)']		0 
+	['template(nonblocking_to_blocking,230)'] --template--> ['template(nonblocking_to_blocking,230)', 'template(decrement_by_one,118)']		0 
+	[] --template--> ['template(sens_to_posedge,110)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'insert(103,187)']		0.99997833412273363 
+	[] --mutation--> ['replace(209,214)']		0.0058552033312489959 
+	[] --mutation--> ['replace(234,145)']		0.0058552033312489959 
+	[] --mutation--> ['insert(187,170)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,121)'] --mutation--> ['template(nonblocking_to_blocking,121)', 'replace(87,161)']		0.0058552033312489959 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(136)']		0.9999470393810348 
+	[] --mutation--> ['insert(121,209)']		0.99997833412273363 
+	[] --mutation--> ['insert(98,113)']		0.002734835572563289 
+	[] --mutation--> ['insert(196,121)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'insert(83,83)']		0.99997833412273363 
+	[] --mutation--> ['replace(176,84)']		0.029054659711158917 
+	[] --mutation--> ['replace(84,122)']		0.0058552033312489959 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(121,131)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,116)'] --template--> ['template(nonblocking_to_blocking,116)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'insert(175,194)']		0.27379590382517083 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(146)']		0.99997833412273363 
+	[] --mutation--> ['replace(179,226)']		0.029054659711158917 
+	['template(increment_by_one,207)'] --mutation--> ['template(increment_by_one,207)', 'replace(65,221)']		0.0058533943187289361 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'replace(97,189)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,67)'] --template--> ['template(nonblocking_to_blocking,67)', 'template(decrement_by_one,167)']		0 
+	[] --mutation--> ['replace(190,190)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'insert(165,182)']		0.10671708396550551 
+	[] --mutation--> ['insert(165,146)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'insert(220,116)']		0.99997833412273363 
+	[] --template--> ['template(negate_equality,161)']		0.017917078669402186 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(72)']		0.0058552033312489959 
+	['template(sens_to_negedge,110)'] --mutation--> ['template(sens_to_negedge,110)', 'delete(121)']		0.90908106091153651 
+	['template(nonblocking_to_blocking,170)'] --template--> ['template(nonblocking_to_blocking,170)', 'template(nonblocking_to_blocking,214)']		0.99997833412273363 
+	['template(sens_to_negedge,110)'] --mutation--> ['template(sens_to_negedge,110)', 'replace(209,67)']		0.0058714845419146717 
+	[] --mutation--> ['replace(153,143)']		0.0058552033312489959 
+	[] --template--> ['template(nonblocking_to_blocking,170)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'replace(146,146)']		0.99997833412273363 
+	[] --template--> ['template(increment_by_one,133)']		0 
+	['template(nonblocking_to_blocking,165)'] --mutation--> ['template(nonblocking_to_blocking,165)', 'delete(165)']		0 
+	[] --template--> ['template(nonblocking_to_blocking,83)']		0.80289225684261456 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(141,206)']		0.93257940092645697 
+	[] --mutation--> ['delete(136)']		0.9999470393810348 
+	[] --mutation--> ['insert(103,90)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(223,199)']		0.99997833412273363 
+	[] --mutation--> ['delete(131)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,146)'] --mutation--> ['template(nonblocking_to_blocking,146)', 'replace(101,80)']		0.0058552033312489959 
+	[] --template--> ['template(sens_to_negedge,61)']		0.99997592681752523 
+	[] --template--> ['template(nonblocking_to_blocking,146)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'replace(142,166)']		0.94128596614093341 
+	['template(nonblocking_to_blocking,235)'] --mutation--> ['template(nonblocking_to_blocking,235)', 'insert(165,83)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'delete(72)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'delete(83)']		0.0058552033312489959 
+	[] --template--> []		0.99997833412273363 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'insert(136,194)']		0.99914419784797659 
+	[] --mutation--> ['replace(236,183)']		0.29131517291476461 
+	['template(nonblocking_to_blocking,220)'] --mutation--> ['template(nonblocking_to_blocking,220)', 'insert(165,146)']		0.99997833412273363 
+	[] --mutation--> ['insert(209,141)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'replace(232,232)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,214)'] --template--> ['template(nonblocking_to_blocking,214)', 'template(nonblocking_to_blocking,182)']		0.99997833412273363 
+	[] --mutation--> ['replace(176,117)']		0.029054659711158917 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(73,210)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,146)'] --template--> ['template(nonblocking_to_blocking,146)', 'template(nonblocking_to_blocking,116)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(198,92)']		0.98472555652717653 
+	['template(increment_by_one,114)'] --mutation--> ['template(increment_by_one,114)', 'replace(88,239)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,235)'] --mutation--> ['template(nonblocking_to_blocking,235)', 'insert(187,67)']		0.99997953777026694 
+	[] --template--> []		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'delete(136)']		0.9999470393810348 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(185,70)']		0.20950602401662494 
+	[] --template--> []		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'delete(182)']		0.20950602401662494 
+	['template(sens_to_negedge,110)'] --mutation--> ['template(sens_to_negedge,110)', 'delete(72)']		0.0058714845419146717 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'insert(146,182)']		0.017917078669402186 
+	[] --mutation--> ['insert(146,113)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,182)'] --template--> ['template(nonblocking_to_blocking,182)', 'template(decrement_by_one,105)']		0 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'replace(83,121)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(68,176)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,182)'] --template--> ['template(nonblocking_to_blocking,182)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --template--> ['template(sens_to_posedge,110)']		0.99997833412273363 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'insert(67,83)']		0.99997833412273363 
+	[] --mutation--> ['insert(165,90)']		0.0058552033312489959 
+	[] --mutation--> ['insert(98,182)']		0.0083436387293401946 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(195,172)']		0.99914419784797659 
+	['template(nonblocking_to_blocking,83)'] --mutation--> ['template(nonblocking_to_blocking,83)', 'insert(136,141)']		0.80289225684261456 
+	['template(increment_by_one,227)'] --template--> ['template(increment_by_one,227)', 'template(increment_by_one,234)']		0 
+	['template(decrement_by_one,186)'] --template--> ['template(decrement_by_one,186)', 'template(decrement_by_one,133)']		0 
+	[] --template--> []		0.99997833412273363 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'delete(209)']		0.0058552033312489959 
+	[] --template--> []		0.99997833412273363 
+	[] --mutation--> ['delete(121)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'insert(131,95)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,146)'] --mutation--> ['template(nonblocking_to_blocking,146)', 'replace(131,187)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'delete(121)']		0.99997833412273363 
+	[] --mutation--> ['replace(177,100)']		0 
+	['template(nonblocking_to_blocking,146)'] --mutation--> ['template(nonblocking_to_blocking,146)', 'replace(65,180)']		0.0058533943187289361 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(230,209)']		0.0058552033312489959 
+	[] --mutation--> ['insert(141,136)']		0.99997833412273363 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'insert(136,141)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(72,165)']		0.73814861467778925 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'delete(141)']		0.94128596614093341 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'insert(187,206)']		0.6355378620090274 
+	[] --mutation--> ['replace(121,77)']		0.99997833412273363 
+	[] --mutation--> ['insert(220,141)']		0.99997833412273363 
+	[] --mutation--> ['insert(146,235)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'delete(83)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,214)'] --mutation--> ['template(nonblocking_to_blocking,214)', 'delete(146)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'delete(98)']		0 
+	[] --mutation--> ['insert(196,72)']		0.99998074143083948 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'insert(220,225)']		0.99997833412273363 
+	[] --mutation--> ['insert(235,235)']		0.99997833412273363 
+	[] --mutation--> ['replace(104,210)']		0.002734835572563289 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(167,88)']		0.056235765291593597 
+	[] --template--> ['template(sens_to_level,59)']		0 
+	['template(nonblocking_to_blocking,136)'] --mutation--> ['template(nonblocking_to_blocking,136)', 'replace(239,89)']		0.30358287408694878 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'insert(131,113)']		0.0058552033312489959 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(114,207)']		0 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'insert(98,72)']		0.99997833412273363 
+	[] --mutation--> ['insert(182,126)']		0.99997833412273363 
+	['template(sens_to_level,110)'] --mutation--> ['template(sens_to_level,110)', 'insert(220,90)']		0.032275957704974864 
+	[] --mutation--> ['replace(74,143)']		0.0058696755097975371 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'insert(67,83)']		0.99997833412273363 
+	[] --mutation--> ['insert(196,165)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'insert(146,206)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'replace(181,200)']		0.029054659711158917 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'delete(182)']		0.20950602401662494 
+	[] --mutation--> ['replace(237,232)']		0.0058552033312489959 
+	[] --mutation--> ['insert(220,187)']		0.029054659711158917 
+	[] --mutation--> ['replace(97,207)']		0.015542257789033335 
+	[] --mutation--> ['delete(196)']		0.70172435678422029 
+	['template(nonblocking_to_blocking,214)'] --template--> ['template(nonblocking_to_blocking,214)', 'template(negate_equality,161)']		0.017917078669402186 
+	[] --mutation--> ['insert(220,182)']		0.029054659711158917 
+	[] --mutation--> ['replace(209,170)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'delete(67)']		0.99997833412273363 
+	[] --mutation--> ['insert(103,157)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'insert(103,72)']		0.99997833412273363 
+	[] --template--> ['template(nonblocking_to_blocking,136)']		0.99997833412273363 
+	[] --mutation--> ['insert(98,146)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,182)'] --template--> ['template(nonblocking_to_blocking,182)', 'template(negate_equality,161)']		0.017917078669402186 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'replace(148,97)']		0.017917078669402186 
+	['template(nonblocking_to_blocking,146)'] --mutation--> ['template(nonblocking_to_blocking,146)', 'replace(69,180)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(230)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,235)'] --mutation--> ['template(nonblocking_to_blocking,235)', 'delete(220)']		0.08870912897756919 
+	[] --mutation--> ['replace(74,92)']		0.0058552033312489959 
+	[] --mutation--> ['replace(138,222)']		0.9999470393810348 
+	[] --template--> ['template(sens_to_all,110)']		0 
+	[] --mutation--> ['delete(146)']		0.99997833412273363 
+	[] --mutation--> ['insert(196,136)']		0.99997833412273363 
+	[] --mutation--> ['replace(186,177)']		0.2122431465112822 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(165,131)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(131)']		0.99997833412273363 
+	[] --mutation--> ['insert(196,206)']		0.99914419784797659 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(146)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'replace(135,200)']		0.99997833412273363 
+	[] --mutation--> ['insert(165,201)']		0.99997833412273363 
+	['template(sens_to_negedge,61)'] --mutation--> ['template(sens_to_negedge,61)', 'delete(131)']		0.99997592681752523 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'delete(83)']		0.0058552033312489959 
+	[] --template--> ['template(decrement_by_one,198)']		0 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'insert(72,77)']		0.99997833412273363 
+	[] --mutation--> ['delete(131)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,116)'] --template--> ['template(nonblocking_to_blocking,116)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(239,102)']		0.30358287408694878 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)', 'template(increment_by_one,114)']		0.0058552033312489959 
+	[] --mutation--> ['insert(175,126)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'insert(141,136)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'replace(238,139)']		0.99997833412273363 
+	[] --mutation--> ['delete(103)']		0.002734835572563289 
+	[] --mutation--> ['replace(184,97)']		0.094658628924713051 
+	[] --mutation--> ['replace(136,165)']		0.9999470393810348 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(67)']		0.99997833412273363 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'replace(84,142)']		0.0027052255086816974 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(167,74)']		0 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(146,136)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --template--> ['template(nonblocking_to_blocking,141)', 'template(nonblocking_to_blocking,196)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --template--> ['template(nonblocking_to_blocking,141)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'replace(125,130)']		0.99997833412273363 
+	[] --template--> ['template(increment_by_one,60)']		0 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(98,67)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(189,97)']		0.79632751343735764 
+	['template(sens_to_posedge,110)'] --template--> ['template(sens_to_posedge,110)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)']		0.99997833412273363 
+	[] --template--> ['template(decrement_by_one,69)']		0 
+	[] --mutation--> ['replace(149,124)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'replace(198,118)']		0.36140364219135401 
+	['template(nonblocking_to_blocking,90)'] --template--> ['template(nonblocking_to_blocking,90)', 'template(negate_equality,161)']		0.017917078669402186 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'replace(207,153)']		0.0058552033312489959 
+	[] --mutation--> ['replace(143,186)']		0 
+	['template(nonblocking_to_blocking,141)'] --template--> ['template(nonblocking_to_blocking,141)']		0.99997833412273363 
+	[] --mutation--> ['insert(196,220)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'replace(213,21)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --template--> ['template(sens_to_negedge,59)', 'template(decrement_by_one,186)']		0.60973014548034754 
+	['template(nonblocking_to_blocking,116)'] --template--> ['template(nonblocking_to_blocking,116)']		0.99997833412273363 
+	[] --mutation--> ['replace(210,215)']		0.0058552033312489959 
+	[] --template--> []		0.99997833412273363 
+	[] --mutation--> ['replace(207,62)']		0.0058552033312489959 
+	[] --mutation--> ['replace(122,221)']		0.99997833412273363 
+	[] --mutation--> ['insert(141,214)']		0.99370726631395423 
+	[] --mutation--> ['replace(138,167)']		0.9999470393810348 
+	['template(nonblocking_to_blocking,121)'] --mutation--> ['template(nonblocking_to_blocking,121)', 'replace(233,139)']		0.0058552033312489959 
+	[] --mutation--> ['replace(104,221)']		0.002734835572563289 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(98,136)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(138,118)']		0.9999470393810348 
+	[] --template--> []		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --template--> ['template(nonblocking_to_blocking,72)', 'template(increment_by_one,203)']		0 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'replace(132,84)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'delete(220)']		0.08870912897756919 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'replace(88,203)']		0.0058552033312489959 
+	[] --mutation--> ['replace(179,179)']		0.99997833412273363 
+	['template(sens_to_negedge,61)'] --mutation--> ['template(sens_to_negedge,61)', 'insert(235,220)']		0.0058533943187289361 
+	[] --mutation--> ['replace(98,126)']		0.0058552033312489959 
+	[] --mutation--> ['replace(199,93)']		0.63554665747540429 
+	['template(nonblocking_to_blocking,196)'] --template--> ['template(nonblocking_to_blocking,196)', 'template(increment_by_one,228)']		0.35356708485814647 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(146,165)']		0.99997833412273363 
+	[] --mutation--> ['delete(72)']		0.0058552033312489959 
+	[] --mutation--> ['delete(72)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'replace(137,78)']		0.9999470393810348 
+	[] --template--> []		0.99997833412273363 
+	[] --template--> ['template(sens_to_negedge,59)']		0.99997833412273363 
+	[] --mutation--> ['replace(142,176)']		0.94128596614093341 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'delete(165)']		0 
+	[] --mutation--> ['insert(235,131)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(125,89)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(136,235)']		0.9999470393810348 
+	[] --mutation--> ['insert(131,146)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,235)'] --mutation--> ['template(nonblocking_to_blocking,235)', 'insert(103,126)']		0.99997833412273363 
+	[] --mutation--> ['replace(166,221)']		0 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'insert(165,126)']		0.99997833412273363 
+	[] --mutation--> ['replace(98,126)']		0.0058552033312489959 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(188,210)']		0.1704869827196574 
+	[] --mutation--> ['insert(196,121)']		0.99997833412273363 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'insert(209,77)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)']		0.99997833412273363 
+	[] --mutation--> ['replace(228,62)']		0.0058552033312489959 
+	[] --mutation--> ['replace(153,211)']		0 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'delete(121)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'delete(220)']		0.08870912897756919 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'insert(235,136)']		0.017917078669402186 
+	[] --mutation--> ['insert(182,67)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'insert(196,170)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'replace(114,211)']		0 
+	[] --mutation--> ['delete(98)']		0 
+	[] --mutation--> ['delete(175)']		0.029054659711158917 
+	['template(nonblocking_to_blocking,116)'] --mutation--> ['template(nonblocking_to_blocking,116)', 'replace(105,219)']		0.0027444530347489424 
+	[] --template--> []		0.99997833412273363 
+	[] --mutation--> ['delete(83)']		0.0058552033312489959 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)']		0.99997833412273363 
+	[] --mutation--> ['delete(141)']		0.94128596614093341 
+	['template(nonblocking_to_blocking,196)'] --template--> ['template(nonblocking_to_blocking,196)', 'template(sens_to_all,59)']		0 
+	[] --mutation--> ['replace(140,89)']		0.99996268654470788 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(72,131)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'insert(187,170)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'replace(131,196)']		0.99997833412273363 
+	[] --mutation--> ['delete(121)']		0.99997833412273363 
+	[] --mutation--> ['replace(67,165)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,214)'] --mutation--> ['template(nonblocking_to_blocking,214)', 'insert(235,77)']		0.99997833412273363 
+	[] --mutation--> ['insert(136,165)']		0.99997833412273363 
+	[] --mutation--> ['delete(146)']		0.99997833412273363 
+	[] --template--> ['template(increment_by_one,211)']		0 
+	[] --mutation--> ['replace(188,215)']		0.4031785045609681 
+	['template(sens_to_level,110)'] --template--> ['template(sens_to_level,110)']		0.15209287489693607 
+	[] --mutation--> ['insert(72,95)']		0.0058552033312489959 
+	[] --mutation--> ['replace(84,142)']		0.0027052255086816974 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'insert(103,141)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'delete(141)']		0.94128596614093341 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'replace(234,107)']		0.0058552033312489959 
+	[] --mutation--> ['replace(149,204)']		0.99997833412273363 
+	[] --mutation--> ['replace(65,172)']		0.0058533943187289361 
+	['template(nonblocking_to_blocking,77)'] --template--> ['template(nonblocking_to_blocking,77)', 'template(decrement_by_one,189)']		0 
+	[] --mutation--> ['insert(72,136)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,121)'] --mutation--> ['template(nonblocking_to_blocking,121)', 'replace(87,161)']		0.0058552033312489959 
+	['template(decrement_by_one,186)'] --mutation--> ['template(decrement_by_one,186)', 'delete(211)']		0.0058552033312489959 
+	[] --template--> []		0.99997833412273363 
+	[] --mutation--> ['replace(125,163)']		0.99997833412273363 
+	[] --mutation--> ['delete(209)']		0.0058552033312489959 
+	[] --mutation--> ['delete(209)']		0.0058552033312489959 
+	[] --mutation--> ['replace(135,120)']		0.99997833412273363 
+	[] --mutation--> ['insert(121,187)']		0.029054659711158917 
+	[] --mutation--> ['insert(182,141)']		0.99997833412273363 
+	['template(negate_equality,161)'] --template--> ['template(negate_equality,161)', 'template(sens_to_level,61)']		0 
+	[] --mutation--> ['replace(96,218)']		0.0058552033312489959 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(114,203)']		0.5115017232423047 
+	[] --mutation--> ['delete(165)']		0 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(199,119)']		0.99997833412273363 
+	[] --mutation--> ['delete(209)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,136)'] --mutation--> ['template(nonblocking_to_blocking,136)', 'insert(67,201)']		0.53267184200279372 
+	['template(nonblocking_to_blocking,235)'] --template--> ['template(nonblocking_to_blocking,235)', 'template(sens_to_negedge,59)']		0.99997833412273363 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'replace(125,205)']		0.017917078669402186 
+	['template(nonblocking_to_blocking,67)'] --template--> ['template(nonblocking_to_blocking,67)', 'template(sens_to_all,59)']		0 
+	['template(nonblocking_to_blocking,121)'] --mutation--> ['template(nonblocking_to_blocking,121)', 'delete(165)']		0 
+	['template(nonblocking_to_blocking,131)'] --mutation--> ['template(nonblocking_to_blocking,131)', 'insert(83,121)']		0.62940757667764602 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(176,166)']		0.029054659711158917 
+	['template(nonblocking_to_blocking,214)'] --mutation--> ['template(nonblocking_to_blocking,214)', 'replace(136,136)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'delete(187)']		0.79632751343735764 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'replace(184,167)']		0.10693976103741035 
+	['template(sens_to_level,110)'] --mutation--> ['template(sens_to_level,110)', 'replace(134,106)']		0.15209287489693607 
+	[] --template--> []		0.99997833412273363 
+	[] --mutation--> ['delete(136)']		0.9999470393810348 
+	['template(nonblocking_to_blocking,175)'] --template--> ['template(nonblocking_to_blocking,175)', 'template(negate_equality,161)']		0.017917078669402186 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'insert(209,201)']		0.28654867991615307 
+	[] --template--> ['template(sens_to_level,59)']		0 
+	['template(nonblocking_to_blocking,235)'] --template--> ['template(nonblocking_to_blocking,235)']		0.99997833412273363 
+	['template(sens_to_posedge,61)'] --template--> ['template(sens_to_posedge,61)', 'template(increment_by_one,237)']		0 
+	[] --mutation--> ['replace(123,128)']		0.99997833412273363 
+	['template(sens_to_level,110)'] --mutation--> ['template(sens_to_level,110)', 'insert(175,77)']		0.15209287489693607 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'replace(237,60)']		0 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(168,233)']		0 
+	[] --mutation--> ['delete(121)']		0.99997833412273363 
+	[] --mutation--> ['replace(123,228)']		0.99997833412273363 
+	[] --mutation--> ['replace(165,131)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,230)'] --template--> ['template(nonblocking_to_blocking,230)']		0.99997833412273363 
+	[] --mutation--> ['insert(121,67)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --template--> ['template(nonblocking_to_blocking,141)', 'template(blocking_to_nonblocking,141)']		0.99997833412273363 
+	[] --template--> ['template(sens_to_all,61)']		0 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(197,231)']		0.70172435678422029 
+	[] --mutation--> ['replace(84,84)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,230)'] --template--> ['template(nonblocking_to_blocking,230)', 'template(negate_equality,161)']		0.017917078669402186 
+	['template(nonblocking_to_blocking,220)'] --mutation--> ['template(nonblocking_to_blocking,220)', 'delete(196)']		0.70172435678422029 
+	[] --mutation--> ['insert(103,201)']		0.53267184200279372 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'insert(131,194)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(137,99)']		0.9999470393810348 
+	['template(sens_to_negedge,59)'] --template--> ['template(sens_to_negedge,59)']		0.99997833412273363 
+	[] --mutation--> ['insert(230,165)']		0 
+	[] --template--> []		0.99997833412273363 
+	[] --mutation--> ['replace(212,101)']		0.99997833412273363 
+	[] --mutation--> ['insert(131,90)']		0.0058552033312489959 
+	[] --mutation--> ['insert(146,77)']		0.99997833412273363 
+	[] --mutation--> ['insert(209,121)']		0.99997833412273363 
+	[] --mutation--> ['replace(234,145)']		0.0058552033312489959 
+	[] --mutation--> ['replace(153,227)']		0 
+	[] --template--> []		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(210,215)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'insert(220,230)']		0.99997833412273363 
+	[] --mutation--> ['delete(121)']		0.99997833412273363 
+	[] --mutation--> ['insert(182,170)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'replace(85,211)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'insert(146,136)']		0.99997833412273363 
+	[] --mutation--> ['delete(72)']		0.0058552033312489959 
+	[] --template--> ['template(increment_by_one,69)']		0 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'replace(144,119)']		0.99997833412273363 
+	[] --mutation--> ['insert(131,220)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'delete(72)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'replace(133,74)']		0.99997833412273363 
+	[] --mutation--> ['replace(84,188)']		0.16790753966510572 
+	[] --mutation--> ['replace(124,238)']		0.99997833412273363 
+	[] --mutation--> ['delete(146)']		0.99997833412273363 
+	[] --mutation--> ['insert(67,209)']		0.91876740416911662 
+	[] --mutation--> ['replace(165,220)']		0 
+	[] --mutation--> ['insert(98,230)']		0.27313277714889578 
+	[] --template--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363 
+	[] --mutation--> ['replace(121,90)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'replace(196,103)']		0.70172435678422029 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'replace(165,116)']		0 
+	['template(nonblocking_to_blocking,146)'] --mutation--> ['template(nonblocking_to_blocking,146)', 'replace(121,72)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'delete(196)']		0.70172435678422029 
+	['template(nonblocking_to_blocking,126)'] --template--> ['template(nonblocking_to_blocking,126)', 'template(sens_to_posedge,61)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)', 'template(decrement_by_one,237)']		0 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'delete(121)']		0.99997833412273363 
+	[] --template--> ['template(sens_to_negedge,61)']		0.99997592681752523 
+	['template(increment_by_one,219)'] --mutation--> ['template(increment_by_one,219)', 'insert(103,67)']		0.60313649683226822 
+	[] --mutation--> ['delete(146)']		0.99997833412273363 
+	[] --mutation--> ['delete(103)']		0.002734835572563289 
+	[] --mutation--> ['replace(196,98)']		0 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'delete(235)']		0.30358287408694878 
+	[] --template--> ['template(sens_to_posedge,59)']		0.99997833412273363 
+	[] --mutation--> ['replace(123,228)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'replace(176,137)']		0.029054659711158917 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(105,153)']		0 
+	[] --template--> []		0.99997833412273363 
+	['template(increment_by_one,207)'] --mutation--> ['template(increment_by_one,207)', 'replace(222,146)']		0.0058552033312489959 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(195,195)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --template--> ['template(sens_to_negedge,59)']		0.99997833412273363 
+	[] --mutation--> ['replace(175,116)']		0.031916565221305593 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(177,148)']		0.029054659711158917 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(83)']		0.0058552033312489959 
+	[] --mutation--> ['insert(72,90)']		0.0058552033312489959 
+	[] --template--> ['template(increment_by_one,232)']		0 
+	['template(nonblocking_to_blocking,146)'] --template--> ['template(nonblocking_to_blocking,146)', 'template(decrement_by_one,207)']		0.023666584028989811 
+	[] --template--> ['template(nonblocking_to_blocking,131)']		0.99997833412273363 
+	[] --mutation--> ['delete(141)']		0.94128596614093341 
+	['template(nonblocking_to_blocking,235)'] --mutation--> ['template(nonblocking_to_blocking,235)', 'replace(195,211)']		0.71831468326895787 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(209,170)']		0.30358287408694878 
+	['template(nonblocking_to_blocking,146)'] --template--> ['template(nonblocking_to_blocking,146)', 'template(nonblocking_to_blocking,72)']		0.99997833412273363 
+	[] --mutation--> ['insert(220,136)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --template--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(125,200)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(141)']		0.94128596614093341 
+	[] --mutation--> ['delete(141)']		0.94128596614093341 
+	[] --mutation--> ['replace(149,185)']		0.99997833412273363 
+	[] --mutation--> ['replace(69,237)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,116)'] --mutation--> ['template(nonblocking_to_blocking,116)', 'delete(196)']		0.70172435678422029 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'delete(196)']		0.70172435678422029 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'delete(103)']		0.002734835572563289 
+	[] --mutation--> ['delete(182)']		0.20950602401662494 
+	[] --mutation--> ['delete(131)']		0.99997833412273363 
+	[] --mutation--> ['insert(141,113)']		0.20950602401662494 
+	[] --mutation--> ['replace(187,214)']		0.37025600039480044 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(76,150)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'delete(146)']		0.99997833412273363 
+	['template(increment_by_one,162)'] --template--> ['template(increment_by_one,162)']		0.93114343472763283 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'insert(220,160)']		0.029054659711158917 
+	[] --mutation--> ['delete(220)']		0.08870912897756919 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'delete(175)']		0.029054659711158917 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'insert(131,83)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,230)'] --template--> ['template(nonblocking_to_blocking,230)', 'template(sens_to_all,61)']		0 
+	['template(nonblocking_to_blocking,220)'] --mutation--> ['template(nonblocking_to_blocking,220)', 'replace(147,166)']		0.99997833412273363 
+	[] --template--> ['template(sens_to_level,61)']		0 
+	['template(nonblocking_to_blocking,77)'] --template--> ['template(nonblocking_to_blocking,77)', 'template(sens_to_level,61)']		0 
+	['template(nonblocking_to_blocking,121)'] --mutation--> ['template(nonblocking_to_blocking,121)', 'insert(230,201)']		0.006809340125632243 
+	['template(nonblocking_to_blocking,235)'] --mutation--> ['template(nonblocking_to_blocking,235)', 'delete(141)']		0.94128596614093341 
+	[] --mutation--> ['insert(209,90)']		0.28654867991615307 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'replace(141,187)']		0.94127054816250311 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'insert(103,220)']		0.91876740416911662 
+	[] --mutation--> ['insert(165,165)']		0.99997833412273363 
+	[] --mutation--> ['delete(235)']		0.30358287408694878 
+	[] --mutation--> ['insert(220,141)']		0.99997833412273363 
+	[] --mutation--> ['replace(133,158)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,230)'] --template--> ['template(nonblocking_to_blocking,230)', 'template(negate_equality,161)']		0.017917078669402186 
+	[] --mutation--> ['insert(98,152)']		0.002734835572563289 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'replace(122,132)']		0.99997833412273363 
+	[] --template--> ['template(negate_equality,161)']		0.017917078669402186 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'delete(83)']		0.0058552033312489959 
+	[] --mutation--> ['insert(103,230)']		0.99997833412273363 
+	['template(decrement_by_one,180)'] --template--> ['template(decrement_by_one,180)']		0.029054659711158917 
+	[] --mutation--> ['delete(103)']		0.002734835572563289 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'insert(136,131)']		0.99997833412273363 
+	[] --mutation--> ['insert(131,206)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'replace(175,196)']		0.012210527329397767 
+	[] --mutation--> ['delete(136)']		0.9999470393810348 
+	['template(nonblocking_to_blocking,141)'] --template--> ['template(nonblocking_to_blocking,141)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'delete(72)']		0.0058552033312489959 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(74,158)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'replace(239,18)']		0.99997833412273363 
+	[] --mutation--> ['insert(131,146)']		0.99997833412273363 
+	[] --mutation--> ['replace(239,169)']		0.99997833412273363 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'replace(190,75)']		0.79632751343735764 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'insert(146,182)']		0.99997833412273363 
+	[] --mutation--> ['insert(83,170)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'insert(83,72)']		0.0058552033312489959 
+	[] --mutation--> ['replace(76,52)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(104,197)']		0.002734835572563289 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'delete(72)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'insert(187,141)']		0.99996268654470788 
+	['template(nonblocking_to_blocking,165)'] --mutation--> ['template(nonblocking_to_blocking,165)', 'replace(104,78)']		0.032717054135288581 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'delete(187)']		0.79632751343735764 
+	['template(increment_by_one,186)'] --template--> ['template(increment_by_one,186)', 'template(sens_to_posedge,59)']		0.60737217583785252 
+	['template(nonblocking_to_blocking,165)'] --mutation--> ['template(nonblocking_to_blocking,165)', 'delete(235)']		0.30358287408694878 
+	[] --mutation--> ['insert(146,141)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(122,215)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,214)'] --template--> ['template(nonblocking_to_blocking,214)', 'template(blocking_to_nonblocking,214)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,201)'] --mutation--> ['template(nonblocking_to_blocking,201)', 'delete(182)']		0.20950602401662494 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(101,101)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(196,196)']		0.99997833412273363 
+	['template(increment_by_one,186)'] --template--> ['template(increment_by_one,186)', 'template(decrement_by_one,85)']		0 
+	[] --template--> ['template(increment_by_one,143)']		0 
+	[] --mutation--> ['insert(103,187)']		0.99997833412273363 
+	[] --mutation--> ['replace(226,87)']		0.006809340125632243 
+	[] --mutation--> ['delete(136)']		0.9999470393810348 
+	[] --mutation--> ['delete(230)']		0.0058552033312489959 
+	[] --template--> ['template(negate_equality,161)']		0.017917078669402186 
+	['template(nonblocking_to_blocking,182)'] --template--> ['template(nonblocking_to_blocking,182)', 'template(decrement_by_one,114)']		0.0057737999234493071 
+	['template(nonblocking_to_blocking,121)'] --mutation--> ['template(nonblocking_to_blocking,121)', 'replace(213,71)']		0.0058552033312489959 
+	[] --template--> ['template(sens_to_level,110)']		0.15209287489693607 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)', 'template(increment_by_one,118)']		0 
+	[] --mutation--> ['insert(146,206)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,170)'] --template--> ['template(nonblocking_to_blocking,170)', 'template(increment_by_one,198)']		0 
+	[] --mutation--> ['insert(67,121)']		0.99997833412273363 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'insert(141,113)']		0.20950602401662494 
+	['template(nonblocking_to_blocking,196)'] --mutation--> ['template(nonblocking_to_blocking,196)', 'insert(175,152)']		0 
+	[] --mutation--> ['replace(136,220)']		0.9999470393810348 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'delete(103)']		0.002734835572563289 
+	['template(sens_to_posedge,110)'] --mutation--> ['template(sens_to_posedge,110)', 'insert(235,141)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(212,217)']		0.017042017959808593 
+	[] --mutation--> ['replace(167,153)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'insert(175,95)']		0 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'delete(220)']		0.08870912897756919 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(212,93)']		0.0058552033312489959 
+	[] --mutation--> ['replace(182,146)']		0.20950602401662494 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'delete(136)']		0.9999470393810348 
+	['template(nonblocking_to_blocking,83)'] --mutation--> ['template(nonblocking_to_blocking,83)', 'delete(121)']		0.80289225684261456 
+	['template(nonblocking_to_blocking,121)'] --mutation--> ['template(nonblocking_to_blocking,121)', 'insert(141,230)']		0.99600144198449803 
+	[] --mutation--> ['replace(198,65)']		0 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'delete(182)']		0.20950602401662494 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'delete(235)']		0.30358287408694878 
+	['template(increment_by_one,105)'] --mutation--> ['template(increment_by_one,105)', 'insert(184,131)']		0 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'delete(182)']		0.20950602401662494 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'insert(98,77)']		0.99997833412273363 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'replace(239,17)']		0.30358287408694878 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'replace(101,80)']		0.0058552033312489959 
+	[] --mutation--> ['replace(223,80)']		0.99997833412273363 
+	['template(sens_to_negedge,110)'] --mutation--> ['template(sens_to_negedge,110)', 'replace(107,155)']		0 
+	[] --mutation--> ['replace(234,51)']		0.0058552033312489959 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'delete(121)']		0.99997833412273363 
+	['template(sens_to_level,110)'] --mutation--> ['template(sens_to_level,110)', 'replace(146,201)']		0.15209287489693607 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'replace(102,17)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,72)'] --template--> ['template(nonblocking_to_blocking,72)']		0.99997833412273363 
+	[] --mutation--> ['replace(124,149)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'insert(187,220)']		0.99691334077932736 
+	['template(nonblocking_to_blocking,90)'] --mutation--> ['template(nonblocking_to_blocking,90)', 'insert(146,160)']		0.99997833412273363 
+	['template(decrement_by_one,65)'] --template--> ['template(decrement_by_one,65)', 'template(decrement_by_one,81)']		0 
+	[] --mutation--> ['insert(141,64)']		0.30034527148979501 
+	[] --mutation--> ['insert(131,116)']		0.99997833412273363 
+	[] --mutation--> ['insert(220,67)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,116)'] --mutation--> ['template(nonblocking_to_blocking,116)', 'replace(196,146)']		0.70172435678422029 
+	[] --mutation--> ['delete(141)']		0.94128596614093341 
+	['template(sens_to_negedge,61)'] --mutation--> ['template(sens_to_negedge,61)', 'insert(72,160)']		0.1639949446316803 
+	[] --mutation--> ['insert(235,206)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'insert(98,235)']		0.27313277714889578 
+	[] --mutation--> ['replace(165,146)']		0 
+	['template(nonblocking_to_blocking,67)'] --mutation--> ['template(nonblocking_to_blocking,67)', 'insert(131,131)']		0.99997833412273363 
+	[] --mutation--> ['insert(230,170)']		0 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)', 'template(increment_by_one,92)']		0 
+	[] --mutation--> ['delete(220)']		0.08870912897756919 
+	['template(nonblocking_to_blocking,235)'] --mutation--> ['template(nonblocking_to_blocking,235)', 'replace(237,227)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,121)'] --template--> ['template(nonblocking_to_blocking,121)', 'template(blocking_to_nonblocking,121)']		0.99997833412273363 
+	[] --mutation--> ['replace(231,176)']		0.0058552033312489959 
+	[] --mutation--> ['replace(235,98)']		0.031715459322618572 
+	[] --mutation--> ['replace(88,85)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'insert(230,182)']		0 
+	['template(nonblocking_to_blocking,182)'] --template--> ['template(nonblocking_to_blocking,182)', 'template(increment_by_one,177)']		0 
+	['template(nonblocking_to_blocking,116)'] --template--> ['template(nonblocking_to_blocking,116)', 'template(sens_to_negedge,110)']		0.90908106091153651 
+	['template(nonblocking_to_blocking,116)'] --mutation--> ['template(nonblocking_to_blocking,116)', 'replace(209,131)']		0.0058552033312489959 
+	[] --mutation--> ['replace(188,68)']		0.018150588679940228 
+	['template(nonblocking_to_blocking,72)'] --mutation--> ['template(nonblocking_to_blocking,72)', 'replace(72,126)']		0.0058552033312489959 
+	[] --template--> ['template(sens_to_posedge,59)']		0.99997833412273363 
+	[] --mutation--> ['replace(207,100)']		0.031702289199991789 
+	['template(decrement_by_one,228)'] --template--> ['template(decrement_by_one,228)', 'template(negate_equality,161)']		0.012098586963521283 
+	[] --template--> ['template(negate_equality,161)']		0.017917078669402186 
+	[] --mutation--> ['insert(131,230)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,182)'] --mutation--> ['template(nonblocking_to_blocking,182)', 'insert(98,116)']		0.99997833412273363 
+	[] --mutation--> ['delete(98)']		0 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'delete(165)']		0 
+	['template(nonblocking_to_blocking,77)'] --mutation--> ['template(nonblocking_to_blocking,77)', 'replace(178,106)']		0.029054659711158917 
+	[] --mutation--> ['replace(125,239)']		0.99997833412273363 
+	[] --mutation--> ['insert(230,64)']		0.006809340125632243 
+	[] --mutation--> ['replace(223,124)']		0.99997833412273363 
+	[] --mutation--> ['replace(212,93)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,116)'] --template--> ['template(nonblocking_to_blocking,116)', 'template(increment_by_one,227)']		0.28654867991615307 
+	['template(nonblocking_to_blocking,136)'] --mutation--> ['template(nonblocking_to_blocking,136)', 'replace(168,190)']		0 
+	[] --template--> ['template(sens_to_all,110)']		0 
+	['template(nonblocking_to_blocking,116)'] --mutation--> ['template(nonblocking_to_blocking,116)', 'insert(98,116)']		0.99997833412273363 
+	[] --mutation--> ['insert(230,90)']		0.006809340125632243 
+	[] --template--> ['template(nonblocking_to_blocking,175)']		0.99997833412273363 
+	[] --template--> ['template(decrement_by_one,195)']		0.99914419784797659 
+	['template(nonblocking_to_blocking,182)'] --template--> ['template(nonblocking_to_blocking,182)', 'template(decrement_by_one,94)']		0 
+	[] --mutation--> ['replace(169,205)']		0.99997833412273363 
+	['template(negate_equality,161)'] --mutation--> ['template(negate_equality,161)', 'insert(141,187)']		0.0069384971945698091 
+	['template(nonblocking_to_blocking,175)'] --mutation--> ['template(nonblocking_to_blocking,175)', 'replace(88,219)']		0.0058552033312489959 
+	[] --mutation--> ['replace(67,131)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'delete(121)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --template--> ['template(sens_to_posedge,59)', 'template(sens_to_all,59)']		0 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'delete(187)']		0.79632751343735764 
+	['template(sens_to_negedge,61)'] --mutation--> ['template(sens_to_negedge,61)', 'delete(83)']		0.0058533943187289361 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'delete(121)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'delete(98)']		0 
+	[] --mutation--> ['replace(96,96)']		0.99997833412273363 
+	[] --template--> ['template(sens_to_posedge,59)']		0.99997833412273363 
+	['template(increment_by_one,186)'] --mutation--> ['template(increment_by_one,186)', 'delete(83)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,196)'] --template--> ['template(nonblocking_to_blocking,196)', 'template(sens_to_all,59)']		0 
+	[] --mutation--> ['delete(146)']		0.99997833412273363 
+	[] --mutation--> ['insert(165,121)']		0.99997833412273363 
+	[] --mutation--> ['insert(83,116)']		0.62940757667764602 
+	[] --mutation--> ['replace(142,236)']		0.94128596614093341 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'delete(131)']		0.99997833412273363 
+	['template(nonblocking_to_blocking,170)'] --mutation--> ['template(nonblocking_to_blocking,170)', 'replace(200,76)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(163,234)']		0.019095461660725604 
+	['template(sens_to_level,110)'] --mutation--> ['template(sens_to_level,110)', 'replace(143,177)']		0.10594457141704985 
+	['template(nonblocking_to_blocking,230)'] --mutation--> ['template(nonblocking_to_blocking,230)', 'insert(165,83)']		0.0058552033312489959 
+	[] --mutation--> ['delete(146)']		0.99997833412273363 
+	[] --mutation--> ['insert(72,194)']		0.0058552033312489959 
+	[] --mutation--> ['insert(165,194)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --mutation--> ['template(sens_to_negedge,59)', 'replace(122,91)']		0.99997833412273363 
+	['template(sens_to_negedge,59)'] --template--> ['template(sens_to_negedge,59)', 'template(increment_by_one,211)']		0 
+	['template(nonblocking_to_blocking,187)'] --mutation--> ['template(nonblocking_to_blocking,187)', 'replace(187,220)']		0.012210527329397767 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(155,18)']		0 
+	['template(nonblocking_to_blocking,126)'] --mutation--> ['template(nonblocking_to_blocking,126)', 'replace(227,198)']		0.0058552033312489959 
+	[] --mutation--> ['insert(141,72)']		0.99999759266871335 
+	[] --template--> ['template(nonblocking_to_blocking,67)']		0.99997833412273363 
+	[] --mutation--> ['insert(83,220)']		0.99997833412273363 
+	[] --mutation--> ['delete(209)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,214)'] --mutation--> ['template(nonblocking_to_blocking,214)', 'replace(182,121)']		0.023772604328422389 
+	[] --mutation--> ['replace(155,21)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,141)'] --mutation--> ['template(nonblocking_to_blocking,141)', 'delete(141)']		0.94128596614093341 
+	[] --template--> ['template(decrement_by_one,118)']		0 
+	['template(sens_to_negedge,61)'] --mutation--> ['template(sens_to_negedge,61)', 'replace(131,165)']		0.99997592681752523 
+	[] --template--> []		0.99997833412273363 
+	[] --template--> ['template(decrement_by_one,94)']		0 
+	['template(sens_to_posedge,61)'] --mutation--> ['template(sens_to_posedge,61)', 'replace(180,85)']		0.028955124896620794 
+	['template(nonblocking_to_blocking,136)'] --template--> ['template(nonblocking_to_blocking,136)', 'template(nonblocking_to_blocking,90)']		0.99997833412273363 
+	[] --mutation--> ['replace(233,185)']		0.18300023050086092 
+	['template(nonblocking_to_blocking,220)'] --mutation--> ['template(nonblocking_to_blocking,220)', 'insert(165,170)']		0.99997833412273363 
+	[] --mutation--> ['replace(230,72)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,126)'] --template--> ['template(nonblocking_to_blocking,126)']		0.99997833412273363 
+	['template(sens_to_posedge,59)'] --mutation--> ['template(sens_to_posedge,59)', 'replace(162,111)']		0 
+	[] --mutation--> ['delete(67)']		0.99997833412273363 
+	[] --template--> ['template(nonblocking_to_blocking,170)']		0.99997833412273363 
+	[] --mutation--> ['replace(210,91)']		0.0058552033312489959 
+	[] --mutation--> ['replace(165,165)']		0.99997833412273363 
+	[] --mutation--> ['insert(235,77)']		0.99997833412273363 
+	[] --mutation--> ['replace(167,162)']		0 
+	['template(sens_to_negedge,110)'] --mutation--> ['template(sens_to_negedge,110)', 'replace(232,211)']		0.0058714845419146717 
+	[] --template--> ['template(increment_by_one,79)']		0 
+	[] --mutation--> ['insert(182,160)']		0.99997833412273363 
+	[] --mutation--> ['replace(186,211)']		0.20950602401662494 
+	[] --mutation--> ['replace(137,188)']		0.99997833412273363 
+	[] --mutation--> ['delete(72)']		0.0058552033312489959 
+	['template(nonblocking_to_blocking,136)'] --mutation--> ['template(nonblocking_to_blocking,136)', 'replace(71,26)']		0.99997833412273363 
+	[] --mutation--> ['delete(175)']		0.029054659711158917 

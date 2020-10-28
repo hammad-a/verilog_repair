@@ -1,0 +1,201 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/decoder_3_to_8/decoder_3_to_8_buggy_var.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/decoder_3_to_8/decoder_3_to_8_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/decoder_3_to_8/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/decoder_3_to_8/run.sh
+ORACLE:
+	 oracle_decoder3_to_8.txt
+PARAMETERS:
+	gens=5
+	popsize=10000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(108,72)']		0.9642857142857143 
+	[] --mutation--> ['replace(62,89)']		0.6785714285714286 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(49,75)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(66,40)']		0.9285714285714286 
+	[] --mutation--> ['replace(73,73)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(37,37)']		0.9642857142857143 
+	[] --mutation--> ['replace(86,41)']		0.9285714285714286 
+	[] --mutation--> ['replace(37,110)']		0.5161290322580645 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(34,34)']		0.9642857142857143 
+	[] --mutation--> ['replace(76,112)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(45,99)']		0.8928571428571429 
+	[] --mutation--> ['replace(72,81)']		0.8928571428571429 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(86,41)']		0.9285714285714286 
+	[] --mutation--> ['replace(90,98)']		0.6785714285714286 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(78,70)']		0.8928571428571429 
+	[] --mutation--> ['replace(66,48)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(34,34)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(111,59)']		0.9642857142857143 
+	[] --mutation--> ['replace(94,94)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(41,38)']		0.5161290322580645 
+	[] --mutation--> ['replace(55,82)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(47,48)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(116,78)']		0.6071428571428571 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(42,75)']		0.4375 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(75,59)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(97,69)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(80,54)']		0 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(43,43)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(38,48)']		0.46031746031746029 
+	[] --mutation--> ['replace(45,63)']		0.8928571428571429 
+	[] --mutation--> ['replace(41,101)']		0.5161290322580645 
+	[] --mutation--> ['replace(93,104)']		0.9642857142857143 
+	[] --mutation--> ['replace(68,103)']		0.9285714285714286 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(65,36)']		0.9642857142857143 
+	[] --mutation--> ['replace(104,38)']		0.9285714285714286 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(65,92)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(110,58)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(66,42)']		0.9285714285714286 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(52,79)']		0.8928571428571429 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(85,94)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(66,111)']		0.9642857142857143 
+	[] --mutation--> ['replace(40,110)']		0.5161290322580645 
+	[] --mutation--> ['replace(42,41)']		0.60655737704918034 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(59,92)']		0.9285714285714286 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(59,35)']		0.9285714285714286 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(97,87)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(103,104)']		0.9285714285714286 
+	[] --mutation--> ['replace(55,91)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(33,33)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(86,37)']		0.9285714285714286 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(113,37)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(101,112)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(75,59)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(114,70)']		0.8928571428571429 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(91,109)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(73,73)']		0.9642857142857143 
+	[] --mutation--> ['replace(99,107)']		0.8214285714285714 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(87,51)']		0.8928571428571429 
+	[] --mutation--> ['replace(95,104)']		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> []		0.9642857142857143 
+	[] --mutation--> ['replace(83,75)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(84,101)']		0.9285714285714286 
+	[] --mutation--> ['replace(109,109)']		0.9642857142857143 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['delete(32)']		0 
+	[] --mutation--> ['replace(46,55)']		1 
+
+######## REPAIR FOUND ########
+		['replace(46,55)']
+TOTAL TIME TAKEN TO FIND REPAIR = 69.805088
+Minimized patch: ['replace(46,55)']

@@ -1,0 +1,72 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing/tate_pairing_buggy_v2.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing/test_duursma_lee_algo_t1.v
+INCLUDE_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing
+DEP_FILES:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing/f32m.v /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing/f33m.v /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing/f36m.v /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing/f3m.v /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing/f3.v /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing/fun.v
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/pairing/oracle.txt
+PARAMETERS:
+	gens=4
+	popsize=500
+	mutation_rate=0
+	crossover_rate=0
+	replacement_rate=0
+	insertion_rate=0
+	deletion_rate=0
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['replace(416,228)']		0 
+	[] --mutation--> ['insert(750,713)']		0 
+	[] --mutation--> ['insert(399,450)']		0 
+	[] --mutation--> ['delete(256)']		0 
+	[] --mutation--> ['replace(754,64)']		0 
+	[] --mutation--> ['insert(498,440)']		0 
+	[] --mutation--> ['replace(498,415)']		0 
+	[] --mutation--> ['delete(415)']		0 
+	[] --mutation--> ['replace(492,507)']		0 
+	[] --mutation--> ['replace(262,604)']		0 
+	[] --mutation--> ['replace(402,506)']		0 
+	[] --mutation--> ['insert(399,468)']		0 
+	[] --mutation--> ['replace(505,709)']		0 
+	[] --mutation--> ['insert(750,490)']		0 
+	[] --mutation--> ['insert(503,707)']		0 
+	[] --mutation--> ['delete(750)']		0 
+	[] --mutation--> ['insert(729,531)']		0 
+	[] --mutation--> ['insert(399,473)']		0 
+	[] --mutation--> ['insert(503,515)']		0 
+	[] --mutation--> ['delete(399)']		0 
+	[] --mutation--> ['replace(765,286)']		0 
+	[] --mutation--> ['insert(490,531)']		0 
+	[] --mutation--> ['replace(504,400)']		0 
+	[] --mutation--> ['replace(541,739)']		0 
+	[] --mutation--> ['replace(403,239)']		0 
+	[] --mutation--> ['replace(753,518)']		0 
+	[] --mutation--> ['replace(763,750)']		0 
+	[] --mutation--> ['delete(763)']		0 
+	[] --mutation--> ['replace(490,718)']		0.99828372497219531 
+	[] --mutation--> ['insert(399,707)']		0 
+	[] --mutation--> ['replace(780,425)']		0 
+	[] --mutation--> ['replace(779,446)']		0 
+	[] --mutation--> ['replace(747,412)']		0 
+	[] --mutation--> ['insert(778,778)']		0 
+	[] --mutation--> ['replace(496,447)']		0 
+	[] --mutation--> ['delete(256)']		0 
+	[] --mutation--> ['insert(256,718)']		0 
+	[] --mutation--> ['delete(498)']		0 
+	[] --mutation--> ['replace(502,189)']		0 
+	[] --mutation--> ['insert(415,778)']		0 
+	[] --mutation--> ['delete(503)']		0 
+	[] --mutation--> ['replace(501,433)']		0 
+	[] --mutation--> ['replace(782,380)']		0 
+	[] --mutation--> ['replace(428,279)']		0 
+	[] --mutation--> ['insert(763,490)']		1 ######## REPAIR FOUND ########
+		['insert(763,490)']
+TOTAL TIME TAKEN TO FIND REPAIR = 573.493506

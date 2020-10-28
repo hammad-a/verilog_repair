@@ -1,0 +1,98 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_buggy_var.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/run.sh
+ORACLE:
+	 oracle_fsmfull.txt
+PARAMETERS:
+	gens=5
+	popsize=10000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['delete(248)']		0.97499999999999998 
+	[] --mutation--> ['delete(228)']		0 
+	[] --mutation--> ['replace(290,304)']		0.65432098765432101 
+	[] --mutation--> ['replace(186,180)']		0.94999999999999996 
+	[] --mutation--> ['insert(364,330)']		0 
+	[] --mutation--> ['insert(144,144)']		0.97499999999999998 
+	[] --mutation--> ['replace(187,311)']		0.94999999999999996 
+	[] --mutation--> ['insert(330,289)']		0.97499999999999998 
+	[] --mutation--> ['delete(248)']		0.97499999999999998 
+	[] --mutation--> ['replace(361,322)']		0.94999999999999996 
+	[] --mutation--> ['replace(188,131)']		0.94999999999999996 
+	[] --mutation--> ['insert(330,100)']		0.6875 
+	[] --mutation--> ['replace(241,359)']		0.97499999999999998 
+	[] --mutation--> ['delete(222)']		0.94999999999999996 
+	[] --mutation--> ['insert(186,296)']		0.9375 
+	[] --mutation--> ['insert(228,100)']		0.97499999999999998 
+	[] --mutation--> ['delete(359)']		0.97499999999999998 
+	[] --mutation--> ['replace(225,66)']		0.9375 
+	[] --mutation--> ['replace(298,271)']		0.70370370370370372 
+	[] --mutation--> ['delete(228)']		0 
+	[] --mutation--> ['delete(289)']		0.65432098765432101 
+	[] --mutation--> ['delete(335)']		0.97499999999999998 
+	[] --mutation--> ['replace(291,177)']		0.97499999999999998 
+	[] --mutation--> ['insert(204,296)']		0.94999999999999996 
+	[] --mutation--> ['insert(150,340)']		0.96250000000000002 
+	[] --mutation--> ['delete(364)']		0.97499999999999998 
+	[] --mutation--> ['delete(216)']		0.97499999999999998 
+	[] --mutation--> ['insert(216,186)']		0.94999999999999996 
+	[] --mutation--> ['replace(150,198)']		0.97499999999999998 
+	[] --mutation--> ['replace(297,101)']		0.71604938271604934 
+	[] --mutation--> ['delete(168)']		0.94999999999999996 
+	[] --mutation--> ['replace(164,108)']		0.94999999999999996 
+	[] --mutation--> ['insert(359,350)']		0.94999999999999996 
+	[] --mutation--> ['delete(216)']		0.97499999999999998 
+	[] --mutation--> ['insert(277,284)']		0.97499999999999998 
+	[] --mutation--> ['delete(216)']		0.97499999999999998 
+	[] --mutation--> ['delete(320)']		0.92500000000000004 
+	[] --mutation--> ['insert(282,162)']		0 
+	[] --mutation--> ['replace(243,164)']		0.97499999999999998 
+	[] --mutation--> ['insert(277,340)']		0.97499999999999998 
+	[] --mutation--> ['insert(277,269)']		0.97499999999999998 
+	[] --mutation--> ['replace(202,200)']		0.97499999999999998 
+	[] --mutation--> ['replace(100,162)']		0.97499999999999998 
+	[] --mutation--> ['insert(168,150)']		0.8125 
+	[] --mutation--> ['insert(294,222)']		0 
+	[] --mutation--> ['delete(204)']		0.94999999999999996 
+	[] --mutation--> ['insert(144,216)']		0.96250000000000002 
+	[] --mutation--> ['replace(116,342)']		0.92500000000000004 
+	[] --mutation--> ['replace(164,230)']		0.97499999999999998 
+	[] --mutation--> ['delete(282)']		0.97499999999999998 
+	[] --mutation--> ['replace(296,100)']		0.71604938271604934 
+	[] --mutation--> ['delete(325)']		0.97499999999999998 
+	[] --mutation--> ['insert(144,330)']		0.94999999999999996 
+	[] --mutation--> ['delete(294)']		0.97499999999999998 
+	[] --mutation--> ['insert(277,320)']		0.97499999999999998 
+	[] --mutation--> ['insert(186,320)']		0.94999999999999996 
+	[] --mutation--> ['replace(212,120)']		0.96250000000000002 
+	[] --mutation--> ['delete(359)']		0.97499999999999998 
+	[] --mutation--> ['delete(325)']		0.97499999999999998 
+	[] --mutation--> ['insert(320,105)']		0.6875 
+	[] --mutation--> ['replace(275,259)']		0.6875 
+	[] --mutation--> ['insert(253,124)']		0 
+	[] --mutation--> ['delete(320)']		0.92500000000000004 
+	[] --mutation--> ['insert(100,105)']		0.75 
+	[] --mutation--> ['replace(192,102)']		0.94999999999999996 
+	[] --mutation--> ['delete(162)']		1 
+
+######## REPAIR FOUND ########
+		['delete(162)']
+TOTAL TIME TAKEN TO FIND REPAIR = 63.370167
+Minimized patch: ['delete(162)']

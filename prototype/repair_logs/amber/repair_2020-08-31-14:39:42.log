@@ -1,0 +1,60 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber/a23_multiply_buggy.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber/tb.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber
+FITNESS_MODE:
+	 testcases
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/amber/oracle.txt
+PARAMETERS:
+	gens=5
+	popsize=20
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=False
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['insert(103,193)']		0 
+	[] --mutation--> ['replace(219,217)']		0 
+	[] --mutation--> ['insert(295,188)']		0 
+	[] --mutation--> ['insert(183,311)']		0 
+	[] --mutation--> ['insert(134,319)']		0 
+	[] --mutation--> ['delete(244)']		0 
+	[] --mutation--> ['replace(219,217)']		0 
+	[] --mutation--> ['delete(155)']		0 
+	[] --mutation--> ['replace(219,217)']		0 
+	[] --mutation--> ['insert(220,311)']		0 
+	[] --mutation--> ['replace(219,217)']		0 
+	[] --mutation--> ['replace(219,217)']		0 
+	[] --mutation--> ['delete(244)']		0 
+	[] --mutation--> ['insert(311,319)']		0 
+	[] --mutation--> ['replace(219,217)']		0 
+	[] --mutation--> ['replace(219,217)']		0 
+	[] --mutation--> ['delete(83)']		0 
+	[] --mutation--> ['insert(311,183)']		0 
+	[] --mutation--> ['delete(124)']		0 
+	[] --mutation--> ['delete(311)']		0 
+IN GENERATION 1 OF ATTEMPT 0
+	['delete(311)'] --elitism--> ['delete(311)']		0.000000
+	['insert(103,193)'] --mutation--> ['insert(103,193)', 'replace(219,217)']		0 
+	['insert(103,193)'] --mutation--> ['insert(103,193)', 'replace(219,217)']		0 
+	['insert(183,311)'] --mutation--> ['insert(183,311)', 'insert(183,188)']		0 
+	['insert(295,188)'] --mutation--> ['insert(295,188)', 'replace(219,217)']		0 
+	['insert(220,311)'] --mutation--> ['insert(220,311)', 'replace(219,217)']		0 
+	['insert(295,188)'] --mutation--> ['insert(295,188)', 'insert(124,319)']		0 
+	['insert(103,193)'] --mutation--> ['insert(103,193)', 'replace(219,217)']		0 
+	['insert(103,193)'] --mutation--> ['insert(103,193)', 'replace(219,217)']		0 
+	['insert(183,311)'] --mutation--> ['insert(183,311)', 'replace(219,217)']		0 
+	['insert(220,311)'] --mutation--> ['insert(220,311)', 'delete(303)']		0 
+	['delete(155)'] --mutation--> ['delete(155)', 'replace(219,217)']		0 

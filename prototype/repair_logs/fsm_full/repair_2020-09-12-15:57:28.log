@@ -1,0 +1,187 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_wadden_buggy2.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/run.sh
+ORACLE:
+	 oracle_fsmfull.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['insert(109,319)']		0.7857142857142857 
+	[] --template--> []		0.80952380952380953 
+	[] --mutation--> ['delete(292)']		0.7142857142857143 
+	[] --mutation--> ['insert(309,251)']		0.7857142857142857 
+	[] --mutation--> ['delete(237)']		0.76470588235294112 
+	[] --mutation--> ['replace(155,155)']		0.80952380952380953 
+	[] --mutation--> ['delete(249)']		0.80952380952380953 
+	[] --template--> ['template(blocking_to_nonblocking,145)']		0.80952380952380953 
+	[] --template--> ['template(decrement_by_one,185)']		0.77380952380952384 
+	[] --mutation--> ['replace(269,240)']		0.75 
+	[] --mutation--> ['delete(263)']		0.80952380952380953 
+	[] --mutation--> ['insert(256,199)']		0 
+	[] --mutation--> ['insert(309,109)']		0.79761904761904767 
+	[] --mutation--> ['insert(334,119)']		0 
+	[] --mutation--> ['delete(271)']		0.80952380952380953 
+	[] --template--> ['template(decrement_by_one,337)']		0.75 
+	[] --template--> []		0.80952380952380953 
+	[] --template--> ['template(decrement_by_one,159)']		0 
+	[] --template--> ['template(decrement_by_one,327)']		0.75 
+	[] --mutation--> ['replace(220,73)']		0.80952380952380953 
+	[] --template--> ['template(decrement_by_one,167)']		0.7857142857142857 
+	[] --template--> ['template(decrement_by_one,185)']		0.77380952380952384 
+	[] --mutation--> ['replace(333,236)']		0.80952380952380953 
+	[] --mutation--> ['delete(249)']		0.80952380952380953 
+	[] --mutation--> ['replace(271,242)']		0.80952380952380953 
+	[] --template--> ['template(sens_to_level,95)']		0.80952380952380953 
+	[] --mutation--> ['replace(136,169)']		0.75 
+	[] --mutation--> ['replace(228,317)']		0.65000000000000002 
+	[] --mutation--> ['replace(194,300)']		0.65476190476190477 
+	[] --mutation--> ['delete(193)']		0.65476190476190477 
+	[] --mutation--> ['replace(321,161)']		0 
+	[] --template--> []		0.80952380952380953 
+	[] --mutation--> ['insert(309,299)']		0.48809523809523808 
+	[] --template--> []		0.80952380952380953 
+	[] --mutation--> ['insert(139,329)']		0.7857142857142857 
+	[] --mutation--> ['insert(251,193)']		0.80952380952380953 
+	[] --template--> ['template(blocking_to_nonblocking,199)']		0.80952380952380953 
+	[] --template--> ['template(nonblocking_to_blocking,237)']		0.80952380952380953 
+	[] --mutation--> ['delete(199)']		0.80952380952380953 
+	[] --mutation--> ['delete(256)']		0.80952380952380953 
+	[] --mutation--> ['replace(305,70)']		0.80952380952380953 
+	[] --mutation--> ['insert(283,285)']		0.80952380952380953 
+	[] --mutation--> ['insert(244,139)']		0.80952380952380953 
+	[] --mutation--> ['insert(157,309)']		0.79761904761904767 
+	[] --mutation--> ['insert(339,199)']		0.73809523809523814 
+	[] --template--> []		0.80952380952380953 
+	[] --mutation--> ['replace(267,194)']		0.5714285714285714 
+	[] --mutation--> ['insert(314,258)']		0 
+	[] --mutation--> ['delete(235)']		0.80952380952380953 
+	[] --mutation--> ['delete(297)']		0.80952380952380953 
+	[] --mutation--> ['replace(278,175)']		0.5357142857142857 
+	[] --template--> ['template(increment_by_one,179)']		0.7857142857142857 
+	[] --mutation--> ['insert(157,309)']		0.79761904761904767 
+	[] --mutation--> ['insert(324,339)']		0 
+	[] --template--> ['template(increment_by_one,337)']		0.75 
+	[] --mutation--> ['delete(266)']		0.5714285714285714 
+	[] --mutation--> ['delete(181)']		0.80952380952380953 
+	[] --mutation--> ['insert(329,175)']		0.79761904761904767 
+	[] --mutation--> ['replace(133,101)']		0.75 
+	[] --mutation--> ['delete(285)']		0.61904761904761907 
+	[] --mutation--> ['replace(248,209)']		0.80952380952380953 
+	[] --mutation--> ['delete(339)']		0.75 
+	[] --mutation--> ['replace(287,167)']		0 
+	[] --mutation--> ['delete(334)']		0.80952380952380953 
+	[] --mutation--> ['insert(193,129)']		0.75 
+	[] --mutation--> ['replace(122,196)']		0.75 
+	[] --mutation--> ['insert(119,339)']		0.7857142857142857 
+	[] --mutation--> ['insert(319,199)']		0.73809523809523814 
+	[] --template--> ['template(blocking_to_nonblocking,119)']		0.79761904761904767 
+	[] --mutation--> ['insert(319,109)']		0.79761904761904767 
+	[] --template--> ['template(blocking_to_nonblocking,211)']		0.79761904761904767 
+	[] --mutation--> ['insert(237,230)']		0.80952380952380953 
+	[] --mutation--> ['insert(285,285)']		0.80952380952380953 
+	[] --mutation--> ['replace(343,81)']		0.75 
+	[] --mutation--> ['replace(282,303)']		0.80952380952380953 
+	[] --mutation--> ['replace(270,131)']		0.80952380952380953 
+	[] --mutation--> ['replace(320,279)']		0.69047619047619047 
+	[] --mutation--> ['delete(292)']		0.7142857142857143 
+	[] --mutation--> ['delete(157)']		0.35714285714285715 
+	[] --mutation--> ['insert(344,292)']		0.80952380952380953 
+	[] --mutation--> ['insert(256,139)']		0 
+	[] --mutation--> ['delete(285)']		0.61904761904761907 
+	[] --mutation--> ['replace(278,211)']		0.5357142857142857 
+	[] --mutation--> ['replace(139,211)']		0.75 
+	[] --mutation--> ['insert(230,100)']		0.80722891566265065 
+	[] --mutation--> ['delete(242)']		0.80952380952380953 
+	[] --mutation--> ['insert(290,251)']		0.80952380952380953 
+	[] --mutation--> ['replace(259,286)']		0.5714285714285714 
+	[] --mutation--> ['replace(141,149)']		0 
+	[] --mutation--> ['delete(263)']		0.80952380952380953 
+	[] --mutation--> ['delete(278)']		0.5357142857142857 
+	[] --mutation--> ['delete(217)']		0.80952380952380953 
+	[] --template--> ['template(negate_equality,153)']		0.33333333333333331 
+	[] --template--> []		0.80952380952380953 
+	[] --mutation--> ['delete(119)']		0.75 
+	[] --template--> []		0.80952380952380953 
+	[] --mutation--> ['insert(163,129)']		0.7142857142857143 
+	[] --mutation--> ['replace(230,139)']		0.75294117647058822 
+	[] --mutation--> ['replace(288,247)']		0.80952380952380953 
+	[] --mutation--> ['delete(304)']		0.80952380952380953 
+	[] --mutation--> ['insert(299,299)']		0.80952380952380953 
+	[] --mutation--> ['delete(193)']		0.65476190476190477 
+	[] --mutation--> ['delete(193)']		0.65476190476190477 
+	[] --template--> ['template(sens_to_posedge,93)']		0 
+	[] --mutation--> ['replace(322,247)']		0.75 
+	[] --mutation--> ['insert(297,181)']		0 
+	[] --mutation--> ['delete(163)']		0.80952380952380953 
+	[] --mutation--> ['insert(304,319)']		0 
+	[] --mutation--> ['insert(244,285)']		0.80952380952380953 
+	[] --mutation--> ['replace(131,260)']		0.79761904761904767 
+	[] --mutation--> ['replace(247,202)']		0.7857142857142857 
+	[] --mutation--> ['replace(298,74)']		0 
+	[] --mutation--> ['delete(304)']		0.80952380952380953 
+	[] --mutation--> ['insert(278,119)']		0.80952380952380953 
+	[] --template--> ['template(increment_by_one,197)']		0.7857142857142857 
+	[] --mutation--> ['delete(119)']		0.75 
+	[] --template--> ['template(decrement_by_one,208)']		0.77380952380952384 
+	[] --template--> ['template(increment_by_one,149)']		0.72619047619047616 
+	[] --mutation--> ['replace(112,66)']		0.7142857142857143 
+	[] --mutation--> ['insert(244,139)']		0.80952380952380953 
+	[] --mutation--> ['insert(199,299)']		0.7857142857142857 
+	[] --mutation--> ['insert(334,273)']		0 
+	[] --mutation--> ['insert(278,237)']		0.80952380952380953 
+	[] --mutation--> ['delete(292)']		0.7142857142857143 
+	[] --mutation--> ['delete(334)']		0.80952380952380953 
+	[] --mutation--> ['delete(242)']		0.80952380952380953 
+	[] --mutation--> ['replace(330,252)']		0.69047619047619047 
+	[] --mutation--> ['insert(249,119)']		0 
+	[] --template--> []		0.80952380952380953 
+	[] --mutation--> ['delete(157)']		0.35714285714285715 
+	[] --mutation--> ['delete(278)']		0.5357142857142857 
+	[] --mutation--> ['replace(230,211)']		0.76470588235294112 
+	[] --mutation--> ['insert(271,292)']		0.80952380952380953 
+	[] --template--> []		0.80952380952380953 
+	[] --template--> ['template(negate_equality,189)']		0.63095238095238093 
+	[] --template--> ['template(increment_by_one,270)']		0.10714285714285714 
+	[] --mutation--> ['insert(304,211)']		0 
+	[] --mutation--> ['replace(329,109)']		0.73809523809523814 
+	[] --template--> []		0.80952380952380953 
+	[] --mutation--> ['insert(163,339)']		0.7857142857142857 
+	[] --mutation--> ['replace(240,322)']		0.7857142857142857 
+	[] --mutation--> ['replace(283,249)']		0.80952380952380953 
+	[] --mutation--> ['delete(157)']		0.35714285714285715 
+	[] --mutation--> ['delete(299)']		0.79761904761904767 
+	[] --mutation--> ['delete(145)']		0.5714285714285714 
+	[] --mutation--> ['delete(230)']		0.76470588235294112 
+	[] --mutation--> ['insert(319,230)']		0.80952380952380953 
+	[] --mutation--> ['replace(324,344)']		0.80952380952380953 
+	[] --mutation--> ['delete(242)']		0.80952380952380953 
+	[] --mutation--> ['replace(249,256)']		0.80952380952380953 
+	[] --mutation--> ['delete(299)']		0.79761904761904767 
+	[] --mutation--> ['insert(329,273)']		0.48192771084337349 
+	[] --template--> ['template(increment_by_one,195)']		0 
+	[] --mutation--> ['replace(255,107)']		0.7857142857142857 
+	[] --mutation--> ['replace(205,274)']		1 
+
+######## REPAIR FOUND ########
+		['replace(205,274)']
+TOTAL TIME TAKEN TO FIND REPAIR = 135.681159
+Minimized patch: ['replace(205,274)']

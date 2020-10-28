@@ -1,0 +1,38 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_buggy_var.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_tb_t1.v
+ORACLE:
+	 oracle_fsmfull.txt
+PARAMETERS:
+	gens=5
+	popsize=1000
+	mutation_rate=0
+	crossover_rate=0
+	replacement_rate=0
+	insertion_rate=0
+	deletion_rate=0
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['insert(168,310)']		0.86250000000000004 
+	[] --mutation--> ['delete(269)']		0.97499999999999998 
+	[] --mutation--> ['replace(131,257)']		0.91249999999999998 
+	[] --mutation--> ['insert(282,303)']		0.97499999999999998 
+	[] --mutation--> ['replace(243,305)']		0.97499999999999998 
+	[] --mutation--> ['replace(291,96)']		0 
+	[] --mutation--> ['replace(318,230)']		0.66249999999999998 
+	[] --mutation--> ['insert(301,359)']		0 
+	[] --mutation--> ['replace(228,289)']		0.94999999999999996 
+	[] --mutation--> ['delete(289)']		0.65432098765432101 
+	[] --mutation--> ['delete(186)']		0.94999999999999996 
+	[] --mutation--> ['delete(277)']		0.75 
+	[] --mutation--> ['insert(134,284)']		0.875 
+	[] --mutation--> ['insert(296,340)']		0.97499999999999998 
+	[] --mutation--> ['delete(162)']		1 ######## REPAIR FOUND ########
+		['delete(162)']
+TOTAL TIME TAKEN TO FIND REPAIR = 20.415718

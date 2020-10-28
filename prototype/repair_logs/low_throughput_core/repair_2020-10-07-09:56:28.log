@@ -1,0 +1,99 @@
+SEED:
+	 repair_2020-10-07-09:56:28
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/round_ssscrazy_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/test_keccak_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/run_keccak.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/oracle_keccak.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(negate_ulnot,1438)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,1627)']		0
+	[] --template_seeding--> ['template(decrement_by_one,1171)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,1390)']		0
+	[] --template_seeding--> ['template(increment_by_one,1379)']		0
+	[] --template_seeding--> ['template(negate_inequality,1592)']		0
+	[] --template_seeding--> ['template(decrement_by_one,1023)']		0
+	[] --template_seeding--> ['template(decrement_by_one,1203)']		0
+	[] --template_seeding--> ['template(negate_ulnot,1438)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(negate_ulnot,1438)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,1554)']		0
+	[] --template_seeding--> ['template(increment_by_one,1346)']		0
+	[] --template_seeding--> ['template(decrement_by_one,182)']		0
+	[] --template_seeding--> ['template(negate_equality,1511)']		0
+	[] --template_seeding--> ['template(negate_ulnot,1438)']		0
+	[] --template_seeding--> ['template(negate_equality,305)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(negate_equality,1493)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(decrement_by_one,1483)']		0
+	[] --template_seeding--> ['template(decrement_by_one,317)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(decrement_by_one,1403)']		0
+	[] --template_seeding--> ['template(increment_by_one,403)']		0
+	[] --template_seeding--> ['template(negate_inequality,1589)']		0
+	[] --template_seeding--> ['template(negate_ulnot,1438)']		0
+	[] --template_seeding--> ['template(decrement_by_one,1548)']		0
+	[] --template_seeding--> ['template(negate_equality,1443)']		0
+	[] --template_seeding--> ['template(negate_equality,305)']		0
+	[] --template_seeding--> ['template(increment_by_one,189)']		0
+	[] --template_seeding--> ['template(negate_equality,1493)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,176)']		0
+	[] --template_seeding--> ['template(increment_by_one,1314)']		0
+	[] --template_seeding--> ['template(negate_inequality,1589)']		0
+	[] --template_seeding--> ['template(negate_inequality,1589)']		0
+	[] --template_seeding--> ['template(negate_equality,1493)']		0
+	[] --template_seeding--> ['template(negate_ulnot,1438)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(decrement_by_one,1112)']		0
+	[] --template_seeding--> ['template(negate_equality,1499)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,254)']		0
+	[] --template_seeding--> ['template(negate_ulnot,1438)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(increment_by_one,1461)']		0
+	[] --template_seeding--> ['template(increment_by_one,1607)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(decrement_by_one,1013)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(negate_equality,1496)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,237)']		0
+	[] --template_seeding--> ['template(decrement_by_one,1403)']		0
+	[] --template_seeding--> ['template(increment_by_one,1307)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(decrement_by_one,1467)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(negate_ulnot,1438)']		0
+	[] --template_seeding--> ['template(negate_inequality,1589)']		0
+	[] --template_seeding--> ['template(negate_inequality,1589)']		0
+	[] --template_seeding--> ['template(negate_equality,1499)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,237)']		0
+	[] --template_seeding--> ['template(negate_ulnot,1438)']		0
+	[] --template_seeding--> ['template(decrement_by_one,1599)']		0
+	[] --template_seeding--> ['template(negate_inequality,1589)']		0
+	[] --template_seeding--> ['template(decrement_by_one,682)']		0
+	[] --template_seeding--> []		0

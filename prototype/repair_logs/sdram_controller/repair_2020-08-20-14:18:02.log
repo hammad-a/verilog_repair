@@ -1,0 +1,41 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/sdram_controller/sdram_controller_githubbug.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/sdram_controller/sdram_controller_tb_t1.v
+ORACLE:
+	 oracle_sdramcontroller.txt
+PARAMETERS:
+	gens=10
+	popsize=500
+	mutation_rate=0
+	crossover_rate=0
+	replacement_rate=0
+	insertion_rate=0
+	deletion_rate=0
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['replace(404,404)']		0.9998233917612257 
+	[] --mutation--> ['delete(875)']		0.9998233917612257 
+	[] --mutation--> ['insert(507,883)']		0.99849932690397902 
+	[] --mutation--> ['replace(930,60)']		0.39668073136427567 
+	[] --mutation--> ['replace(642,939)']		0 
+	[] --mutation--> ['insert(888,979)']		0.9998233917612257 
+	[] --mutation--> ['replace(587,364)']		0.99929356704490269 
+	[] --mutation--> ['replace(608,378)']		0.99823391761225666 
+	[] --mutation--> ['insert(459,640)']		0 
+	[] --mutation--> ['replace(792,567)']		0.99911695880612827 
+	[] --mutation--> ['insert(514,771)']		0.9998233917612257 
+	[] --mutation--> ['delete(464)']		0.72825175442468115 
+	[] --mutation--> ['insert(446,691)']		0 
+	[] --mutation--> ['delete(446)']		0.64796751555810561 
+	[] --mutation--> ['replace(419,748)']		0 
+	[] --mutation--> ['replace(510,956)']		0.99752748465715924 
+	[] --mutation--> ['delete(514)']		0 
+	[] --mutation--> ['delete(603)']		0.99823391761225666 
+	[] --mutation--> ['delete(681)']		0.64796751555810561 
+	[] --mutation--> ['insert(459,665)']		

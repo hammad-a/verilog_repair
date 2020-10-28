@@ -1,0 +1,98 @@
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/f_permutation_buggy.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/test_f_permutation_t1.v
+INCLUDE_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core
+DEP_FILES:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/rconst.v /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/round.v
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/oracle.txt
+PARAMETERS:
+	gens=4
+	popsize=500
+	mutation_rate=0
+	crossover_rate=0
+	replacement_rate=0
+	insertion_rate=0
+	deletion_rate=0
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['replace(106,106)']		0.37428646636332868 
+	[] --mutation--> ['delete(203)']		0 
+	[] --mutation--> ['replace(102,197)']		0.12898883164742603 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(202,168)']		0.12897379009513782 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(97,114)']		0 
+	[] --mutation--> ['replace(79,166)']		0.11876057609145264 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(196,196)']		0.37428646636332868 
+	[] --mutation--> ['delete(196)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(101)']		0.12844733576505096 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(83,134)']		0 
+	[] --mutation--> ['delete(113)']		0.12897379009513782 
+	[] --mutation--> ['replace(76,102)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(75)']		0 
+	[] --mutation--> ['replace(85,85)']		0.37428646636332868 
+	[] --mutation--> ['replace(83,99)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(203,147)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(200,163)']		0.11167600496371226 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(196)']		0 
+	[] --mutation--> ['replace(83,99)']		0 
+	[] --mutation--> ['replace(61,152)']		0 
+	[] --mutation--> ['replace(66,119)']		0 
+	[] --mutation--> ['delete(113)']		0.12897379009513782 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(112,198)']		0.12844733576505096 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(199,134)']		0.37428646636332868 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(203)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(101)']		0.12844733576505096 
+	[] --mutation--> ['replace(110,119)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(203)']		0 
+	[] --mutation--> ['delete(101)']		0.12844733576505096 
+	[] --mutation--> ['replace(88,19)']		0.37428646636332868 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(80)']		0 
+	[] --mutation--> ['delete(61)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(61)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(96,96)']		0.37428646636332868 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(97,76)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(101)']		0.12844733576505096 
+	[] --mutation--> ['replace(197,121)']		0 
+	[] --mutation--> ['delete(80)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['delete(101)']		0.12844733576505096 
+	[] --mutation--> ['replace(206,199)']		0.12897379009513782 
+	[] --mutation--> ['delete(75)']		0 
+	[] --mutation--> ['replace(198,160)']		0 
+	[] --mutation--> []		0.37428646636332868 
+	[] --mutation--> ['replace(102,197)']		0.12898883164742603 
+	[] --mutation--> ['replace(109,144)']		1 ######## REPAIR FOUND ########
+		['replace(109,144)']
+TOTAL TIME TAKEN TO FIND REPAIR = 187.442698
