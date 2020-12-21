@@ -549,7 +549,7 @@ class MutationOp(ASTCodeGenerator):
         print("Node to replace class: %s" % self.node_class_to_replace)
         if self.node_class_to_replace == None: # if the node does not exist, return with no-op
             return patch_list, ast
-
+        
         if with_id == None:       
             self.get_replaceable_nodes_by_class(ast, self.node_class_to_replace) # get all valid nodes that have a class that could be substituted for the original node's class
             if len(self.replaceable_nodes) == 0: # if no replaceable nodes exist, exit gracefully
@@ -561,8 +561,6 @@ class MutationOp(ASTCodeGenerator):
             print("Replacing node id %s with node id %s" % (node_id,with_id))  
         
         self.get_node_from_ast(ast, with_id) # get the node associated with with_id
-
-
 
         # safety guard: this could happen if crossover makes the GA think a node is actually suitable for replacement when in reality it is not....    
         if self.tmp_node.__class__ not in REPLACE_TARGETS[self.node_class_to_replace]: 
@@ -730,34 +728,71 @@ class MutationOp(ASTCodeGenerator):
                 print("Invalid operator in patch list: %s" % m)
         return ast
     
-def minimize_patch(mutation_op, ast, patch_list, codegen):
-    print("\n\nMinimizing patchlist...")
-    minimized = copy.deepcopy(patch_list)
-    # print(minimized)
+# def minimize_patch(mutation_op, ast, patch_list, codegen):
+#     print("\n\nMinimizing patchlist...")
+#     minimized = copy.deepcopy(patch_list)
+#     # print(minimized)
 
-    for i in range(len(patch_list)-1, -1, -1): # iterate over the list in reverse order 
-        op = patch_list.pop(i)
-        # print(patch_list)
-        tmp_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), patch_list)
-        f = open("minimized_%s.v" % TB_ID, "w+")
-        f.write(codegen.visit(tmp_ast))
-        f.close()
-        os.system("cp minimized_%s.v %s/minimized_%s.v" % (TB_ID, PROJ_DIR, TB_ID))
+#     for i in range(len(patch_list)-1, -1, -1): # iterate over the list in reverse order 
+#         op = patch_list.pop(i)
+#         # print(patch_list)
+#         tmp_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), patch_list)
+#         f = open("minimized_%s.v" % TB_ID, "w+")
+#         f.write(codegen.visit(tmp_ast))
+#         f.close()
+#         os.system("cp minimized_%s.v %s/minimized_%s.v" % (TB_ID, PROJ_DIR, TB_ID))
 
-        ff, _ = calc_candidate_fitness("minimized_%s.v" % TB_ID)
-        if ff == 1:
-            tmp = minimized.pop(i)
-            print("Removed operator: %s" % tmp)
-        else:
-            patch_list.insert(len(patch_list), op)
-            print("Removing operator %s causes a drop in fitness; inserting it back into the patchlist..." % op)
+#         ff, _ = calc_candidate_fitness("minimized_%s.v" % TB_ID)
+#         if ff == 1:
+#             tmp = minimized.pop(i)
+#             print("Removed operator: %s" % tmp)
+#         else:
+#             patch_list.insert(len(patch_list), op)
+#             print("Removing operator %s causes a drop in fitness; inserting it back into the patchlist..." % op)
         
-        os.remove("minimized_%s.v" % TB_ID)
-        os.remove("%s/minimized_%s.v" % (PROJ_DIR, TB_ID))
-        # print(patch_list)
+#         os.remove("minimized_%s.v" % TB_ID)
+#         os.remove("%s/minimized_%s.v" % (PROJ_DIR, TB_ID))
+#         # print(patch_list)
 
-    return minimized
+#     return minimized
 
+def is_interesting(mutation_op, ast, codegen, patch_list):
+    tmp_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), patch_list)
+    f = open("minimized_%s.v" % TB_ID, "w+")
+    f.write(codegen.visit(tmp_ast))
+    f.close()
+    os.system("cp minimized_%s.v %s/minimized_%s.v" % (TB_ID, PROJ_DIR, TB_ID))
+
+    ff, _ = calc_candidate_fitness("minimized_%s.v" % TB_ID)
+    os.remove("minimized_%s.v" % TB_ID)
+    os.remove("%s/minimized_%s.v" % (PROJ_DIR, TB_ID))
+    if ff == 1:
+        print("Patch %s still has a fitness of 1.0 --> interesting" % str(patch_list))
+        return True
+    else:
+        print("Patch %s has a fitness < 1.0 --> not interesting" % str(patch_list))
+        return False
+
+"""
+Delta debugging for patch minimization.
+"""
+def minimize_patch(mutation_op, ast, codegen, prefix, patch_list, suffix):
+    mid = len(patch_list) // 2
+    if mid == 0:
+        return patch_list
+
+    left = patch_list[:mid]
+    if is_interesting(mutation_op, ast, codegen, prefix + left + suffix):
+        return minimize_patch(mutation_op, ast, codegen, prefix, left, suffix)
+
+    right = patch_list[mid:]
+    if is_interesting(mutation_op, ast, codegen, prefix + right + suffix):
+        return minimize_patch(mutation_op, ast, codegen, prefix, right, suffix)
+
+    left = minimize_patch(mutation_op, ast, codegen, prefix, left, right + suffix)
+    right = minimize_patch(mutation_op, ast, codegen, prefix + left, right, suffix)
+
+    return left + right
 
 def tournament_selection(mutation_op, codegen, orig_ast, popn):
     # Choose 5 random candidates for parent selection
@@ -940,7 +975,7 @@ def seed_popn(ast, mutation_op, codegen, log, log_file):
                     log_file.write("\n\n######## REPAIR FOUND ########\n\t\t%s\n" % str(child))
                     log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
                 
-                minimized = minimize_patch(mutation_op, ast, child, codegen)
+                minimized = minimize_patch(mutation_op, ast, codegen, [], child, [])
                 print("\n\n")
                 print("Minimized patch: %s" % str(minimized))
 
@@ -992,6 +1027,7 @@ def main():
 
     LOG = False
     CODE_FROM_PATCHLIST = False
+    MINIMIZE_ONLY = False
 
     for i in range(1, len(sys.argv)):
         cmd = sys.argv[i]
@@ -1005,6 +1041,11 @@ def main():
             if val.lower() == "true": CODE_FROM_PATCHLIST = True
             elif val.lower() == "false": CODE_FROM_PATCHLIST = False
             print("Using CODE_FROM_PATCHLIST = %s" % CODE_FROM_PATCHLIST)
+        elif "minimize" in cmd.lower():
+            val = cmd.split("=")[1]
+            if val.lower() == "true": MINIMIZE_ONLY = True
+            elif val.lower() == "false": MINIMIZE_ONLY = False
+            print("Using MINIMIZE_ONLY = %s" % MINIMIZE_ONLY)
         else:
             print("Invalid command line argument: %s. Aborting." % cmd)
 
@@ -1094,6 +1135,11 @@ def main():
         # os.remove("patchlist_code.v")
         os.remove("%s/patchlist_code.v" % PROJ_DIR)
 
+        exit(1)
+
+    elif MINIMIZE_ONLY:
+        patch_list = eval(input("Please enter the patchlist representation of candidate... "))
+        print(minimize_patch(mutation_op, ast, codegen, [], patch_list, []))
         exit(1)
 
     # calculate fitness of the original buggy program
@@ -1293,7 +1339,7 @@ def main():
                             log_file.write("\n\n######## REPAIR FOUND ########\n\t\t%s\n" % str(child_patchlist))
                             log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
                         
-                        minimized = minimize_patch(mutation_op, ast, child_patchlist, codegen)
+                        minimized = minimize_patch(mutation_op, ast, codegen, [], child_patchlist, [])
                         print("\n\n")
                         print("Minimized patch: %s" % str(minimized))
 
