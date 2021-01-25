@@ -115,8 +115,10 @@ input                      rst_n;
 input                      clk;
 
 /* SDRAM SIDE */
-output [SDRADDR_WIDTH-1:0] addr;
-output [BANK_WIDTH-1:0]    bank_addr;
+//output [SDRADDR_WIDTH-1:0] addr;
+//output [BANK_WIDTH-1:0]    bank_addr;
+output [12:0]              addr;
+output [1:0]               bank_addr;
 inout  [15:0]              data;
 output                     clock_enable;
 output                     cs_n;
