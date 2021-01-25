@@ -43,7 +43,7 @@ module sdram_controller_tb();
     integer f;
 
     initial begin
-        f = $fopen("output.txt");
+        f = $fopen("output_sdram_controller_tb_t1.txt");
         $fwrite(f, "time,rd_data[15],rd_data[14],rd_data[13],rd_data[12],rd_data[11],rd_data[10],rd_data[9],rd_data[8],rd_data[7],rd_data[6],rd_data[5],rd_data[4],rd_data[3],rd_data[2],rd_data[1],rd_data[0],rd_ready,addr[12],addr[11],addr[10],addr[9],addr[8],addr[7],addr[6],addr[5],addr[4],addr[3],addr[2],addr[1],addr[0],bank_addr[1],bank_addr[0],data[15],data[14],data[13],data[12],data[11],data[10],data[9],data[8],data[7],data[6],data[5],data[4],data[3],data[2],data[1],data[0],clock_enable,cs_n,ras_n,cas_n,we_n,data_mask_low,data_mask_high\n");
 	$monitor("%g\t %h\t %b\t %b\t %b\t %b\t %h\t %h\t %h\t %b\t %h\t %h\t %h\t %b\t %b\t %b\t %b\t %b\t", $time, haddr, rd_enable, rd_ready, wr_enable, rst_n,data_r, data_input, data_output, busy, addr, bank_addr, data, clock_enable, cas_n, we_n, data_mask_low, data_mask_high);
 	forever begin
