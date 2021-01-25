@@ -1,0 +1,88 @@
+0 
+35
++vc
+-Mamsrun=
+-Masflags=
+-Mcc=gcc
+-Mcfl= -pipe -fPIC -O -I/usr/caen/vcs-2017.12-SP2-1/include
+-Mcplusplus=g++
+-Mcrt0=
+-Mcrtn=
+-Mcsrc=
+-Mexternalobj=
+-Mldflags= -rdynamic
+-Mobjects= /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libvirsim.so /usr/caen/vcs-2017.12-SP2-1/linux64/lib/liberrorinf.so /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libsnpsmalloc.so /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libvfs.so
+-Mout=simv
+-Msaverestoreobj=/usr/caen/vcs-2017.12-SP2-1/linux64/lib/vcs_save_restore_new.o
+-Msyslibs=-ldl
+-Mupdate
+-Mvcsaceobjs=
+-Mxcflags= -pipe -fPIC -I/usr/caen/vcs-2017.12-SP2-1/include
+-Xvcs_run_simv=1
+-full64
+-gen_obj
+-line
+-o simv
+-picarchive
+-sverilog
+/usr/caen/vcs-2017.12-SP2-1/linux64/bin/vcs1
+f3.v
+f32m.v
+f33m.v
+f36m.v
+f3m.v
+fun.v
+inc.v
+patchlist_code.v
+test_duursma_lee_algo_t1.v
+32
+sysc_uni_pwd=/home/hammada/projects/verilog_repair/benchmarks/opencores/pairing
+_LMFILES_=/usr/caen/misc/modules/vcs/2017.12-SP2-1
+ZSH=/home/hammada/.oh-my-zsh
+XDG_SESSION_ID=9281
+XDG_RUNTIME_DIR=/run/user/1001
+XDG_DATA_DIRS=/home/hammada/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+VMR_MODE_FLAG=64
+VCS_MODE_FLAG=64
+VCS_HOME=/usr/caen/vcs-2017.12-SP2-1
+VCS_DEPTH=0
+VCS_ARG_ADDED_FOR_TMP=1
+VCS_ARCH=linux64
+UNAME=/bin/uname
+TOOL_HOME=/usr/caen/vcs-2017.12-SP2-1/linux64
+SSH_TTY=/dev/pts/1
+SSH_CONNECTION=73.144.196.131 50366 141.212.106.158 22
+SSH_CLIENT=73.144.196.131 50366 22
+SNPS_VCS_CLANG_PATH=/fs/src/interfaces/LLVM_Project/QSCM/opt/llvm-3.9.1/linux64
+SCRNAME=vcs
+SCRIPT_NAME=vcs
+OVA_UUM=0
+MODULESHOME=/usr/share/Modules
+MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles:/usr/caen/misc/modules:/afs/umich.edu/class/coe/modules
+LSCOLORS=Gxfxcxdxbxegedabagacad
+LOADEDMODULES=vcs/2017.12-SP2-1
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+LESS=-R
+LC_ALL=C
+HISTCONTROL=ignoredups
+BASH_FUNC_module()=() {  eval `/usr/bin/modulecmd bash $*`_}
+AMBER_CROSSTOOL=arm-linux-gnu
+AMBER_BASE=/home/hammada/yh_benchmarks/verilog/opencores/processor/amber/trunk
+0
+9
+1609794051 patchlist_code.v
+1596118692 inc.v
+1596118678 fun.v
+1596118525 f3.v
+1596118598 f3m.v
+1596118664 f36m.v
+1596118645 f33m.v
+1596118620 f32m.v
+1600109467 test_duursma_lee_algo_t1.v
+5
+0 
+1531625631 /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libvirsim.so
+1531624898 /usr/caen/vcs-2017.12-SP2-1/linux64/lib/liberrorinf.so
+1531624871 /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libsnpsmalloc.so
+1531625298 /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libvfs.so
+1609794067 simv.daidir

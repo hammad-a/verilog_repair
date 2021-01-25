@@ -1,0 +1,1 @@
+timeout 8 vcs -sverilog +vc -Mupdate -line -full64 RS_dec_tb_t1.v RS_dec.v BM_lamda.v GF_matrix_dec.v GF_matrix_ascending_binary.v input_syndromes.v lamda_roots.v transport_in2out.v DP_RAM.v out_stage.v error_correction.v Omega_Phy.v GF_mult_add_syndromes.v -o simv -R
