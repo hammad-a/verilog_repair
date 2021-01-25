@@ -1,0 +1,1 @@
+timeout 10 vcs -sverilog +vc -Mupdate -line -full64 test_padder_t1.v padder.v keccak.v f_permutation.v padder1.v rconst.v round.v -o simv -R

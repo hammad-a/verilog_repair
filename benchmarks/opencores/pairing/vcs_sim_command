@@ -1,0 +1,1 @@
+timeout 40 vcs -sverilog +vc -Mupdate -line -full64 test_duursma_lee_algo_t1.v f32m.v f33m.v f36m.v f3m.v f3.v fun.v inc.v tate_pairing.v -o simv -R

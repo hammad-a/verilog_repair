@@ -1,0 +1,14 @@
+rc file Version 1.0
+
+[Design]
+COMPILE_PATH=/home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder
+SystemC=FALSE
+UUM=FALSE
+KDB=FALSE
+USE_NOVAS_HOME=FALSE
+COSIM=FALSE
+TOP=RS_dec_tb 
+
+[Value]
+WREALX=ffff534e50535f58
+WREALZ=ffff534e50535f5a
