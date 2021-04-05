@@ -13,8 +13,13 @@ cat vcs_sim_command_buggy
 
 rm vcs_sim_command_buggy
 
+#<<<<<<< HEAD
 cp output_tst_bench_top_t1.txt $cur_dir/output_tst_bench_top_t1.txt
 rm output_tst_bench_top_t1.txt
+#=======
+#cp output.txt $cur_dir/output.txt
+#rm output.txt
+#>>>>>>> 89e14778f7436711d11453e02e968083808e48f3
 
 cd $cur_dir
 
