@@ -1,0 +1,1 @@
+timeout 10 vcs -sverilog +vc -Mupdate -line -full64 tff_tb.v tff.v -o simv -R
