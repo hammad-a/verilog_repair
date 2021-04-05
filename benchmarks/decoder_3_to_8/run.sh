@@ -13,8 +13,8 @@ cat vcs_sim_command_buggy
 
 rm vcs_sim_command_buggy
 
-cp output.txt $cur_dir/output.txt
-rm output.txt
+cp output_decoder_3_to_8_tb_t1.txt $cur_dir/output_decoder_3_to_8_tb_t1.txt
+rm output_decoder_3_to_8_tb_t1.txt
 
 cd $cur_dir
 
