@@ -13,8 +13,8 @@ cat vcs_sim_command_buggy
 
 rm vcs_sim_command_buggy
 
-cp output.txt $cur_dir/output.txt
-rm output.txt
+cp output_mux_4_1_tb.txt $cur_dir/output_mux_4_1_tb.txt
+rm output_mux_4_1_tb.txt
 
 cd $cur_dir
 
