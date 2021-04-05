@@ -13,8 +13,8 @@ cat vcs_sim_command_buggy
 
 rm vcs_sim_command_buggy
 
-cp output_lshift_reg_tb_t1.txt $cur_dir/output_lshift_reg_tb_t1.txt
-rm output_lshift_reg_tb_t1.txt
+cp output_tff_tb.txt $cur_dir/output_tff_tb.txt
+rm output_tff_tb.txt
 
 cd $cur_dir
 
