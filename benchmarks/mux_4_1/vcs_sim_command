@@ -1,1 +1,1 @@
-timeout 20 vcs -sverilog +vc -Mupdate -line -full64 mux_4_1_tb.v mux_4_1.v -o simv -R
+timeout 5 vcs -sverilog +vc -Mupdate -line -full64 mux_4_1_tb.v mux_4_1.v -o simv -R
