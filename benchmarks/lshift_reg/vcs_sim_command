@@ -1,1 +1,1 @@
-timeout 20 vcs -sverilog +vc -Mupdate -line -full64 lshift_reg_tb_t1.v lshift_reg.v -o simv -R
+timeout 7 vcs -sverilog +vc -Mupdate -line -full64 lshift_reg_tb_t1.v lshift_reg.v -o simv -R
