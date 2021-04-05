@@ -1,0 +1,84 @@
+0 
+32
++vc
+-Mamsrun=
+-Masflags=
+-Mcc=gcc
+-Mcfl= -pipe -fPIC -O -I/usr/caen/vcs-2017.12-SP2-1/include
+-Mcplusplus=g++
+-Mcrt0=
+-Mcrtn=
+-Mcsrc=
+-Mexternalobj=
+-Mldflags= -rdynamic
+-Mobjects= /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libvirsim.so /usr/caen/vcs-2017.12-SP2-1/linux64/lib/liberrorinf.so /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libsnpsmalloc.so /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libvfs.so
+-Mout=simv
+-Msaverestoreobj=/usr/caen/vcs-2017.12-SP2-1/linux64/lib/vcs_save_restore_new.o
+-Msyslibs=-ldl
+-Mupdate
+-Mvcsaceobjs=
+-Mxcflags= -pipe -fPIC -I/usr/caen/vcs-2017.12-SP2-1/include
+-Xvcs_run_simv=1
+-full64
+-gen_obj
+-line
+-o simv
+-picarchive
+-sverilog
+/usr/caen/vcs-2017.12-SP2-1/linux64/bin/vcs1
+i2c_master_byte_ctrl.v
+i2c_master_top.v
+i2c_slave_model.v
+minimized_tst_bench_top_t1.v
+tst_bench_top_t1.v
+wb_master_model.v
+32
+sysc_uni_pwd=/home/hammada/projects/verilog_repair/benchmarks/opencores/i2c
+_LMFILES_=/usr/caen/misc/modules/vcs/2017.12-SP2-1
+ZSH=/home/hammada/.oh-my-zsh
+XDG_SESSION_ID=7062
+XDG_RUNTIME_DIR=/run/user/1001
+XDG_DATA_DIRS=/home/hammada/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+VMR_MODE_FLAG=64
+VCS_MODE_FLAG=64
+VCS_HOME=/usr/caen/vcs-2017.12-SP2-1
+VCS_DEPTH=0
+VCS_ARG_ADDED_FOR_TMP=1
+VCS_ARCH=linux64
+UNAME=/bin/uname
+TOOL_HOME=/usr/caen/vcs-2017.12-SP2-1/linux64
+SSH_TTY=/dev/pts/0
+SSH_CONNECTION=68.48.134.194 49630 141.212.106.158 22
+SSH_CLIENT=68.48.134.194 49630 22
+SNPS_VCS_CLANG_PATH=/fs/src/interfaces/LLVM_Project/QSCM/opt/llvm-3.9.1/linux64
+SCRNAME=vcs
+SCRIPT_NAME=vcs
+OVA_UUM=0
+MODULESHOME=/usr/share/Modules
+MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles:/usr/caen/misc/modules:/afs/umich.edu/class/coe/modules
+LSCOLORS=Gxfxcxdxbxegedabagacad
+LOADEDMODULES=vcs/2017.12-SP2-1
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+LESS=-R
+LC_ALL=C
+HISTCONTROL=ignoredups
+BASH_FUNC_module()=() {  eval `/usr/bin/modulecmd bash $*`_}
+AMBER_CROSSTOOL=arm-linux-gnu
+AMBER_BASE=/home/hammada/yh_benchmarks/verilog/opencores/processor/amber/trunk
+0
+8
+1595697147 i2c_master_defines.v
+1595544207 timescale.v
+1608660629 minimized_tst_bench_top_t1.v
+1595697126 i2c_master_byte_ctrl.v
+1599606469 i2c_slave_model.v
+1595544380 wb_master_model.v
+1595697121 i2c_master_top.v
+1599937805 tst_bench_top_t1.v
+5
+0 
+1531625631 /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libvirsim.so
+1531624898 /usr/caen/vcs-2017.12-SP2-1/linux64/lib/liberrorinf.so
+1531624871 /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libsnpsmalloc.so
+1531625298 /usr/caen/vcs-2017.12-SP2-1/linux64/lib/libvfs.so
+1608660632 simv.daidir
