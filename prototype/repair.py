@@ -64,6 +64,8 @@ WRITE_TO_FILE = True
 
 GENOME_FITNESS_CACHE = {}
 
+FITNESS_EVAL_TIMES = []
+
 SEED = "None"
 SRC_FILE = None
 TEST_BENCH = None
@@ -217,6 +219,7 @@ class MutationOp(ASTCodeGenerator):
         self.fault_loc_set = set()
         self.new_vars_in_fault_loc = dict()
         self.wires_brought_in = dict()
+        self.implicated_lines = set() # contains the line number implicated by FL
         # self.blacklist = set()
         self.tmp_node = None 
         self.deletable_nodes = []
@@ -301,6 +304,16 @@ class MutationOp(ASTCodeGenerator):
         
         for c in ast.children():
             if c: self.get_node_from_ast(c, node_id)
+
+    """ 
+    Gets all the line numbers for the code implicated by the FL.
+    """    
+    def collect_lines_for_fl(self, ast):
+        if ast.node_id in self.fault_loc_set:
+            self.implicated_lines.add(ast.lineno)
+        
+        for c in ast.children():
+            if c: self.collect_lines_for_fl(c)
 
     """
     Gets a list of all nodes that can be deleted.
@@ -834,9 +847,8 @@ def calc_candidate_fitness(fileName):
     # TODO: The test bench is currently hard coded in eval_script. Do we want to change that?
     os.system("bash %s %s %s %s" % (EVAL_SCRIPT, ORIG_FILE, fileName, PROJ_DIR))
     
-    t_finish = time.time()
-    
     if not os.path.exists("output_%s.txt" % TB_ID): 
+        t_finish = time.time()
         return 0, t_finish - t_start # if the code does not compile, return 0
         # return math.inf
 
@@ -862,15 +874,18 @@ def calc_candidate_fitness(fileName):
         print("FITNESS = %f" % normalized_ff)
 
         # if os.path.exists("output_%s.txt" % TB_ID): os.remove("output_%s.txt" % TB_ID) # Do we need to do this here? Does it make a difference?
+        t_finish = time.time()
 
         return normalized_ff, t_finish - t_start
         # return fitness_v2.calculate_badness(oracle_lines, sim_lines, weights, weighting)
-    elif FITNESS_MODE == "testcases":
+    elif FITNESS_MODE == "testcases": # experimental
         total_possible = len(sim_lines)
         count = 0
         for l in sim_lines:
             if "pass" in l.lower(): count += 1
         print("%d out of %d testcases pass" % (count, total_possible))
+
+        t_finish = time.time()
         return count/total_possible, t_finish - t_start
 
 def get_elite_parents(popn, pop_size):
@@ -955,6 +970,8 @@ def seed_popn(ast, mutation_op, codegen, log, log_file):
             # if the child fitness was not 0, i.e. the parser did not throw syntax errors
             if child_fitness == -1: 
                 child_fitness, sim_time = calc_candidate_fitness("candidate_%s.v" % TB_ID)
+                global FITNESS_EVAL_TIMES
+                FITNESS_EVAL_TIMES.append(sim_time)
                 if os.path.exists("output_%s.txt" % TB_ID): os.remove("output_%s.txt" % TB_ID)
 
             os.remove("candidate_%s.v" % TB_ID)
@@ -971,6 +988,8 @@ def seed_popn(ast, mutation_op, codegen, log, log_file):
                 print(child)
                 total_time = time.time() - start_time
                 print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
+                fitness_times = sum(FITNESS_EVAL_TIMES)
+                print("TOTAL TIME SPENT ON FITNESS EVALS = %f" % fitness_times)
                 if log and log_file: 
                     log_file.write("\n\n######## REPAIR FOUND ########\n\t\t%s\n" % str(child))
                     log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
@@ -993,6 +1012,17 @@ def seed_popn(ast, mutation_op, codegen, log, log_file):
     print(GENOME_FITNESS_CACHE)
     print(len(GENOME_FITNESS_CACHE))
     return seeded
+
+def extended_fl_for_study(fl_lines, delta):
+    extended_fl = set()
+    for i in range(max(fl_lines)+delta): # e.g. 0 thru 108
+        if i in fl_lines:
+            extended_fl.add(i)
+        else:
+            for j in range(1, delta+1):
+                if i+j in fl_lines or i-j in fl_lines:
+                    extended_fl.add(i)
+    return extended_fl
 
 def main():
     start_time = time.time()
@@ -1144,6 +1174,8 @@ def main():
 
     # calculate fitness of the original buggy program
     orig_fitness, sim_time = calc_candidate_fitness(SRC_FILE)
+    global FITNESS_EVAL_TIMES
+    FITNESS_EVAL_TIMES.append(sim_time)
     #orig_fitness = ff_1
     GENOME_FITNESS_CACHE[str([])] = orig_fitness
     #GENOME_FITNESS_CACHE[str(['insert(53,78)'])] = orig_fitness
@@ -1196,13 +1228,15 @@ def main():
     # print(minimized)
     # exit(1)
 
+    comp_failures = 0
+
     for restart_attempt in range(RESTARTS):
         popn = []
         popn.append([])
         #popn.append(['insert(53,78)'])
 
         # seed initial population using repair templates
-        popn.extend(seed_popn(copy.deepcopy(ast), mutation_op, codegen, LOG, log_file))
+        # popn.extend(seed_popn(copy.deepcopy(ast), mutation_op, codegen, LOG, log_file))
 
         # print(popn)
 
@@ -1235,8 +1269,11 @@ def main():
                 parent_patchlist, parent_ast = tournament_selection(mutation_op, codegen, ast, popn)
                 print(parent_patchlist)
                 
+                fl2_wires = copy.deepcopy(mismatch_set)
+
                 if mutation_op.fault_loc:
                     tmp_mismatch_set = copy.deepcopy(mismatch_set)
+                    print()
                     mutation_op.get_fault_loc_targets(parent_ast, tmp_mismatch_set, uniq_headers) # compute fault localization for the parent
                     print("Initial Fault Localization:", str(mutation_op.fault_loc_set))
                     while len(mutation_op.new_vars_in_fault_loc) > 0:
@@ -1253,6 +1290,81 @@ def main():
                     # print(mutation_op.wires_brought_in)
                 
                 # exit(1)
+
+                mutation_op.implicated_lines = set()
+                mutation_op.collect_lines_for_fl(parent_ast)
+                print("Lines implicated by FL: %s" % str(mutation_op.implicated_lines))
+                print("Number of lines implicated by FL: %d" % len(mutation_op.implicated_lines))
+
+                extended_fl = extended_fl_for_study(mutation_op.implicated_lines, 5)
+                print("Lines in extended FL: %s" % str(extended_fl))
+                print("Number of lines in extended FL: %d" % len(extended_fl))
+
+                # FL 1
+                # html_str = """<pre style="margin-left: 40px;">\n"""
+                html_str = """<div><p style="line-height:1.5; font-size:16px;">"""
+
+                with open(SRC_FILE, 'r') as tmp_f:
+                    lines = tmp_f.readlines()
+                    put_dots = True
+                    for i in range(1,len(lines)+1):
+                        if i in mutation_op.implicated_lines:
+                            # print(lines[i], end="")
+                            # html_str += """%d&nbsp;&nbsp;<span style="background-color:#f1c40f;">%s</span>\n""" % (i, lines[i-1].strip().replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
+                            html_str += """<code>%d&nbsp;&nbsp;<span style="background-color:#f1c40f;"><code>%s</code></span></code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                            put_dots = True
+                        elif i in extended_fl:
+                            # html_str += "%d&nbsp;&nbsp;%s" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
+                            html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                            put_dots = True
+                        else:
+                            if put_dots:
+                                # html_str += "&nbsp;&nbsp;...\n"
+                                html_str += "<code>&nbsp;&nbsp;...</code><br/>"
+                                put_dots = False
+
+                # html_str += "</pre>"
+                html_str += "</p></div>"
+
+                print(html_str)
+
+                print(fl2_wires)
+                # FL 2
+                html_str = """<div><p style="line-height:1.5; font-size:16px;">"""
+
+                with open(SRC_FILE, 'r') as tmp_f:
+                    lines = tmp_f.readlines()
+                    put_dots = True
+                    for i in range(1,len(lines)+1):
+                        if i in mutation_op.implicated_lines:
+                            # print(lines[i], end="")
+                            # html_str += """%d&nbsp;&nbsp;<span style="background-color:#f1c40f;">%s</span>\n""" % (i, lines[i-1].strip().replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
+                            html_str += """<code>%d&nbsp;&nbsp;%s</code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                            put_dots = True
+                        elif i in extended_fl:
+                            # html_str += "%d&nbsp;&nbsp;%s" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
+                            html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                            put_dots = True
+                        else:
+                            if put_dots:
+                                # html_str += "&nbsp;&nbsp;...\n"
+                                html_str += "<code>&nbsp;&nbsp;...</code><br/>"
+                                put_dots = False
+
+                # html_str += "</pre>"
+                html_str += "</p></div>"
+
+                print(html_str)
+
+                for wire in fl2_wires:
+                    html_str = html_str.replace(wire, """<span style="background-color:#f1c40f;"><code>%s</code></span>""" % wire)
+                print(html_str)
+
+
+                mutation_op.implicated_lines = set()
+
+
+                exit(1)
                 # input("About to mutate. Press any key.")
                 
                 random.seed(inc_seed())
@@ -1313,11 +1425,13 @@ def main():
                             tmp_ast, directives = parse(["candidate_%s.v" % TB_ID])
                         except ParseError:
                             child_fitness = 0
+                            comp_failures += 1
                             # child_fitness = math.inf
                         # if the child fitness was not 0, i.e. the parser did not throw syntax errors
                         if child_fitness == -1: 
                             
                             child_fitness, sim_time = calc_candidate_fitness("candidate_%s.v" % TB_ID)
+                            FITNESS_EVAL_TIMES.append(sim_time)
                             if os.path.exists("output_%s.txt" % TB_ID): os.remove("output_%s.txt" % TB_ID)
 
                         os.remove("candidate_%s.v" % TB_ID)
@@ -1335,6 +1449,8 @@ def main():
                         print(child_patchlist)
                         total_time = time.time() - start_time
                         print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
+                        fitness_times = sum(FITNESS_EVAL_TIMES)
+                        print("TOTAL TIME SPENT ON FITNESS EVALS = %f" % fitness_times)
                         if LOG: 
                             log_file.write("\n\n######## REPAIR FOUND ########\n\t\t%s\n" % str(child_patchlist))
                             log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
@@ -1359,6 +1475,8 @@ def main():
                     mutation_op.wires_brought_in = dict()
                     # mutation_op.blacklist = set()
                 
+                print("NUMBER OF COMPILATION FAILURES SO FAR: %d" % comp_failures)
+                
                 # exit(1)
             
             popn = copy.deepcopy(_children)
@@ -1370,6 +1488,8 @@ def main():
     
     total_time = time.time() - start_time
     print("TOTAL TIME TAKEN = %f" % total_time)
+    fitness_times = sum(FITNESS_EVAL_TIMES)
+    print("TOTAL TIME SPENT ON FITNESS EVALS = %f" % fitness_times)
     if LOG: log_file.write("\n\n\nTOTAL TIME TAKEN = %f\n\n" % total_time)
 
     if LOG: log_file.write("BEST PATCHES:\n")
