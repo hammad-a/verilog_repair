@@ -1046,7 +1046,7 @@ class InstanceList(Node):
     def __init__(self, module, parameterlist, instances, lineno=0):
         self.lineno = lineno
         self.module = module
-        self.parameterlist = parameterlist
+        self.parameterlist = list(parameterlist)
         self.instances = instances
         self.node_id = None
 
@@ -1198,7 +1198,7 @@ class GenerateStatement(Node):
 
     def __init__(self, items, lineno=0):
         self.lineno = lineno
-        self.items = items
+        self.items = list(items)
         self.node_id = None
 
     def children(self):
@@ -1214,7 +1214,7 @@ class SystemCall(Node):
     def __init__(self, syscall, args, lineno=0):
         self.lineno = lineno
         self.syscall = syscall
-        self.args = args
+        self.args = list(args)
         self.node_id = None
 
     def children(self):

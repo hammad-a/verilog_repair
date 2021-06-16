@@ -29,7 +29,7 @@ from pyverilog.vparser.ast import *
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 
 AST_CLASSES = []
-f = open("ast_classes.txt", "r")
+f = open("/home/hammada/.local/lib/python3.6/site-packages/pyverilog/vparser/ast_classes.txt", "r")
 lines = f.readlines()
 for line in lines:
     line = line.strip()
@@ -2327,7 +2327,10 @@ class NodeNumbering(ASTCodeGenerator):
             elif attr[key].__class__ in [list, tuple]: # for attributes that are lists or tuples
                 if attr[key].__class__ == tuple:
                     print(key, attr[key], ast)
+                    pass
                 for i in range(len(attr[key])): # loop through each AST in that list or tuple
+                    #print(attr[key].__class__, key)
+                    #ast.show()
                     attr[key][i] = copy.deepcopy(attr[key][i])
 
         for c in ast.children():
@@ -2351,8 +2354,14 @@ def parse(
     outputdir=".",
     debug=True
 ):
+    try:
+        pp_post = filelist[0].split("/")[-1].replace(".v","") # get the name of the src file, appended to preprocess.out for "unique" outputs from preprocessor (so that we can run multiple experiments at the same time)
+        print(pp_post)
+    except Exception:
+        pp_post = ""
     codeparser = VerilogCodeParser(
         filelist,
+        preprocess_output="pp.out"+pp_post,
         preprocess_include=preprocess_include,
         preprocess_define=preprocess_define,
         outputdir=outputdir,
