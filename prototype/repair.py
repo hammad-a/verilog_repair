@@ -1311,11 +1311,11 @@ def main():
                         if i in mutation_op.implicated_lines:
                             # print(lines[i], end="")
                             # html_str += """%d&nbsp;&nbsp;<span style="background-color:#f1c40f;">%s</span>\n""" % (i, lines[i-1].strip().replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
-                            html_str += """<code>%d&nbsp;&nbsp;<span style="background-color:#f1c40f;"><code>%s</code></span></code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                            html_str += """<code>%d&nbsp;&nbsp;<span style="background-color:#f1c40f;"><code>%s</code></span></code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
                             put_dots = True
                         elif i in extended_fl:
                             # html_str += "%d&nbsp;&nbsp;%s" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
-                            html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                            html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
                             put_dots = True
                         else:
                             if put_dots:
@@ -1339,11 +1339,11 @@ def main():
                         if i in mutation_op.implicated_lines:
                             # print(lines[i], end="")
                             # html_str += """%d&nbsp;&nbsp;<span style="background-color:#f1c40f;">%s</span>\n""" % (i, lines[i-1].strip().replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
-                            html_str += """<code>%d&nbsp;&nbsp;%s</code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                            html_str += """<code>%d&nbsp;&nbsp;%s</code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
                             put_dots = True
                         elif i in extended_fl:
                             # html_str += "%d&nbsp;&nbsp;%s" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
-                            html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                            html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
                             put_dots = True
                         else:
                             if put_dots:
