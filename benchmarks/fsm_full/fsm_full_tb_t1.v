@@ -8,7 +8,7 @@ wire gnt_0 , gnt_1 , gnt_2 , gnt_3 ;
 integer f;
 
 initial begin
-  f = $fopen("output.txt");
+  f = $fopen("output_fsm_full_tb_t1.txt");
   $display("time\t    req_0 req_1 req_2 req_3 gnt_0 gnt_1 gnt_2 gnt_3");
   $fwrite(f, "time,gnt_0,gnt_1,gnt_2,gnt_3\n");
   $monitor("%g\t    %b  %b  %b  %b  %b  %b  %b  %b", 
