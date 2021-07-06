@@ -38,6 +38,7 @@ reg [2:0] state, next_state;
 
 always @ (req_0 or req_1 or req_2 or req_3)
 begin  
+  // next_state = 0;
   case(state)
     IDLE : if (req_0 == 1'b1) begin
   	     next_state = GNT0;
@@ -70,6 +71,7 @@ begin
            end else begin
 	     next_state = GNT3;
 	  end
+  //  default : next_state = IDLE;
   endcase
 end
 
