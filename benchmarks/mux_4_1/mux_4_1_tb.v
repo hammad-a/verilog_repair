@@ -24,7 +24,7 @@ module tb_4to1_mux;
    integer f;
 
    initial begin
-       f = $fopen("output.txt");
+       f = $fopen("output_mux_4_1_tb.txt");
        $fwrite(f, "time,out[3],out[2],out[1],out[0]\n");
        forever begin
            @(posedge clk);
