@@ -1,0 +1,47 @@
+SEED:
+	 repair_2021-07-18-14:24:15
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/flip_flop/tff_wadden_buggy2.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/flip_flop/tff_tb.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/flip_flop
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/flip_flop/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/flip_flop/oracle_quarter.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> []		0.40000000000000002
+	[] --template_seeding--> []		0.40000000000000002
+	[] --template_seeding--> ['template(sens_to_level,16)']		0.40000000000000002
+	[] --template_seeding--> []		0.40000000000000002
+	[] --template_seeding--> ['template(decrement_by_one,35)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,33)']		0.40000000000000002
+	[] --template_seeding--> ['template(nonblocking_to_blocking,28)']		0.40000000000000002
+	[] --template_seeding--> ['template(increment_by_one,20)']		0.77777777777777779
+	[] --template_seeding--> ['template(sens_to_level,16)']		0.40000000000000002
+	[] --template_seeding--> []		0.40000000000000002
+	[] --template_seeding--> ['template(sens_to_all,16)']		0.77777777777777779
+	[] --template_seeding--> []		0.40000000000000002
+	[] --template_seeding--> ['template(decrement_by_one,20)']		1
+
+
+######## REPAIR FOUND ########
+		['template(decrement_by_one,20)']
+TOTAL TIME TAKEN TO FIND REPAIR = 5.733557
+Minimized patch: ['template(decrement_by_one,20)']

@@ -1,0 +1,97 @@
+SEED:
+	 repair_2021-07-11-13:52:52
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/first_counter_overflow_wadden_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter/first_counter_tb_t3.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/oracle_half.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+IN GENERATION 0 OF ATTEMPT 0
+	[] --mutation--> ['replace(50,73)']		0.37142857142857144 
+	[] --mutation--> ['replace(77,44)']		0 
+	[] --mutation--> ['replace(47,47)']		0.085714285714285715 
+	[] --mutation--> ['replace(59,33)']		0.085714285714285715 
+	[] --template--> ['template(increment_by_one,48)']		0 
+	[] --mutation--> ['delete(51)']		0.085714285714285715 
+	[] --mutation--> ['insert(46,53)']		0.085714285714285715 
+	[] --mutation--> ['delete(58)']		0.085714285714285715 
+	[] --template--> []		0.085714285714285715 
+	[] --mutation--> ['insert(72,74)']		0 
+	[] --mutation--> ['insert(51,79)']		0 
+	[] --template--> ['template(sens_to_all,38)']		0.31428571428571428 
+	[] --mutation--> ['delete(51)']		0.085714285714285715 
+	[] --mutation--> ['replace(56,56)']		0.085714285714285715 
+	[] --mutation--> ['delete(72)']		0.085714285714285715 
+	[] --mutation--> ['delete(79)']		0.11428571428571428 
+	[] --mutation--> ['insert(53,53)']		0.085714285714285715 
+	[] --template--> ['template(increment_by_one,43)']		0 
+	[] --mutation--> ['replace(66,80)']		0.057142857142857141 
+	[] --mutation--> ['delete(51)']		0.085714285714285715 
+	[] --template--> []		0.085714285714285715 
+	[] --mutation--> ['insert(53,74)']		0.057142857142857141 
+	[] --mutation--> ['insert(46,53)']		0.085714285714285715 
+	[] --mutation--> ['insert(65,53)']		0 
+	[] --mutation--> ['delete(51)']		0.085714285714285715 
+	[] --template--> ['template(increment_by_one,48)']		0 
+	[] --template--> []		0.085714285714285715 
+	[] --mutation--> ['insert(51,41)']		0.085714285714285715 
+	[] --mutation--> ['delete(65)']		0.20000000000000001 
+	[] --mutation--> ['delete(84)']		0.085714285714285715 
+	[] --mutation--> ['insert(51,79)']		0 
+	[] --mutation--> ['replace(46,79)']		0 
+	[] --mutation--> ['replace(47,47)']		0.085714285714285715 
+	[] --mutation--> ['delete(58)']		0.085714285714285715 
+	[] --mutation--> ['delete(84)']		0.085714285714285715 
+	[] --mutation--> ['delete(51)']		0.085714285714285715 
+	[] --template--> []		0.085714285714285715 
+	[] --mutation--> ['replace(80,66)']		0.25714285714285712 
+	[] --template--> ['template(sens_to_all,38)']		0.31428571428571428 
+	[] --mutation--> ['delete(65)']		0.20000000000000001 
+	[] --mutation--> ['replace(46,53)']		0 
+	[] --mutation--> ['delete(58)']		0.085714285714285715 
+	[] --mutation--> ['replace(58,84)']		0.085714285714285715 
+	[] --mutation--> ['insert(79,65)']		0 
+	[] --mutation--> ['insert(58,74)']		0 
+	[] --mutation--> ['delete(79)']		0.11428571428571428 
+	[] --mutation--> ['insert(51,46)']		0.085714285714285715 
+	[] --template--> ['template(nonblocking_to_blocking,65)']		0.085714285714285715 
+	[] --mutation--> ['replace(62,81)']		0.20000000000000001 
+	[] --mutation--> ['insert(53,53)']		0.085714285714285715 
+	[] --template--> ['template(nonblocking_to_blocking,65)']		0.085714285714285715 
+	[] --mutation--> ['insert(72,74)']		0 
+	[] --mutation--> ['replace(85,73)']		0.085714285714285715 
+	[] --mutation--> ['insert(84,74)']		0 
+	[] --template--> ['template(decrement_by_one,67)']		0 
+	[] --mutation--> ['replace(50,77)']		0.17142857142857143 
+	[] --template--> ['template(nonblocking_to_blocking,46)']		0.085714285714285715 
+	[] --mutation--> ['replace(59,57)']		0 
+	[] --mutation--> ['insert(46,41)']		0 
+	[] --template--> ['template(decrement_by_one,55)']		0 
+	[] --mutation--> ['insert(65,41)']		0 
+	[] --template--> []		0.085714285714285715 
+	[] --template--> ['template(sens_to_posedge,38)']		1 
+
+######## REPAIR FOUND ########
+		['template(sens_to_posedge,38)']
+TOTAL TIME TAKEN TO FIND REPAIR = 35.757185
+Minimized patch: ['template(sens_to_posedge,38)']

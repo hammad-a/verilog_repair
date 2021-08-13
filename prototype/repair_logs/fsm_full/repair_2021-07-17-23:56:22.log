@@ -1,0 +1,40 @@
+SEED:
+	 repair_2021-07-17-23:56:22
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_wadden_buggy2.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/oracle_quarter.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(increment_by_one,94)']		0
+	[] --template_seeding--> ['template(sens_to_level,224)']		0.86363636363636365
+	[] --template_seeding--> ['template(increment_by_one,90)']		0
+	[] --template_seeding--> ['template(increment_by_one,294)']		0
+	[] --template_seeding--> []		1
+	[] --template_seeding--> ['template(nonblocking_to_blocking,339)']		1
+
+
+######## REPAIR FOUND ########
+		['template(nonblocking_to_blocking,339)']
+TOTAL TIME TAKEN TO FIND REPAIR = 2.380842
+Minimized patch: ['template(nonblocking_to_blocking,339)']

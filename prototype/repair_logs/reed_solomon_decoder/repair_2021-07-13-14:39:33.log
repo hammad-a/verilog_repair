@@ -1,0 +1,42 @@
+SEED:
+	 repair_2021-07-13-14:39:33
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/out_stage_ssscrazy_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/RS_dec_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/reed_solomon_decoder/oracle_half.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(sens_to_level,61)']		0
+	[] --template_seeding--> ['template(increment_by_one,60)']		0
+	[] --template_seeding--> ['template(increment_by_one,162)']		0.93129431023483678
+	[] --template_seeding--> ['template(decrement_by_one,69)']		0
+	[] --template_seeding--> []		1
+	[] --template_seeding--> ['template(increment_by_one,74)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,59)']		0.95474427954115959
+	[] --template_seeding--> ['template(sens_to_posedge,59)']		1
+
+
+######## REPAIR FOUND ########
+		['template(sens_to_posedge,59)']
+TOTAL TIME TAKEN TO FIND REPAIR = 7.487562
+Minimized patch: ['template(sens_to_posedge,59)']

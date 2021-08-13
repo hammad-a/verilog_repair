@@ -1,0 +1,301 @@
+SEED:
+	 repair_2021-07-18-00:01:11
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_ssscrazy_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/fsm_full_tb_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/fsm_full/oracle_quarter.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(decrement_by_one,134)']		0.90909090909090906
+	[] --template_seeding--> ['template(blocking_to_nonblocking,179)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,92)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,123)']		0.77272727272727271
+	[] --template_seeding--> ['template(sens_to_posedge,95)']		0
+	[] --template_seeding--> ['template(decrement_by_one,213)']		0.90909090909090906
+	[] --template_seeding--> ['template(sens_to_level,222)']		0.5
+	[] --template_seeding--> ['template(increment_by_one,260)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_level,91)']		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,327)']		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,123)']		0.77272727272727271
+	[] --template_seeding--> ['template(decrement_by_one,350)']		0.72727272727272729
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(blocking_to_nonblocking,127)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_level,91)']		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,103)']		0.68181818181818177
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,249)']		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,242)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_level,89)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,94)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,151)']		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,307)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_level,222)']		0.5
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,187)']		0.81818181818181823
+	[] --template_seeding--> ['template(sens_to_level,89)']		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,123)']		0.77272727272727271
+	[] --template_seeding--> ['template(negate_equality,205)']		0.90909090909090906
+	[] --template_seeding--> ['template(increment_by_one,350)']		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,249)']		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,99)']		0.72727272727272729
+	[] --template_seeding--> ['template(increment_by_one,159)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(blocking_to_nonblocking,127)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,268)']		0.45454545454545453
+	[] --template_seeding--> ['template(blocking_to_nonblocking,161)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_all,89)']		0
+	[] --template_seeding--> ['template(sens_to_level,222)']		0.5
+	[] --template_seeding--> ['template(nonblocking_to_blocking,337)']		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,114)']		0.86363636363636365
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,258)']		0
+	[] --template_seeding--> ['template(decrement_by_one,181)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,103)']		0.68181818181818177
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,121)']		0.77272727272727271
+	[] --template_seeding--> ['template(decrement_by_one,230)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,143)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,111)']		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,101)']		0.72727272727272729
+	[] --template_seeding--> ['template(increment_by_one,111)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,285)']		0
+	[] --template_seeding--> ['template(increment_by_one,195)']		0.90909090909090906
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,290)']		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,327)']		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,113)']		0.68181818181818177
+	[] --template_seeding--> ['template(increment_by_one,217)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,117)']		0.90909090909090906
+	[] --template_seeding--> ['template(decrement_by_one,278)']		0
+	[] --template_seeding--> ['template(increment_by_one,134)']		0.77272727272727271
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_negedge,95)']		0
+	[] --template_seeding--> ['template(negate_equality,133)']		0.77272727272727271
+	[] --template_seeding--> ['template(negate_equality,205)']		0.90909090909090906
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,346)']		0.72727272727272729
+	[] --template_seeding--> ['template(sens_to_level,89)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_negedge,93)']		0
+	[] --template_seeding--> ['template(negate_equality,205)']		0.90909090909090906
+	[] --template_seeding--> ['template(nonblocking_to_blocking,249)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_level,91)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_level,93)']		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,297)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_level,91)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,319)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_posedge,222)']		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,149)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,124)']		0.77272727272727271
+	[] --template_seeding--> ['template(sens_to_negedge,93)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,319)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_posedge,95)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,327)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,305)']		0.77272727272727271
+	[] --template_seeding--> ['template(increment_by_one,104)']		0.68181818181818177
+	[] --template_seeding--> ['template(blocking_to_nonblocking,155)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_all,91)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,170)']		0.63636363636363635
+	[] --template_seeding--> ['template(increment_by_one,157)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_level,95)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_posedge,222)']		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,121)']		0.77272727272727271
+	[] --template_seeding--> ['template(sens_to_level,95)']		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,201)']		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,123)']		0.77272727272727271
+	[] --template_seeding--> ['template(increment_by_one,170)']		0.63636363636363635
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,228)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_negedge,222)']		0.54545454545454541
+	[] --template_seeding--> ['template(sens_to_negedge,93)']		0
+	[] --template_seeding--> ['template(increment_by_one,157)']		0
+	[] --template_seeding--> ['template(negate_equality,187)']		0.81818181818181823
+	[] --template_seeding--> ['template(sens_to_level,91)']		0.95454545454545459
+	[] --template_seeding--> ['template(blocking_to_nonblocking,179)']		0.95454545454545459
+	[] --template_seeding--> ['template(blocking_to_nonblocking,179)']		0.95454545454545459
+	[] --template_seeding--> ['template(blocking_to_nonblocking,127)']		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,187)']		0.81818181818181823
+	[] --template_seeding--> ['template(negate_equality,169)']		0.63636363636363635
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,145)']		0
+	[] --template_seeding--> ['template(sens_to_level,222)']		0.5
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(blocking_to_nonblocking,191)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_negedge,95)']		0
+	[] --template_seeding--> ['template(increment_by_one,139)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,145)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_posedge,91)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,113)']		0.68181818181818177
+	[] --template_seeding--> ['template(increment_by_one,94)']		0
+	[] --template_seeding--> ['template(decrement_by_one,268)']		0.54545454545454541
+	[] --template_seeding--> ['template(increment_by_one,149)']		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,187)']		0.81818181818181823
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,113)']		0.68181818181818177
+	[] --template_seeding--> ['template(decrement_by_one,217)']		0
+	[] --template_seeding--> ['template(decrement_by_one,226)']		0.36363636363636365
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,319)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_negedge,91)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.95454545454545459
+	[] --template_seeding--> ['template(blocking_to_nonblocking,107)']		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,337)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,315)']		0.68181818181818177
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,305)']		0.77272727272727271
+	[] --template_seeding--> ['template(decrement_by_one,217)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,327)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,149)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,169)']		0.63636363636363635
+	[] --template_seeding--> ['template(decrement_by_one,244)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_all,222)']		0.36363636363636365
+	[] --template_seeding--> ['template(blocking_to_nonblocking,209)']		0.90909090909090906
+	[] --template_seeding--> ['template(negate_equality,123)']		0.77272727272727271
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_negedge,89)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,209)']		0.90909090909090906
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,185)']		0.81818181818181823
+	[] --template_seeding--> ['template(decrement_by_one,183)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,237)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,327)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,149)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(blocking_to_nonblocking,117)']		0.90909090909090906
+	[] --template_seeding--> ['template(nonblocking_to_blocking,242)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,163)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(blocking_to_nonblocking,155)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,111)']		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,177)']		0.86363636363636365
+	[] --template_seeding--> ['template(negate_equality,113)']		0.68181818181818177
+	[] --template_seeding--> ['template(decrement_by_one,213)']		0.90909090909090906
+	[] --template_seeding--> ['template(sens_to_posedge,91)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,93)']		0
+	[] --template_seeding--> ['template(sens_to_negedge,95)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,109)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,161)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,339)']		0
+	[] --template_seeding--> ['template(negate_equality,205)']		0.90909090909090906
+	[] --template_seeding--> ['template(sens_to_all,95)']		0
+	[] --template_seeding--> ['template(decrement_by_one,134)']		0.90909090909090906
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,346)']		0.72727272727272729
+	[] --template_seeding--> ['template(blocking_to_nonblocking,191)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,219)']		0.95454545454545459
+	[] --template_seeding--> ['template(decrement_by_one,292)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_level,222)']		0.5
+	[] --template_seeding--> ['template(nonblocking_to_blocking,283)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,121)']		0.77272727272727271
+	[] --template_seeding--> ['template(increment_by_one,244)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,237)']		0
+	[] --template_seeding--> ['template(decrement_by_one,329)']		0
+	[] --template_seeding--> ['template(increment_by_one,124)']		0.77272727272727271
+	[] --template_seeding--> ['template(negate_equality,103)']		0.68181818181818177
+	[] --template_seeding--> ['template(increment_by_one,260)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,157)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,117)']		0.90909090909090906
+	[] --template_seeding--> ['template(blocking_to_nonblocking,191)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,348)']		0
+	[] --template_seeding--> ['template(sens_to_all,91)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.95454545454545459
+	[] --template_seeding--> ['template(sens_to_all,93)']		0
+	[] --template_seeding--> ['template(increment_by_one,141)']		0.90909090909090906
+	[] --template_seeding--> ['template(sens_to_negedge,89)']		0
+	[] --template_seeding--> ['template(increment_by_one,141)']		0.90909090909090906
+	[] --template_seeding--> ['template(nonblocking_to_blocking,337)']		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,299)']		0
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,123)']		0.77272727272727271
+	[] --template_seeding--> ['template(nonblocking_to_blocking,242)']		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,235)']		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,123)']		0.77272727272727271
+	[] --template_seeding--> ['template(nonblocking_to_blocking,337)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(negate_equality,113)']		0.68181818181818177
+	[] --template_seeding--> ['template(negate_equality,205)']		0.90909090909090906
+	[] --template_seeding--> ['template(decrement_by_one,201)']		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> []		0.95454545454545459
+	[] --template_seeding--> ['template(increment_by_one,185)']		0.81818181818181823
+	[] --template_seeding--> ['template(increment_by_one,335)']		0.90909090909090906
+	[] --template_seeding--> ['template(increment_by_one,134)']		0.77272727272727271
+	[] --template_seeding--> ['template(sens_to_level,95)']		0.95454545454545459
+	[] --template_seeding--> ['template(nonblocking_to_blocking,264)']		0.86363636363636365
+	[] --template_seeding--> ['template(decrement_by_one,223)']		0
+	[] --template_seeding--> ['template(decrement_by_one,114)']		0.86363636363636365
+	[] --template_seeding--> ['template(decrement_by_one,260)']		1
+
+
+######## REPAIR FOUND ########
+		['template(decrement_by_one,260)']
+TOTAL TIME TAKEN TO FIND REPAIR = 84.856754
+Minimized patch: ['template(decrement_by_one,260)']

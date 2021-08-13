@@ -1,0 +1,36 @@
+SEED:
+	 repair_2021-08-02-12:27:37
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/first_counter_overflow_kgoliya_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter/first_counter_tb_t3.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/run.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/first_counter_overflow/oracle.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(negate_equality,54)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,72)']		0
+	[] --template_seeding--> []		0
+	[] --template_seeding--> ['template(negate_equality,54)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,58)']		0
+	[] --template_seeding--> ['template(sens_to_posedge,38)']		0
+	[] --template_seeding--> ['template(negate_equality,68)']		0

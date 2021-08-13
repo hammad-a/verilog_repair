@@ -1,0 +1,49 @@
+SEED:
+	 repair_2021-07-13-11:49:30
+SOURCE FILE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/padder_ssscrazy_buggy1.v
+TEST BENCH:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/test_padder_t1.v
+PROJ_DIR:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/
+FITNESS_MODE:
+	 outputwires
+EVAL_SCRIPT:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/run_padder.sh
+ORACLE:
+	 /home/hammada/projects/verilog_repair/benchmarks/opencores/sha3/low_throughput_core/oracle_padder_half.txt
+PARAMETERS:
+	gens=8
+	popsize=5000
+	mutation_rate=0.700000
+	crossover_rate=0.300000
+	replacement_rate=0.400000
+	insertion_rate=0.300000
+	deletion_rate=0.300000
+	restarts=1
+	fault_loc=True
+	control_flow=True
+	limit_transitive_dependency_set=True
+	dependency_set_max=4
+
+	[] --template_seeding--> ['template(blocking_to_nonblocking,210)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,107)']		0.91610327388874102
+	[] --template_seeding--> []		0.91610327388874102
+	[] --template_seeding--> []		0.91610327388874102
+	[] --template_seeding--> ['template(nonblocking_to_blocking,141)']		0.97418152781474576
+	[] --template_seeding--> ['template(negate_equality,229)']		0
+	[] --template_seeding--> ['template(negate_equality,229)']		0
+	[] --template_seeding--> ['template(nonblocking_to_blocking,170)']		0.91610327388874102
+	[] --template_seeding--> []		0.91610327388874102
+	[] --template_seeding--> ['template(sens_to_negedge,159)']		0
+	[] --template_seeding--> ['template(blocking_to_nonblocking,232)']		0.91610327388874102
+	[] --template_seeding--> ['template(increment_by_one,90)']		0
+	[] --template_seeding--> ['template(negate_equality,229)']		0
+	[] --template_seeding--> ['template(increment_by_one,106)']		0
+	[] --template_seeding--> ['template(sens_to_all,177)']		1
+
+
+######## REPAIR FOUND ########
+		['template(sens_to_all,177)']
+TOTAL TIME TAKEN TO FIND REPAIR = 25.692781
+Minimized patch: ['template(sens_to_all,177)']
