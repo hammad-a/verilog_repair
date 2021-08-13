@@ -1236,7 +1236,7 @@ def main():
         #popn.append(['insert(53,78)'])
 
         # seed initial population using repair templates
-        # popn.extend(seed_popn(copy.deepcopy(ast), mutation_op, codegen, LOG, log_file))
+        popn.extend(seed_popn(copy.deepcopy(ast), mutation_op, codegen, LOG, log_file))
 
         # print(popn)
 
@@ -1300,72 +1300,68 @@ def main():
                 print("Lines in extended FL: %s" % str(extended_fl))
                 print("Number of lines in extended FL: %d" % len(extended_fl))
 
-                # FL 1
-                # html_str = """<pre style="margin-left: 40px;">\n"""
-                html_str = """<div><p style="line-height:1.5; font-size:16px;">"""
+                # # FL 1
+                # # html_str = """<pre style="margin-left: 40px;">\n"""
+                # html_str = """<div><p style="line-height:1.5; font-size:16px;">"""
 
-                with open(SRC_FILE, 'r') as tmp_f:
-                    lines = tmp_f.readlines()
-                    put_dots = True
-                    for i in range(1,len(lines)+1):
-                        if i in mutation_op.implicated_lines:
-                            # print(lines[i], end="")
-                            # html_str += """%d&nbsp;&nbsp;<span style="background-color:#f1c40f;">%s</span>\n""" % (i, lines[i-1].strip().replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
-                            html_str += """<code>%d&nbsp;&nbsp;<span style="background-color:#f1c40f;"><code>%s</code></span></code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
-                            put_dots = True
-                        elif i in extended_fl:
-                            # html_str += "%d&nbsp;&nbsp;%s" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
-                            html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
-                            put_dots = True
-                        else:
-                            if put_dots:
-                                # html_str += "&nbsp;&nbsp;...\n"
-                                html_str += "<code>&nbsp;&nbsp;...</code><br/>"
-                                put_dots = False
+                # with open(SRC_FILE, 'r') as tmp_f:
+                #     lines = tmp_f.readlines()
+                #     put_dots = True
+                #     for i in range(1,len(lines)+1):
+                #         if i in mutation_op.implicated_lines:
+                #             # print(lines[i], end="")
+                #             # html_str += """%d&nbsp;&nbsp;<span style="background-color:#f1c40f;">%s</span>\n""" % (i, lines[i-1].strip().replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
+                #             html_str += """<code>%d&nbsp;&nbsp;<span style="background-color:#f1c40f;"><code>%s</code></span></code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                #             put_dots = True
+                #         elif i in extended_fl:
+                #             # html_str += "%d&nbsp;&nbsp;%s" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
+                #             html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                #             put_dots = True
+                #         else:
+                #             if put_dots:
+                #                 # html_str += "&nbsp;&nbsp;...\n"
+                #                 html_str += "<code>&nbsp;&nbsp;...</code><br/>"
+                #                 put_dots = False
 
-                # html_str += "</pre>"
-                html_str += "</p></div>"
+                # # html_str += "</pre>"
+                # html_str += "</p></div>"
 
-                print(html_str)
+                # print(html_str)
 
-                print(fl2_wires)
-                # FL 2
-                html_str = """<div><p style="line-height:1.5; font-size:16px;">"""
+                # print(fl2_wires)
+                # # FL 2
+                # html_str = """<div><p style="line-height:1.5; font-size:16px;">"""
 
-                with open(SRC_FILE, 'r') as tmp_f:
-                    lines = tmp_f.readlines()
-                    put_dots = True
-                    for i in range(1,len(lines)+1):
-                        if i in mutation_op.implicated_lines:
-                            # print(lines[i], end="")
-                            # html_str += """%d&nbsp;&nbsp;<span style="background-color:#f1c40f;">%s</span>\n""" % (i, lines[i-1].strip().replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
-                            html_str += """<code>%d&nbsp;&nbsp;%s</code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
-                            put_dots = True
-                        elif i in extended_fl:
-                            # html_str += "%d&nbsp;&nbsp;%s" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
-                            html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
-                            put_dots = True
-                        else:
-                            if put_dots:
-                                # html_str += "&nbsp;&nbsp;...\n"
-                                html_str += "<code>&nbsp;&nbsp;...</code><br/>"
-                                put_dots = False
+                # with open(SRC_FILE, 'r') as tmp_f:
+                #     lines = tmp_f.readlines()
+                #     put_dots = True
+                #     for i in range(1,len(lines)+1):
+                #         if i in mutation_op.implicated_lines:
+                #             # print(lines[i], end="")
+                #             # html_str += """%d&nbsp;&nbsp;<span style="background-color:#f1c40f;">%s</span>\n""" % (i, lines[i-1].strip().replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
+                #             html_str += """<code>%d&nbsp;&nbsp;%s</code><br/>""" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                #             put_dots = True
+                #         elif i in extended_fl:
+                #             # html_str += "%d&nbsp;&nbsp;%s" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("   ", "&nbsp;").replace("    ", "&nbsp;"))
+                #             html_str += "<code>%d&nbsp;&nbsp;%s</code><br/>" % (i, lines[i-1].replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;").replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").replace("   ", "&nbsp;").replace("    ", "&nbsp;").replace("  ", "&nbsp;"))
+                #             put_dots = True
+                #         else:
+                #             if put_dots:
+                #                 # html_str += "&nbsp;&nbsp;...\n"
+                #                 html_str += "<code>&nbsp;&nbsp;...</code><br/>"
+                #                 put_dots = False
 
-                # html_str += "</pre>"
-                html_str += "</p></div>"
+                # # html_str += "</pre>"
+                # html_str += "</p></div>"
 
-                print(html_str)
+                # print(html_str)
 
-                for wire in fl2_wires:
-                    html_str = html_str.replace(wire, """<span style="background-color:#f1c40f;"><code>%s</code></span>""" % wire)
-                print(html_str)
+                # for wire in fl2_wires:
+                #     html_str = html_str.replace(wire, """<span style="background-color:#f1c40f;"><code>%s</code></span>""" % wire)
+                # print(html_str)
 
 
                 mutation_op.implicated_lines = set()
-
-
-                exit(1)
-                # input("About to mutate. Press any key.")
                 
                 random.seed(inc_seed())
                 p = random.random()
