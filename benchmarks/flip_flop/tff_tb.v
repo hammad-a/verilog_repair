@@ -18,7 +18,7 @@ module tb;
     f = $fopen("output_tff_tb.txt");
     $fwrite(f, "time,rstn,t,q\n");
     forever begin
-        @(posedge instrumented_clk);
+        @(posedge clk);
         $fwrite(f, "%g,%b,%b,%b\n", $time,rstn,t,q);
     end
 

@@ -52,7 +52,7 @@ initial begin
 	f = $fopen("output_RS_dec_tb_t1.txt");
 	$fwrite(f, "time,Out_byte[7],Out_byte[6],Out_byte[5],Out_byte[4],Out_byte[3],Out_byte[2],Out_byte[1],Out_byte[0],CEO,Valid_out\n");
 	forever begin
-		@(posedge instrumented_clk);
+		@(posedge clk);
 		$fwrite(f, "%g,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b\n",
 		$time,Out_byte[7],Out_byte[6],Out_byte[5],Out_byte[4],Out_byte[3],Out_byte[2],Out_byte[1],Out_byte[0],CEO,Valid_out);
 	end

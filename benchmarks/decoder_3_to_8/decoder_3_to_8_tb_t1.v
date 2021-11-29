@@ -49,7 +49,7 @@
      end
  
     //  always @(A or B or C or en)
-    always @(posedge instrumented_clk)
+    always @(posedge clk)
      $fwrite(f, "%g,%b,%b,%b,%b,%b,%b,%b,%b\n", $time,Y7,Y6,Y5,Y4,Y3,Y2,Y1,Y0);
 
      always @(A or B or C or en)  
