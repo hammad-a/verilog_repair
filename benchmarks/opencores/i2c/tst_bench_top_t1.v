@@ -206,7 +206,7 @@ module tst_bench_top();
 		$fwrite(f, "time,wb_dat_o[7],wb_dat_o[6],wb_dat_o[5],wb_dat_o[4],wb_dat_o[3],wb_dat_o[2],wb_dat_o[1],wb_dat_o[0],wb_ack_o,wb_inta_o,scl_pad_o,scl_padoen_o\n");
 		
 		forever begin
-			@(posedge instrument_clk);
+			@(posedge clk);
 			$fwrite(f, "%g,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b\n", 
 			$time,dat0_i[7],dat0_i[6],dat0_i[5],dat0_i[4],dat0_i[3],dat0_i[2],dat0_i[1],dat0_i[0],ack,inta,scl0_o,scl0_oen);
 		end
