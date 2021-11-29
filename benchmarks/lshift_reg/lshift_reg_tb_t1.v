@@ -1,5 +1,6 @@
 module tb;
   reg clk;
+  reg instrumented_clk;
   reg rstn;
   reg [7:0] load_val;
   reg load_en;
@@ -7,6 +8,7 @@ module tb;
  
   // Setup DUT clock
   always #10 clk = ~clk;
+  always #40 instrumented_clk = ~instrumented_clk;
  
   // Instantiate the design
   lshift_reg u0 ( .clk(clk),
@@ -29,6 +31,7 @@ module tb;
   initial begin
     // 1. Initialize testbench variables
     clk <= 0;
+    instrumented_clk <= 0;
     rstn <= 0;
     load_val <= 8'h01;
     load_en <= 0;
