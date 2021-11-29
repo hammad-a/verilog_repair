@@ -16,7 +16,7 @@ from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 from pyverilog.vparser.plyparser import ParseError
 import pyverilog.vparser.ast as vast
 
-import fitness, fitness_v2
+import fitness
 
 AST_CLASSES = []
 
