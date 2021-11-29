@@ -8,10 +8,12 @@ module tb_4to1_mux;
    reg [1:0] sel;
 
    reg clk;
+   reg instrumented_clk;
 
    integer i;
    
-   always #1 clk = !clk;
+   always #5 clk = !clk;
+   always #20 instrumented_clk = !instrumented_clk;
 
    mux_4to1_case  mux0 (   .a (a),
                            .b (b),
@@ -34,18 +36,40 @@ module tb_4to1_mux;
    initial begin
       $monitor ("[%0t] sel=0x%0h a=0x%0h b=0x%0h c=0x%0h d=0x%0h out=0x%0h", $time, sel, a, b, c, d, out);
 
-   	  clk = 0;
-      sel <= 0;
-      a <= $random;
-      b <= $random;
-      c <= $random;
-      d <= $random;
+   	clk = 0;
+      instrumented_clk = 0;
 
-      for (i = 1; i < 4; i=i+1) begin
-         #5 sel <= i;
-      end
+      sel <= 2'b00;
+      a <= 4'b0001;
+      b <= 4'b0010;
+      c <= 4'b0100;
+      d <= 4'b1000;
 
-      #6 $finish;
-      #10 $fclose(f);
+      #100;
+      sel <= 2'b01;
+      #100;
+      sel <= 2'b10;
+      #100;
+      sel <= 2'b11;
+      
+      #100;
+
+      sel <= 2'b00;
+      d <= 4'b0001;
+      c <= 4'b0010;
+      b <= 4'b0100;
+      a <= 4'b1000;
+
+      #100;
+      sel <= 2'b01;
+      #100;
+      sel <= 2'b10;
+      #100;
+      sel <= 2'b11;
+
+
+      #800 $finish;
+      #850 $fclose(f);
    end
+
 endmodule

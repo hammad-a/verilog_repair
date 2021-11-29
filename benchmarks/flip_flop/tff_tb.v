@@ -1,5 +1,6 @@
 module tb;
   reg clk;
+  reg instrumented_clk;
   reg rstn;
   reg t;
 
@@ -9,6 +10,7 @@ module tb;
           .q(q));
 
   always #5 clk = ~clk;
+  always #20 instrumented_clk = ~instrumented_clk;
 
   integer f;
 
@@ -16,14 +18,14 @@ module tb;
     f = $fopen("output_tff_tb.txt");
     $fwrite(f, "time,rstn,t,q\n");
     forever begin
-        @(posedge clk);
+        @(posedge instrumented_clk);
         $fwrite(f, "%g,%b,%b,%b\n", $time,rstn,t,q);
     end
 
   end
 
   initial begin
-    {rstn, clk, t} <= 0;
+    {rstn, clk, t, instrumented_clk} <= 0;
     $monitor ("T=%0t rstn=%0b t=%0d q=%0d", $time, rstn, t, q);
     repeat(2) @(posedge clk);
     rstn <= 1;

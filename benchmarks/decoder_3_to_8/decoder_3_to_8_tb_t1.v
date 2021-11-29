@@ -12,11 +12,14 @@
      wire  Y7, Y6, Y5, Y4, Y3, Y2, Y1, Y0;
      reg   A, B, C;
      reg   en;
+     reg   clk, instrumented_clk;
      // Instantiate the Decoder (named DUT {device under test})
      decoder_3to8  DUT(Y7,Y6,Y5,Y4,Y3,Y2,Y1,Y0, A, B, C, en);
   
      integer f;
      initial  begin
+        clk = 0;
+        instrumented_clk = 0;
         f = $fopen("output_decoder_3_to_8_tb_t1.txt");
         $fwrite(f, "time,Y7,Y6,Y5,Y4,Y3,Y2,Y1,Y0\n");
         $timeformat(-9, 1, " ns", 6); #1;
@@ -45,11 +48,15 @@
 	$finish;
      end
  
-     always @(A or B or C or en)
+    //  always @(A or B or C or en)
+    always @(posedge instrumented_clk)
      $fwrite(f, "%g,%b,%b,%b,%b,%b,%b,%b,%b\n", $time,Y7,Y6,Y5,Y4,Y3,Y2,Y1,Y0);
 
      always @(A or B or C or en)  
      $monitor("t=%t en=%b ABC=%b%b%b Y=%b%b%b%b%b%b%b%b",
 $time,en,A,B,C,Y7,Y6,Y5,Y4,Y3,Y2,Y1,Y0);
+
+    always #1 clk = ~clk;
+    always #1 instrumented_clk = ~instrumented_clk;
     
   endmodule

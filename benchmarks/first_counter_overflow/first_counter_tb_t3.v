@@ -8,6 +8,7 @@
 // bench.
 module first_counter_tb;
 reg clk, reset, enable;
+reg instrument_clk;
 wire[3:0] counter_out;
 wire overflow_out;
 
@@ -24,12 +25,16 @@ first_counter U0(
 // inputs of DUT to some known state.
 initial begin // initial block only executes once 
     clk = 0;
+    instrument_clk = 0;
     reset = 0;
     enable = 0;
 end
 
 always
     #5 clk = !clk;
+
+always
+    #5 instrument_clk = !instrument_clk; // IMPORTANT: Make sure that this reflects the granularity of the oracle w.r.t. the clock cycle!
 
 
 integer f;
@@ -39,7 +44,7 @@ initial begin
     $fwrite(f, "time,counter_out[3],counter_out[2],counter_out[1],counter_out[0],overflow_out\n");
     $monitor("%d, \t%b, \t%b, \t%b, \t%d, \t\t%b", $time, clk, reset, enable, counter_out, overflow_out);
     forever begin
-    @(posedge clk);
+    @(posedge instrument_clk);
     $fwrite(f, "%g,%b,%b,%b,%b,%b\n", $time, counter_out[3], counter_out[2], counter_out[1], counter_out[0], overflow_out);
     end
 end

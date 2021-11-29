@@ -2,6 +2,7 @@
 
 module fsm_full_tb();
 reg clock , reset ;
+reg instrument_clock;
 reg req_0 , req_1 ,  req_2 , req_3; 
 wire gnt_0 , gnt_1 , gnt_2 , gnt_3 ;
 
@@ -14,7 +15,7 @@ initial begin
   $monitor("%g\t    %b  %b  %b  %b  %b  %b  %b  %b", 
     $time, req_0, req_1, req_2, req_3, gnt_0, gnt_1, gnt_2, gnt_3);
   forever begin
-    @(posedge clock);
+    @(posedge instrument_clock);
     $fwrite(f, "%g,%b,%b,%b,%b\n", 
      $time, gnt_0, gnt_1, gnt_2, gnt_3);
   end
@@ -23,6 +24,7 @@ end
 initial begin
   #4
   clock = 0;
+  instrument_clock = 0;
   reset = 0;
   req_0 = 0;
   req_1 = 0;
@@ -46,6 +48,8 @@ end
 always
  #2 clock = ~clock;
 
+always
+  #8 instrument_clock = ~instrument_clock;
 
 fsm_full U_fsm_full(
 clock , // Clock
