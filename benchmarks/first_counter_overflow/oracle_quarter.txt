@@ -1,0 +1,7 @@
+time,counter_out[3],counter_out[2],counter_out[1],counter_out[0],overflow_out
+20,x,x,x,x,x
+60,0,0,1,0,0
+100,0,1,1,0,0
+140,1,0,1,0,0
+180,1,1,1,0,0
+220,0,0,1,0,1

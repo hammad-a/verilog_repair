@@ -8,6 +8,7 @@ parameter number = 100;  ///  number of input codewords
 
 
 reg clk,reset;
+reg instrumented_clk;
 reg CE;
 reg [7:0] input_byte;
 
@@ -37,18 +38,21 @@ reg enable;
 reg [7:0]true_out;
 integer h,k,err;
 
+always #(pclk*4) instrumented_clk=~instrumented_clk; // this is 2*clk
 
 initial
 begin
 	clk=0;
-	forever #pclk clk=~clk;
+	instrumented_clk=0;
+	forever 
+		#pclk clk=~clk;
 end 
 
 initial begin
 	f = $fopen("output_RS_dec_tb_t1.txt");
 	$fwrite(f, "time,Out_byte[7],Out_byte[6],Out_byte[5],Out_byte[4],Out_byte[3],Out_byte[2],Out_byte[1],Out_byte[0],CEO,Valid_out\n");
 	forever begin
-		@(posedge clk);
+		@(posedge instrumented_clk);
 		$fwrite(f, "%g,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b\n",
 		$time,Out_byte[7],Out_byte[6],Out_byte[5],Out_byte[4],Out_byte[3],Out_byte[2],Out_byte[1],Out_byte[0],CEO,Valid_out);
 	end

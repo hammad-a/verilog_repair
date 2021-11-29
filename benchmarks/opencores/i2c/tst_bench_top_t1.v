@@ -74,7 +74,7 @@ module tst_bench_top();
 	// wires && regs
 	//
 	reg  clk;
-	reg instrument; // instrumentation clock cycle
+	reg instrument_clk; // instrumentation clock cycle
 	reg  rstn;
 
 	wire [31:0] adr;
@@ -111,7 +111,7 @@ module tst_bench_top();
 
 	// generate clock
 	always #5 clk = ~clk;
-	always #500 instrument = ~instrument;
+	always #20 instrument_clk = ~instrument_clk;
 
 	integer f;
 	// possible outputs: adr[31],adr[30],adr[29],adr[28],adr[27],adr[26],adr[25],adr[24],adr[23],adr[22],adr[21],adr[20],adr[19],adr[18],adr[17],adr[16],adr[15],adr[14],adr[13],adr[12],adr[11],adr[10],adr[9],adr[8],adr[7],adr[6],adr[5],adr[4],adr[3],adr[2],adr[1],adr[0],,dat_o[7],dat_o[6],dat_o[5],dat_o[4],dat_o[3],dat_o[2],dat_o[1],dat_o[0],cyc,stb,we,sda
@@ -203,11 +203,10 @@ module tst_bench_top();
 
 	initial begin
 		f = $fopen("output_tst_bench_top_t1.txt");
-		instrument = 0;
 		$fwrite(f, "time,wb_dat_o[7],wb_dat_o[6],wb_dat_o[5],wb_dat_o[4],wb_dat_o[3],wb_dat_o[2],wb_dat_o[1],wb_dat_o[0],wb_ack_o,wb_inta_o,scl_pad_o,scl_padoen_o\n");
 		
 		forever begin
-			@(posedge clk);
+			@(posedge instrument_clk);
 			$fwrite(f, "%g,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b\n", 
 			$time,dat0_i[7],dat0_i[6],dat0_i[5],dat0_i[4],dat0_i[3],dat0_i[2],dat0_i[1],dat0_i[0],ack,inta,scl0_o,scl0_oen);
 		end
@@ -232,6 +231,7 @@ module tst_bench_top();
 
 	      // initially values
 	      clk = 0;
+		  instrument_clk = 0;
 
 	      // reset system
 	      rstn = 1'b1; // negate reset
