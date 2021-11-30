@@ -1,5 +1,7 @@
 # CirFix: Automatically Repairing Defects in Hardware Design Code
 
+This repository contains the artifact for the paper CirFix: Automatically Repairing Defects in Hardware Design Code accepted at ASPLOS'22.
+
 Please read the individual readme files in /prototype and /pyverilog_changes for instructions on how to set up and run CirFix.
 
 Please contact Hammad Ahmad (hammada@umich.edu) if you have any questions or problems running CirFix.
