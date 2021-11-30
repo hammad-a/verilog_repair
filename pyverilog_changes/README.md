@@ -1,4 +1,4 @@
-#There are some changes needed to the off-the-shelf PyVerilog to work with Cirfix:
+# There are some changes needed to the off-the-shelf PyVerilog to work with Cirfix:
 
 You need to replace the files in <home>/.local/lib/python3.6/site-packages/pyverilog/ (or equivalent directory where Python stores the site packages).
   
