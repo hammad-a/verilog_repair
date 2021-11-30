@@ -989,7 +989,7 @@ def seed_popn(ast, mutation_op, codegen, log, log_file):
                 total_time = time.time() - start_time
                 print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
                 fitness_times = sum(FITNESS_EVAL_TIMES)
-                print("TOTAL TIME SPENT ON FITNESS EVALS = %f" % fitness_times)
+                # print("TOTAL TIME SPENT ON FITNESS EVALS = %f" % fitness_times)
                 if log and log_file: 
                     log_file.write("\n\n######## REPAIR FOUND ########\n\t\t%s\n" % str(child))
                     log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
@@ -1092,62 +1092,7 @@ def main():
 
     print("\n\n")
 
-    # Generate the bit-weights
-    # if INCLUDE_DIR == "":
-    #     bashCmd = ["python3", "bit_weighting.py", SRC_FILE]
-    # else:
-    #     bashCmd = ["python3", "bit_weighting.py", SRC_FILE, "-I", INCLUDE_DIR]
-    # process = subprocess.Popen(bashCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # stdout, stderr = process.communicate()
-
-    # process = subprocess.run(bashCmd, capture_output=True, check=True)
-    # print(stdout, stderr) # if there is a CalledProcessError, uncomment this to see the contents of stderr
-
     mutation_op = MutationOp(POPSIZE, FAULT_LOC, CONTROL_FLOW)
-
-    # manually testing sdram_controller
-       
-    # seed_patchlist, seed_ast = mutation_op.insert(copy.deepcopy(ast), [], 53, 78)
-    # seed_ast.show()
-    # tmp1 = codegen.visit(seed_ast)
-    # f = open("candidate.v", "w+")
-    # f.write(tmp1)
-    # f.close()
-    # ff_1 = calc_candidate_fitness("candidate.v")
-    # print(ff_1)
-    # os.remove("candidate.v")
-
-    # mismatch_set, uniq_headers = get_output_mismatch()
-    # print(mismatch_set)
-
-    # mutation_op.get_fault_loc_targets(seed_ast, mismatch_set, uniq_headers) # compute fault localization for the parent
-    # print("Fault Localization:", str(mutation_op.fault_loc_set))
-    # while len(mutation_op.new_vars_in_fault_loc) > 0:
-    #     new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
-    #     print("New vars in fault loc:", new_mismatch_set)
-    #     mutation_op.new_vars_in_fault_loc = dict()
-    #     mismatch_set = mismatch_set.union(new_mismatch_set)
-    #     mutation_op.get_fault_loc_targets(seed_ast, mismatch_set, uniq_headers) # compute fault localization for the parent
-    #     print("Fault Localization:", str(mutation_op.fault_loc_set))
-    # new_mismatch_set = set(mutation_op.new_vars_in_fault_loc.values())
-    # print("Final mismatch set:", mismatch_set)
-    # print(len(mutation_op.fault_loc_set))
-    # exit(1)
-    
-
-    # seed2_ast = mutation_op.ast_from_patchlist(copy.deepcopy(ast), seed_patchlist)
-    # seed2_patchlist, seed2_ast = mutation_op.replace(seed2_ast, seed_patchlist, 83, 44)
-    # seed2_ast.show()
-    # tmp1 = codegen.visit(seed2_ast)
-    # f = open("candidate.v", "w+")
-    # f.write(tmp1)
-    # f.close()
-    # print(tmp1)
-    # print(seed2_patchlist)
-    # ff_1 = calc_candidate_fitness("candidate.v")
-    # print(ff_1)
-    # os.remove("candidate.v")
-    # exit(1)
 
     if CODE_FROM_PATCHLIST:
         patch_list = eval(input("Please enter the patchlist representation of candidate... "))
@@ -1221,12 +1166,6 @@ def main():
         log_file.write("\tdependency_set_max=%s\n\n" % DEPENDENCY_SET_MAX)
     
     best_patches = dict()
-
-    ### Testing minimizing patchlist with fsm_full...
-
-    # minimized = minimize_patch(mutation_op, ast, ['delete(274)','replace(104,275)', 'delete(162)'], codegen, DEP_FILES, INCLUDE_DIR)
-    # print(minimized)
-    # exit(1)
 
     comp_failures = 0
 
@@ -1446,7 +1385,7 @@ def main():
                         total_time = time.time() - start_time
                         print("TOTAL TIME TAKEN TO FIND REPAIR = %f" % total_time)
                         fitness_times = sum(FITNESS_EVAL_TIMES)
-                        print("TOTAL TIME SPENT ON FITNESS EVALS = %f" % fitness_times)
+                        # print("TOTAL TIME SPENT ON FITNESS EVALS = %f" % fitness_times)
                         if LOG: 
                             log_file.write("\n\n######## REPAIR FOUND ########\n\t\t%s\n" % str(child_patchlist))
                             log_file.write("TOTAL TIME TAKEN TO FIND REPAIR = %f\n" % total_time)
