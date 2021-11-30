@@ -6,12 +6,12 @@ Please contact Hammad Ahmad (hammada@umich.edu) if you have any questions or pro
 
 # Dependencies:
 
-PyVerilog 1.2.1
-    pip3 install pyverilog==1.2.1
-    -> replace source files for PyVerilog to support CirFix (see documentaiton in /pyverilog_changes)
+PyVerilog 1.2.1 <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;pip3 install pyverilog==1.2.1 <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;Make sure to replace source files for PyVerilog to support CirFix (see documentaiton in /pyverilog_changes).
 
-Icarus Verilog
-    sudo yum install iverilog (for RHEL)
+Icarus Verilog <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;sudo yum install iverilog (for RHEL)
 
-Synopsys VCS
-    (commercial license; you may use alternative Verilog simulators, but would likely need to modify the scripts to match the API of the simulator)
+Synopsys VCS <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(Commercial license; you may use alternative Verilog simulators, but would likely need to modify the scripts to match the API of the simulator.)
