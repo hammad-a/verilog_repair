@@ -25,6 +25,8 @@
         3. Run "python3 repair.py". When CirFix terminates, you will be presented with a minimized patchlist (e.g., "['template(sens_to_posedge,32)']"). This step alone should be sufficient to verify our results in experiments_results.xlsx and Table 3 of the paper.
                 3.1. See the steps above to produce the Verilog code corresponding to the repair patchlist, if you are interested.
         
+        Note: Try not to concurrently run trials for different bugs associated with the same project. VCS writes temporary files tied to a project during compilation and simulation, and running two concurrent trials on the same circuit (even if with different bugs) can overwrite the temporary files prematurely and contimante results. You may run trials associated with _different_ projects at the same time -- we have modified the underlying source code of PyVerilog to support this. During our experiments, we ran at most two different trials at the same time on one machine (given our limited number of CPU cores). 
+        
 # Troubleshooting:
         1. If you get a file not found exception immediately after the first simulation, but don't see any other visible errors
                 (e.g., FileNotFoundError: [Errno 2] No such file or directory: 'output_lshift_reg_tb_t1.txt'),
