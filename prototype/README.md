@@ -21,7 +21,7 @@
         1. Look at the experiments_results.xlsx file to get the seed that produced the repair.
         2. Edit repair.conf to configure CirFix.
                 2.1. You need to force the random seed for the relevant CirFix run. You can do so by uncommenting the line "seed=..." (line 6 in repair.conf) and copy-pasting the seed (e.g., repair_2020-09-22-16:01:26) in that line.
-                2.2. Important: You also need to set the correct paths for the source file, testbench, etc. We have already included all combinations of configurations you might need. Simply search for the bug (e.g., first_counter_overflow_wadden_buggy1.v), and uncomment the 6 lines following the bug description. We leave one bug uncommented out (with the proper seed) to help you get started.
+                2.2. Important: You also need to set the correct paths for the source file, testbench, etc. We have already included all combinations of configurations you might need. Simply search for the bug name (e.g., first_counter_overflow_wadden_buggy1.v), and uncomment the 6 lines following the bug description. We leave one bug uncommented out (with the proper seed) to help you get started.
         3. Run "python3 repair.py". When CirFix terminates, you will be presented with a minimized patchlist (e.g., "['template(sens_to_posedge,32)']"). This step alone should be sufficient to verify our results in experiments_results.xlsx and Table 3 of the paper.
                 3.1. See the steps above to produce the Verilog code corresponding to the repair patchlist, if you are interested.
         
@@ -30,7 +30,8 @@
                 (e.g., FileNotFoundError: [Errno 2] No such file or directory: 'output_lshift_reg_tb_t1.txt'),
         it is likely that the command to run the simulation timed out (due to long compilation times). This is often easily resolved by re-running the repair.py script. 
 
-        2. If the machine seems super slow and unresponsive, run the top command to see if there are any zombie "simv" processes. This may happen due to a bug in VCS. If you see several zombie simv processes (that often use 100% CPU on one thread), please run the following command:
+        2. If the machine seems super slow and unresponsive, run the top command to see if there are any zombie "simv" processes. This may happen due to a bug in VCS. If you see several zombie simv processes (that often use 100% CPU each on one thread), please run the following command:
                 nohup bash ~/clean_simv.sh & 
+        This command will kill these zombie processes, and the machine should be responsive again.
 
         If you run into any other issues, feel free to reach out to Hammad Ahmad (hammad@umich.edu).
