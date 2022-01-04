@@ -1235,9 +1235,9 @@ def main():
                 print("Lines implicated by FL: %s" % str(mutation_op.implicated_lines))
                 print("Number of lines implicated by FL: %d" % len(mutation_op.implicated_lines))
 
-                extended_fl = extended_fl_for_study(mutation_op.implicated_lines, 5)
-                print("Lines in extended FL: %s" % str(extended_fl))
-                print("Number of lines in extended FL: %d" % len(extended_fl))
+                # extended_fl = extended_fl_for_study(mutation_op.implicated_lines, 5)
+                # print("Lines in extended FL: %s" % str(extended_fl))
+                # print("Number of lines in extended FL: %d" % len(extended_fl))
 
                 # # FL 1
                 # # html_str = """<pre style="margin-left: 40px;">\n"""
