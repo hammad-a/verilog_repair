@@ -220,7 +220,7 @@ class MutationOp(ASTCodeGenerator):
         self.new_vars_in_fault_loc = dict()
         self.wires_brought_in = dict()
         self.implicated_lines = set() # contains the line number implicated by FL
-        # self.blacklist = set()
+        # self.stoplist = set()
         self.tmp_node = None 
         self.deletable_nodes = []
         self.insertable_nodes = []
@@ -410,25 +410,25 @@ class MutationOp(ASTCodeGenerator):
     Add node and its immediate children to the fault loc set.    
     """
     def add_node_and_children_to_fault_loc(self, ast, mismatch_set, uniq_headers, parent=None):
-        # if ast.__class__.__name__ == "Identifier" and ast.name in self.blacklist: return
+        # if ast.__class__.__name__ == "Identifier" and ast.name in self.stoplist: return
         self.fault_loc_set.add(ast.node_id)
         if parent and parent.__class__.__name__ == "Identifier" and parent.name not in self.wires_brought_in: self.wires_brought_in[parent.name] = set()
-        if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers: # and ast.name not in self.blacklist: 
+        if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers: # and ast.name not in self.stoplist: 
             if not LIMIT_TRANSITIVE_DEPENDENCY_SET or len(self.wires_brought_in[parent.name]) < DEPENDENCY_SET_MAX:
                 self.wires_brought_in[parent.name].add(ast.name)
                 self.new_vars_in_fault_loc[ast.node_id] = ast.name
             # else:
-            #     self.blacklist.add(ast.name)
+            #     self.stoplist.add(ast.name)
         for c in ast.children():
             if c:
                 self.fault_loc_set.add(c.node_id) 
                 # add all children identifiers to depedency set
-                if c.__class__.__name__ == "Identifier" and c.name not in mismatch_set and c.name not in uniq_headers: # and c.name not in self.blacklist: 
+                if c.__class__.__name__ == "Identifier" and c.name not in mismatch_set and c.name not in uniq_headers: # and c.name not in self.stoplist: 
                     if not LIMIT_TRANSITIVE_DEPENDENCY_SET or len(self.wires_brought_in[parent.name]) < DEPENDENCY_SET_MAX: 
                         self.wires_brought_in[parent.name].add(c.name)
                         self.new_vars_in_fault_loc[c.node_id] = c.name
                     # else:
-                    #     self.blacklist.add(c.name)
+                    #     self.stoplist.add(c.name)
 
     """
     Given a set of output wires that mismatch with the oracle, get a list of node IDs that are potential fault localization targets.
@@ -436,7 +436,7 @@ class MutationOp(ASTCodeGenerator):
     # TODO: add decl to fault loc targets?
     def get_fault_loc_targets(self, ast, mismatch_set, uniq_headers, parent=None, include_all_subnodes=False):
         # data dependency analysis
-        # if ast.__class__.__name__ == "Identifier" and ast.name in self.blacklist: return
+        # if ast.__class__.__name__ == "Identifier" and ast.name in self.stoplist: return
         if ast.__class__.__name__ in ["BlockingSubstitution", "NonblockingSubstitution", "Assign"]: # for assignment statements =, <=
             if ast.left and ast.left.__class__.__name__ == "Lvalue" and ast.left.var:
                 if ast.left.var.__class__.__name__ == "Identifier" and ast.left.var.name in mismatch_set: # single assignment
@@ -473,13 +473,13 @@ class MutationOp(ASTCodeGenerator):
 
         if include_all_subnodes: # recurisvely ensure all children of a fault loc target are also included in the fault loc set
             self.fault_loc_set.add(ast.node_id)
-            if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers: # and ast.name not in self.blacklist:
+            if ast.__class__.__name__ == "Identifier" and ast.name not in mismatch_set and ast.name not in uniq_headers: # and ast.name not in self.stoplist:
                 if parent and parent.__class__.__name__ == "Identifier":
                     if not LIMIT_TRANSITIVE_DEPENDENCY_SET or len(self.wires_brought_in[parent.name]) < DEPENDENCY_SET_MAX: 
                         self.wires_brought_in[parent.name].add(ast.name)
                         self.new_vars_in_fault_loc[ast.node_id] = ast.name
                     # else:
-                    #     self.blacklist.add(ast.name)
+                    #     self.stoplist.add(ast.name)
 
         for c in ast.children():
             if c: self.get_fault_loc_targets(c, mismatch_set, uniq_headers, parent, include_all_subnodes)
@@ -1225,7 +1225,7 @@ def main():
                     print("Final mismatch set:", tmp_mismatch_set)
                     print("Final Fault Localization:", str(mutation_op.fault_loc_set))
                     print(len(mutation_op.fault_loc_set))
-                    # print(mutation_op.blacklist)
+                    # print(mutation_op.stoplist)
                     # print(mutation_op.wires_brought_in)
                 
                 # exit(1)
@@ -1408,7 +1408,7 @@ def main():
                     mutation_op.fault_loc_set = set() # reset the fault localization data structures for the next parent
                     mutation_op.new_vars_in_fault_loc = dict()
                     mutation_op.wires_brought_in = dict()
-                    # mutation_op.blacklist = set()
+                    # mutation_op.stoplist = set()
                 
                 print("NUMBER OF COMPILATION FAILURES SO FAR: %d" % comp_failures)
                 
