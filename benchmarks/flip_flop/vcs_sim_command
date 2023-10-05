@@ -1,1 +1,2 @@
-timeout 10 vcs -sverilog +vc -Mupdate -line -full64 tff_tb.v tff.v -o simv -R
+timeout 5 iverilog -g2005-sv -o simv tff_tb.v tff.v && vvp simv
+

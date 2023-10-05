@@ -1,1 +1,1 @@
-timeout 10 vcs -sverilog +vc -Mupdate -line -full64 fsm_full_tb_t1.v fsm_full.v -o simv -R
+timeout 7 iverilog -o simv fsm_full_tb_t1.v fsm_full.v && vvp simv

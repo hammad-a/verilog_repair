@@ -1,1 +1,1 @@
-timeout 5 vcs -sverilog +vc -Mupdate -line -full64 sdram_controller_tb_t1.v sdram_controller.v -o simv -R
+timeout 7 iverilog -o simv sdram_controller_tb_t1.v sdram_controller.v && vvp simv

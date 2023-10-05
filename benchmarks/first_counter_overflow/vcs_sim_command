@@ -1,1 +1,2 @@
-timeout 20 vcs -sverilog +vc -Mupdate -line -full64 first_counter_tb_t3.v first_counter_overflow.v -o simv -R
+timeout 7 iverilog -o simv first_counter_tb_t3.v first_counter_overflow.v && vvp simv
+
