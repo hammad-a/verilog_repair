@@ -20,6 +20,7 @@ import sys, inspect
 import copy
 import os
 import pathlib
+from site import getsitepackages
 
 from pyverilog.vparser.ply.yacc import yacc
 from pyverilog.vparser.plyparser import PLYParser, Coord, ParseError
@@ -29,9 +30,10 @@ from pyverilog.vparser.ast import *
 from pyverilog.ast_code_generator.codegen import ASTCodeGenerator
 
 AST_CLASSES = []
+SITEPACKAGE_PATH = str(getsitepackages()[0])
 
-# replace hammada with your username
-f = open("/home/hammada/.local/lib/python3.6/site-packages/pyverilog/vparser/ast_classes.txt", "r")
+f = open(f"{SITEPACKAGE_PATH}/pyverilog/vparser/ast_classes.txt", "r")
+
 lines = f.readlines()
 for line in lines:
     line = line.strip()
