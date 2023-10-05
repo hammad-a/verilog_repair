@@ -5,6 +5,7 @@ import copy
 import random
 import time 
 from datetime import datetime
+from pathlib import Path
 import math
 
 # genprog: Class Rep: you need to write your own class 
@@ -90,6 +91,8 @@ FITNESS_MODE = "outputwires"
 
 TIME_NOW = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
 
+PROJECT_ROOT_DIR = Path(__file__).resolve().parent.parent
+
 config_file = open("repair.conf", "r")
 configs = config_file.readlines()
 for c in configs:
@@ -100,25 +103,25 @@ for c in configs:
             SEED = val
             print("Using SEED = %s" % SEED)
         elif param == "src_file":
-            SRC_FILE = val
+            SRC_FILE = val.replace("PROJECT_ROOT_DIR", str(PROJECT_ROOT_DIR))
             print("Using SRC_FILE = %s" % SRC_FILE)
         elif param == "test_bench":
-            TEST_BENCH = val
+            TEST_BENCH = val.replace("PROJECT_ROOT_DIR", str(PROJECT_ROOT_DIR))
             print("Using TEST_BENCH = %s" % TEST_BENCH)
         elif param == "eval_script":
-            EVAL_SCRIPT = val
+            EVAL_SCRIPT = val.replace("PROJECT_ROOT_DIR", str(PROJECT_ROOT_DIR))
             print("Using EVAL_SCRIPT = %s" % EVAL_SCRIPT)
         elif param == "orig_file":
-            ORIG_FILE = val
+            ORIG_FILE = val.replace("PROJECT_ROOT_DIR", str(PROJECT_ROOT_DIR))
             print("Using ORIG_FILE = %s" % ORIG_FILE)
         elif param == "proj_dir":
-            PROJ_DIR = val
+            PROJ_DIR = val.replace("PROJECT_ROOT_DIR", str(PROJECT_ROOT_DIR))
             print("Using PROJ_DIR = %s" % PROJ_DIR)
         elif param == "fitness_mode":
             FITNESS_MODE = val
             print("Using FITNESS_MODE = %s" % FITNESS_MODE)
         elif param == "oracle":
-            ORACLE = val
+            ORACLE = val.replace("PROJECT_ROOT_DIR", str(PROJECT_ROOT_DIR))
             print("Using ORACLE = %s" % ORACLE)
         elif param == "gens":
             GENS = int(val)
