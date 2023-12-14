@@ -10,7 +10,7 @@ Please contact Hammad Ahmad (hammada@umich.edu) if you have any questions or pro
 
 * PyVerilog 1.2.1
     * `pip3 install pyverilog==1.2.1`
-    * Make sure to replace source files for PyVerilog to support CirFix (see documentaiton in /pyverilog_changes).
+    * Make sure to replace source files for PyVerilog to support CirFix (see documentation in /pyverilog_changes).
 
 * [Icarus Verilog](https://github.com/steveicarus/iverilog)
     * `sudo yum install iverilog` (for RHEL), or [build from source](https://github.com/steveicarus/iverilog?tab=readme-ov-file#buildinginstalling-icarus-verilog-from-source)
