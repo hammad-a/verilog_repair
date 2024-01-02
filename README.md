@@ -17,3 +17,7 @@ Icarus Verilog <br/>
 
 Synopsys VCS <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;(Commercial license; you may use alternative Verilog simulators, but would likely need to modify the scripts to match the API of the simulator.)
+
+# Note:
+
+If you do not have a Synopsys VCS license, check out the iverilog branch that removes that dependency and provides minor usability improvements. Note that I have had a chance to only partially replicate the ASPLOS'22 results using just iverilog. If you happen to be able to fully verify those results, let me know and I can update this. :) 
